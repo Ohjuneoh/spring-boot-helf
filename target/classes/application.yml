@@ -1,0 +1,31 @@
+#내장 웹서버의 포트번호 지정하기
+server:
+  port: 80
+  
+# 로그레벨 지정하기
+logging:
+  level:
+    root: info
+    '[org.springframework.security]': info
+    '[org.springframework.web]': trace
+    '[kr.co.helf.dao]': info 
+# 커넥션 풀 관련 설정정보 지정하기
+spring:
+  datasource:
+      driver-class-name: oracle.jdbc.OracleDriver
+      url: jdbc:oracle:thin:@localhost:1521:xe
+      username: hr
+      password : zxcv1234
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp    
+# mybatis 관련 설정정보 저장하기
+mybatis:
+  mapper-locations:
+  - META-INF/mybatis/mappers/*.xml
+  configuration:
+    jdbc-type-for-null: 'NULL'
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+
+# 
