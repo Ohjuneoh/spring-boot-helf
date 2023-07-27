@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class HomeController {
-
 	
 	@GetMapping(value = "/")
 	public String home() {
