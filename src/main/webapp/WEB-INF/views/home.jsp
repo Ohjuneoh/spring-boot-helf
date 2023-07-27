@@ -44,7 +44,7 @@
         <div class="row gx-0">
             <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
                 <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>서울시 종로구 율곡로 10길 103 </small>
+                    <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>서울시 종로구 율곡로 10길 105 </small>
                     <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small>
                     <small class="text-light"><i class="fa fa-envelope-open me-2"></i>health@helf.com</small>
                 </div>
