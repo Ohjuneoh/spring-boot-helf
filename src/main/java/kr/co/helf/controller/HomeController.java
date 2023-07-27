@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class HomeController {
 
+	
 	@GetMapping(value = "/")
 	public String home() {
 		
