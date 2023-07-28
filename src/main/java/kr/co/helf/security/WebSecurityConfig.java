@@ -31,7 +31,7 @@ public class WebSecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		return http
-				// 사이트간 요청위조 방지 기능을 비활성화한다.
+				// 사이트간 요청위조 방지 기능을 비활성화한다. 수정 
 				.csrf()
 					.disable()
 					// Form 로그인 인증 기능을 사용한다.

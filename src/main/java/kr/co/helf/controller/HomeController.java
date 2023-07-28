@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class HomeController {
-
+	
 	@GetMapping(value = "/")
 	public String home() {
 		
@@ -50,6 +50,13 @@ public class HomeController {
 	public String feature() {
 		
 		return "feature";
+		
+	}
+	
+	@GetMapping(value="/lesson")
+	public String lesson() {
+		
+		return "lesson";
 		
 	}
 	
