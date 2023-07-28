@@ -52,6 +52,13 @@ public class HomeController {
 		
 	}
 	
+	@GetMapping(value="/lesson")
+	public String lesson() {
+		
+		return "lesson";
+		
+	}
+	
 	
 	
 }
