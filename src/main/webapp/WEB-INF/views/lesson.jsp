@@ -45,9 +45,9 @@
         <div class="row gx-0">
             <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
                 <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</small>
+					<small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>서울시 종로구 율곡로 10길 105 </small>
                     <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small>
-                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>info@example.com</small>
+                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>health@helf.com</small>
                 </div>
             </div>
             <div class="col-lg-4 text-center text-lg-end">
@@ -74,7 +74,7 @@
                     <h1 class="display-4 text-white animated zoomIn">Blog Grid</h1>
                     <a href="" class="h5 text-white">Home</a>
                     <i class="far fa-circle text-white px-2"></i>
-                    <a href="" class="h5 text-white">Blog Grid</a>
+                    <a class="h5 text-white">Blog Grid</a>
                 </div>
             </div>
         </div>
