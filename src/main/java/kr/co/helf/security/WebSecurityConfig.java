@@ -39,7 +39,7 @@ public class WebSecurityConfig {
 					// 사용자정의 로그인 페이지를 요청하는 URL을 지정한다.
 					.loginPage("/login")
 					// 아이디에 해당하는 파라미터값의 이름을 지정한다.
-					.usernameParameter("email")
+					.usernameParameter("id")
 					// 비밀번호에 해당하는 파라미터값의 이름을 지정한다.
 					.passwordParameter("password")
 					// Form 로그인 인증작업을 요청하는 URL을 지정한다.
@@ -49,7 +49,7 @@ public class WebSecurityConfig {
 					// 로그인 실패시 재요청 URL을 지정한다.
 					.failureUrl("/emp/loginform?error=fail")
 				.and()
-					// 로그아웃 기능을 사용한다. 
+				// 로그아웃 기능을 사용한다. 
 					.logout()
 					// 로그아웃을 요청하는 URL을 지정한다.
 					.logoutUrl("/emp/logout")
