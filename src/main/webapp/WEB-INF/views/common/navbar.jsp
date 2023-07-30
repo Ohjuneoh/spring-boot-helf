@@ -52,7 +52,7 @@
             </sec:authorize>
         </div>
         <button type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>
-        <a href="loginform" class="btn btn-primary py-2 px-4 ms-3">로그인</a>
-        <a href="https://htmlcodex.com/startup-company-website-template" class="btn btn-primary py-2 px-4 ms-3">회원가입</a>
+        <a href="login" class="btn btn-primary py-2 px-4 ms-3">로그인</a>
+        <a href="register" class="btn btn-primary py-2 px-4 ms-3">회원가입</a>
     </div>
 </nav>

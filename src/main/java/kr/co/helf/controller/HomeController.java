@@ -19,6 +19,16 @@ public class HomeController {
 		return "home";	
 	}
 	
+	@GetMapping(value="/login")
+	public String loginForm() {
+		return "loginform";
+	}
+	
+	@GetMapping(value="/register")
+	public String registerForm() {
+		return "registerform";
+	}
+	
 	@GetMapping(value = "/home")
 	public String home2() {
 		

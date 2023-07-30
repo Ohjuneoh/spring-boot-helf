@@ -41,11 +41,11 @@
     <!-- Spinner End -->
 
 
-    <!-- Topbar Start -->
-   	<jsp:include page="common/navbar.jsp">
+    <!-- Topnavbar Start -->
+   	<jsp:include page="common/topnavbar.jsp">
 		<jsp:param name="menu" value="홈"/>
 	</jsp:include>
-    <!-- Topbar End -->
+    <!-- Topnavbar End -->
 
 
     <!-- Navbar & Carousel Start -->
@@ -61,8 +61,6 @@
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase mb-3 animated slideInDown">HELF</h5>
                             <h1 class="display-1 text-white mb-md-4 animated zoomIn">Health & Friends <br>당신과 함께합니다.</h1>
-                            <a href="quote" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">강사 소개</a>
-                            <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">오시는 길</a>
                         </div>
                     </div>
                 </div>
@@ -72,8 +70,6 @@
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase mb-3 animated slideInDown">HELF</h5>
                             <h1 class="display-1 text-white mb-md-4 animated zoomIn">Health & Friends <br>당신과 함께합니다.</h1>
-                            <a href="quote" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">강사 소개</a>
-                            <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">오시는 길</a>
                         </div>
                     </div>
                 </div>
