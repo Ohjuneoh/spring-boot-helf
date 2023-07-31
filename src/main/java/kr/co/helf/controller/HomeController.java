@@ -22,6 +22,7 @@ public class HomeController {
 	// 로그인화면 요청을 처리
 	@GetMapping(value="login")
 	public String loginForm() {
+		log.info("loginform() is running");
 		return "loginform";
 	}
 	
