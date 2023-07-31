@@ -11,10 +11,10 @@
         <div class="navbar-nav ms-auto py-0">
             <a href="home" class="nav-item nav-link ${menu eq '홈' ? 'active' : '' }">홈</a>
             <sec:authorize access="isAnonymous()">
-            <a href="about" class="nav-item nav-link">Concept</a>
+            <a href="concept" class="nav-item nav-link">Concept</a>
             <a href="about" class="nav-item nav-link">News</a>
             <a href="about" class="nav-item nav-link">보도자료</a>
-            <a href="about" class="nav-item nav-link">강사 소개</a>
+            <a href="trainerIntro" class="nav-item nav-link">강사 소개</a>
             <a href="about" class="nav-item nav-link">오시는길</a>
             </sec:authorize>
             <sec:authorize access="isAuthenticated">
@@ -52,7 +52,7 @@
             </sec:authorize>
         </div>
         <button type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>
-        <a href="/user/login" class="btn btn-primary py-2 px-4 ms-3">로그인</a>
+        <a href="login" class="btn btn-primary py-2 px-4 ms-3">로그인</a>
         <a href="register" class="btn btn-primary py-2 px-4 ms-3">회원가입</a>
     </div>
 </nav>

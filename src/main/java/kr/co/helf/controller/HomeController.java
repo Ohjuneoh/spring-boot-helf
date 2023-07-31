@@ -13,17 +13,36 @@ public class HomeController {
 	
 	@GetMapping(value = "/")
 	public String home() {
-		
-		
 		return "home";	
 	}
 	
-	@GetMapping(value="/user/login")
+	// 로그인화면 요청을 처리
+	@GetMapping(value="login")
 	public String loginForm() {
 		return "loginform";
 	}
 	
-	@GetMapping(value="/user/register")
+	// Concept 화면 요청을 처리
+	@GetMapping(value="concept")
+	public String concept() {
+		
+		return "concept";
+	}
+		
+	// 강사소개 화면 요청을 처리
+	@GetMapping(value="trainerIntro")
+	public String trainerIntro() {
+		return "trainerIntro";
+	}
+	
+	// 지점찾기 화면 요청을 처리
+	@GetMapping(value="gymfind")
+	public String gymfind() {
+		return "gymfind";
+	}
+
+	
+	@GetMapping(value="register")
 	public String registerForm() {
 		return "registerform";
 	}
