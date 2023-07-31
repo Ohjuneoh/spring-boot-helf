@@ -37,13 +37,13 @@ public class WebSecurityConfig {
 					// Form 로그인 인증 기능을 사용한다.
 				.formLogin()
 					// 사용자정의 로그인 페이지를 요청하는 URL을 지정한다.
-					.loginPage("/login")
+					.loginPage("/user/loginform")
 					// 아이디에 해당하는 파라미터값의 이름을 지정한다.
 					.usernameParameter("id")
 					// 비밀번호에 해당하는 파라미터값의 이름을 지정한다.
 					.passwordParameter("password")
 					// Form 로그인 인증작업을 요청하는 URL을 지정한다.
-					.loginProcessingUrl("/emp/login")
+					.loginProcessingUrl("/user/login")
 					// 로그인 성공시 재요청 URL을 지정한다.
 					.defaultSuccessUrl("/")
 					// 로그인 실패시 재요청 URL을 지정한다.
