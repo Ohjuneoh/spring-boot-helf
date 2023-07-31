@@ -23,7 +23,7 @@
 	 		-mybatis Mapper 인터페이스가 정의된 패키지를 지정한다.
 	 		- 해당 패키지에 대한 로그 출력레벨을 trace로 지정한다.		
 	 -->
-	 <logger name="kr.co.jhta.hr.mapper">
+	 <logger name="kr.co.helf.hr.mapper">
 	 	<level value="trace"/>
 	
 	 </logger>
