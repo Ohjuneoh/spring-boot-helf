@@ -47,12 +47,12 @@ public class WebSecurityConfig {
 					// 로그인 성공시 재요청 URL을 지정한다.
 					.defaultSuccessUrl("/")
 					// 로그인 실패시 재요청 URL을 지정한다.
-					.failureUrl("/emp/loginform?error=fail")
+					.failureUrl("/user/loginform?error=fail")
 				.and()
 				// 로그아웃 기능을 사용한다. 
 					.logout()
 					// 로그아웃을 요청하는 URL을 지정한다.
-					.logoutUrl("/emp/logout")
+					.logoutUrl("/user/logout")
 					// 로그아웃 성공시 재요청 URL을 지정한다.
 					.logoutSuccessUrl("/")
 					// 세션객체를 무효화 시킨다.
@@ -60,11 +60,11 @@ public class WebSecurityConfig {
 				.and()
 				//인증 안되었을 때 오는곳
 					.exceptionHandling().authenticationEntryPoint((request, response, authentication) -> {
-						response.sendRedirect("/emp/loginform?error=denied");
+						response.sendRedirect("/user/loginform?error=denied");
 					})
 				.and()
 					.exceptionHandling().accessDeniedHandler((request, response, exception) -> {
-						response.sendRedirect("/emp/loginform?error=forbidden");
+						response.sendRedirect("/user/loginform?error=forbidden");
 					})
 				.and()
 					.build();

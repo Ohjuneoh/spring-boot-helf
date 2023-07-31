@@ -26,10 +26,10 @@
     <link href="/resources/lib/animate/animate.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="/resources/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="w-100" src="resources/img/carousel-2.jpg" alt="Image">
+                    <img class="w-100" src="/resources/img/carousel-2.jpg" alt="Image">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase mb-3 animated slideInDown">HELF</h5>
@@ -175,7 +175,7 @@
                 </div>
                 <div class="col-lg-5" style="min-height: 500px;">
                     <div class="position-relative h-100">
-                        <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.9s" src="resources/img/about.jpg" style="object-fit: cover;">
+                        <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.9s" src="/resources/img/about.jpg" style="object-fit: cover;">
                     </div>
                 </div>
             </div>
