@@ -151,9 +151,29 @@
 					  </a>
 					</p>
 					<div class="collapse" id="collapseExample">
-					  <div class="card card-body bg-light border-0">
-					    내용넣어주세요
-					  </div>
+						<label>
+						    <input type="checkbox" id="agreeCheckbox-1" class="normal">
+						    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
+						</label>
+					  	<div class="card card-body bg-light border-0">
+					   		내용넣어주세요
+					  	</div>
+						<label>
+						    <input type="checkbox" id="agreeCheckbox-2" class="normal">
+						    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
+						</label>
+					  	<div class="card card-body bg-light border-0">
+					   		내용넣어주세요
+					  	</div>
+						<label>
+						    <input type="checkbox" id="agreeCheckbox-3" class="normal">
+						    <strong style="color: blue;">[선택]</strong> 이용약관에 동의합니다.
+						</label>
+					  	<div class="card card-body bg-light border-0">
+					   		내용넣어주세요
+					  	</div>
+						  <input type="checkbox" id="check_all" >
+  						  <label for="check_all">전체 동의합니다.</label>
 					</div>				    
 				    <div class="col-12">
 				        <button class="btn btn-dark w-100 py-3" type="submit">가입하기</button>
@@ -255,6 +275,40 @@
 
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
+   
+   <script type="text/javascript"></script>
+   
+   <script>
+	// 체크박스 전체 선택/해제 처리하는 제이쿼리
+	   $(".collapse").on("click", "#check_all", function () {
+	     var checked = $(this).is(":checked");
+	
+	     if(checked){
+	     	$(this).parents(".collapse").find('input').prop("checked", true);
+	     } else {
+	     	$(this).parents(".collapse").find('input').prop("checked", false);
+	     }
+	   });
+	
+	// 체크박스 전체선택 한 상태에서 다른 체크박스 선택시 전체동의 체크박스 해제된다.
+	   $(".collapse").on("click", ".normal", function() {
+	     var checked = $(this).is(":checked"); 
+	
+	     if (!checked) {
+	     	$("#check_all").prop("checked", false); 
+	     }
+	   });
+	
+	// 체크박스를 개별로 각각 선택하면 전체동의가 체크된다.
+	   $(".collapse").on("click", ".normal", function() {
+	       var is_checked = true;
+	       
+	       $(".collapse .normal").each(function(){
+	           is_checked = is_checked && $(this).is(":checked");
+	       });
+	       
+	       $("#check_all").prop("checked", is_checked);
+	   });
+	</script>
 </body>
-
 </html>
