@@ -13,19 +13,18 @@ import lombok.RequiredArgsConstructor;
 @Slf4j
 public class HomeController {
 
-
 	@GetMapping(value = "/")
-	public String home() {
+	public String home() {	
 		return "home";	
 	}
 	
 	// 로그인화면 요청을 처리
 	@GetMapping(value="login")
 	public String loginForm() {
-		log.info("loginform() is running");
 		return "loginform";
 	}
 	
+
 	// Concept 화면 요청을 처리
 	@GetMapping(value="concept")
 	public String concept() {
@@ -56,7 +55,8 @@ public class HomeController {
 	
 	@GetMapping(value = "/home")
 	public String home2() {
-		
-		return "home";	
-	}
+
+		return "gymfind";
+	}		
+
 }
