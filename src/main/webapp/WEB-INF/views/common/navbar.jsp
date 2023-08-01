@@ -12,11 +12,26 @@
             <a href="/" class="nav-item nav-link ${menu eq '홈' ? 'active' : '' }">홈</a>
             <a href="test" class="nav-item nav-link">캘린더</a>
             <sec:authorize access="isAnonymous()">
+<<<<<<< HEAD
+<<<<<<< HEAD
+            <a href="concept" class="nav-item nav-link">Concept</a>
+=======
             <a href="/concept" class="nav-item nav-link">Concept</a>
             <a href="about" class="nav-item nav-link">News</a>
             <a href="about" class="nav-item nav-link">보도자료</a>
+<<<<<<< HEAD
             <a href="/trainerIntro" class="nav-item nav-link">강사 소개</a>
             <a href="about" class="nav-item nav-link">오시는길</a>
+=======
+>>>>>>> d43d0aa82e7c87f003c906edc78402b25b83b9a2
+=======
+
+            <a href="concept" class="nav-item nav-link">Concept</a>
+
+>>>>>>> ceed97ca7d134a16daece5865b524d94cd9c7581
+            <a href="trainerIntro" class="nav-item nav-link">강사 소개</a>
+            <a href="branch" class="nav-item nav-link">오시는길</a>
+>>>>>>> main
             </sec:authorize>
             <sec:authorize access="isAuthenticated">
             <div class="nav-item dropdown">
