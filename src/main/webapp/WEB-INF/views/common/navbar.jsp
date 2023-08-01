@@ -9,13 +9,13 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-0">
-            <a href="home" class="nav-item nav-link ${menu eq '홈' ? 'active' : '' }">홈</a>
+            <a href="/" class="nav-item nav-link ${menu eq '홈' ? 'active' : '' }">홈</a>
             <a href="test" class="nav-item nav-link">캘린더</a>
             <sec:authorize access="isAnonymous()">
-            <a href="concept" class="nav-item nav-link">Concept</a>
+            <a href="/concept" class="nav-item nav-link">Concept</a>
             <a href="about" class="nav-item nav-link">News</a>
             <a href="about" class="nav-item nav-link">보도자료</a>
-            <a href="trainerIntro" class="nav-item nav-link">강사 소개</a>
+            <a href="/trainerIntro" class="nav-item nav-link">강사 소개</a>
             <a href="about" class="nav-item nav-link">오시는길</a>
             </sec:authorize>
             <sec:authorize access="isAuthenticated">
@@ -28,7 +28,7 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업</a>
                 <div class="dropdown-menu m-0">
-                    <a href="blog" class="dropdown-item">수업 예약</a>
+                    <a href="blog" class="dropdown-item">수업 신청</a>
                     <a href="detail" class="dropdown-item">그룹수업 시간표</a>
                 </div>
             </div>
@@ -55,7 +55,7 @@
         <button type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>
         <sec:authorize access="isAnonymous()">
         	<a href="login" class="btn btn-primary py-2 px-4 ms-3">로그인</a>
-        	<a href="register" class="btn btn-primary py-2 px-4 ms-3">회원가입</a>
+        	<a href="/user/register" class="btn btn-primary py-2 px-4 ms-3">회원가입</a>
         </sec:authorize>
         <sec:authorize access="isAuthenticated">
         	<a href="/user/logout" class="btn btn-primary py-2 px-4 ms-3">로그아웃</a>
