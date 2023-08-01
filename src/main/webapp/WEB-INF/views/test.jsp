@@ -54,40 +54,20 @@
 			<jsp:param name="menu" value="홈"/>
 		</jsp:include>
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
+            <div class="carousel-inner" >
+                <div class="carousel-item active"  >
                     <img class="w-100" src="/resources/img/carousel-1.jpg" alt="Image">
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px;">
-                        	<form action="/user/login" method="post">
-	                            <div class="row g-3">
-	                            	<div class="col-xl-12">
-	                            		<a><strong style="font-size: 40px;">LOGIN</strong></a>
-	                            	</div>
-	                                <div class="col-xl-12">
-	                                    <input type="text" class="form-control bg-light border-0" placeholder="ID" style="height: 55px;" name="id">
-	                                </div>
-	                                <div class="col-12">
-	                                    <input type="password" class="form-control bg-light border-0" placeholder="PASSWORD" style="height: 55px;" name="password">
-	                                </div>
-	                                <div class="col-12">
-	                                    <button class="btn btn-dark w-100 py-3" type="submit">로그인</button>
-	                                </div>
-	                                <div class="col-12">
-	                                	<a href=""  class="btn" >아이디 찾기</a>
-	                                	<span>│</span>
-	                                	<a href=""  class="btn" >비밀번호 찾기</a>
-	                                	<span>│</span>
-	                                	<a href=""  class="btn" >회원가입</a>
-	                                </div>
-	                            </div>
-                        	</form>
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center" >
+                        <div class="p-3" style="max-width: 900px;" >
+                        <div >
+                        </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div id="calendar"></div>
 
 
 
@@ -105,7 +85,14 @@
     <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script> 
 
     <!-- Template Javascript -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <script src="/resources/js/index.global.js"></script>
     <script src="/resources/js/main.js"></script>
+    
+    <!-- Calendar -->
+   	<script type="text/javascript">
+   		new FullCalendar.Calendar(document.getElementById('calendar')).render();
+   	</script>
 </body>
 
 </html>

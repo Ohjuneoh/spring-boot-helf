@@ -14,14 +14,7 @@ public class HomeController {
 	@GetMapping(value = "/")
 	public String home() {
 		return "home";	
-	}
-	
-	// 로그인화면 요청을 처리
-	@GetMapping(value="login")
-	public String loginForm() {
-		return "loginform";
-	}
-	
+	}		
 	// Concept 화면 요청을 처리
 	@GetMapping(value="concept")
 	public String concept() {
@@ -39,14 +32,7 @@ public class HomeController {
 	@GetMapping(value="gymfind")
 	public String gymfind() {
 		return "gymfind";
-	}
-
-	
-	@GetMapping(value="register")
-	public String registerForm() {
-		return "registerform";
-	}
-	
+	}		
 	@GetMapping(value = "/home")
 	public String home2() {
 		
