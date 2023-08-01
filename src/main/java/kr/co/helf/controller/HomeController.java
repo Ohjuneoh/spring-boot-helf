@@ -31,14 +31,16 @@ public class HomeController {
 	// 강사소개 화면 요청을 처리
 	@GetMapping(value="trainerIntro")
 	public String trainerIntro() {
+		
 		return "trainerIntro";
 	}
-	
-	// 지점찾기 화면 요청을 처리
-	@GetMapping(value="gymfind")
-	public String gymfind() {
-		return "gymfind";
-	}		
+
+	@GetMapping(value="register")
+	public String registerForm() {
+		
+		return "registerform";
+	}
+
 	@GetMapping(value = "/")
 	public String home() {
 		

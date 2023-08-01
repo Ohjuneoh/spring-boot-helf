@@ -2,16 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="kr">
-
 <head>
     <meta charset="utf-8">
-    <title>HELF</title>
+    <title>오시는길</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="/resources/img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,30 +40,49 @@
     <!-- Spinner End -->
 
 
-    <!-- Topnavbar Start -->
-   	<jsp:include page="common/topnavbar.jsp">
-		<jsp:param name="menu" value="홈"/>
-	</jsp:include>
-    <!-- Topnavbar End -->
-
-
-    <!-- Navbar Start -->
-    <div class="container-fluid position-relative p-0 h-10 ">
-		<jsp:include page="common/navbar.jsp">
-			<jsp:param name="menu" value="홈"/>
-		</jsp:include>
-    <!-- Navbar End -->
-        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
-            <div class="row py-5">
-                <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">REGISTER</h1>
-                    <a href="" class="h5 text-white">회원가입</a>
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-dark px-5 d-none d-lg-block">
+        <div class="row gx-0">
+            <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center" style="height: 45px;">
+                    <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</small>
+                    <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small>
+                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>info@example.com</small>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end">
+                <div class="d-inline-flex align-items-center" style="height: 45px;">
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Topbar End -->
 
 
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative p-0">
+        <%@ include file="/WEB-INF/views/common/navbar.jsp" %>
+
+        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+            <div class="row py-5">
+                <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-4 text-white animated zoomIn">오시는길</h1>
+                    <a href="/home" class="h5 text-white">Home</a>
+                    <i class="far fa-circle text-white px-2"></i>
+                    <a href="" class="h5 text-white">오시는길</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+
+    <!-- Full Screen Search Start -->
     <div class="modal fade" id="searchModal" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
@@ -80,108 +98,30 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" style="padding-bottom: 0px;">
-        <div class="container ">
-            <div class="row g-5" style="margin-bottom: 1px;">
-                <div class="col-lg-7" > 
-                    <div class="section-title position-relative pb-3 mb-5">
-                        <h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">HELF FRIEND 회원가입</h5>
-                        <h1 class="mb-0" style="font-size: 15px;">회원가입에 필요한 정보를 입력해주세요 </h1>
-                        <h1 class="mb-0"  style="font-size: 15px;">회원정보는 동의 없이 공개 및 유출되지 않으며 개인정보 보호정책에 의해 보호 받고 있습니다.</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
-        <div class="container py-5">
-		     <form>
-				<div class="row g-3">
-				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" placeholder="아이디" style="height: 55px;">
-				    </div>
-				    <div class="col-12">
-				        <input type="password" class="form-control bg-light border-0" placeholder="비밀번호" style="height: 55px;">
-				    </div>
-				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" placeholder="이메일" style="height: 55px;">
-				    </div>
-				    <div class="col-12">
-				    	<div class="row">
-				    		<div class="col-md-6">
-					        	<input type="text" class="form-control bg-light border-0" placeholder="이름" style="height: 55px;">
-				    		</div>
+    <!-- Full Screen Search End -->
 
-						    <div class="col-md-3">
-						        <select class="form-select bg-light border-0" style="height: 55px; width: 100px;">
-						            <option selected>성별</option>
-						            <option value="1">선택하지 않음</option>
-						            <option value="2">남자</option>
-						            <option value="3">여자</option>
-						        </select>
-				    		</div>
-				    	</div>  
-				    </div>
-				    <div class="col-12">
-				    	<div class="row">
-				    		<div class="col-md-6">
-					        	<input type="text" class="form-control bg-light border-0" placeholder="전화번호" style="height: 55px;">
-				    		</div>
-						    <div class="col-md-6">
-							    <select class="form-select bg-light border-0" style="height: 55px; width: 100px;">
-						            <option selected>통신사</option>
-						            <option value="1">SK</option>
-						            <option value="2">LG</option>
-								    <option value="3">KT</option>
-								    <option value="4">알뜰폰</option>
-							    </select>
-						    </div>
-				    	</div>  
-				    </div>
-				      
-				    
-					<p>
-					  <a class="form-select bg-light border-0" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-					    <strong style="color: red;">[필수]</strong> 이용약관
-					  </a>
-					</p>
-					<div class="collapse" id="collapseExample">
-						<label>
-						    <input type="checkbox" id="agreeCheckbox-1" class="normal">
-						    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
-						</label>
-					  	<div class="card card-body bg-light border-0">
-					   		내용넣어주세요
-					  	</div>
-						<label>
-						    <input type="checkbox" id="agreeCheckbox-2" class="normal">
-						    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
-						</label>
-					  	<div class="card card-body bg-light border-0">
-					   		내용넣어주세요
-					  	</div>
-						<label>
-						    <input type="checkbox" id="agreeCheckbox-3" class="normal">
-						    <strong style="color: blue;">[선택]</strong> 이용약관에 동의합니다.
-						</label>
-					  	<div class="card card-body bg-light border-0">
-					   		내용넣어주세요
-					  	</div>
-						  <input type="checkbox" id="check_all" >
-  						  <label for="check_all">전체 동의합니다.</label>
-					</div>				    
-				    <div class="col-12">
-				        <button class="btn btn-dark w-100 py-3" type="submit">가입하기</button>
-				    </div>
-				</div>
-		 	</form>
-        </div>
-    </div>
-    
-    
+
+
+
+
+    <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container">
             <div class="row gx-5">
+                <div class="col-lg-4 col-md-6 footer-about">
+                    <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-primary p-4">
+                        <a href="home" class="navbar-brand">
+                            <h1 class="m-0 text-white"><i class="fa fa-user-tie me-2"></i>Startup</h1>
+                        </a>
+                        <p class="mt-3 mb-4">Lorem diam sit erat dolor elitr et, diam lorem justo amet clita stet eos sit. Elitr dolor duo lorem, elitr clita ipsum sea. Diam amet erat lorem stet eos. Diam amet et kasd eos duo.</p>
+                        <form action="">
+                            <div class="input-group">
+                                <input type="text" class="form-control border-white p-3" placeholder="Your Email">
+                                <button class="btn btn-dark">Sign Up</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="col-lg-8 col-md-6">
                     <div class="row gx-5">
                         <div class="col-lg-4 col-md-12 pt-5 mb-5">
@@ -190,11 +130,11 @@
                             </div>
                             <div class="d-flex mb-2">
                                 <i class="bi bi-geo-alt text-primary me-2"></i>
-                                <p class="mb-0">123 Street, New York, USA</p>
+                                <p class="mb-0">서울시 종로구 율곡로 10길 105</p>
                             </div>
                             <div class="d-flex mb-2">
                                 <i class="bi bi-envelope-open text-primary me-2"></i>
-                                <p class="mb-0">info@example.com</p>
+                                <p class="mb-0">health@helf.com</p>
                             </div>
                             <div class="d-flex mb-2">
                                 <i class="bi bi-telephone text-primary me-2"></i>
@@ -247,12 +187,35 @@
 						
 						<!--/*** This template is free as long as you keep the footer authorâs credit link/attribution link/backlink. If you'd like to use the template without the footer authorâs credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 						Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
+                        <br>Distributed By: <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Footer End -->
+    
+    <div class="modal" tabindex="-1" id="modal-teacher">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">트레이너 상세정보</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+        	자격<br>
+        	경력<br>
+        	수상이력<br>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-primary">강사후기 보러가기</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
     <!-- Back to Top -->
@@ -270,40 +233,18 @@
 
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
-   
-   <script type="text/javascript"></script>
-   
-   <script>
-	// 체크박스 전체 선택/해제 처리하는 제이쿼리
-	   $(".collapse").on("click", "#check_all", function () {
-	     var checked = $(this).is(":checked");
-	
-	     if(checked){
-	     	$(this).parents(".collapse").find('input').prop("checked", true);
-	     } else {
-	     	$(this).parents(".collapse").find('input').prop("checked", false);
-	     }
-	   });
-	
-	// 체크박스 전체선택 한 상태에서 다른 체크박스 선택시 전체동의 체크박스 해제된다.
-	   $(".collapse").on("click", ".normal", function() {
-	     var checked = $(this).is(":checked"); 
-	
-	     if (!checked) {
-	     	$("#check_all").prop("checked", false); 
-	     }
-	   });
-	
-	// 체크박스를 개별로 각각 선택하면 전체동의가 체크된다.
-	   $(".collapse").on("click", ".normal", function() {
-	       var is_checked = true;
-	       
-	       $(".collapse .normal").each(function(){
-	           is_checked = is_checked && $(this).is(":checked");
-	       });
-	       
-	       $("#check_all").prop("checked", is_checked);
-	   });
-	</script>
+    
+    
+    <script type="text/javascript">
+    let teacherModal = new bootstrap.Modal("#modal-teacher");
+
+    $("#box-trainer img").click(function() {
+
+       teacherModal.show();
+    });
+
+
+    </script>
 </body>
+
 </html>
