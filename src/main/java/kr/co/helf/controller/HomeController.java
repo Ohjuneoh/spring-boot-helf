@@ -17,6 +17,7 @@ public class HomeController {
 	@GetMapping(value = "/")
 	public String home() {
 		return "home";	
+<<<<<<< HEAD
 	}
 	
 	// 로그인화면 요청을 처리
@@ -26,6 +27,9 @@ public class HomeController {
 		return "loginform";
 	}
 	
+=======
+	}		
+>>>>>>> juno
 	// Concept 화면 요청을 처리
 	@GetMapping(value="concept")
 	public String concept() {

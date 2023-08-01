@@ -10,6 +10,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-0">
             <a href="home" class="nav-item nav-link ${menu eq '홈' ? 'active' : '' }">홈</a>
+            <a href="test" class="nav-item nav-link">캘린더</a>
             <sec:authorize access="isAnonymous()">
             <a href="concept" class="nav-item nav-link">Concept</a>
             <a href="about" class="nav-item nav-link">News</a>
