@@ -108,12 +108,10 @@
 				    </div>
 				    <div class="col-12">
 				    	<div class="row">
-				    		<div class="col-md-3">
+				    		<div class="col-md-6">
 					        	<input type="text" class="form-control bg-light border-0" placeholder="이름" style="height: 55px;">
 				    		</div>
-						    <div class="col-md-3">
-					        	<input type="text" class="form-control bg-light border-0" placeholder="생년월일" style="height: 55px;">
-						    </div>
+
 						    <div class="col-md-3">
 						        <select class="form-select bg-light border-0" style="height: 55px; width: 100px;">
 						            <option selected>성별</option>
@@ -141,9 +139,6 @@
 				    	</div>  
 				    </div>
 				      
-				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" placeholder="주소" style="height: 55px;">
-				    </div>
 				    
 					<p>
 					  <a class="form-select bg-light border-0" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
