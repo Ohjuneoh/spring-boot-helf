@@ -47,14 +47,7 @@ public class HomeController {
 	@GetMapping(value="gymfind")
 	public String gymfind() {
 		return "gymfind";
-	}
-
-	
-	@GetMapping(value="register")
-	public String registerForm() {
-		return "registerform";
-	}
-	
+	}		
 	@GetMapping(value = "/home")
 	public String home2() {
 		
