@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
-	<a href="home" class="navbar-brand p-0">
+	<a href="/" class="navbar-brand p-0">
 	    <h1 class="m-0"><i class="fa fa-user-tie me-2"></i>HELF</h1>
 	</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -15,7 +15,7 @@
             <a href="/concept" class="nav-item nav-link">Concept</a>
             <a href="about" class="nav-item nav-link">News</a>
             <a href="about" class="nav-item nav-link">보도자료</a>
-            <a href="/trainerIntro" class="nav-item nav-link">강사 소개</a>
+            <a href="trainerIntro" class="nav-item nav-link">강사 소개</a>
             <a href="about" class="nav-item nav-link">오시는길</a>
             </sec:authorize>
             <sec:authorize access="isAuthenticated">
@@ -28,7 +28,7 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업</a>
                 <div class="dropdown-menu m-0">
-                    <a href="blog" class="dropdown-item">수업 신청</a>
+                    <a href="blog" class="dropdown-item">수업 예약</a>
                     <a href="detail" class="dropdown-item">그룹수업 시간표</a>
                 </div>
             </div>
