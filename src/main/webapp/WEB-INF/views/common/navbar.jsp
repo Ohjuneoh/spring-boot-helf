@@ -13,12 +13,18 @@
             <a href="test" class="nav-item nav-link">캘린더</a>
             <sec:authorize access="isAnonymous()">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <a href="concept" class="nav-item nav-link">Concept</a>
 =======
             <a href="/concept" class="nav-item nav-link">Concept</a>
             <a href="about" class="nav-item nav-link">News</a>
             <a href="about" class="nav-item nav-link">보도자료</a>
 >>>>>>> d43d0aa82e7c87f003c906edc78402b25b83b9a2
+=======
+
+            <a href="concept" class="nav-item nav-link">Concept</a>
+
+>>>>>>> ceed97ca7d134a16daece5865b524d94cd9c7581
             <a href="trainerIntro" class="nav-item nav-link">강사 소개</a>
             <a href="branch" class="nav-item nav-link">오시는길</a>
             </sec:authorize>
