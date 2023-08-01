@@ -1,6 +1,5 @@
 package kr.co.helf.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,42 +7,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/user")
 @RequiredArgsConstructor
-@Slf4j
-public class HomeController {
-
+public class UserController {
 	
 	// 로그인화면 요청을 처리
 	@GetMapping(value="login")
 	public String loginForm() {
 		return "loginform";
 	}
+
 	
-
-	// Concept 화면 요청을 처리
-	@GetMapping(value="concept")
-	public String concept() {
-		
-		return "concept";
-	}
-		
-	// 강사소개 화면 요청을 처리
-	@GetMapping(value="trainerIntro")
-	public String trainerIntro() {
-		
-		return "trainerIntro";
-	}
-
 	@GetMapping(value="register")
 	public String registerForm() {
-		
 		return "registerform";
 	}
-
-	@GetMapping(value = "/")
-	public String home() {
-		
-		return "home";	
+	
+	@GetMapping(value="/test")
+	public String test() {
+		return "test";
 	}
+
+
 }
