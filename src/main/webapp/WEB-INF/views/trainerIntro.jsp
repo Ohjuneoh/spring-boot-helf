@@ -1,10 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="kr">
-<style>
-
-</style>
 <head>
     <meta charset="utf-8">
     <title>강사 소개</title>
@@ -13,7 +10,7 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="/resources/img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -104,27 +101,27 @@
     <!-- Full Screen Search End -->
 
 
-   <!-- Team Start -->
+    <!-- Team Start -->
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-                <h5 class="fw-bold text-primary text-uppercase">강사 소개</h5>
-                <h1 class="mb-0">HELF 헬스장의<br>TRAINER를 소개합니다.</h1>
+                <h5 class="fw-bold text-primary text-uppercase">TRAINERS</h5>
+                <h1 class="mb-0">HELF 헬스장의<br> 트레이너를 소개합니다.</h1>
             </div>
-            <div class="row g-5">
+            <div class="row g-5" id="box-trainer">
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
-                   <!-- 이민혁 점장 사진 클릭 링크 -->
-					<a href="#" data-toggle="modal" data-target="#modalMinhyuk">
-					  <div class="team-item bg-light rounded overflow-hidden">
-					    <div class="team-img position-relative overflow-hidden">
-					      <img class="img-fluid w-100" src="/resources/img/team-1.jpg" alt="">
-					    </div>
+                    <div class="team-item bg-light rounded overflow-hidden">
+                        <div class="team-img position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="/resources/img/team-1.jpg" alt="" >
+                        </div>
+                        
                         <div class="text-center py-4">
                             <h4 class="text-primary">이민혁</h4>
                             <p class="text-uppercase m-0">점장</p>
                         </div>
-                     </div>
-                    </a>
+                        
+           
+                    </div>
                 </div>
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
                     <div class="team-item bg-light rounded overflow-hidden">
@@ -155,7 +152,7 @@
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <h4 class="text-primary">최상엽</h4>
+                            <h4 class="text-primary">유기현</h4>
                             <p class="text-uppercase m-0">트레이너</p>
                         </div>
                     </div>
@@ -164,9 +161,9 @@
         </div>
     </div>
     <!-- Team End -->
-    
-    
-    <!-- Testimonial Start -->
+
+
+<!-- Testimonial Start -->
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
@@ -176,7 +173,7 @@
             <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.6s">
                 <div class="testimonial-item bg-light my-4">
                     <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
-                        <img class="img-fluid rounded" src="img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
+                        <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
                         <div class="ps-4">
                             <h4 class="text-primary mb-1">Client Name</h4>
                             <small class="text-uppercase">Profession</small>
@@ -188,7 +185,7 @@
                 </div>
                 <div class="testimonial-item bg-light my-4">
                     <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
-                        <img class="img-fluid rounded" src="img/testimonial-2.jpg" style="width: 60px; height: 60px;" >
+                        <img class="/resources/img-fluid rounded" src="/resources/img/testimonial-2.jpg" style="width: 60px; height: 60px;" >
                         <div class="ps-4">
                             <h4 class="text-primary mb-1">Client Name</h4>
                             <small class="text-uppercase">Profession</small>
@@ -200,7 +197,7 @@
                 </div>
                 <div class="testimonial-item bg-light my-4">
                     <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
-                        <img class="img-fluid rounded" src="img/testimonial-3.jpg" style="width: 60px; height: 60px;" >
+                        <img class="img-fluid rounded" src="/resources/img/testimonial-3.jpg" style="width: 60px; height: 60px;" >
                         <div class="ps-4">
                             <h4 class="text-primary mb-1">Client Name</h4>
                             <small class="text-uppercase">Profession</small>
@@ -212,7 +209,7 @@
                 </div>
                 <div class="testimonial-item bg-light my-4">
                     <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
-                        <img class="img-fluid rounded" src="img/testimonial-4.jpg" style="width: 60px; height: 60px;" >
+                        <img class="img-fluid rounded" src="/resources/img/testimonial-4.jpg" style="width: 60px; height: 60px;" >
                         <div class="ps-4">
                             <h4 class="text-primary mb-1">Client Name</h4>
                             <small class="text-uppercase">Profession</small>
@@ -226,9 +223,7 @@
         </div>
     </div>
     <!-- Testimonial End -->
-    
-    
-    
+
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
@@ -236,7 +231,7 @@
             <div class="row gx-5">
                 <div class="col-lg-4 col-md-6 footer-about">
                     <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-primary p-4">
-                        <a href="index.html" class="navbar-brand">
+                        <a href="home" class="navbar-brand">
                             <h1 class="m-0 text-white"><i class="fa fa-user-tie me-2"></i>Startup</h1>
                         </a>
                         <p class="mt-3 mb-4">Lorem diam sit erat dolor elitr et, diam lorem justo amet clita stet eos sit. Elitr dolor duo lorem, elitr clita ipsum sea. Diam amet erat lorem stet eos. Diam amet et kasd eos duo.</p>
@@ -256,11 +251,11 @@
                             </div>
                             <div class="d-flex mb-2">
                                 <i class="bi bi-geo-alt text-primary me-2"></i>
-                                <p class="mb-0">123 Street, New York, USA</p>
+                                <p class="mb-0">서울시 종로구 율곡로 10길 105</p>
                             </div>
                             <div class="d-flex mb-2">
                                 <i class="bi bi-envelope-open text-primary me-2"></i>
-                                <p class="mb-0">info@example.com</p>
+                                <p class="mb-0">health@helf.com</p>
                             </div>
                             <div class="d-flex mb-2">
                                 <i class="bi bi-telephone text-primary me-2"></i>
@@ -313,12 +308,31 @@
 						
 						<!--/*** This template is free as long as you keep the footer authorâs credit link/attribution link/backlink. If you'd like to use the template without the footer authorâs credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 						Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
+                        <br>Distributed By: <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Footer End -->
+    
+    <div class="modal" tabindex="-1" id="modal-teacher">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">트레이너 상세정보</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
     <!-- Back to Top -->
@@ -334,31 +348,20 @@
     <script src="/resources/lib/counterup/counterup.min.js"></script>
     <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script>
 
-	<!-- Bootstrap JS (jQuery 및 Popper.js 포함) -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
     
-    <!-- 사진 클릭 이벤트를 처리하는 함수 -->
-    <script>
-	
-    function showMinhyukModal() {
-	  $('#modalMinhyuk').modal('show'); // 모달 창 표시
-	}
     
-    // 문서가 로드되면
-    $(document).ready(function () {
-      // 이민혁 점장 사진 클릭 시 모달 창을 띄움.
-      $('a[data-target="#modalMinhyuk"]').on('click', function (event) {
-        event.preventDefault(); // 링크 기본 동작(새로고침 등) 방지
-        showMinhyukModal();
-      });
+    <script type="text/javascript">
+    let teacherModal = new bootstrap.Modal("#modal-teacher");
+
+    $("#box-trainer img").click(function() {
+
+       teacherModal.show();
     });
-    
-   </script>
+
+
+    </script>
 </body>
 
 </html>
