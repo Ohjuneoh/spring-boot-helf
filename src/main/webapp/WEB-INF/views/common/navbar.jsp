@@ -15,7 +15,7 @@
             <a href="/concept" class="nav-item nav-link">Concept</a>
             <a href="about" class="nav-item nav-link">News</a>
             <a href="about" class="nav-item nav-link">보도자료</a>
-            <a href="trainerIntro" class="nav-item nav-link">강사 소개</a>
+            <a href="/trainerIntro" class="nav-item nav-link">강사 소개</a>
             <a href="about" class="nav-item nav-link">오시는길</a>
             </sec:authorize>
             <sec:authorize access="isAuthenticated">
