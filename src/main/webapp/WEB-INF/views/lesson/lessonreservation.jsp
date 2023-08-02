@@ -31,6 +31,8 @@
 
     <!-- Template Stylesheet -->
     <link href="/resources/css/style.css" rel="stylesheet">
+    <!-- Date Picker  -->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 
 <body>
@@ -52,11 +54,11 @@
 			<jsp:param name="menu" value="수업"/>
 		</jsp:include>
     <!-- Navbar End -->
-        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">RESERVATION</h1>
-                    <a href="" class="h5 text-white">수업 예약</a>
+                    <h1 class="display-4 text-white animated zoomIn">REGISTER</h1>
+                    <a href="" class="h5 text-white">수업 등록</a>
                 </div>
             </div>
         </div>
@@ -77,9 +79,21 @@
                 </div>
             </div>
         </div>
+    <!-- Lesson Category Start  -->
     </div>
-    <div class="container-fluid py-5 wow fadeInUp " data-wow-delay="0.1s">
+    <div class="container-fluid py-1 wow fadeInUp " data-wow-delay="0.1s">
+	    
         <div class="container py-5">
+        	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+	        	<div class="container ">
+	            	<div class="row g-1" >
+                   		<div class="section-title position-relative pb-3 mb-5" id="lesson-reservation">
+                       		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;" >수업개설</h5>
+                 				<h1 class="mb-0" style="font-size: 15px;" >수업유형을 선택하세요</h1>
+			    		</div>
+					</div>
+				</div>
+			</div>
             <div class="row g-5">
                 <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="personal-lesson-img">
                     <div class="team-item bg-light rounded overflow-hidden">
@@ -104,32 +118,77 @@
             </div>
         </div>
     </div>
+    <!-- Lesson Category End -->
+    <!-- Lesson Register Form Start  -->
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
         <div class="container py-5">
-		     <form class="" id="personal-lesson-form" style="display: none">
+			<form class="" id="personal-lesson-form" style="display: none">
+		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+	        		<div class="container ">
+	            		<div class="row g-1" >
+                    		<div class="section-title position-relative pb-3 mb-5">
+                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">수업개설</h5>
+                        		<h1 class="mb-0" style="font-size: 15px;" >내용을 입력해주세요</h1>
+			               	</div>
+				    	</div>
+				 	</div>
+				</div>
 				<div class="row g-1">
 				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" placeholder="제목" style="height: 55px;">
+				        <input type="text" class="form-control bg-light border-0" id="name" placeholder="수업명" style="height: 55px;">
 				    </div>
-				    <div class="col-12">
-				        <button class="btn btn-dark w-100 py-3" type="submit">테스트1</button>
+				    <div class="col-6">
+				    	<input type="text" class="form-control bg-light border-0"  id="date" style="height: 55px;" placeholder="수업날짜">
 				    </div>
+					<div class="col-6">
+					    <select id="dropdown1" class="form-select bg-light border-0" style="height: 55px;">
+					      <option value=""  >시간</option>
+					      <option value="10~12" class="form-control bg-light border-0" >10:00 ~ 12:00</option>
+					      <option value="13~14" class="form-control bg-light border-0" >13:00 ~ 15:00</option>
+					      <option value="14~16" class="form-control bg-light border-0" >14:00 ~ 16:00</option>
+					      <option value="16~18" class="form-control bg-light border-0" >16:00 ~ 18:00</option>
+					    </select>
+					</div>
+					<div class="col-12">
+					  <textarea class="form-control bg-light border-0" id="content" style="height: 300px;" placeholder="내용"></textarea>
+					</div>
 				</div>
 		 	</form>
-		 	<form id="group-lesson-form" style="display: none">
-				<div class="row g-3">
+		 	<form class="" id="group-lesson-form" style="display: none">
+		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+	        		<div class="container ">
+	            		<div class="row g-1" >
+                    		<div class="section-title position-relative pb-3 mb-5">
+                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">수업개설</h5>
+                        		<h1 class="mb-0" style="font-size: 15px;" >내용을 입력해주세요</h1>
+			               	</div>
+				    	</div>
+				 	</div>
+				</div>
+				<div class="row g-1">
 				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" placeholder="아이디" style="height: 55px;">
+				        <input type="text" class="form-control bg-light border-0" id="name" placeholder="수업명" style="height: 55px;">
 				    </div>
-				    <div class="col-12">
-				        <button class="btn btn-dark w-100 py-3" type="submit">테스트2</button>
+				    <div class="col-6">
+				    	<input type="text" class="form-control bg-light border-0"  id="date" style="height: 55px;" placeholder="수업날짜">
 				    </div>
+					<div class="col-6">
+					    <select id="dropdown1" class="form-select bg-light border-0" style="height: 55px;">
+					      <option value=""  >시간</option>
+					      <option value="10~12" class="form-control bg-light border-0" >10:00 ~ 12:00</option>
+					      <option value="13~14" class="form-control bg-light border-0" >13:00 ~ 15:00</option>
+					      <option value="14~16" class="form-control bg-light border-0" >14:00 ~ 16:00</option>
+					      <option value="16~18" class="form-control bg-light border-0" >16:00 ~ 18:00</option>
+					    </select>
+					</div>
+					<div class="col-12">
+					  <textarea class="form-control bg-light border-0" id="content" style="height: 300px;" placeholder="내용"></textarea>
+					</div>
 				</div>
 		 	</form>
         </div>
     </div>
-    
-    
+    <!-- Lesson Register Form End  -->
 	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
 	    <div class="container">
 	        <div class="row gx-5">
@@ -212,6 +271,7 @@
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/resources/lib/wow/wow.min.js"></script>
     <script src="/resources/lib/easing/easing.min.js"></script>
@@ -223,21 +283,31 @@
 	<script src="/resources/js/main.js"></script>
     
 <script>
-	$(document).ready(function() {
- 	$('#personal-lesson-img').on('click', function() {
-    $('#group-lesson-img').hide();
-    $('#group-lesson-form').hide();
-    $('#personal-lesson-form').show();
-    $(this).hide();
- 	});
-
-  $('#group-lesson-img').on('click', function() {
-    	$('#personal-lesson-img').hide();
-    	$('#personal-lesson-form').hide();
-   		$('#group-lesson-form').show();
-    	$(this).hide();
-  		});
+$(document).ready(function() {
+$('#personal-lesson-img').on('click', function() {
+		$('#group-lesson-img').hide();
+		$('#group-lesson-form').hide();
+		$('#lesson-reservation').hide();
+		$('#personal-lesson-form').show();
+		$(this).hide();
 	});
+
+ $('#group-lesson-img').on('click', function() {
+	$('#personal-lesson-img').hide();
+	$('#personal-lesson-form').hide();
+	$('#group-lesson-form').show();
+	$(this).hide();
+	});
+});
+$( function() {
+    $("#date").datepicker({
+   		dateFormat: 'yy/mm/dd'
+    });
+});
+
+
+	
+
 </script>
     
     
