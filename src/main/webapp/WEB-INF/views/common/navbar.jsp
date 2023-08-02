@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-0">
             <a href="/" class="nav-item nav-link ${menu eq '홈' ? 'active' : '' }">홈</a>
-            <a href="test" class="nav-item nav-link">캘린더</a>
+            <a href="/membership/list" class="nav-item nav-link">이용권</a>
             <sec:authorize access="isAnonymous()">
             <a href="/concept" class="nav-item nav-link">Concept</a>
             <a href="/branch" class="nav-item nav-link">오시는길</a>
@@ -20,7 +20,7 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">이용권</a>
                 <div class="dropdown-menu m-0">
-                    <a href="blog" class="dropdown-item">이용권 구매하기</a>
+                    <a href="/membership" class="dropdown-item">이용권 구매하기</a>
                 </div>
             </div>
             <div class="nav-item dropdown">
