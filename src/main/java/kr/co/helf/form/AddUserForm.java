@@ -16,10 +16,10 @@ public class AddUserForm {
 	private String id;
 	private String password;
 	private String email;
-	private String phoneNumber;
-	private String address;
-	private String mobileCarrier;
 	private String gender;
+	private String name;
+	private String tel;
+	private String mobileCarrier;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date createDate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

@@ -1,9 +1,13 @@
 package kr.co.helf.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.co.helf.form.AddUserForm;
+import kr.co.helf.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -11,17 +15,30 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 	
-	// 로그인화면 요청을 처리
-	@GetMapping(value="login")
+	@Autowired
+	UserService userService = new UserService();
+	
+	
+	// 로그인화면 요청처리
+	@GetMapping(value="/loginform")
 	public String loginForm() {
 		return "loginform";
 	}
 
-	
-	@GetMapping(value="register")
+	// 회원가입화면 요청처리
+	@GetMapping(value="/registerform")
 	public String registerForm() {
 		return "registerform";
 	}
+	
+	// 회원가입 요청
+	@PostMapping(value="/register")
+	public String register(AddUserForm form) {
+		userService.createUser(form);
+		
+		return "redirect:/";
+	}
+	
 	
 	@GetMapping(value="/test")
 	public String test() {
