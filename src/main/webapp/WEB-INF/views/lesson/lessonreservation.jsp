@@ -81,23 +81,23 @@
     <div class="container-fluid py-5 wow fadeInUp " data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
-                <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s">
+                <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="personal-lesson-img">
                     <div class="team-item bg-light rounded overflow-hidden">
                         <div class="team-img position-relative overflow-hidden">
                             <img class="img-fluid w-100" src="/resources/img/personal.jpg" alt="">
                         </div>
                         <div class="text-center py-4">
-                            <h4 class="text-primary" style="font-size:40px;">개인수업</h4>
+                            <h4 class="text-primary" style="font-size:40px;" >개인수업</h4>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s">
+                <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="group-lesson-img">
                     <div class="team-item bg-light rounded overflow-hidden">
                         <div class="team-img position-relative overflow-hidden">
                             <img class="img-fluid w-100" src="/resources/img/group.jpg" alt="">
                         </div>
                         <div class="text-center py-4">
-                            <h4 class="text-primary" style="font-size:40px;">그룹수업</h4>
+                            <h4 class="text-primary" style="font-size:40px;"  >그룹수업</h4>
                         </div>
                     </div>
                 </div>
@@ -106,17 +106,17 @@
     </div>
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
         <div class="container py-5">
-		     <form>
-				<div class="row g-3">
+		     <form class="" id="personal-lesson-form" style="display: none">
+				<div class="row g-1">
 				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" placeholder="아이디" style="height: 55px;">
+				        <input type="text" class="form-control bg-light border-0" placeholder="제목" style="height: 55px;">
 				    </div>
 				    <div class="col-12">
 				        <button class="btn btn-dark w-100 py-3" type="submit">테스트1</button>
 				    </div>
 				</div>
 		 	</form>
-		 	<form>
+		 	<form id="group-lesson-form" style="display: none">
 				<div class="row g-3">
 				    <div class="col-12">
 				        <input type="text" class="form-control bg-light border-0" placeholder="아이디" style="height: 55px;">
@@ -130,79 +130,79 @@
     </div>
     
     
-    <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container">
-            <div class="row gx-5">
-                <div class="col-lg-8 col-md-6">
-                    <div class="row gx-5">
-                        <div class="col-lg-4 col-md-12 pt-5 mb-5">
-                            <div class="section-title section-title-sm position-relative pb-3 mb-4">
-                                <h3 class="text-light mb-0">Get In Touch</h3>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <i class="bi bi-geo-alt text-primary me-2"></i>
-                                <p class="mb-0">123 Street, New York, USA</p>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <i class="bi bi-envelope-open text-primary me-2"></i>
-                                <p class="mb-0">info@example.com</p>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <i class="bi bi-telephone text-primary me-2"></i>
-                                <p class="mb-0">+012 345 67890</p>
-                            </div>
-                            <div class="d-flex mt-4">
-                                <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
-                                <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
-                                <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
-                                <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram fw-normal"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-                            <div class="section-title section-title-sm position-relative pb-3 mb-4">
-                                <h3 class="text-light mb-0">Quick Links</h3>
-                            </div>
-                            <div class="link-animated d-flex flex-column justify-content-start">
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Meet The Team</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
-                                <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-                            <div class="section-title section-title-sm position-relative pb-3 mb-4">
-                                <h3 class="text-light mb-0">Popular Links</h3>
-                            </div>
-                            <div class="link-animated d-flex flex-column justify-content-start">
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Meet The Team</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
-                                <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid text-white" style="background: #061429;">
-        <div class="container text-center">
-            <div class="row justify-content-end">
-                <div class="col-lg-8 col-md-6">
-                    <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
-                        <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights Reserved. 
-						
-						<!--/*** This template is free as long as you keep the footer authorâs credit link/attribution link/backlink. If you'd like to use the template without the footer authorâs credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-						Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
+	    <div class="container">
+	        <div class="row gx-5">
+	            <div class="col-lg-8 col-md-6">
+	                <div class="row gx-5">
+	                    <div class="col-lg-4 col-md-12 pt-5 mb-5">
+	                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
+	                            <h3 class="text-light mb-0">Get In Touch</h3>
+	                        </div>
+	                        <div class="d-flex mb-2">
+	                            <i class="bi bi-geo-alt text-primary me-2"></i>
+	                            <p class="mb-0">123 Street, New York, USA</p>
+	                        </div>
+	                        <div class="d-flex mb-2">
+	                            <i class="bi bi-envelope-open text-primary me-2"></i>
+	                            <p class="mb-0">info@example.com</p>
+	                        </div>
+	                        <div class="d-flex mb-2">
+	                            <i class="bi bi-telephone text-primary me-2"></i>
+	                            <p class="mb-0">+012 345 67890</p>
+	                        </div>
+	                        <div class="d-flex mt-4">
+	                            <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
+	                            <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
+	                            <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
+	                            <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram fw-normal"></i></a>
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
+	                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
+	                            <h3 class="text-light mb-0">Quick Links</h3>
+	                        </div>
+	                        <div class="link-animated d-flex flex-column justify-content-start">
+	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
+	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
+	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
+	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Meet The Team</a>
+	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
+	                            <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
+	                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
+	                            <h3 class="text-light mb-0">Popular Links</h3>
+	                        </div>
+	                        <div class="link-animated d-flex flex-column justify-content-start">
+	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
+	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
+	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
+	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Meet The Team</a>
+	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
+	                            <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="container-fluid text-white" style="background: #061429;">
+	    <div class="container text-center">
+	        <div class="row justify-content-end">
+	            <div class="col-lg-8 col-md-6">
+	                <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
+	                    <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights Reserved. 
+			
+			<!--/*** This template is free as long as you keep the footer authorâs credit link/attribution link/backlink. If you'd like to use the template without the footer authorâs credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+			Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
     <!-- Footer End -->
 
 
@@ -220,7 +220,27 @@
     <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="/resources/js/main.js"></script>
+	<script src="/resources/js/main.js"></script>
+    
+<script>
+	$(document).ready(function() {
+ 	$('#personal-lesson-img').on('click', function() {
+    $('#group-lesson-img').hide();
+    $('#group-lesson-form').hide();
+    $('#personal-lesson-form').show();
+    $(this).hide();
+ 	});
+
+  $('#group-lesson-img').on('click', function() {
+    	$('#personal-lesson-img').hide();
+    	$('#personal-lesson-form').hide();
+   		$('#group-lesson-form').show();
+    	$(this).hide();
+  		});
+	});
+</script>
+    
+    
 </body>
 
 </html>
