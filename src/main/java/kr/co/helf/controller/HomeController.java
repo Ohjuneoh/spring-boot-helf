@@ -35,10 +35,11 @@ public class HomeController {
 	}
 	
 	// 지점찾기 화면 요청을 처리
-	@GetMapping(value="gymfind")
-	public String gymfind() {
-		return "gymfind";
-	}		
+	@GetMapping(value="branch")
+	public String branch() {
+		return "branch";
+	}	
+	
 	@GetMapping(value = "/")
 	public String home() {
 		
