@@ -42,9 +42,7 @@
 
 
     <!-- Topnavbar Start -->
-   	<jsp:include page="common/topnavbar.jsp">
-		<jsp:param name="menu" value="홈"/>
-	</jsp:include>
+   	<jsp:include page="common/topnavbar.jsp"/>
     <!-- Topnavbar End -->
 
 

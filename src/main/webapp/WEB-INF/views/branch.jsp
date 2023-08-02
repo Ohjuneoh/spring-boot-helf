@@ -41,26 +41,7 @@
 
 
     <!-- Topbar Start -->
-    <div class="container-fluid bg-dark px-5 d-none d-lg-block">
-        <div class="row gx-0">
-            <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
-                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</small>
-                    <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small>
-                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>info@example.com</small>
-                </div>
-            </div>
-            <div class="col-lg-4 text-center text-lg-end">
-                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <jsp:include page="common/topnavbar.jsp"/>
     <!-- Topbar End -->
 
 
@@ -100,9 +81,32 @@
     </div>
     <!-- Full Screen Search End -->
 
+	<!-- 지도 api start -->
+	<div class="row">
+		<div class="col-lg-7" id="map" style="width: 1000px; height: 500px;"></div>
+		
+		 <div class="col-lg-5">
+		 	  <h1>찾아오시는 길</h1>
+	          <div class="branch-info-row">
+	          	<div class="info-tel1"><font size="5">연락처</font></div>
+	          	<div class="info-tel2"><font size="4">02-1234-1111</font></div>
+	          </div>
+	          <div class="branch-info-row">
+	          	<div class="info-add1"><font size="5">주소</font></div>
+	          	<div class="info-add2"><font size="4">서울시 종로구 율곡로 10길 105</font></div>
+	          </div>
+	          <div class="branch-info-row">
+	          	<div class="info-road1"><font size="5">찾아오시는 길</font></div>
+	          	<div class="info-road2"><font size="4">미리내마을 농협 옆 디아망 2층</font></div>
+	          </div>
+	          <div class="branch-info-row">
+	          	<div class="info-parking1"><font size="5">주차안내</font></div>
+	          	<div class="info-parking2"><font size="4">무료주차 3시간 가능</font></div>
+	          </div>
+	     </div>
+     </div>
 
-
-
+	<!-- 지도 api end -->
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
@@ -194,28 +198,6 @@
         </div>
     </div>
     <!-- Footer End -->
-    
-    <div class="modal" tabindex="-1" id="modal-teacher">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">트레이너 상세정보</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>
-        	자격<br>
-        	경력<br>
-        	수상이력<br>
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary">강사후기 보러가기</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
     <!-- Back to Top -->
@@ -234,7 +216,7 @@
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
     
-    
+    <!-- 트레이너 이미지를 클릭했을 때 모달페이지 -->
     <script type="text/javascript">
     let teacherModal = new bootstrap.Modal("#modal-teacher");
 
@@ -242,9 +224,27 @@
 
        teacherModal.show();
     });
-
-
     </script>
+    
+    <!-- 지도 api생성  -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	e7906e0911476858c75ab0600aedd7ae"></script>
+	<script type="text/javascript">
+	
+	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+	
+	var options = { //지도를 생성할 때 필요한 기본 옵션
+		center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+		level: 3 //지도의 레벨(확대, 축소 정도)
+	};
+
+	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+	
+	</script>
+    
+ 
+    
+    
+    
 </body>
 
 </html>

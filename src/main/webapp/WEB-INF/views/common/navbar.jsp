@@ -13,7 +13,7 @@
             <a href="test" class="nav-item nav-link">캘린더</a>
             <sec:authorize access="isAnonymous()">
             <a href="/concept" class="nav-item nav-link">Concept</a>
-            <a href="about" class="nav-item nav-link">오시는길</a>
+            <a href="/branch" class="nav-item nav-link">오시는길</a>
             <a href="/trainerIntro" class="nav-item nav-link">강사 소개</a>
             </sec:authorize>
             <sec:authorize access="isAuthenticated">
