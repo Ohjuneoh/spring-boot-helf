@@ -4,19 +4,31 @@
 	
 	<select id="getUserById" parameterType="string" resultType="kr.co.helf.vo.User">
 		select
+			user_id					as id,
+			user_email				as email,
+			user_name				as name,
+			user_tel				as tel,
 			user_encrypted_password as encryptedPassword,
-			user_address			as address,
-			user_phone_number		as phoneNumber,
-			user_mobile_carrier		as mobileCarrier,
 			user_gender				as gender,
+			user_status				as status,
+			user_mobile_carrier		as mobileCarrier,
 			user_create_date		as createDate,
 			user_update_date		as updateDate,
-			user_id					as id,
-			user_name				as name
+			user_point				as point
+			
 		from
-			helf_user
+			helf_users
 		where 
 			user_id = #{value}
 	</select>
 	
+	<insert id="insertUser" parameterType="kr.co.helf.vo.User">
+		insert into helf_users
+		(user_id, user_email, user_name, user_tel, user_encrypted_password,
+		 user_gender, user_status, user_mobile_carrier, user_point)
+		values
+		(#{id}, #{email}, #{name}, #{tel}, #{encryptedPassword}, 
+		 #{gender}, #{status}, #{mobileCarrier}, #{point})
+		
+	</insert>
 </mapper>

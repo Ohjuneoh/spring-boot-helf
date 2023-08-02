@@ -93,27 +93,29 @@
             </div>
         </div>
     </div>
+    
+    
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
         <div class="container py-5">
-		     <form>
+		     <form action="/user/register" method="post">
 				<div class="row g-3">
 				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" placeholder="아이디" style="height: 55px;">
+				        <input type="text" class="form-control bg-light border-0" placeholder="아이디" name="id" style="height: 55px;">
 				    </div>
 				    <div class="col-12">
-				        <input type="password" class="form-control bg-light border-0" placeholder="비밀번호" style="height: 55px;">
+				        <input type="password" class="form-control bg-light border-0" placeholder="비밀번호" name="password" style="height: 55px;">
 				    </div>
 				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" placeholder="이메일" style="height: 55px;">
+				        <input type="text" class="form-control bg-light border-0" placeholder="이메일" name="email" style="height: 55px;">
 				    </div>
 				    <div class="col-12">
 				    	<div class="row">
 				    		<div class="col-md-6">
-					        	<input type="text" class="form-control bg-light border-0" placeholder="이름" style="height: 55px;">
+					        	<input type="text" class="form-control bg-light border-0" placeholder="이름" name="name" style="height: 55px;">
 				    		</div>
 
 						    <div class="col-md-3">
-						        <select class="form-select bg-light border-0" style="height: 55px; width: 100px;">
+						        <select class="form-select bg-light border-0" name="gender" style="height: 55px; width: 100px;">
 						            <option selected>성별</option>
 						            <option value="1">선택하지 않음</option>
 						            <option value="2">남자</option>
@@ -125,10 +127,10 @@
 				    <div class="col-12">
 				    	<div class="row">
 				    		<div class="col-md-6">
-					        	<input type="text" class="form-control bg-light border-0" placeholder="전화번호" style="height: 55px;">
+					        	<input type="text" class="form-control bg-light border-0" placeholder="전화번호" name="tel" style="height: 55px;">
 				    		</div>
 						    <div class="col-md-6">
-							    <select class="form-select bg-light border-0" style="height: 55px; width: 100px;">
+							    <select class="form-select bg-light border-0" name="mobileCarrier" style="height: 55px; width: 100px;">
 						            <option selected>통신사</option>
 						            <option value="1">SK</option>
 						            <option value="2">LG</option>
