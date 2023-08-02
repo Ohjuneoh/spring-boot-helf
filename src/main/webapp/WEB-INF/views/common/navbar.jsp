@@ -52,8 +52,8 @@
         </div>
         <button type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>
         <sec:authorize access="isAnonymous()">
-        	<a href="login" class="btn btn-primary py-2 px-4 ms-3">로그인</a>
-        	<a href="/user/register" class="btn btn-primary py-2 px-4 ms-3">회원가입</a>
+        	<a href="/user/loginform" class="btn btn-primary py-2 px-4 ms-3">로그인</a>
+        	<a href="/user/registerform" class="btn btn-primary py-2 px-4 ms-3">회원가입</a>
         </sec:authorize>
         <sec:authorize access="isAuthenticated">
         	<a href="/user/logout" class="btn btn-primary py-2 px-4 ms-3">로그아웃</a>

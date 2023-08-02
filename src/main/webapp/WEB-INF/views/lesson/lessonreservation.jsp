@@ -295,7 +295,7 @@ $('#personal-lesson-img').on('click', function() {
  $('#group-lesson-img').on('click', function() {
 	$('#personal-lesson-img').hide();
 	$('#personal-lesson-form').hide();
-		$('#lesson-reservation').hide();
+	$('#lesson-reservation').hide();
 	$('#group-lesson-form').show();
 	$(this).hide();
 	});

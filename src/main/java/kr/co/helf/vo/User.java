@@ -15,21 +15,24 @@ import lombok.Data;
 @Alias("User")
 public class User implements UserDetails{
 
-	private int no;
 	private String id;
+	private String email;
+	private String name;
+	private String tel;
 	private String encryptedPassword;
-	private String address;
-	private String phoneNumber;
-	private String mobileCarrier;
 	private String gender;
+	private String status;
+	private String mobileCarrier;
 	private Date createDate;
 	private Date updateDate;
-	private String name;
+	private int point;
+	private Rank rank;
 	
 	public User(){}
 	public User(String id) {
 		this.id = id;
 	}
+	
 	// 직원(사용자)의 보유권한을 반환한다.
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
