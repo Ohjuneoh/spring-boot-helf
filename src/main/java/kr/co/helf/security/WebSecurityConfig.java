@@ -1,25 +1,14 @@
 package kr.co.helf.security;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
 
 
 @Configuration
@@ -52,7 +41,7 @@ public class WebSecurityConfig {
 					// 로그아웃 기능을 사용한다. 
 					.logout()
 					// 로그아웃을 요청하는 URL을 지정한다.
-					.logoutUrl("/emp/logout")
+					.logoutUrl("//logout")
 					// 로그아웃 성공시 재요청 URL을 지정한다.
 					.logoutSuccessUrl("/")
 					// 세션객체를 무효화 시킨다.
@@ -60,11 +49,11 @@ public class WebSecurityConfig {
 				.and()
 				//인증 안되었을 때 오는곳
 					.exceptionHandling().authenticationEntryPoint((request, response, authentication) -> {
-						response.sendRedirect("/emp/loginform?error=denied");
+						response.sendRedirect("//loginform?error=denied");
 					})
 				.and()
 					.exceptionHandling().accessDeniedHandler((request, response, exception) -> {
-						response.sendRedirect("/emp/loginform?error=forbidden");
+						response.sendRedirect("//loginform?error=forbidden");
 					})
 				.and()
 					.build();

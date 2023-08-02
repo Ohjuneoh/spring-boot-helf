@@ -14,16 +14,16 @@ spring:
   datasource:
       driver-class-name: oracle.jdbc.OracleDriver
       url: jdbc:oracle:thin:@localhost:1521:xe
-      username: hr
+      username: final
       password : zxcv1234
   mvc:
     view:
       prefix: /WEB-INF/views/
-      suffix: .jsp    
+      suffix: .jsp       
 # mybatis 관련 설정정보 저장하기
 mybatis:
   mapper-locations:
-  - META-INF/mybatis/mappers/*.xml
+  - META-INF/mybatis/mappers/**/*.xml
   configuration:
     jdbc-type-for-null: 'NULL'
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
