@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- 
+		<appender> 태그는 로그를 출력할 Appender를 정의한다.
+		           ConsoleAppender는 로그를 콘솔화면에 출력시키는 Appender다.
+	 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <!-- 
+        	<pattern> 태그는 로그 출력 포맷을 지정하는 태그다.
+         -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <logger name="com.ibatis" level="debug" />
+    <logger name="java.sql" level="debug" />
+    
+
+	 
+	 <!-- mybatis  실행로그 출력을 위한 설정
+	 		-mybatis Mapper 인터페이스가 정의된 패키지를 지정한다.
+	 		- 해당 패키지에 대한 로그 출력레벨을 trace로 지정한다.		
+	 -->
+	 <logger name="kr.co.helf.hr.mapper">
+	 	<level value="trace"/>
+	
+	 </logger>
+	<!-- 
+		<root> 태그는 애플리케이션의 기본 로그 레벨을 지정하는 태그다.
+	 -->
+    <root level="debug">
+        <appender-ref ref="STDOUT" />
+    </root>
+<typeAliases></typeAliases>
+</configuration>

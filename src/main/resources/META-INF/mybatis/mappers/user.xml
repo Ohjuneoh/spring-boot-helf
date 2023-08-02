@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.helf.mapper.UserDao">
+	
+	<select id="getUserById" parameterType="string" resultType="kr.co.helf.vo.User">
+		select
+			user_encrypted_password as encryptedPassword,
+			user_address			as address,
+			user_phone_number		as phoneNumber,
+			user_mobile_carrier		as mobileCarrier,
+			user_gender				as gender,
+			user_create_date		as createDate,
+			user_update_date		as updateDate,
+			user_id					as id,
+			user_name				as name
+		from
+			helf_user
+		where 
+			user_id = #{value}
+	</select>
+	
+</mapper>
