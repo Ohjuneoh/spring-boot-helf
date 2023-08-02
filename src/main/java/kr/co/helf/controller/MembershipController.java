@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/membership")
 public class MembershipController {
 
-	@GetMapping("list")
+	@GetMapping(value="list")
 	public String list() {
 		return "membership/list";
 	}
