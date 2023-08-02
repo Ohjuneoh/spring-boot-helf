@@ -2,15 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="kr">
+
 <head>
     <meta charset="utf-8">
-    <title>강사 소개</title>
+    <title>HELF</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="/resources/img/favicon.ico" rel="icon">
+    <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,6 +31,8 @@
 
     <!-- Template Stylesheet -->
     <link href="/resources/css/style.css" rel="stylesheet">
+    <!-- Date Picker  -->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 
 <body>
@@ -40,24 +43,23 @@
     <!-- Spinner End -->
 
 
-    <!-- Topbar Start -->
-    <jsp:include page="../common/topnavbar.jsp"/>
-    <!-- Topbar End -->
+    <!-- Topnavbar Start -->
+   	<jsp:include page="../common/topnavbar.jsp" />
+    <!-- Topnavbar End -->
 
 
     <!-- Navbar Start -->
-    <div class="container-fluid position-relative p-0">
-        <%@ include file="/WEB-INF/views/common/navbar.jsp" %>
-
-        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+    <div class="container-fluid position-relative p-0 h-10 ">
+		<jsp:include page="../common/navbar.jsp">
+			<jsp:param name="menu" value="이용권"/>
+		</jsp:include>
+    <!-- Navbar End -->
+        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">강사 소개</h1>
-                    <a href="/" class="h5 text-white">Home</a>
-                    <i class="far fa-circle text-white px-2"></i>
-                    <a href="" class="h5 text-white">강사 소개</a>
+                    <h1 class="display-4 text-white animated zoomIn">MEMBERSHIP</h1>
+                    <a href="" class="h5 text-white">이용권 조회</a>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Navbar End -->
