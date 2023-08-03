@@ -149,7 +149,7 @@
 	
 						    <div class="col-md-3">
 						        <select class="form-select bg-light border-0" id="gender" name="gender" style="height: 55px; width: 100px;">
-						            <option selected>성별</option>
+						            <option selected disabled>성별</option>
 						            <option value="MAN">남자</option>
 						            <option value="WOMAN">여자</option>
 						        </select>
@@ -214,27 +214,26 @@
 					<h3>트레이너 회원가입</h3>
 				</div>
 				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" id="id" placeholder="아이디" style="height: 55px;">
+				        <input type="text" class="form-control bg-light border-0" id="id" name="id" placeholder="아이디" style="height: 55px;">
 				    </div>
 				    <div class="col-12">
-				        <input type="password" class="form-control bg-light border-0" id="password" placeholder="비밀번호" style="height: 55px;">
+				        <input type="password" class="form-control bg-light border-0" id="password" name="password" placeholder="비밀번호" style="height: 55px;">
 				    </div>
 				    
 				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" id="email" placeholder="이메일" style="height: 55px;">
+				        <input type="text" class="form-control bg-light border-0" id="email" name="email" placeholder="이메일" style="height: 55px;">
 				    </div>
 				    <div class="col-12">
 				    	<div class="row">
 				    		<div class="col-md-6">
-					        	<input type="text" class="form-control bg-light border-0" id="name" placeholder="이름" style="height: 55px;">
+					        	<input type="text" class="form-control bg-light border-0" id="name" name="name" placeholder="이름" style="height: 55px;">
 				    		</div>
 
 						    <div class="col-md-3">
-						        <select class="form-select bg-light border-0" id="gender" style="height: 55px; width: 100px;">
-						            <option selected>성별</option>
-						            <option value="1">선택하지 않음</option>
-						            <option value="2">남자</option>
-						            <option value="3">여자</option>
+						        <select class="form-select bg-light border-0" id="gender" name="gender" style="height: 55px; width: 100px;">
+						            <option selected disabled>성별</option>
+						            <option value="MAN">남자</option>
+						            <option value="WOMAN">여자</option>
 						        </select>
 				    		</div>
 				    	</div>  
@@ -242,15 +241,15 @@
 				    <div class="col-12">
 				    	<div class="row">
 				    		<div class="col-md-6">
-					        	<input type="text" class="form-control bg-light border-0" id="tel" placeholder="전화번호" style="height: 55px;">
+					        	<input type="text" class="form-control bg-light border-0" id="tel" name="tel" placeholder="전화번호" style="height: 55px;">
 				    		</div>
 						    <div class="col-md-6">
-							    <select class="form-select bg-light border-0" id="mobileCarrier" style="height: 55px; width: 100px;">
-						            <option selected>통신사</option>
-						            <option value="1">SK</option>
-						            <option value="2">LG</option>
-								    <option value="3">KT</option>
-								    <option value="4">알뜰폰</option>
+							    <select class="form-select bg-light border-0" id="mobileCarrier" name="mobileCarrier" style="height: 55px; width: 100px;">
+						            <option selected disabled>통신사</option>
+						            <option value="SK">SK</option>
+						            <option value="LG">LG</option>
+								    <option value="KT">KT</option>
+								    <option value="MVNO">알뜰폰</option>
 							    </select>
 						    </div>
 				    	</div>  

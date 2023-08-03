@@ -30,4 +30,13 @@
 		(#{id}, #{email}, #{name}, #{tel}, #{encryptedPassword}, 
 		 #{gender}, #{type}, #{rank.no}, #{point}, #{mobileCarrier})
 	</insert>
+	
+	<insert id="insertTrainer" parameterType="kr.co.helf.vo.User">
+		insert into helf_users
+		(user_id, user_email, user_name, user_tel, user_encrypted_password,
+		 user_gender, user_status, user_type, rank_no, user_point, user_mobile_carrier)
+		values
+		(#{id}, #{email}, #{name}, #{tel}, #{encryptedPassword}, 
+		 #{gender}, #{status}, #{type}, null, #{point}, #{mobileCarrier})
+	</insert>
 </mapper>

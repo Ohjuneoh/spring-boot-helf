@@ -11,4 +11,6 @@ public interface UserDao {
 
 	void insertUser(User user);
 
+	void insertTrainer(User user);
+
 }
