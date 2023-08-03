@@ -6,20 +6,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import kr.co.helf.mapper.UserDao;
+import kr.co.helf.mapper.UserMapper;
 import kr.co.helf.vo.User;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	private UserDao userDao;
+	private UserMapper userMapper;
 	
 		
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 		
-		User user = userDao.getUserById(id);
+		User user = userMapper.getUserById(id);
 		if(user == null) {
 			throw new UsernameNotFoundException("고객 정보가 존재하지 않습니다/");
 			

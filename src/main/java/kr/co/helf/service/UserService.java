@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.co.helf.form.AddUserForm;
-import kr.co.helf.mapper.UserDao;
+import kr.co.helf.mapper.UserMapper;
 import kr.co.helf.vo.Rank;
 import kr.co.helf.vo.User;
 
@@ -14,7 +14,7 @@ import kr.co.helf.vo.User;
 public class UserService {
 	
 	@Autowired
-	private UserDao userDao;
+	private UserMapper userMapper;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -35,7 +35,7 @@ public class UserService {
 		rank.setNo(1);
 		user.setRank(rank);
 		
-		userDao.insertUser(user);
+		userMapper.insertUser(user);
 		
 	}
 	
@@ -52,7 +52,7 @@ public class UserService {
 		user.setType("ROLE_TRAINER");
 		user.setStatus("N");
 		
-		userDao.insertTrainer(user);
+		userMapper.insertTrainer(user);
 		
 	}
 }

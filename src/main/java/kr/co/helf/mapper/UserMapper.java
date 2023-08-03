@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import kr.co.helf.vo.User;
 
 @Mapper
-public interface UserDao {
+public interface UserMapper {
 	
 	User getUserById(String id);
 
