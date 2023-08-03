@@ -22,7 +22,9 @@ public class LessonController {
 	public String lessonList() {
 		return "lesson/list";
 	}
-	
-	
+
+	public static void main(String[] args) {
+
+	}
 
 }
