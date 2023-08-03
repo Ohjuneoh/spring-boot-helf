@@ -1,22 +1,18 @@
-package kr.co.helf.vo.membership;
+package kr.co.helf.vo;
 
 import java.util.Date;
 
-import kr.co.helf.vo.User;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
-@ToString
+@NoArgsConstructor
+@Data
 public class MyMembership {
 
 	private int no;
 	private Date startDate;
 	private Date endDate;
 	private int remainderCnt;
-	private int remainderDuration;
 	private String state;
 	private User user;
 	private Period period;

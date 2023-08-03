@@ -1,4 +1,4 @@
-package kr.co.helf.vo.membership;
+package kr.co.helf.vo;
 
 import lombok.Getter;
 import lombok.ToString;
