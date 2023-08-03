@@ -15,12 +15,12 @@ public class LessonController {
 	
 	@GetMapping(value="registration")
 	public String loginForm() {
-		return "lesson/form";
+		return "lesson/trainerform";
 	}
 	
 	@GetMapping(value="list")
 	public String lessonList() {
-		return "lesson/list";
+		return "lesson/trainerlist";
 	}
 	
 	

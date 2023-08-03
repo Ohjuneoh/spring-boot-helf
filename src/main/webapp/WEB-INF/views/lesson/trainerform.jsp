@@ -44,13 +44,13 @@
 
 
     <!-- Topnavbar Start -->
-   	<jsp:include page="../common/topnavbar.jsp" />
+   	<jsp:include page="/WEB-INF/views/common/topnavbar.jsp" />
     <!-- Topnavbar End -->
 
 
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0 h-10 ">
-		<jsp:include page="../common/navbar.jsp">
+		<jsp:include page="/WEB-INF/views/common/navbar.jsp">
 			<jsp:param name="menu" value="수업"/>
 		</jsp:include>
     <!-- Navbar End -->

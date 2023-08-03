@@ -44,21 +44,21 @@
 
 
     <!-- Topnavbar Start -->
-   	<jsp:include page="../common/topnavbar.jsp" />
+   	<jsp:include page="/WEB-INF/views/common/topnavbar.jsp" />
     <!-- Topnavbar End -->
 
 
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0 h-10 ">
-		<jsp:include page="../common/navbar.jsp">
+		<jsp:include page="/WEB-INF/views/common/navbar.jsp">
 			<jsp:param name="menu" value="수업"/>
 		</jsp:include>
     <!-- Navbar End -->
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">LESSONLIST</h1>
-                    <a href="" class="h5 text-white">수업 목록</a>
+                    <h1 class="display-4 text-white animated zoomIn">REGISTER</h1>
+                    <a href="" class="h5 text-white">수업 등록</a>
                 </div>
             </div>
         </div>
@@ -79,53 +79,125 @@
                 </div>
             </div>
         </div>
+    <!-- Lesson Category Start  -->
     </div>
+    <div class="container-fluid py-1 wow fadeInUp " data-wow-delay="0.1s">
+	    
+        <div class="container py-5">
+        	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+	        	<div class="container ">
+	            	<div class="row g-1" >
+                   		<div class="section-title position-relative pb-3 mb-5" id="lesson-registration">
+                       		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;" >수업개설</h5>
+                 				<h1 class="mb-0" style="font-size: 15px;" >수업유형을 선택하세요</h1>
+			    		</div>
+					</div>
+				</div>
+			</div>
+            <div class="row g-5">
+                <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="personal-lesson-img">
+                    <div class="team-item bg-light rounded overflow-hidden">
+                        <div class="team-img position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="/resources/img/personal.jpg" alt="">
+                        </div>
+                        <div class="text-center py-4">
+                            <h4 class="text-primary" style="font-size:40px;" >개인수업</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="group-lesson-img">
+                    <div class="team-item bg-light rounded overflow-hidden">
+                        <div class="team-img position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="/resources/img/group.jpg" alt="">
+                        </div>
+                        <div class="text-center py-4">
+                            <h4 class="text-primary" style="font-size:40px;"  >그룹수업</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Lesson Category End -->
+    <!-- Lesson Register Form Start  -->
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
-		<div class="container py-5">
-			<div class="row mb-3">
-				<div class="col-12">
-					<div class="card" >
-						<div class="card-header bg-dark" style="color: #ffffff">
-							수업목록
-							<span class="float-end">
-								<a href="add" class="btn btn-primary btn-sm ">신규 수업 등록</a>
-							</span>
-						</div>
-						<div class="card-body">
-							<div class="d-flex justify-content-start mb-3">
-								<select class="form-select me-3" style="width:150px" name="sort" onchange="changeSort()">
-									<option >수업유형</option>
-									<option >개인수업</option>
-									<option >그룹수업</option>
-			            		</select>
-            				</div>
-			               <table class="table">
-			               		<thead>
-			                     	<tr>
-			                        	<th>수업번호</th>
-			                        	<th>수업명</th>
-			                        	<th>강사명</th>
-			                        	<th>모집총원</th>
-			                        	<th>모집여부</th>
-			                     	</tr>
-			                  	</thead>
-			                  	<tbody>
-		                  			<tr>
-				                        <td>1</td>
-				                        <td>1</td>
-				                        <td>1</td>
-				                        <td>1</td>
-				                        <td>1</td>
-		                    		 </tr>
-		                 			<tr>
-	                 					<td colspan="5" class="text-center">검색결과가 존재하지 않습니다.</td>
-		                 			</tr>
-			             		</tbody>
-			               </table>
-        				</div>
-    				</div>
-    			</div>
-    		</div>
+        <div class="container py-5">
+			<form class="" id="personal-lesson-form" style="display: none">
+		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+	        		<div class="container ">
+	            		<div class="row g-1" >
+                    		<div class="section-title position-relative pb-3 mb-5">
+                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">수업개설</h5>
+                        		<h1 class="mb-0" style="font-size: 15px;" >내용을 입력해주세요</h1>
+			               	</div>
+				    	</div>
+				 	</div>
+				</div>
+				<div class="row g-1">
+				    <div class="col-12">
+				        <input type="text" class="form-control bg-light border-0" id="name" placeholder="수업명" style="height: 55px;">
+				    </div>
+				    <div class="col-6">
+				    	<input type="text" class="form-control bg-light border-0"  id="date" style="height: 55px;" placeholder="수업날짜">
+				    </div>
+					<div class="col-6">
+					    <select id="dropdown1" class="form-select bg-light border-0" style="height: 55px;">
+					      <option value=""  >시간</option>
+					      <option value="10~12" class="form-control bg-light border-0" >10:00 ~ 12:00</option>
+					      <option value="13~14" class="form-control bg-light border-0" >13:00 ~ 15:00</option>
+					      <option value="14~16" class="form-control bg-light border-0" >14:00 ~ 16:00</option>
+					      <option value="16~18" class="form-control bg-light border-0" >16:00 ~ 18:00</option>
+					    </select>
+					</div>
+					<div class="col-12">
+					  <textarea class="form-control bg-light border-0" id="content" style="height: 300px;" placeholder="내용"></textarea>
+					</div>
+					<div class="col-12">
+				        <button class="btn btn-dark w-100 py-3" type="submit">등록</button>
+				    </div>
+				    <div class="col-12">
+				        <button class="btn btn-primary w-100 py-3" type="submit" id="group-back">뒤로가기</button>
+				    </div>
+				</div>
+		 	</form>
+		 	<form class="" id="group-lesson-form" style="display: none">
+		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+	        		<div class="container ">
+	            		<div class="row g-1" >
+                    		<div class="section-title position-relative pb-3 mb-5">
+                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">수업개설</h5>
+                        		<h1 class="mb-0" style="font-size: 15px;" >내용을 입력해주세요</h1>
+			               	</div>
+				    	</div>
+				 	</div>
+				</div>
+				<div class="row g-1">
+				    <div class="col-12">
+				        <input type="text" class="form-control bg-light border-0" id="name" placeholder="수업명" style="height: 55px;">
+				    </div>
+				    <div class="col-6">
+				    	<input type="text" class="form-control bg-light border-0"  id="date" style="height: 55px;" placeholder="수업날짜">
+				    </div>
+					<div class="col-6">
+					    <select id="dropdown1" class="form-select bg-light border-0" style="height: 55px;">
+					      <option value=""  >시간</option>
+					      <option value="10~12" class="form-control bg-light border-0" >10:00 ~ 12:00</option>
+					      <option value="13~14" class="form-control bg-light border-0" >13:00 ~ 15:00</option>
+					      <option value="14~16" class="form-control bg-light border-0" >14:00 ~ 16:00</option>
+					      <option value="16~18" class="form-control bg-light border-0" >16:00 ~ 18:00</option>
+					    </select>
+					</div>
+					<div class="col-12">
+					  <textarea class="form-control bg-light border-0" id="content" style="height: 300px;" placeholder="내용"></textarea>
+					</div>
+					<div class="col-12">
+				        <button class="btn btn-dark w-100 py-3" type="submit">등록</button>
+				    </div>
+				    <div class="col-12">
+				        <button class="btn btn-primary w-100 py-3" type="submit" id="personal-back">뒤로가기</button>
+				    </div>
+				</div>
+		 	</form>
         </div>
     </div>
     <!-- Lesson Register Form End  -->
@@ -223,6 +295,54 @@
 	<script src="/resources/js/main.js"></script>
     
 <script>
+$(document).ready(function() {
+$('#personal-lesson-img').on('click', function() {
+		$('#group-lesson-img').hide();
+		$('#group-lesson-form').hide();
+		$('#lesson-registration').hide();
+		$('#personal-lesson-form').show();
+		$(this).hide();
+	});
+
+ $('#group-lesson-img').on('click', function() {
+	$('#personal-lesson-img').hide();
+	$('#personal-lesson-form').hide();
+	$('#lesson-registration').hide();
+	$('#group-lesson-form').show();
+	$(this).hide();
+	});
+});
+$(document).back(function() {
+	$('#personal-back').on('click', function() {
+			$('#group-lesson-img').show();
+			$('#personal-lesson-img').show();
+			$('#group-lesson-form').hide();
+			$('#lesson-registration').show();
+			$('#personal-lesson-form').hide();
+			$(this).hide();
+		});
+
+	 $('#group-back').on('click', function() {
+			$('#group-lesson-img').show();
+			$('#personal-lesson-img').show();
+			$('#group-lesson-form').hide();
+			$('#lesson-registration').show();
+			$('#personal-lesson-form').hide();
+		$(this).hide();
+		});
+	});
+
+
+
+
+$( function() {
+    $("#date").datepicker({
+   		dateFormat: 'yy/mm/dd'
+    });
+});
+
+
+	
 
 </script>
     
