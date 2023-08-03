@@ -97,7 +97,7 @@
                 </div>
             </div>
             <div class="row g-5">
-        		<div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="customer-img">
+        		<div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="user-img">
             		<div class="team-item bg-light rounded overflow-hidden">
                		 	<div class="team-img position-relative overflow-hidden">
                     		<img class="img-fluid w-100" src="/resources/img/personal.jpg" alt="">
@@ -127,7 +127,7 @@
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
         <div class="container py-5">
         	<!-- 회원 폼 -->
-		     <form action="/user/register/cust" id="registerform-customer" style="display: none" method="post">
+		     <form action="/user/register/user" id="registerform-user" style="display: none" method="post">
 				<div class="row g-3">
 				<div>
 					<h3>회원 회원가입</h3>
@@ -208,7 +208,7 @@
 				</div>
 		 	</form>
             <!-- 트레이너 폼 -->
-		 	<form action="/user/register" id="registerform-trainer" style="display: none" method="post">
+		 	<form action="/user/register/trainer" id="registerform-trainer" style="display: none" method="post">
 				<div class="row g-3">
 				<div>
 					<h3>트레이너 회원가입</h3>
@@ -427,17 +427,17 @@
 	
 
 	   $(document).ready(function() {
-	   $('#customer-img').on('click', function() {
+	   $('#user-img').on('click', function() {
 	   		$('#trainer-img').hide();
 	   		$('#registerform-trainer').hide();
 	   		$('#register-form').hide();
-	   		$('#registerform-customer').show();
+	   		$('#registerform-user').show();
 	   		$(this).hide();
 	   	});
 
 	    $('#trainer-img').on('click', function() {
-	   	$('#customer-img').hide();
-	   	$('#registerform-customer').hide();
+	   	$('#user-img').hide();
+	   	$('#registerform-user').hide();
 	   	$('#register-form').hide();
 	   	$('#registerform-trainer').show();
 	   	$(this).hide();

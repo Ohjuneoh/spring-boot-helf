@@ -20,7 +20,7 @@ public class UserService {
 	private PasswordEncoder passwordEncoder;
 	
 	
-	public void createCustomer(AddUserForm form) {
+	public void createUser(AddUserForm form) {
 		User user = new User();
 		
 		BeanUtils.copyProperties(form, user);
@@ -30,12 +30,12 @@ public class UserService {
 		user.setEncryptedPassword(encryptedPassword);
 		
 		// 등급, 타입 담기
-		user.setType("회원");
+		user.setType("ROLE_USER");
 		Rank rank = new Rank();
 		rank.setNo(1);
 		user.setRank(rank);
 		
-		userDao.insertCustomer(user);
+		userDao.insertUser(user);
 		
 	}
 }

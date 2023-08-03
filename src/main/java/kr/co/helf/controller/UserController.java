@@ -32,13 +32,20 @@ public class UserController {
 	}
 	
 	// 회원가입 요청(회원)
-	@PostMapping(value="/register/cust")
-	public String register(AddUserForm form) {
-		userService.createCustomer(form);
+	@PostMapping(value="/register/user")
+	public String registerUser(AddUserForm form) {
+		userService.createUser(form);
 		
 		return "redirect:/";
 	}
 	
+	// 회원가입 요청(트레이너)
+	@PostMapping(value="/register/trainer")
+	public String registerTrainer(AddUserForm form) {
+		userService.createTrainer(form);
+		
+		return "redirect:/";
+	}
 	
 	@GetMapping(value="/test")
 	public String test() {
