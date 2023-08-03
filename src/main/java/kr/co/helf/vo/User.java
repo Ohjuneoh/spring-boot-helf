@@ -1,5 +1,6 @@
 package kr.co.helf.vo;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,7 @@ public class User implements UserDetails{
 	private String gender;
 	private String status;
 	private Date createDate;
+	private String type;
 	private Date updateDate;
 	private String type;
 	private Rank rank;
@@ -37,7 +39,7 @@ public class User implements UserDetails{
 	// 직원(사용자)의 보유권한을 반환한다.
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority("USER_ROLE"));
+		return List.of(new SimpleGrantedAuthority(type));
 	}
 	// 직원(사용자)의 비밀번호를 반환한다.
 	@Override
