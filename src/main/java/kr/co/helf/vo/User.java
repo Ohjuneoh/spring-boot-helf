@@ -24,7 +24,6 @@ public class User implements UserDetails{
 	private String gender;
 	private String status;
 	private Date createDate;
-	private String type;
 	private Date updateDate;
 	private String type;
 	private Rank rank;
