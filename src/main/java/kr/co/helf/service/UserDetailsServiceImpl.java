@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		User user = userMapper.getUserById(id);
 		if(user == null) {
-			throw new UsernameNotFoundException("고객 정보가 존재하지 않습니다/");
+			throw new UsernameNotFoundException("고객 정보가 존재하지 않습니다.");
 			
 		}
 		return user;

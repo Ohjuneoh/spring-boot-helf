@@ -91,8 +91,8 @@
                 <div class="col-lg-7" > 
                     <div class="section-title position-relative pb-3 mb-5" id="register-form">
                         <h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">HELF FRIEND 회원가입</h5>
-                        <h1 class="mb-0" style="font-size: 15px;">회원가입에 필요한 정보를 입력해주세요 </h1>
-                        <h1 class="mb-0"  style="font-size: 15px;">회원정보는 동의 없이 공개 및 유출되지 않으며 개인정보 보호정책에 의해 보호 받고 있습니다.</h1>
+                        <h1 class="mb-0" style="font-size: 15px;">회원가입 유형을 선택해주세요. </h1>
+                        <h1 class="mb-0" style="font-size: 15px;">회원정보는 동의 없이 공개 및 유출되지 않으며 개인정보 보호정책에 의해 보호 받고 있습니다.</h1>
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@
         		<div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="user-img">
             		<div class="team-item bg-light rounded overflow-hidden">
                		 	<div class="team-img position-relative overflow-hidden">
-                    		<img class="img-fluid w-100" src="/resources/img/personal.jpg" alt="">
+                    		<img class="img-fluid w-100" src="/resources/img/회원.jpg" alt="">
                 		</div>
                 		<div class="text-center py-4">
                     		<h4 class="text-primary" style="font-size:40px;">회원</h4>
@@ -110,7 +110,7 @@
        			 <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="trainer-img">
             		<div class="team-item bg-light rounded overflow-hidden">
                 		<div class="team-img position-relative overflow-hidden">
-                   			<img class="img-fluid w-100" src="/resources/img/group.jpg" alt="">
+                   			<img class="img-fluid w-100" src="/resources/img/트레이너.jpg" alt="">
                 		</div>
                	 		<div class="text-center py-4">
                     		<h4 class="text-primary" style="font-size:40px;">트레이너</h4>
