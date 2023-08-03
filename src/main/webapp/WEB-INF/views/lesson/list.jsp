@@ -106,7 +106,7 @@
 			                        	<th>수업명</th>
 			                        	<th>강사명</th>
 			                        	<th>모집총원</th>
-			                        	<th>소속부서</th>
+			                        	<th>모집여부</th>
 			                     	</tr>
 			                  	</thead>
 			                  	<tbody>
