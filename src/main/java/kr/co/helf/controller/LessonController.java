@@ -13,12 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LessonController {
 
-	@GetMapping(value = "/registration")
+	@GetMapping(value = "registration")
 	public String loginForm() {
 		return "lesson/form";
 	}
 
-	@GetMapping(value = "/list")
+	@GetMapping(value = "list")
 	public String lessonList() {
 		return "lesson/list";
 	}
