@@ -65,8 +65,6 @@
     </div>
 
 
-
-
     <div class="modal fade" id="searchModal" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
@@ -82,174 +80,91 @@
             </div>
         </div>
     </div>
-    
-    <!-- 회원가입 카테고리 -->
     <div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" style="padding-bottom: 0px;">
-    
-        <div class="container py-5 ">
+        <div class="container ">
             <div class="row g-5" style="margin-bottom: 1px;">
                 <div class="col-lg-7" > 
-                    <div class="section-title position-relative pb-3 mb-5" id="register-form">
+                    <div class="section-title position-relative pb-3 mb-5">
                         <h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">HELF FRIEND 회원가입</h5>
                         <h1 class="mb-0" style="font-size: 15px;">회원가입에 필요한 정보를 입력해주세요 </h1>
                         <h1 class="mb-0"  style="font-size: 15px;">회원정보는 동의 없이 공개 및 유출되지 않으며 개인정보 보호정책에 의해 보호 받고 있습니다.</h1>
                     </div>
                 </div>
             </div>
-            <div class="row g-5">
-        		<div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="user-img">
-            		<div class="team-item bg-light rounded overflow-hidden">
-               		 	<div class="team-img position-relative overflow-hidden">
-                    		<img class="img-fluid w-100" src="/resources/img/personal.jpg" alt="">
-                		</div>
-                		<div class="text-center py-4">
-                    		<h4 class="text-primary" style="font-size:40px;">회원</h4>
-                		</div>
-            		</div>
-        		</div>
-       			 <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="trainer-img">
-            		<div class="team-item bg-light rounded overflow-hidden">
-                		<div class="team-img position-relative overflow-hidden">
-                   			<img class="img-fluid w-100" src="/resources/img/group.jpg" alt="">
-                		</div>
-               	 		<div class="text-center py-4">
-                    		<h4 class="text-primary" style="font-size:40px;">트레이너</h4>
-                		</div>
-            		</div>
-        		</div>
-    		</div>
         </div>
     </div>
-   
-     
- 
-    <!-- 회원가입 폼  -->        
+    
+      <!-- 회원가입 유형  -->
+      <div class="row g-5">
+        <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="customer-img">
+            <div class="team-item bg-light rounded overflow-hidden">
+                <div class="team-img position-relative overflow-hidden">
+                    <img class="img-fluid w-100" src="/resources/img/personal.jpg" alt="">
+                </div>
+                <div class="text-center py-4">
+                    <h4 class="text-primary" style="font-size:40px;">회원</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="trainer-img">
+            <div class="team-item bg-light rounded overflow-hidden">
+                <div class="team-img position-relative overflow-hidden">
+                    <img class="img-fluid w-100" src="/resources/img/group.jpg" alt="">
+                </div>
+                <div class="text-center py-4">
+                    <h4 class="text-primary" style="font-size:40px;">트레이너</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+            
+            
+    <!-- 입력 폼(회원) -->
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
         <div class="container py-5">
-        	<!-- 회원 폼 -->
-		     <form action="/user/register/user" id="registerform-user" style="display: none" method="post">
+        
+		     <form action="/user/register-customer" method="post">
 				<div class="row g-3">
-				<div>
-					<h3>회원 회원가입</h3>
-				</div>
 				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" id="id" name="id" placeholder="아이디" style="height: 55px;">
+				        <input type="text" class="form-control bg-light border-0" placeholder="아이디" name="id" style="height: 55px;">
 				    </div>
 				    <div class="col-12">
-				        <input type="password" class="form-control bg-light border-0" id="password" name="password" placeholder="비밀번호" style="height: 55px;">
-				    </div>
-				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" id="email" name="email" placeholder="이메일" style="height: 55px;">
-				    </div>
-				    <div class="col-12">
-				    	<div class="row">
-				    		<div class="col-md-6">
-					        	<input type="text" class="form-control bg-light border-0" id="name"  name="name" placeholder="이름" style="height: 55px;">
-				    		</div>
-	
-						    <div class="col-md-3">
-						        <select class="form-select bg-light border-0" id="gender" name="gender" style="height: 55px; width: 100px;">
-						            <option selected disabled>성별</option>
-						            <option value="MAN">남자</option>
-						            <option value="WOMAN">여자</option>
-						        </select>
-				    		</div>
-				    	</div>  
-				    </div>
-				    <div class="col-12">
-				    	<div class="row">
-				    		<div class="col-md-6">
-					        	<input type="text" class="form-control bg-light border-0" id="tel" name="tel" placeholder="전화번호" style="height: 55px;">
-				    		</div>
-						    <div class="col-md-6">
-							    <select class="form-select bg-light border-0" id="mobileCarrier" name="mobileCarrier" style="height: 55px; width: 100px;">
-						            <option selected disabled>통신사</option>
-						            <option value="SK">SK</option>
-						            <option value="LG">LG</option>
-								    <option value="KT">KT</option>
-								    <option value="MVNO">알뜰폰</option>
-							    </select>
-						    </div>
-				    	</div>  
-				    </div>
-					<p>
-					  <a class="form-select bg-light border-0" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-					    <strong style="color: red;">[필수]</strong> 이용약관
-					  </a>
-					</p>
-						<div class="collapse" id="collapseExample">
-							<label>
-							    <input type="checkbox" id="agreeCheckbox-1" class="normal">
-							    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
-							</label>
-						  	<div class="card card-body bg-light border-0">
-						   		내용넣어주세요
-						  	</div>
-							<label>
-							    <input type="checkbox" id="agreeCheckbox-2" class="normal">
-							    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
-							</label>
-						  	<div class="card card-body bg-light border-0">
-						   		내용넣어주세요
-						  	</div>
-							<label>
-							    <input type="checkbox" id="agreeCheckbox-3" class="normal">
-							    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
-							</label>
-						  	<div class="card card-body bg-light border-0">
-						   		내용넣어주세요
-						  	</div>
-							  <input type="checkbox" id="check_all" >
-		 						  <label for="check_all">전체 동의합니다.</label>
-						</div>				    
-				    <div class="col-12">
-				        <button class="btn btn-dark w-100 py-3" type="submit">가입하기</button>
-				    </div>
-				</div>
-		 	</form>
-            <!-- 트레이너 폼 -->
-		 	<form action="/user/register/trainer" id="registerform-trainer" style="display: none" method="post">
-				<div class="row g-3">
-				<div>
-					<h3>트레이너 회원가입</h3>
-				</div>
-				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" id="id" name="id" placeholder="아이디" style="height: 55px;">
-				    </div>
-				    <div class="col-12">
-				        <input type="password" class="form-control bg-light border-0" id="password" name="password" placeholder="비밀번호" style="height: 55px;">
+				        <input type="password" class="form-control bg-light border-0" placeholder="비밀번호" name="password" style="height: 55px;">
 				    </div>
 				    
 				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" id="email" name="email" placeholder="이메일" style="height: 55px;">
+				        <input type="text" class="form-control bg-light border-0" placeholder="이메일" name="email" style="height: 55px;">
 				    </div>
+				    
 				    <div class="col-12">
 				    	<div class="row">
 				    		<div class="col-md-6">
-					        	<input type="text" class="form-control bg-light border-0" id="name" name="name" placeholder="이름" style="height: 55px;">
+					        	<input type="text" class="form-control bg-light border-0" placeholder="이름" name="name" style="height: 55px;">
 				    		</div>
 
 						    <div class="col-md-3">
-						        <select class="form-select bg-light border-0" id="gender" name="gender" style="height: 55px; width: 100px;">
-						            <option selected disabled>성별</option>
-						            <option value="MAN">남자</option>
-						            <option value="WOMAN">여자</option>
+						        <select class="form-select bg-light border-0" name="gender" style="height: 55px; width: 100px;">
+						            <option selected>성별</option>
+						            <option value="1">선택하지 않음</option>
+						            <option value="2">남자</option>
+						            <option value="3">여자</option>
 						        </select>
 				    		</div>
 				    	</div>  
 				    </div>
+				    
 				    <div class="col-12">
 				    	<div class="row">
 				    		<div class="col-md-6">
-					        	<input type="text" class="form-control bg-light border-0" id="tel" name="tel" placeholder="전화번호" style="height: 55px;">
+					        	<input type="text" class="form-control bg-light border-0" placeholder="전화번호" name="tel" style="height: 55px;">
 				    		</div>
 						    <div class="col-md-6">
-							    <select class="form-select bg-light border-0" id="mobileCarrier" name="mobileCarrier" style="height: 55px; width: 100px;">
-						            <option selected disabled>통신사</option>
-						            <option value="SK">SK</option>
-						            <option value="LG">LG</option>
-								    <option value="KT">KT</option>
-								    <option value="MVNO">알뜰폰</option>
+							    <select class="form-select bg-light border-0" name="mobileCarrier" style="height: 55px; width: 100px;">
+						            <option selected>통신사</option>
+						            <option value="1">SK</option>
+						            <option value="2">LG</option>
+								    <option value="3">KT</option>
+								    <option value="4">알뜰폰</option>
 							    </select>
 						    </div>
 				    	</div>  
@@ -260,31 +175,114 @@
 					    <strong style="color: red;">[필수]</strong> 이용약관
 					  </a>
 					</p>
-						<div class="collapse" id="collapseExample">
-							<label>
-							    <input type="checkbox" id="agreeCheckbox-1" class="normal">
-							    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
-							</label>
-						  	<div class="card card-body bg-light border-0">
-						   		내용넣어주세요
-						  	</div>
-							<label>
-							    <input type="checkbox" id="agreeCheckbox-2" class="normal">
-							    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
-							</label>
-						  	<div class="card card-body bg-light border-0">
-						   		내용넣어주세요
-						  	</div>
-							<label>
-							    <input type="checkbox" id="agreeCheckbox-3" class="normal">
-							    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
-							</label>
-						  	<div class="card card-body bg-light border-0">
-						   		내용넣어주세요
-						  	</div>
-							  <input type="checkbox" id="check_all" >
-	  						  <label for="check_all">전체 동의합니다.</label>
-						</div>				    
+					<div class="collapse" id="collapseExample">
+						<label>
+						    <input type="checkbox" id="agreeCheckbox-1" class="normal">
+						    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
+						</label>
+					  	<div class="card card-body bg-light border-0">
+					   		내용넣어주세요
+					  	</div>
+						<label>
+						    <input type="checkbox" id="agreeCheckbox-2" class="normal">
+						    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
+						</label>
+					  	<div class="card card-body bg-light border-0">
+					   		내용넣어주세요
+					  	</div>
+						<label>
+						    <input type="checkbox" id="agreeCheckbox-3" class="normal">
+						    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
+						</label>
+					  	<div class="card card-body bg-light border-0">
+					   		내용넣어주세요
+					  	</div>
+						  <input type="checkbox" id="check_all" >
+  						  <label for="check_all">전체 동의합니다.</label>
+					</div>				    
+				    <div class="col-12">
+				        <button class="btn btn-dark w-100 py-3" type="submit">가입하기</button>
+				    </div>
+				</div>
+		 	</form>
+		 	
+		 	<form action="/user/register-customer" method="post">
+				<div class="row g-3">
+				    <div class="col-12">
+				        <input type="text" class="form-control bg-light border-0" placeholder="아이디" name="id" style="height: 55px;">
+				    </div>
+				    <div class="col-12">
+				        <input type="password" class="form-control bg-light border-0" placeholder="비밀번호" name="password" style="height: 55px;">
+				    </div>
+				    
+				    <div class="col-12">
+				        <input type="text" class="form-control bg-light border-0" placeholder="이메일" name="email" style="height: 55px;">
+				    </div>
+				    
+				    <div class="col-12">
+				    	<div class="row">
+				    		<div class="col-md-6">
+					        	<input type="text" class="form-control bg-light border-0" placeholder="이름" name="name" style="height: 55px;">
+				    		</div>
+
+						    <div class="col-md-3">
+						        <select class="form-select bg-light border-0" name="gender" style="height: 55px; width: 100px;">
+						            <option selected>성별</option>
+						            <option value="1">선택하지 않음</option>
+						            <option value="2">남자</option>
+						            <option value="3">여자</option>
+						        </select>
+				    		</div>
+				    	</div>  
+				    </div>
+				    
+				    <div class="col-12">
+				    	<div class="row">
+				    		<div class="col-md-6">
+					        	<input type="text" class="form-control bg-light border-0" placeholder="전화번호" name="tel" style="height: 55px;">
+				    		</div>
+						    <div class="col-md-6">
+							    <select class="form-select bg-light border-0" name="mobileCarrier" style="height: 55px; width: 100px;">
+						            <option selected>통신사</option>
+						            <option value="1">SK</option>
+						            <option value="2">LG</option>
+								    <option value="3">KT</option>
+								    <option value="4">알뜰폰</option>
+							    </select>
+						    </div>
+				    	</div>  
+				    </div>
+				    			    
+					<p>
+					  <a class="form-select bg-light border-0" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+					    <strong style="color: red;">[필수]</strong> 이용약관
+					  </a>
+					</p>
+					<div class="collapse" id="collapseExample">
+						<label>
+						    <input type="checkbox" id="agreeCheckbox-1" class="normal">
+						    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
+						</label>
+					  	<div class="card card-body bg-light border-0">
+					   		내용넣어주세요
+					  	</div>
+						<label>
+						    <input type="checkbox" id="agreeCheckbox-2" class="normal">
+						    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
+						</label>
+					  	<div class="card card-body bg-light border-0">
+					   		내용넣어주세요
+					  	</div>
+						<label>
+						    <input type="checkbox" id="agreeCheckbox-3" class="normal">
+						    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
+						</label>
+					  	<div class="card card-body bg-light border-0">
+					   		내용넣어주세요
+					  	</div>
+						  <input type="checkbox" id="check_all" >
+  						  <label for="check_all">전체 동의합니다.</label>
+					</div>				    
 				    <div class="col-12">
 				        <button class="btn btn-dark w-100 py-3" type="submit">가입하기</button>
 				    </div>
@@ -294,8 +292,6 @@
         </div>
     </div>
     
-    
-   
     
     <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container">
@@ -426,24 +422,27 @@
 	
 
 	   $(document).ready(function() {
-	   $('#user-img').on('click', function() {
+	   $('#customer-img').on('click', function() {
 	   		$('#trainer-img').hide();
-	   		$('#registerform-trainer').hide();
-	   		$('#register-form').hide();
-	   		$('#registerform-user').show();
+	   		$('#group-lesson-form').hide();
+	   		$('#lesson-reservation').hide();
+	   		$('#personal-lesson-form').show();
 	   		$(this).hide();
 	   	});
 
 	    $('#trainer-img').on('click', function() {
-	   	$('#user-img').hide();
-	   	$('#registerform-user').hide();
-	   	$('#register-form').hide();
-	   	$('#registerform-trainer').show();
+	   	$('#customer-img').hide();
+	   	$('#personal-lesson-form').hide();
+	   		$('#lesson-reservation').hide();
+	   	$('#group-lesson-form').show();
 	   	$(this).hide();
 	   	});
-	    
-	 });
-;
+	   });
+	   $( function() {
+	       $("#date").datepicker({
+	      		dateFormat: 'yy/mm/dd'
+	       });
+	   });
 	</script>
 </body>
 </html>
