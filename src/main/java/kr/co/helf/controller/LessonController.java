@@ -26,5 +26,4 @@ public class LessonController {
 	public static void main(String[] args) {
 
 	}
-
 }
