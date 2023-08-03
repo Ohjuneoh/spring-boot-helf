@@ -31,10 +31,10 @@ public class UserController {
 		return "registerform";
 	}
 	
-	// 회원가입 요청
-	@PostMapping(value="/register")
+	// 회원가입 요청(회원)
+	@PostMapping(value="/register/cust")
 	public String register(AddUserForm form) {
-		userService.createUser(form);
+		userService.createCustomer(form);
 		
 		return "redirect:/";
 	}

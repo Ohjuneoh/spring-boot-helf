@@ -9,6 +9,6 @@ public interface UserDao {
 	
 	User getUserById(String id);
 
-	void insertUser(User user);
+	void insertCustomer(User user);
 
 }

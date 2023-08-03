@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.mapper.UserDao;
+import kr.co.helf.vo.Rank;
 import kr.co.helf.vo.User;
 
 @Service
@@ -18,7 +19,8 @@ public class UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	public void createUser(AddUserForm form) {
+	
+	public void createCustomer(AddUserForm form) {
 		User user = new User();
 		
 		BeanUtils.copyProperties(form, user);
@@ -27,7 +29,13 @@ public class UserService {
 		String encryptedPassword = passwordEncoder.encode(form.getPassword());
 		user.setEncryptedPassword(encryptedPassword);
 		
-		userDao.insertUser(user);
+		// 등급, 타입 담기
+		user.setType("회원");
+		Rank rank = new Rank();
+		rank.setNo(1);
+		user.setRank(rank);
+		
+		userDao.insertCustomer(user);
 		
 	}
 }

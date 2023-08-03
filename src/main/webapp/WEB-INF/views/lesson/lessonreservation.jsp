@@ -79,8 +79,9 @@
                 </div>
             </div>
         </div>
-    <!-- Lesson Category Start  -->
     </div>
+    
+    <!-- Lesson Category Start  -->
     <div class="container-fluid py-1 wow fadeInUp " data-wow-delay="0.1s">
 	    
         <div class="container py-5">
@@ -88,8 +89,8 @@
 	        	<div class="container ">
 	            	<div class="row g-1" >
                    		<div class="section-title position-relative pb-3 mb-5" id="lesson-reservation">
-                       		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;" >수업개설</h5>
-                 				<h1 class="mb-0" style="font-size: 15px;" >수업유형을 선택하세요</h1>
+                       		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">수업개설</h5>
+                 				<h1 class="mb-0" style="font-size: 15px;">수업유형을 선택하세요</h1>
 			    		</div>
 					</div>
 				</div>
@@ -119,6 +120,8 @@
         </div>
     </div>
     <!-- Lesson Category End -->
+    
+    
     <!-- Lesson Register Form Start  -->
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
         <div class="container py-5">
@@ -154,6 +157,7 @@
 					</div>
 				</div>
 		 	</form>
+		 	
 		 	<form class="" id="group-lesson-form" style="display: none">
 		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
 	        		<div class="container ">

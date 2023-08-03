@@ -22,11 +22,12 @@ public class User implements UserDetails{
 	private String encryptedPassword;
 	private String gender;
 	private String status;
-	private String mobileCarrier;
 	private Date createDate;
 	private Date updateDate;
-	private int point;
+	private String type;
 	private Rank rank;
+	private int point;
+	private String mobileCarrier;
 	
 	public User(){}
 	public User(String id) {
@@ -68,5 +69,6 @@ public class User implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
+		
 	
 }
