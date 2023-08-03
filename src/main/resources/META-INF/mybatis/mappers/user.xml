@@ -14,7 +14,9 @@
 			user_mobile_carrier		as mobileCarrier,
 			user_create_date		as createDate,
 			user_update_date		as updateDate,
-			user_point				as point
+			user_point				as point,
+			rank_no					as "rank.no",
+			user_type				as type
 			
 		from
 			helf_users
