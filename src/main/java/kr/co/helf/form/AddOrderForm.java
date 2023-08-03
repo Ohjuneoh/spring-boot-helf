@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class AddOrderForm {
-
+ 
 	private int no;
 	private int period;
 	private Date startDate;
