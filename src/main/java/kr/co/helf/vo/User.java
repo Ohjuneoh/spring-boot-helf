@@ -25,7 +25,6 @@ public class User implements UserDetails{
 	private String status;
 	private String mobileCarrier;
 	private Date createDate;
-	private String type;
 	private Date updateDate;
 	private int point;
 	private Rank rank;
@@ -38,7 +37,11 @@ public class User implements UserDetails{
 	// 직원(사용자)의 보유권한을 반환한다.
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority(type));
+		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+		authorities.add(new SimpleGrantedAuthority("ROLE_TRAINER"));
+		authorities.add(new SimpleGrantedAuthority("ROLE_MASTER"));
+		return authorities;
 	}
 	// 직원(사용자)의 비밀번호를 반환한다.
 	@Override

@@ -23,10 +23,9 @@ spring:
 # mybatis 관련 설정정보 저장하기
 mybatis:
   mapper-locations:
-  - META-INF/mybatis/mappers/*.xml
+  - META-INF/mybatis/mappers/**/*.xml
   configuration:
     jdbc-type-for-null: 'NULL'
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
-  type-aliases-package: kr.co.helf.vo
 
 # 

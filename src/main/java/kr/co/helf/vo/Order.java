@@ -1,15 +1,12 @@
-package kr.co.helf.vo.membership;
+package kr.co.helf.vo;
 
 import java.util.Date;
 
-import kr.co.helf.vo.User;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
-@ToString
+@NoArgsConstructor
+@Data
 public class Order {
 
 	private int no;

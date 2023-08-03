@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.helf.mapper.MembershipDao">
+
+	<select id="getMemberships" resultType="membership">
+		select membership_no			as no,
+			   membership_name			as name,
+			   membership_description	as description,
+			   Membership_delete		as state,
+			   category_no				as "category.no",
+			   membership_price			as price
+		from helf_membership
+		order by membership_no desc
+	</select>
+</mapper>
