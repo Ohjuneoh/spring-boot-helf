@@ -6,14 +6,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import kr.co.helf.mapper.UserDao;
+import kr.co.helf.mapper.UserMapper;
 import kr.co.helf.vo.User;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	private UserDao userDao;
+	private UserMapper userDao;
 	
 		
 	@Override

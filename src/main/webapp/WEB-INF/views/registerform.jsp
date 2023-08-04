@@ -96,11 +96,11 @@
                     </div>
                 </div>
             </div>
-            <div class="row g-5">
+ 			<div class="row g-5">
         		<div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="user-img">
             		<div class="team-item bg-light rounded overflow-hidden">
                		 	<div class="team-img position-relative overflow-hidden">
-                    		<img class="img-fluid w-100" src="/resources/img/회원.jpg" alt="">
+                    		<img class="img-fluid w-100" src="/resources/img/personal.jpg" alt="">
                 		</div>
                 		<div class="text-center py-4">
                     		<h4 class="text-primary" style="font-size:40px;">회원</h4>
@@ -110,7 +110,7 @@
        			 <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="trainer-img">
             		<div class="team-item bg-light rounded overflow-hidden">
                 		<div class="team-img position-relative overflow-hidden">
-                   			<img class="img-fluid w-100" src="/resources/img/트레이너.jpg" alt="">
+                   			<img class="img-fluid w-100" src="/resources/img/group.jpg" alt="">
                 		</div>
                	 		<div class="text-center py-4">
                     		<h4 class="text-primary" style="font-size:40px;">트레이너</h4>
@@ -127,13 +127,14 @@
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
         <div class="container py-5">
         	<!-- 회원 폼 -->
-		     <form action="/user/register/user" id="registerform-user" style="display: none" method="post">
+		   	<form action="/user/register/user" id="registerform-user" style="display: none" method="post">
 				<div class="row g-3">
 				<div>
 					<h3>회원 회원가입</h3>
 				</div>
+				
 				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" id="id" name="id" placeholder="아이디" style="height: 55px;">
+				         <input type="text" class="form-control bg-light border-0" id="id" name="id" placeholder="아이디" style="height: 55px;">
 				    </div>
 				    <div class="col-12">
 				        <input type="password" class="form-control bg-light border-0" id="password" name="password" placeholder="비밀번호" style="height: 55px;">
@@ -141,6 +142,7 @@
 				    <div class="col-12">
 				        <input type="text" class="form-control bg-light border-0" id="email" name="email" placeholder="이메일" style="height: 55px;">
 				    </div>
+				    
 				    <div class="col-12">
 				    	<div class="row">
 				    		<div class="col-md-6">
@@ -156,6 +158,7 @@
 				    		</div>
 				    	</div>  
 				    </div>
+				    
 				    <div class="col-12">
 				    	<div class="row">
 				    		<div class="col-md-6">
@@ -207,6 +210,7 @@
 				    </div>
 				</div>
 		 	</form>
+		 	
             <!-- 트레이너 폼 -->
 		 	<form action="/user/register/trainer" id="registerform-trainer" style="display: none" method="post">
 				<div class="row g-3">
@@ -424,7 +428,7 @@
 	   });
 	
 	
-
+	// 회원가입 폼 선택
 	   $(document).ready(function() {
 	   $('#user-img').on('click', function() {
 	   		$('#trainer-img').hide();

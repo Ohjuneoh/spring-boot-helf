@@ -22,28 +22,38 @@ public class UserController {
 	// 로그인화면 요청처리
 	@GetMapping(value="/loginform")
 	public String loginForm() {
-		return "loginform";
+		return "/loginform";
 	}
 
 	// 회원가입화면 요청처리
 	@GetMapping(value="/registerform")
 	public String registerForm() {
-		return "registerform";
+		return "/registerform";
 	}
 	
+
 	// 회원가입 요청
-	@PostMapping(value="/register")
-	public String register(AddUserForm form) {
+	@PostMapping(value="/register/user") 
+	public String registerUser(AddUserForm form) {
 		userService.createUser(form);
 		
 		return "redirect:/";
 	}
 	
-	
-	@GetMapping(value="/test")
-	public String test() {
-		return "test";
+	// 회원가입 요청
+	@PostMapping(value="/register/trainer") 
+	public String registerTrainer(AddUserForm form) {
+		userService.createTrainer(form);
+		
+		return "redirect:/";
 	}
-
+	
+	
+	// 아이디찾기화면 요청처리
+	@GetMapping(value="/findId")
+	public String findId() {
+		
+		return "/findId";
+	}
 
 }
