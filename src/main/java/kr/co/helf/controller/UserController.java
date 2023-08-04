@@ -55,5 +55,12 @@ public class UserController {
 		
 		return "/findId";
 	}
+	
+	// 비밀번호찾기화면 요청처리
+	@GetMapping(value="/findPwd")
+	public String findPassword() {
+		
+		return "/findPwd";
+	}
 
 }

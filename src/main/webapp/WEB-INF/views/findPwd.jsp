@@ -60,10 +60,10 @@
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
                         
-                        	<form action="/user/find-id" method="post">
+                        	<form action="/user/find-pwd" method="post">
 	                            <div class="row g-3">
 	                            	<div class="col-xl-12">
-	                            		<a><strong style="font-size: 40px;">아이디 찾기</strong></a>
+	                            		<a><strong style="font-size: 40px;">비밀번호 찾기</strong></a>
 	                            	</div>
 	                            	
 	                            	<div class="border p-3 bg-light">
