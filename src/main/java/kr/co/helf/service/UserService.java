@@ -16,7 +16,7 @@ import kr.co.helf.vo.User;
 public class UserService {
 	
 	@Autowired
-	private UserMapper userDao;
+	private UserMapper userMapper;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -27,8 +27,8 @@ public class UserService {
 		BeanUtils.copyProperties(form, user);
 		
 		//비밀번호를 암호화해서 저장시키기
-		//String encryptedPassword = passwordEncoder.encode(form.getPassword());
-		//user.setEncryptedPassword(encryptedPassword);
+		String encryptedPassword = passwordEncoder.encode(form.getPassword());
+		user.setEncryptedPassword(encryptedPassword);
 		
 		// 등급, 타입 담기
 		user.setType("ROLE_USER");
@@ -36,7 +36,7 @@ public class UserService {
 		rank.setNo(1);
 		user.setRank(rank);
 		
-		userDao.insertUser(user);
+		userMapper.insertUser(user);
 		
 	}
 
@@ -54,12 +54,12 @@ public class UserService {
 		user.setType("ROLE_TRAINER");
 		user.setStatus("R");
 		
-		userDao.insertTrainer(user);
+		userMapper.insertTrainer(user);
 		
 	}
 
 	public List<User> getUsersWithFourDigits(String fourDigits) {
-		return userDao.getUsersByDigits(fourDigits);
+		return userMapper.getUsersByDigits(fourDigits);
 
 	}
 }

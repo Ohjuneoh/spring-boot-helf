@@ -76,7 +76,7 @@
 	                                <div class="col-12">
 	                                	<a href="/user/findId"  class="btn" >아이디 찾기</a>
 	                                	<span>│</span>
-	                                	<a href=""  class="btn" >비밀번호 찾기</a>
+	                                	<a href="/user/findPwd"  class="btn" >비밀번호 찾기</a>
 	                                	<span>│</span>
 	                                	<a href="/user/registerform"  class="btn" >회원가입</a>
 	                                </div>
