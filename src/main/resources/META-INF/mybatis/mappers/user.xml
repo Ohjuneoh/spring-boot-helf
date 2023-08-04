@@ -14,9 +14,19 @@
 			user_id					as id,
 			user_name				as name
 		from
-			helf_user
+			helf_users
 		where 
 			user_id = #{value}
+	</select>
+	
+	<select id="getUsersByDigits" parameterType="string" resultType="kr.co.helf.vo.User">
+		select
+			user_tel		as phoneNumber,
+			user_id					as id,
+			user_name				as name
+		from
+			helf_users
+		where substr(user_tel, 10, 4) = #{value}
 	</select>
 	
 </mapper>
