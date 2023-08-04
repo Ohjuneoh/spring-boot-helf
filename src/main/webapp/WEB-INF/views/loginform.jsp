@@ -74,11 +74,11 @@
 	                                    <button class="btn btn-dark w-100 py-3" type="submit">로그인</button>
 	                                </div>
 	                                <div class="col-12">
-	                                	<a href=""  class="btn" >아이디 찾기</a>
+	                                	<a href="/user/findId"  class="btn" >아이디 찾기</a>
 	                                	<span>│</span>
 	                                	<a href=""  class="btn" >비밀번호 찾기</a>
 	                                	<span>│</span>
-	                                	<a href=""  class="btn" >회원가입</a>
+	                                	<a href="/user/registerform"  class="btn" >회원가입</a>
 	                                </div>
 	                            </div>
                         	</form>

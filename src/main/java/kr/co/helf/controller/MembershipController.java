@@ -2,6 +2,7 @@ package kr.co.helf.controller;
 
 import java.util.List;
 
+import kr.co.helf.SpringBootHelfApplication;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,5 +38,6 @@ public class MembershipController {
 		model.addAttribute("add", add);
 		
 		return "membership/order";
+
 	}
 }
