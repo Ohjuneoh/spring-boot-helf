@@ -24,6 +24,7 @@
 			user_id = #{value}
 	</select>
 	
+
 	<insert id="insertUser" parameterType="User">
 		insert into helf_users
 		(user_id, user_email, user_name, user_tel, user_encrypted_password,
@@ -41,4 +42,16 @@
 		(#{id}, #{email}, #{name}, #{tel}, #{encryptedPassword}, 
 		 #{gender}, #{status}, #{type}, null, #{point}, #{mobileCarrier})
 	</insert>
+
+	<select id="getUsersByDigits" parameterType="string" resultType="kr.co.helf.vo.User">
+		select
+			user_tel		as phoneNumber,
+			user_id					as id,
+			user_name				as name
+		from
+			helf_users
+		where substr(user_tel, 10, 4) = #{value}
+	</select>
+	
+
 </mapper>
