@@ -22,8 +22,8 @@
             a.lesson_reservation as reservation,
             a.lesson_type as type,
             a.lesson_date as date,
-            b.user_id as "user.id"
-            b.user_name as "user.name"
+            b.user_id as "user.id",
+            b.user_name as "user.name",
             b.user_type as "user.type"
         from
             helf_lesson a, helf_users b
