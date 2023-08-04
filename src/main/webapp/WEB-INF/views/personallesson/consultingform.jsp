@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdmnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
@@ -34,7 +34,7 @@
     <!-- Date Picker  -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
-
+<!-- 위에 모든 페이지까지 공통부분 건들 x -->
 <body>
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -57,8 +57,8 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">LESSONLIST</h1>
-                    <a href="" class="h5 text-white">수업 목록</a>
+                    <h1 class="display-4 text-white animated zoomIn">CONSULTING</h1>
+                    <a href="" class="h5 text-white">상담신청</a>
                 </div>
             </div>
         </div>
@@ -80,45 +80,65 @@
             </div>
         </div>
     </div>
+   	<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
+        <div class="container py-5">
+		 	<form class="" id="group-lesson-form">
+		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+	        		<div class="container ">
+	            		<div class="row g-1" >
+                    		<div class="section-title position-relative pb-3 mb-5">
+                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">HELF TRAINERS</h5>
+                        		<h2 class="mb-3" >트레이너를 선택해주세요</h2>
+                        		<h6 class="mb-0" >해당 강사에게 무료 PT 상담 요청이 진행되며, 회원님의 담당강사로 배정되어 1:1 상담 및 관리를 해드립니다.</h6>
+								<h6 class="mb-0">센터의 사정에 의해 다른 담당강사가 배정될 수 있습니다. 배정된 담당강사가 확인 후 회원님께 연락을 드립니다</h6>
+			               	</div>
+			               	<div class="col-6" >
+	            				<img src="/resources/img/sampletrainer.jpg"  class="img-fluid"/>
+	            			</div>
+		           			<div class="col-3"> 
+		            			<h1 class="mb-5">마동석 강사</h1>
+		            			<h4 class="mb-3">주요약력</h4>
+		            			<h6 class="text-muted">성균관대 스포츠학과 졸업</h6>
+		            			<h6 class="text-muted">PASS 입시체육학원 강사</h6>
+		            			<h6 class="text-muted">SKKU 스포츠의학 수료</h6>
+		            			<h6 class="text-muted">SKKU 인체해부학 수료</h6>
+		            			<h6 class="text-muted">현 HELF 트레이너</h6>
+		            		</div>
+		            		<div class="col-3"> 
+		            			<button class="btn btn-primary btn-lg">신청하기</button>
+		            		</div>
+		            		<hr width="90%" color="gray"></hr>
+				    	</div>
+				 	</div>
+				</div>
+		 	</form>
+        </div>
+    </div>
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
-		<div class="container py-5">
-			<div class="row mb-3">
-				<div class="col-12">
-					<div class="card" >
-						<div class="card-header bg-dark" style="color: #ffffff">
-							수업 목록
-							<span class="float-end">
-								<a href="/grouplesson/registration" class="btn btn-primary btn-sm ">신규 수업 등록</a>
-							</span>
-						</div>
-						<div class="card-body">
-			               <table class="table">
-			               		<thead>
-			                     	<tr>
-			                        	<th>수업 번호</th>
-			                        	<th>수업명</th>
-			                        	<th>강사명</th>
-			                        	<th>모집총원</th>
-			                        	<th>모집여부</th>
-			                     	</tr>
-			                  	</thead>
-			                  	<tbody>
-		                  			<tr>
-				                        <td>1</td>
-										<td>1</td>
-										<td>1</td>
-										<td>1</td>
-				                        <td>1</td>
-		                    		 </tr>
-		                 			<tr>
-	                 					<td colspan="5" class="text-center">검색결과가 존재하지 않습니다.</td>
-		                 			</tr>
-			             		</tbody>
-			               </table>
-        				</div>
-    				</div>
-    			</div>
-    		</div>
+        <div class="container py-5">
+		 	<form class="" id="group-lesson-form">
+		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+	        		<div class="container ">
+	            		<div class="row g-1" >
+                    		<div class="section-title position-relative pb-3 mb-5">
+                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">1:1 PT 신청</h5>
+                        		<h1 class="mb-0" style="font-size: 15px;" >내용을 입력해주세요</h1>
+			               	</div>
+				    	</div>
+				 	</div>
+				</div>
+				<div class="row g-1">
+				    <div class="col-12">
+				        <input type="text" class="form-control bg-light border-0" id="name" placeholder="수업명" style="height: 55px;">
+				    </div>
+				    <div class="col-6">
+				    	<input type="text" class="form-control bg-light border-0"  id="date" style="height: 55px;" placeholder="수업날짜">
+				    </div>
+					<div class="col-12">
+					  <textarea class="form-control bg-light border-0" id="content" style="height: 300px;" placeholder="내용"></textarea>
+					</div>
+				</div>
+		 	</form>
         </div>
     </div>
     <!-- Lesson Register Form End  -->
@@ -216,6 +236,14 @@
 	<script src="/resources/js/main.js"></script>
     
 <script>
+$( function() {
+    $("#date").datepicker({
+   		dateFormat: 'yy/mm/dd'
+    });
+});
+
+
+	
 
 </script>
     
