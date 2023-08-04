@@ -95,7 +95,7 @@
 			               <table class="table">
 			               		<thead>
 			                     	<tr>
-			                        	<th>수업 번호</th>
+			                        	<th>수업번호</th>
 			                        	<th>수업명</th>
 			                        	<th>강사명</th>
 			                        	<th>모집총원</th>
