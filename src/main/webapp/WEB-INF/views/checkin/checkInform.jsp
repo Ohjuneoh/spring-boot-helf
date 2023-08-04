@@ -4,7 +4,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <style>
-
+	.modal-font-size {
+            font-size: 150%;
 </style>
 <head>
     <title>HELF 입장하기</title>
@@ -105,7 +106,7 @@
                         <form id="checkinForm" method="get" action="customer-verification">
                             <div class="input-group">
                                 <input type="text" class="form-control border-white p-3" placeholder="휴대폰 뒷번호 네 자리" id="fourDigits" name="fourDigits">
-                                <button type="button" class="btn btn-dark"  id="btn-open-modal">입장</button>
+                                <button type="button" class="btn btn-dark btn-lg"  id="btn-open-modal">입장</button>
                             </div>
                         </form>
                     </div>
@@ -116,19 +117,19 @@
     </div>
     <!-- Concept -입장하기 form End  -->
     
+    
     <!-- Modal 회원정보 Start -->
    <div class="modal fade" id="userModal" data-bs-backdrop="static" role="dialog" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">>
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">회원 목록</h5>
+                <h1 class="modal-title" id="staticBackdropLabel">회원 목록</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>본인 정보를 확인하시고 '선택'버튼을 눌러주세요.</p>
-                <!-- The user list will be dynamically added here using AJAX -->
+                <p class="modal-font-size">본인 정보를 확인하시고 '선택'버튼을 눌러주세요.</p>
+              
                 <table class="table" id="modal-table-users">
                 	<thead>
                 		<tr>
@@ -143,14 +144,12 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
    </div>
 	<!-- Modal 회원정보 End -->
-    
-    
     
  <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
@@ -266,6 +265,7 @@
 	
 	
 	$("#btn-open-modal").click(function() {
+		$("#modal-table-users tbody").empty();
         const fourDigits = $("#fourDigits").val();
         $.ajax({
             type: "GET",
@@ -277,8 +277,8 @@
             		let tr = `
             			<tr>
             				<td>\${user.name}</td>
-            				<td>\${user.phoneNumber}</td>
-            				<td><a href="/checkin/check-in-choice?id=\${user.id}" class="btn btn-outline-primary btn-sm">선택</a></td>
+            				<td>\${user.tel}</td>
+            				<td><a href="/checkin/check-in-choice?id=\${user.id}" class="btn btn-outline-primary">선택</a></td>
             			</tr>
             		`
             		$("#modal-table-users tbody").append(tr);
@@ -295,7 +295,6 @@
 				
 	});
 	
-	// 모달 엘리먼트에 이벤트 핸들러 함수 등록하기 
 	
 	
 	
