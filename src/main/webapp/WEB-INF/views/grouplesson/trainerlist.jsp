@@ -86,7 +86,7 @@
 				<div class="col-12">
 					<div class="card" >
 						<div class="card-header bg-dark" style="color: #ffffff">
-							수업 목록
+							수업목록
 							<span class="float-end">
 								<a href="/grouplesson/registration" class="btn btn-primary btn-sm ">신규 수업 등록</a>
 							</span>
