@@ -45,8 +45,8 @@
 
 	<select id="getUsersByDigits" parameterType="string" resultType="kr.co.helf.vo.User">
 		select
-			user_tel		as phoneNumber,
 			user_id					as id,
+			user_tel				as tel,
 			user_name				as name
 		from
 			helf_users
