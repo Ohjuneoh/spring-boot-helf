@@ -87,7 +87,7 @@
         	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
 	        	<div class="container ">
 	            	<div class="row g-1" >
-                   		<div class="section-title position-relative pb-3 mb-5" id="lesson-reservation">
+                   		<div class="section-title position-relative pb-3 mb-5" id="lesson-registration">
                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;" >수업개설</h5>
                  				<h1 class="mb-0" style="font-size: 15px;" >수업유형을 선택하세요</h1>
 			    		</div>
@@ -152,6 +152,12 @@
 					<div class="col-12">
 					  <textarea class="form-control bg-light border-0" id="content" style="height: 300px;" placeholder="내용"></textarea>
 					</div>
+					<div class="col-12">
+				        <button class="btn btn-dark w-100 py-3" type="submit">등록</button>
+				    </div>
+				    <div class="col-12">
+				        <button class="btn btn-primary w-100 py-3" type="submit" id="group-back">뒤로가기</button>
+				    </div>
 				</div>
 		 	</form>
 		 	<form class="" id="group-lesson-form" style="display: none">
@@ -184,6 +190,12 @@
 					<div class="col-12">
 					  <textarea class="form-control bg-light border-0" id="content" style="height: 300px;" placeholder="내용"></textarea>
 					</div>
+					<div class="col-12">
+				        <button class="btn btn-dark w-100 py-3" type="submit">등록</button>
+				    </div>
+				    <div class="col-12">
+				        <button class="btn btn-primary w-100 py-3" type="submit" id="personal-back">뒤로가기</button>
+				    </div>
 				</div>
 		 	</form>
         </div>
@@ -287,7 +299,7 @@ $(document).ready(function() {
 $('#personal-lesson-img').on('click', function() {
 		$('#group-lesson-img').hide();
 		$('#group-lesson-form').hide();
-		$('#lesson-reservation').hide();
+		$('#lesson-registration').hide();
 		$('#personal-lesson-form').show();
 		$(this).hide();
 	});
@@ -295,11 +307,34 @@ $('#personal-lesson-img').on('click', function() {
  $('#group-lesson-img').on('click', function() {
 	$('#personal-lesson-img').hide();
 	$('#personal-lesson-form').hide();
-	$('#lesson-reservation').hide();
+	$('#lesson-registration').hide();
 	$('#group-lesson-form').show();
 	$(this).hide();
 	});
 });
+$(document).back(function() {
+	$('#personal-back').on('click', function() {
+			$('#group-lesson-img').show();
+			$('#personal-lesson-img').show();
+			$('#group-lesson-form').hide();
+			$('#lesson-registration').show();
+			$('#personal-lesson-form').hide();
+			$(this).hide();
+		});
+
+	 $('#group-back').on('click', function() {
+			$('#group-lesson-img').show();
+			$('#personal-lesson-img').show();
+			$('#group-lesson-form').hide();
+			$('#lesson-registration').show();
+			$('#personal-lesson-form').hide();
+		$(this).hide();
+		});
+	});
+
+
+
+
 $( function() {
     $("#date").datepicker({
    		dateFormat: 'yy/mm/dd'
