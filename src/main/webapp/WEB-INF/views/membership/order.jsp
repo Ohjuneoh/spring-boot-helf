@@ -88,7 +88,7 @@
 			<br/>
 			<br/>
 			<br/>
-			<div class="text-center">
+			<div class="text-center ">
 				<span class="border border-primary rounded-circle d-inline-block bg-primary" style="height:125px; width:125px; padding-top:46px; padding-left:1px;">
 					<strong>이용약관</strong>
 				</span>
@@ -111,42 +111,46 @@
 		  			</strong>
 		  		</span>
 			</div>
-			<p>
-				<a class="form-select bg-light border-0" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-					<strong style="color: red;">[필수]</strong> 이용약관
-				</a>
-					</p>
-					<div class="collapse" id="collapseExample">
-						<label>
-						    <input type="checkbox" id="agreeCheckbox-1" class="normal">
-						    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
-						</label>
-					  	<div class="card card-body bg-light border-0">
-					   		내용넣어주세요
-					  	</div>
-						<label>
-						    <input type="checkbox" id="agreeCheckbox-2" class="normal">
-						    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
-						</label>
-					  	<div class="card card-body bg-light border-0">
-					   		내용넣어주세요
-					  	</div>
-						<label>
-						    <input type="checkbox" id="agreeCheckbox-3" class="normal">
-						    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
-						</label>
-					  	<div class="card card-body bg-light border-0">
-					   		내용넣어주세요
-					  	</div>
-						  <input type="checkbox" id="check_all" >
-  						  <label for="check_all">전체 동의합니다.</label>
-					</div>				    
+			<br/>
+			<br/>
+			<br/>
+			<div class="offset-2">
+				<div class="card card-body bg-light border-0" style="height:600px; width:900px;">
+					내용넣어주세요
+				</div>
+				<br/>
+				<label>
+					<input type="checkbox" id="agreeCheckbox-2" class="normal">
+					<strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
+				</label> 
+			</div>
+			<br/>
+			<br/>
+			<div class="offset-2">
+				<div class="card card-body bg-light border-0" style="height:600px; width:900px;">
+					내용넣어주세요
+				</div>
+				<br/>
+				<label>
+					<input type="checkbox" id="agreeCheckbox-2" class="normal">
+					<strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
+				</label> 
+			</div>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<div>
+				<span class="text-left">
+					<button class="btn btn-danger">취소</button>
+				</span>
+				<span class="text-end">
+				<button class="btn btn-primary">다음</button>
+				</span>
+			</div>
 		</div>
 	</div>
 	
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
-
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

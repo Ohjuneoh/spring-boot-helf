@@ -114,10 +114,6 @@
 		</div>
     </div>
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
-
-
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -142,9 +138,6 @@ $(function() {
         								.next().removeClass('d-none')
         								.next().addClass('d-none')
 	});
-	
-	
-	
 });
 </script>
 </html>
