@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdmnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
@@ -34,7 +34,7 @@
     <!-- Date Picker  -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
-
+<!-- 위에 모든 페이지까지 공통부분 건들 x -->
 <body>
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -101,7 +101,7 @@
                             <img class="img-fluid w-100" src="/resources/img/personal.jpg" alt="">
                         </div>
                         <div class="text-center py-4">
-                            <h4 class="text-primary" style="font-size:40px;" >개인수업</h4>
+                            <h4 class="text-primary" style="font-size:40px;" >수업신청</h4>
                         </div>
                     </div>
                 </div>
@@ -111,7 +111,7 @@
                             <img class="img-fluid w-100" src="/resources/img/group.jpg" alt="">
                         </div>
                         <div class="text-center py-4">
-                            <h4 class="text-primary" style="font-size:40px;"  >그룹수업</h4>
+                            <h4 class="text-primary" style="font-size:40px;"  >수업조회</h4>
                         </div>
                     </div>
                 </div>
@@ -135,10 +135,10 @@
 				</div>
 				<div class="row g-1">
 				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" id="name" placeholder="수업명" style="height: 55px;">
+				        <input type="text" class="form-control bg-light border-0"  placeholder="수업명" style="height: 55px;">
 				    </div>
 				    <div class="col-6">
-				    	<input type="text" class="form-control bg-light border-0"  id="date" style="height: 55px;" placeholder="수업날짜">
+				    	<input type="text" class="form-control bg-light border-0"   style="height: 55px;" placeholder="수업날짜">
 				    </div>
 					<div class="col-6">
 					    <select id="dropdown1" class="form-select bg-light border-0" style="height: 55px;">
@@ -150,7 +150,7 @@
 					    </select>
 					</div>
 					<div class="col-12">
-					  <textarea class="form-control bg-light border-0" id="content" style="height: 300px;" placeholder="내용"></textarea>
+					  <textarea class="form-control bg-light border-0"  style="height: 300px;" placeholder="내용"></textarea>
 					</div>
 				</div>
 		 	</form>
@@ -173,7 +173,7 @@
 				    	<input type="text" class="form-control bg-light border-0"  id="date" style="height: 55px;" placeholder="수업날짜">
 				    </div>
 					<div class="col-6">
-					    <select id="dropdown1" class="form-select bg-light border-0" style="height: 55px;">
+					    <select  class="form-select bg-light border-0" style="height: 55px;">
 					      <option value=""  >시간</option>
 					      <option value="10~12" class="form-control bg-light border-0" >10:00 ~ 12:00</option>
 					      <option value="13~14" class="form-control bg-light border-0" >13:00 ~ 15:00</option>

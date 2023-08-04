@@ -34,7 +34,7 @@
     <!-- Date Picker  -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
-
+<!-- 위에 모든 페이지까지 공통부분 건들 x -->
 <body>
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -87,42 +87,16 @@
         	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
 	        	<div class="container ">
 	            	<div class="row g-1" >
-                   		<div class="section-title position-relative pb-3 mb-5" id="lesson-registration">
-                       		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;" >수업개설</h5>
-                 				<h1 class="mb-0" style="font-size: 15px;" >수업유형을 선택하세요</h1>
-			    		</div>
 					</div>
 				</div>
 			</div>
-            <div class="row g-5">
-                <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="personal-lesson-img">
-                    <div class="team-item bg-light rounded overflow-hidden">
-                        <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="/resources/img/personal.jpg" alt="">
-                        </div>
-                        <div class="text-center py-4">
-                            <h4 class="text-primary" style="font-size:40px;" >개인수업</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="group-lesson-img">
-                    <div class="team-item bg-light rounded overflow-hidden">
-                        <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="/resources/img/group.jpg" alt="">
-                        </div>
-                        <div class="text-center py-4">
-                            <h4 class="text-primary" style="font-size:40px;"  >그룹수업</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <!-- Lesson Category End -->
     <!-- Lesson Register Form Start  -->
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
         <div class="container py-5">
-			<form class="" id="personal-lesson-form" style="display: none">
+		 	<form class="" id="group-lesson-form" >
 		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
 	        		<div class="container ">
 	            		<div class="row g-1" >
@@ -141,7 +115,7 @@
 				    	<input type="text" class="form-control bg-light border-0"  id="date" style="height: 55px;" placeholder="수업날짜">
 				    </div>
 					<div class="col-6">
-					    <select id="dropdown1" class="form-select bg-light border-0" style="height: 55px;">
+					    <select  class="form-select bg-light border-0" style="height: 55px;">
 					      <option value=""  >시간</option>
 					      <option value="10~12" class="form-control bg-light border-0" >10:00 ~ 12:00</option>
 					      <option value="13~14" class="form-control bg-light border-0" >13:00 ~ 15:00</option>
@@ -152,51 +126,8 @@
 					<div class="col-12">
 					  <textarea class="form-control bg-light border-0" id="content" style="height: 300px;" placeholder="내용"></textarea>
 					</div>
-					<div class="col-12">
-				        <button class="btn btn-dark w-100 py-3" type="submit">등록</button>
-				    </div>
-				    <div class="col-12">
-				        <button class="btn btn-primary w-100 py-3" type="submit" id="group-back">뒤로가기</button>
-				    </div>
 				</div>
-		 	</form>
-		 	<form class="" id="group-lesson-form" style="display: none">
-		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
-	        		<div class="container ">
-	            		<div class="row g-1" >
-                    		<div class="section-title position-relative pb-3 mb-5">
-                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">수업개설</h5>
-                        		<h1 class="mb-0" style="font-size: 15px;" >내용을 입력해주세요</h1>
-			               	</div>
-				    	</div>
-				 	</div>
-				</div>
-				<div class="row g-1">
-				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" id="name" placeholder="수업명" style="height: 55px;">
-				    </div>
-				    <div class="col-6">
-				    	<input type="text" class="form-control bg-light border-0"  id="date" style="height: 55px;" placeholder="수업날짜">
-				    </div>
-					<div class="col-6">
-					    <select id="dropdown1" class="form-select bg-light border-0" style="height: 55px;">
-					      <option value=""  >시간</option>
-					      <option value="10~12" class="form-control bg-light border-0" >10:00 ~ 12:00</option>
-					      <option value="13~14" class="form-control bg-light border-0" >13:00 ~ 15:00</option>
-					      <option value="14~16" class="form-control bg-light border-0" >14:00 ~ 16:00</option>
-					      <option value="16~18" class="form-control bg-light border-0" >16:00 ~ 18:00</option>
-					    </select>
-					</div>
-					<div class="col-12">
-					  <textarea class="form-control bg-light border-0" id="content" style="height: 300px;" placeholder="내용"></textarea>
-					</div>
-					<div class="col-12">
-				        <button class="btn btn-dark w-100 py-3" type="submit">등록</button>
-				    </div>
-				    <div class="col-12">
-				        <button class="btn btn-primary w-100 py-3" type="submit" id="personal-back">뒤로가기</button>
-				    </div>
-				</div>
+				<button type="submit" class=" btn btn-primary mt-1 float-end">등록</button>
 		 	</form>
         </div>
     </div>
@@ -295,46 +226,6 @@
 	<script src="/resources/js/main.js"></script>
     
 <script>
-$(document).ready(function() {
-$('#personal-lesson-img').on('click', function() {
-		$('#group-lesson-img').hide();
-		$('#group-lesson-form').hide();
-		$('#lesson-registration').hide();
-		$('#personal-lesson-form').show();
-		$(this).hide();
-	});
-
- $('#group-lesson-img').on('click', function() {
-	$('#personal-lesson-img').hide();
-	$('#personal-lesson-form').hide();
-	$('#lesson-registration').hide();
-	$('#group-lesson-form').show();
-	$(this).hide();
-	});
-});
-$(document).back(function() {
-	$('#personal-back').on('click', function() {
-			$('#group-lesson-img').show();
-			$('#personal-lesson-img').show();
-			$('#group-lesson-form').hide();
-			$('#lesson-registration').show();
-			$('#personal-lesson-form').hide();
-			$(this).hide();
-		});
-
-	 $('#group-back').on('click', function() {
-			$('#group-lesson-img').show();
-			$('#personal-lesson-img').show();
-			$('#group-lesson-form').hide();
-			$('#lesson-registration').show();
-			$('#personal-lesson-form').hide();
-		$(this).hide();
-		});
-	});
-
-
-
-
 $( function() {
     $("#date").datepicker({
    		dateFormat: 'yy/mm/dd'
