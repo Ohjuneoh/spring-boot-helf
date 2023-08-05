@@ -81,32 +81,110 @@
     </div>
     <!-- Full Screen Search End -->
 
-	<!-- 지도 api start -->
+	<!-- 지도 api, 지점소개 start -->
 	<div class="row">
-		<div class="col-lg-7" id="map" style="width: 1000px; height: 500px;"></div>
+		<div class="col-lg-7" id="map" style="width: 1000px; height: 500px;" ></div>
 		
-		 <div class="col-lg-5">
-		 	  <h1>찾아오시는 길</h1>
-	          <div class="branch-info-row">
-	          	<div class="info-tel1"><font size="5">연락처</font></div>
-	          	<div class="info-tel2"><font size="4">02-1234-1111</font></div>
-	          </div>
-	          <div class="branch-info-row">
-	          	<div class="info-add1"><font size="5">주소</font></div>
-	          	<div class="info-add2"><font size="4">서울시 종로구 율곡로 10길 105</font></div>
-	          </div>
-	          <div class="branch-info-row">
-	          	<div class="info-road1"><font size="5">찾아오시는 길</font></div>
-	          	<div class="info-road2"><font size="4">미리내마을 농협 옆 디아망 2층</font></div>
-	          </div>
-	          <div class="branch-info-row">
-	          	<div class="info-parking1"><font size="5">주차안내</font></div>
-	          	<div class="info-parking2"><font size="4">무료주차 3시간 가능</font></div>
-	          </div>
-	     </div>
+		 <div class="col-lg-5"  style="text-align:center" >
+		 	  <h2>찾아오시는 길</h2>
+		 	  
+		 	  <div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"  style="display: flex; justify-content: center;">
+		 	  	<div doz_type="widget" id="w20190820145dcc26dd4ed">
+		 	  		<div class="_widget_data " data-widget-name="가로선" data-widget-type="hr" data-widget-anim="none" data-widget-anim-duration="" data-widget-anim-delay="" data-widget-parent-is-mobile="N">
+		 	  			<div class="widget line type01 _hide" id="hr_w20190820145dcc26dd4ed">
+							<div class="line_box holder" style="width:100px; ">
+								<hr style="border-top-width:1px; border-color:rgba(35, 38, 40, 0.65);">	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		<div doz_type="grid" doz_grid="4" class="col-dz col-dz-4">
+		
+			<div doz_type="row" doz_grid="4" class="doz_row">
+				<div doz_type="grid" doz_grid="4" class="col-dz col-dz-4">
+					<div doz_type="widget" id="w2019081545754e13d8cd3">
+						<div class="_widget_data  animated wg_animated fadeInUp" data-widget-name="텍스트" data-widget-type="text" data-widget-anim="fadeInUp" data-widget-anim-duration="0.7" data-widget-anim-delay="0" data-widget-parent-is-mobile="N" style="opacity: 1; animation-duration: 0.7s; animation-delay: 0s; visibility: visible;">
+							<div doz_type="text" class="widget _text_wrap widget_text_wrap fr-view  default_padding " id="text_w2019081545754e13d8cd3">
+								<div class="text-table mt-2">
+									<div>
+										<p><span style="color: rgb(35, 38, 40);"><strong>주소</strong></span></p>
+										<p><span>서울특별시 종로구 율곡로10길 105 디아망 4F</span></p>
+										<p><span>Tel. 02-2695-1121 | Fax. 02-2697-1121&nbsp;</span></p>
+									</div>
+								</div>		
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div doz_type="row" doz_grid="4" class="doz_row">
+				<div doz_type="grid" doz_grid="4" class="col-dz col-dz-4">
+					<div doz_type="widget" id="w20190820e84e7943d2c5e">
+						<div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N">
+							<div class="widget padding" data-height="14" style="margin-top:px; margin-bottom:px;">
+								<div id="padding_w20190820e84e7943d2c5e" style="width:100%; min-height:1px; height:14px; "></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div doz_type="row" doz_grid="4" class="doz_row">
+				<div doz_type="grid" doz_grid="4" class="col-dz col-dz-4">
+					<div doz_type="widget" id="w2019081748f6c6e1b57b9">
+						<div class="_widget_data  animated wg_animated fadeInUp" data-widget-name="텍스트" data-widget-type="text" data-widget-anim="fadeInUp" data-widget-anim-duration="0.7" data-widget-anim-delay="0.2" data-widget-parent-is-mobile="N" style="opacity: 1; animation-duration: 0.7s; animation-delay: 0.2s; visibility: visible;">
+							<div doz_type="text" class="widget _text_wrap widget_text_wrap fr-view  default_padding " id="text_w2019081748f6c6e1b57b9">
+								<div class="text-table ">
+									<div>
+										<p><span style="color: rgb(35, 38, 40);"><strong>운영시간</strong></span></p>
+										<p>월-금 06:00 ~ 23:00</p><p>토-일, 공휴일 08:00 ~ 20:00</p>
+									</div>
+								</div>		
+							</div>
+	
+						</div>
+					</div>
+				</div>
+			</div>
+			<div doz_type="row" doz_grid="4" class="doz_row">
+				<div doz_type="grid" doz_grid="4" class="col-dz col-dz-4">
+					<div doz_type="widget" id="w20190820d73d6bdbeb75d">
+						<div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N">
+							<div class="widget padding" data-height="14" style="margin-top:px; margin-bottom:px;">
+								<div id="padding_w20190820d73d6bdbeb75d" style="width:100%; min-height:1px; height:14px; "></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div doz_type="row" doz_grid="4" class="doz_row">
+				<div doz_type="grid" doz_grid="4" class="col-dz col-dz-4">
+					<div doz_type="widget" id="w201908176065896b508a7">
+						<div class="_widget_data  animated wg_animated fadeInUp" data-widget-name="텍스트" data-widget-type="text" data-widget-anim="fadeInUp" data-widget-anim-duration="0.7" data-widget-anim-delay="0.4" data-widget-parent-is-mobile="N" style="opacity: 1; animation-duration: 0.7s; animation-delay: 0.4s; visibility: visible;">
+							<div doz_type="text" class="widget _text_wrap widget_text_wrap fr-view  default_padding " id="text_w201908176065896b508a7">
+										<div class="text-table ">
+											<div>
+												<p><span style="color: rgb(35, 38, 40);"><strong>교통편</strong></span></p>
+												<p>지하철역 | 2/5호선 까치산역 4번 출구 앞</p>
+												<p>버스 | 
+													<span style="background-color: rgb(54, 5, 198); color: rgb(255, 255, 255);">간선</span> 652, 653, N65, 
+													<span style="background-color: rgb(39, 195, 0); color: rgb(255, 255, 255);">지선</span> 5712, 6514, 6628, 6630, 6657
+												</p>
+												<p>자가용 | 디아망 주차장 이용 가능</p>
+											</div>
+										</div>		
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	    </div>
      </div>
 
-	<!-- 지도 api end -->
+	<!-- 지도 api, 지점소개 end -->
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">

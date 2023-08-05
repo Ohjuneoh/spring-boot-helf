@@ -100,7 +100,7 @@
         		<div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="user-img">
             		<div class="team-item bg-light rounded overflow-hidden">
                		 	<div class="team-img position-relative overflow-hidden">
-                    		<img class="img-fluid w-100" src="/resources/img/personal.jpg" alt="">
+                    		<img class="img-fluid w-100" src="/resources/img/회원.jpg" alt="">
                 		</div>
                 		<div class="text-center py-4">
                     		<h4 class="text-primary" style="font-size:40px;">회원</h4>
@@ -110,7 +110,7 @@
        			 <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="trainer-img">
             		<div class="team-item bg-light rounded overflow-hidden">
                 		<div class="team-img position-relative overflow-hidden">
-                   			<img class="img-fluid w-100" src="/resources/img/group.jpg" alt="">
+                   			<img class="img-fluid w-100" src="/resources/img/트레이너.jpg" alt="">
                 		</div>
                	 		<div class="text-center py-4">
                     		<h4 class="text-primary" style="font-size:40px;">트레이너</h4>
@@ -185,9 +185,11 @@
 							    <input type="checkbox" id="agreeCheckbox-1" class="normal">
 							    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
 							</label>
+							
 						  	<div class="card card-body bg-light border-0">
 						   		내용넣어주세요
 						  	</div>
+						  	
 							<label>
 							    <input type="checkbox" id="agreeCheckbox-2" class="normal">
 							    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
