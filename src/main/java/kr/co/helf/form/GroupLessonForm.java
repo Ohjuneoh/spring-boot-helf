@@ -1,9 +1,12 @@
 package kr.co.helf.form;
 
+import kr.co.helf.vo.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.Date;
 
 @Getter
 @Setter
@@ -12,7 +15,8 @@ import lombok.ToString;
 public class GroupLessonForm {
     private int no;
     private String name;
-    private String description;
     private int quota;
-    private String userId;
+    private Date date;
+    private String time;
+    private String description;
 }
