@@ -26,7 +26,7 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업(고객)</a>
                 <div class="dropdown-menu m-0">
-                    <a href="/lesson/reservation" class="dropdown-item">수업 예약</a>
+                    <a href="/grouplesson/list" class="dropdown-item">수업 예약</a>
                     <a href="detail" class="dropdown-item">그룹수업 시간표</a>
                 </div>
             </div>

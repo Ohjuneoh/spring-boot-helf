@@ -11,7 +11,7 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="himg/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -97,7 +97,7 @@
     <!-- Lesson Register Form Start  -->
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
         <div class="container py-5">
-		 	<form class="" id="group-lesson-form" >
+		 	<form class="" id="group-lesson-form" method="post" action="/grouplesson/registration">
 		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
 	        		<div class="container ">
 	            		<div class="row g-1" >
@@ -109,23 +109,28 @@
 				 	</div>
 				</div>
 				<div class="row g-1">
-				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" id="name" placeholder="수업명" style="height: 55px;">
-				    </div>
 				    <div class="col-6">
-				    	<input type="text" class="form-control bg-light border-0"  id="date" style="height: 55px;" placeholder="수업날짜">
+				        <input type="text" class="form-control bg-light border-0" name="name" placeholder="수업명" style="height: 55px;">
 				    </div>
 					<div class="col-6">
-					    <select  class="form-select bg-light border-0" style="height: 55px;">
+						<input type="text" class="form-control bg-light border-0" name="quota" placeholder="총 인원" style="height: 55px;">
+					</div>
+				    <div class="col-6">
+				    	<input type="text" class="form-control bg-light border-0"  id="date" name="date" style="height: 55px;" placeholder="수업날짜">
+				    </div>
+					<div class="col-6">
+					    <select  class="form-select bg-light border-0" name="time" style="height: 55px;">
 					      <option value=""  >시간</option>
 					      <option value="10~12" class="form-control bg-light border-0" >10:00 ~ 12:00</option>
 					      <option value="13~14" class="form-control bg-light border-0" >13:00 ~ 15:00</option>
 					      <option value="14~16" class="form-control bg-light border-0" >14:00 ~ 16:00</option>
 					      <option value="16~18" class="form-control bg-light border-0" >16:00 ~ 18:00</option>
+					      <option value="18~20" class="form-control bg-light border-0" >18:00 ~ 20:00</option>
+					      <option value="20~22" class="form-control bg-light border-0" >20:00 ~ 22:00</option>
 					    </select>
 					</div>
 					<div class="col-12">
-					  <textarea class="form-control bg-light border-0" id="content" style="height: 300px;" placeholder="내용"></textarea>
+					  <textarea class="form-control bg-light border-0" name="description" style="height: 300px;" placeholder="내용"></textarea>
 					</div>
 				</div>
 				<button type="submit" class=" btn btn-primary mt-1 float-end">등록</button>
