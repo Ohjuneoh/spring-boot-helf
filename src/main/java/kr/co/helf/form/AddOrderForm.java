@@ -11,13 +11,14 @@ public class AddOrderForm {
 
 	private int no;
 	private int period;
+	private int periodPrice;
 	private Date startDate;
 	private Date endDate;
 	private String optionA;
 	private int DurationA;
 	private String optionB;
 	private int DurationB;
-	private int usePoint;
 	private int optionPrice;
+	private int usePoint;
 	private int totalPrice;
 }

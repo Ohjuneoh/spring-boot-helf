@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.helf.mapper.OrderMapper">
+
+	<select id="getMemberships" resultType="membership">
+		select membership_no			as no,
+			   membership_name			as name,
+			   membership_description	as description,
+			   Membership_delete		as state,
+			   category_no				as "category.no",
+			   membership_price			as price
+		from helf_membership
+		order by membership_no desc
+	</select>
+
+	<select id="getMembershipByNo" resultType="membership" parameterType="int">
+		select membership_no			as no,
+			   membership_name			as name,
+			   membership_description	as description,
+			   Membership_delete		as state,
+			   category_no				as "category.no",
+			   membership_price			as price
+		from helf_membership
+		where membership_no = #{value}
+	</select>
+	
+	<select id="getPeriodsByType" resultType="Period" parameterType="string">
+		select period_no				as no, 
+			    period_type				as type,	
+				period_property			as property,
+				period_duration			as duration,
+				period_addprice			as addPrice
+		from helf_membership_period
+		where period_type = #{value}
+	</select>
+
+	<select id="getPeriodByNo" resultType="Period" parameterType="int">
+		select period_no				as no, 
+			   period_type				as type,	
+			   period_property			as property,
+			   period_duration			as duration,
+			   period_addprice			as addPrice
+		from helf_membership_period
+		where period_no = ${value}
+	</select>
+	
+	<select id="getCategoryByNo" parameterType="int" resultType="category">
+		select category_no			as no,
+			   category_name		as name,
+			   category_property	as property,
+			   category_use_option	as useOption
+		from helf_membership_category
+		where category_no = #{value}
+	</select>
+</mapper>

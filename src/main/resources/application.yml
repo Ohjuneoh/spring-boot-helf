@@ -8,7 +8,7 @@ logging:
     root: info
     '[org.springframework.security]': info
     '[org.springframework.web]': trace
-    '[kr.co.helf.dao]': info 
+    '[kr.co.helf.mapper]': info 
 # 커넥션 풀 관련 설정정보 지정하기
 spring:
   datasource:
@@ -23,7 +23,7 @@ spring:
 # mybatis 관련 설정정보 저장하기
 mybatis:
   mapper-locations:
-  - META-INF/mybatis/mappers/**/*.xml
+  - META-INF/mybatis/mappers/*.xml
   configuration:
     jdbc-type-for-null: 'NULL'
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
