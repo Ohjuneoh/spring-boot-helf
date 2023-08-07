@@ -28,6 +28,7 @@ public class User implements UserDetails{
 	private Date updateDate;
 	private int point;
 	private Rank rank;
+	private String type;
 	
 	public User(){}
 	public User(String id) {

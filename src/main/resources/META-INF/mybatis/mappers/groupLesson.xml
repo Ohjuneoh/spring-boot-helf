@@ -2,8 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.helf.mapper.GroupLessonMapper">
     <insert id="insertLesson" parameterType="Lesson">
-        insert into helf_lesson(lesson_no,lesson_name,lesson_description,lesson_quota,user_id)
-        values(helf_lesson_seq.nextval,#{name}, #{description},#{quota},#{user.id});
+        insert into helf_lesson(lesson_no,lesson_name,lesson_time,lesson_description,lesson_disabled,lesson_req_cnt,lesson_quota,
+                                lesson_reservation,lesson_date,user_id)
+        values(helf_lesson_seq.nextval,#{name},#{time},#{description},#{disabled},#{reqCnt},#{quota},#{reservation},#{date},#{user.id})
     </insert>
 
     <select id="getTotalRows" parameterType="map" resultType="int">
@@ -22,15 +23,15 @@
             a.lesson_reservation as reservation,
             a.lesson_type as type,
             a.lesson_date as date,
-            b.user_id as "user.id"
-            b.user_name as "user.name"
+            b.user_id as "user.id",
+            b.user_name as "user.name",
             b.user_type as "user.type"
         from
             helf_lesson a, helf_users b
         where
             lesson_no = #{value}
-            and a.user_id = b.user_id
-            and b.user_type = 'TRAINER'
+          and a.user_id = b.user_id
+          and b.user_type = 'TRAINER'
     </select>
 
 </mapper>

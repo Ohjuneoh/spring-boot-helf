@@ -3,10 +3,10 @@ package kr.co.helf.service;
 import kr.co.helf.form.GroupLessonForm;
 import kr.co.helf.mapper.GroupLessonMapper;
 import kr.co.helf.vo.Lesson;
+import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
 import java.util.Map;
 
 @Service
@@ -16,9 +16,7 @@ public class GroupLessonService {
     private final GroupLessonMapper groupLessonMapper;
 
     // 레슨 등록
-    public void insertLesson(GroupLessonForm groupLessonForm){
-        Lesson lesson = new Lesson();
-        BeanUtils.copyProperties(groupLessonForm,lesson);
+    public void createLesson(Lesson lesson){
         groupLessonMapper.insertLesson(lesson);
     }
     // 레슨번호로 레슨 상세조회
