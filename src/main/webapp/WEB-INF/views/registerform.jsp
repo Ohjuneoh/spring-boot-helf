@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -127,34 +128,39 @@
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
         <div class="container py-5">
         	<!-- 회원 폼 -->
-		   	<form action="/user/register/user" id="registerform-user" style="display: none" method="post">
+		   	<form:form action="/user/register/user" id="registerform-user" style="display: none" method="post" modelAttribute="addUserForm" >
 				<div class="row g-3">
 				<div>
 					<h3>회원 회원가입</h3>
 				</div>
 				
 				    <div class="col-12">
-				         <input type="text" class="form-control bg-light border-0" id="id" name="id" placeholder="아이디" style="height: 55px;">
+				         <form:input type="text" class="form-control bg-light border-0" id="id" path="id" placeholder="아이디" style="height: 55px;" />
+				         <input type="button" value="중복체크" onClick="idCheck()" />
+				         <form:errors path="id" class="text-danger"></form:errors>
 				    </div>
 				    <div class="col-12">
-				        <input type="password" class="form-control bg-light border-0" id="password" name="password" placeholder="비밀번호" style="height: 55px;">
+				        <form:input type="password" class="form-control bg-light border-0" id="password" path="password" placeholder="비밀번호" style="height: 55px;"/>
+				   		<form:errors path="password" class="text-danger"></form:errors>
 				    </div>
 				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" id="email" name="email" placeholder="이메일" style="height: 55px;">
+				        <form:input type="text" class="form-control bg-light border-0" id="email" path="email" placeholder="이메일" style="height: 55px;"/>
+				    	<form:errors path="email" class="text-danger"></form:errors>
 				    </div>
 				    
 				    <div class="col-12">
 				    	<div class="row">
 				    		<div class="col-md-6">
-					        	<input type="text" class="form-control bg-light border-0" id="name"  name="name" placeholder="이름" style="height: 55px;">
+					        	<form:input type="text" class="form-control bg-light border-0" id="name"  path="name" placeholder="이름" style="height: 55px;" />
+				    			<form:errors path="name" class="text-danger"></form:errors>
 				    		</div>
 	
 						    <div class="col-md-3">
-						        <select class="form-select bg-light border-0" id="gender" name="gender" style="height: 55px; width: 100px;">
+						        <form:select class="form-select bg-light border-0" id="gender" path="gender" style="height: 55px; width: 100px;">
 						            <option selected disabled>성별</option>
 						            <option value="MAN">남자</option>
 						            <option value="WOMAN">여자</option>
-						        </select>
+						        </form:select>
 				    		</div>
 				    	</div>  
 				    </div>
@@ -162,19 +168,21 @@
 				    <div class="col-12">
 				    	<div class="row">
 				    		<div class="col-md-6">
-					        	<input type="text" class="form-control bg-light border-0" id="tel" name="tel" placeholder="전화번호" style="height: 55px;">
+					        	<form:input type="text" class="form-control bg-light border-0" id="tel" path="tel" placeholder="전화번호" style="height: 55px;" />
+				    			<form:errors path="tel" class="text-danger"></form:errors>
 				    		</div>
 						    <div class="col-md-6">
-							    <select class="form-select bg-light border-0" id="mobileCarrier" name="mobileCarrier" style="height: 55px; width: 100px;">
+							    <form:select class="form-select bg-light border-0" id="mobileCarrier" path="mobileCarrier" style="height: 55px; width: 100px;">
 						            <option selected disabled>통신사</option>
 						            <option value="SK">SK</option>
 						            <option value="LG">LG</option>
 								    <option value="KT">KT</option>
 								    <option value="MVNO">알뜰폰</option>
-							    </select>
+							    </form:select>
 						    </div>
 				    	</div>  
 				    </div>
+				    <!-- 이용약관 -->
 					<p>
 					  <a class="form-select bg-light border-0" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
 					    <strong style="color: red;">[필수]</strong> 이용약관
@@ -182,8 +190,31 @@
 					</p>
 						<div class="collapse" id="collapseExample">
 							<label>
-							    <input type="checkbox" id="agreeCheckbox-1" class="normal">
-							    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
+							    <input type="checkbox" id="agreeCheckbox-1" class="normal" name="agree1"/>
+							    <strong style="color: red;">[필수]</strong> HELF 이용약관
+							    <div id="list-example" class="list-group">
+  <a class="list-group-item list-group-item-action" href="#list-item-1">여러분을 환영합니다.</a>
+  <a class="list-group-item list-group-item-action" href="#list-item-2">회원으로 가입하시면 네이버 서비스를 보다 편리하게 이용할 수 있습니다.</a>
+  <a class="list-group-item list-group-item-action" href="#list-item-3">여러분이 제공한 콘텐츠를 소중히 다룰 것입니다.</a>
+  <a class="list-group-item list-group-item-action" href="#list-item-4">Item 4</a>
+</div>
+<div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+  <h4 id="list-item-1">여러분을 환영합니다.</h4>
+  <p>네이버 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 네이버 서비스의 이용과 관련하여 네이버 서비스를 제공하는 네이버 주식회사(이하 ‘네이버’)와 이를 이용하는 네이버 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 네이버 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.
+
+네이버 서비스를 이용하시거나 네이버 서비스 회원으로 가입하실 경우 여러분은 본 약관 및 관련 운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다.</p>
+  <h4 id="list-item-2">회원으로 가입하시면 네이버 서비스를 보다 편리하게 이용할 수 있습니다.</h4>
+  <p>여러분은 본 약관을 읽고 동의하신 후 회원 가입을 신청하실 수 있으며, 네이버는 이에 대한 승낙을 통해 회원 가입 절차를 완료하고 여러분께 네이버 서비스 이용 계정(이하 ‘계정’)을 부여합니다. 계정이란 회원이 네이버 서비스에 로그인한 이후 이용하는 각종 서비스 이용 이력을 회원 별로 관리하기 위해 설정한 회원 식별 단위를 말합니다. 회원은 자신의 계정을 통해 좀더 다양한 네이버 서비스를 보다 편리하게 이용할 수 있습니다. 이와 관련한 상세한 내용은 계정 운영정책 및 고객센터 내 네이버 회원가입 방법 등에서 확인해 주세요.
+
+네이버는 단체에 속한 여러 구성원들이 공동의 계정으로 네이버 서비스를 함께 이용할 수 있도록 단체회원 계정도 부여하고 있습니다. 단체회원 구성원들은 하나의 계정 및 아이디(ID)를 공유하되 각자 개별적으로 설정한 비밀번호를 입력하여 계정에 로그인하고 각종 서비스를 이용하게 됩니다. 단체회원은 관리자와 멤버로 구성되며, 관리자는 구성원 전부로부터 권한을 위임 받아 단체회원을 대표하고 단체회원 계정을 운용합니다.
+따라서 관리자는 단체회원 계정을 통해 별도 약관 또는 기존 약관 개정에 대해 동의하거나 단체회원에서 탈퇴할 수 있고, 멤버들의 단체회원 계정 로그인 방법 및 이를 통한 게시물 게재 등 네이버 서비스 이용을 관리(게시물 삭제 포함)할 수 있습니다. 본 약관에서 규정한 사항은 원칙적으로 구성원 모두에게 적용되며, 각각의 구성원은 다른 구성원들의 단체회원 계정 및 아이디(ID)를 통한 서비스 이용에 관해 연대책임을 부담합니다.
+
+단체회원 계정 사용에서의 관리자, 멤버 등의 권한 및 (공동)책임에 관한 사항 등은 계정 운영정책 및 고객센터 내 네이버 단체회원(단체 아이디) 소개 등에서 확인해 주시기 바랍니다.</p>
+  <h4 id="list-item-3">Item 3</h4>
+  <p>...</p>
+  <h4 id="list-item-4">Item 4</h4>
+  <p>...</p>
+</div>
 							</label>
 							
 						  	<div class="card card-body bg-light border-0">
@@ -191,27 +222,27 @@
 						  	</div>
 						  	
 							<label>
-							    <input type="checkbox" id="agreeCheckbox-2" class="normal">
+							    <input type="checkbox" id="agreeCheckbox-2" class="normal" name="agree2"/>
 							    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
 							</label>
 						  	<div class="card card-body bg-light border-0">
 						   		내용넣어주세요
 						  	</div>
 							<label>
-							    <input type="checkbox" id="agreeCheckbox-3" class="normal">
+							    <input type="checkbox" id="agreeCheckbox-3" class="normal" name="agree3"/>
 							    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
 							</label>
 						  	<div class="card card-body bg-light border-0">
 						   		내용넣어주세요
 						  	</div>
-							  <input type="checkbox" id="check_all" >
-		 						  <label for="check_all">전체 동의합니다.</label>
+							  <input type="checkbox" id="check_all" />
+		 					  <label for="check_all">전체 동의합니다.</label>
 						</div>				    
 				    <div class="col-12">
 				        <button class="btn btn-dark w-100 py-3" type="submit">가입하기</button>
 				    </div>
 				</div>
-		 	</form>
+		 	</form:form>
 		 	
             <!-- 트레이너 폼 -->
 		 	<form action="/user/register/trainer" id="registerform-trainer" style="display: none" method="post">
@@ -398,40 +429,8 @@
    <script type="text/javascript"></script>
    
    <script>
-	// 체크박스 전체 선택/해제 처리하는 제이쿼리
-	   $(".collapse").on("click", "#check_all", function () {
-	     var checked = $(this).is(":checked");
-	
-	     if(checked){
-	     	$(this).parents(".collapse").find('input').prop("checked", true);
-	     } else {
-	     	$(this).parents(".collapse").find('input').prop("checked", false);
-	     }
-	   });
-	
-	// 체크박스 전체선택 한 상태에서 다른 체크박스 선택시 전체동의 체크박스 해제된다.
-	   $(".collapse").on("click", ".normal", function() {
-	     var checked = $(this).is(":checked"); 
-	
-	     if (!checked) {
-	     	$("#check_all").prop("checked", false); 
-	     }
-	   });
-	
-	// 체크박스를 개별로 각각 선택하면 전체동의가 체크된다.
-	   $(".collapse").on("click", ".normal", function() {
-	       var is_checked = true;
-	       
-	       $(".collapse .normal").each(function(){
-	           is_checked = is_checked && $(this).is(":checked");
-	       });
-	       
-	       $("#check_all").prop("checked", is_checked);
-	   });
-	
-	
-	// 회원가입 폼 선택
-	   $(document).ready(function() {
+   
+		// 회원가입 폼 선택(회원/트레이너)
 	   $('#user-img').on('click', function() {
 	   		$('#trainer-img').hide();
 	   		$('#registerform-trainer').hide();
@@ -448,8 +447,22 @@
 	   	$(this).hide();
 	   	});
 	    
-	 });
-;
+	    // 이용약관 체크박스 
+		$("#collapseExample :checkbox.normal").change(function() {
+			let allChecked = true;
+
+			$("#collapseExample :checkbox.normal").each(function(index, checkbox) { 
+				allChecked = allChecked && $(checkbox).prop("checked");
+			});
+			
+			$("#check_all").prop("checked", allChecked);
+		});
+		
+		$("#check_all").change(function() {
+			$("#collapseExample :checkbox.normal").prop("checked", $(this).prop("checked"))
+		});
+	
+
 	</script>
 </body>
 </html>
