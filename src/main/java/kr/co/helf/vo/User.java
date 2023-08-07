@@ -23,26 +23,22 @@ public class User implements UserDetails{
 	private String encryptedPassword;
 	private String gender;
 	private String status;
-	private String mobileCarrier;
 	private Date createDate;
 	private Date updateDate;
-	private int point;
-	private Rank rank;
 	private String type;
-	
+	private Rank rank;
+	private int point;
+	private String mobileCarrier;
+
 	public User(){}
 	public User(String id) {
 		this.id = id;
 	}
-	
+
 	// 직원(사용자)의 보유권한을 반환한다.
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-		authorities.add(new SimpleGrantedAuthority("ROLE_TRAINER"));
-		authorities.add(new SimpleGrantedAuthority("ROLE_MASTER"));
-		return authorities;
+		return List.of(new SimpleGrantedAuthority(type));
 	}
 	// 직원(사용자)의 비밀번호를 반환한다.
 	@Override
@@ -74,5 +70,6 @@ public class User implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
-	
+
+
 }
