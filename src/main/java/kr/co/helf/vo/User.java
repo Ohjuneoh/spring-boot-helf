@@ -29,7 +29,6 @@ public class User implements UserDetails{
 	private Rank rank;
 	private int point;
 	private String mobileCarrier;
-
 	public User(){}
 	public User(String id) {
 		this.id = id;
@@ -70,6 +69,4 @@ public class User implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
-
-
 }
