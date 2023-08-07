@@ -1,5 +1,8 @@
+<%@ page import="kr.co.helf.vo.Lesson" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -9,6 +12,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -75,48 +79,56 @@
             <p>그룹레슨 상세정보를 확인할 수 있습니다.</p>
             <table class="table table-bordered">
                 <tbody>
-                <tr>
-                    <th class="table-dark" style="width: 15%;">레슨번호</th>
-                    <td style="width: 35%;"></td>
-                    <th class="table-dark" style="width: 15%;">레슨명</th>
-                    <td style="width: 35%;"></td>
-                </tr>
-                <tr>
-                    <!-- 레슨 날짜에 레슨날짜+레슨시간 출력-->
-                    <th class="table-dark" style="width: 15%;">레슨날짜</th>
-                    <td style="width: 35%;"></td>
-                    <th class="table-dark" style="width: 15%;">강사명</th>
-                    <td style="width: 35%;"></td>
-                </tr>
-                <tr>
-                    <th class="table-dark" style="width: 15%;">총 인원</th>
-                    <td style="width: 35%;"></td>
-                    <th class="table-dark" style="width: 15%;">신청인원</th>
-                    <td style="width: 35%;"></td>
-                </tr>
-                <tr>
-                    <th class="table-dark" style="width: 15%;">레슨모집 상태</th>
-                    <td  style="width: 85%" colspan="3">
-                        <span class="badge text-bg-success p-2">모집중</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th class="table-dark" style="width: 15%;">설명</th>
-                    <td style="width: 85%; height: 200px;" colspan="3"></td>
-                </tr>
+                    <tr>
+                        <th class="table-dark" style="width: 15%;">레슨번호</th>
+                        <td style="width: 35%;">${lesson.no }</td>
+                        <th class="table-dark" style="width: 15%;">레슨명</th>
+                        <td style="width: 35%;">${lesson.name }</td>
+                    </tr>
+                    <tr>
+                        <!-- 레슨 날짜에 레슨날짜+레슨시간 출력-->
+                        <th class="table-dark" style="width: 15%;">레슨날짜</th>
+                        <td style="width: 35%;"><fmt:formatDate value="${lesson.date }" pattern="yyyy년 M월 d일" /> ${lesson.time }시 </td>
+                        <th class="table-dark" style="width: 15%;">강사명</th>
+                        <td style="width: 35%;">${lesson.user.name }</td>
+                    </tr>
+                    <tr>
+                        <th class="table-dark" style="width: 15%;">신청인원</th>
+                        <td style="width: 35%;">${lesson.reqCnt }명</td>
+                        <th class="table-dark" style="width: 15%;">총 인원</th>
+                        <td style="width: 35%;">${lesson.quota }명</td>
+                    </tr>
+                    <tr>
+                        <th class="table-dark" style="width: 15%;">레슨모집 상태</th>
+                        <c:if test="${lesson.reqCnt != lesson.quota}">
+                            <td  style="width: 85%" colspan="3">
+                                <span class="badge text-bg-success p-2">모집중</span>
+                            </td>
+                        </c:if>
+                        <c:if test="${lesson.reqCnt == lesson.quota}">
+                            <td  style="width: 85%" colspan="3">
+                                <span class="badge text-bg-danger p-2">모집완료</span>
+                            </td>
+                        </c:if>
+                    </tr>
+                    <tr>
+                        <th class="table-dark" style="width: 15%;">설명</th>
+                        <td style="width: 85%; height: 200px;" colspan="3">${lesson.description }</td>
+                    </tr>
                 </tbody>
             </table>
             <div class="text-end">
-
-                <a href="" class="btn btn-warning btn-sm">신청</a>
-
-
-                <a href="" class="btn btn-warning btn-sm">수정</a>
-
-
-                <a href="" class="btn btn-primary btn-sm">목록</a>
-
-                <a href="" class="btn btn-danger btn-sm">삭제</a>
+                <!-- 유저로 로그인 시 detail.jsp에 보이는 화면 -->
+                <sec:authorize access="hasRole('ROLE_USER')">
+                <a href="/grouplesson/list" class="btn btn-warning btn-sm">신청</a>
+                <a href="/grouplesson/list" class="btn btn-primary btn-sm">목록</a>
+                </sec:authorize>
+                <!-- 트레이너로 로그인 시 detail.jsp에 보이는 화면 -->
+                <sec:authorize access="hasRole('ROLE_TRAINER')">
+                <a href="/grouplesson/modifyform" class="btn btn-warning btn-sm">수정</a>
+                <a href="/grouplesson/list" class="btn btn-primary btn-sm">목록</a>
+                <a href="/grouplesson/list" class="btn btn-danger btn-sm">삭제</a>
+                </sec:authorize>
             </div>
         </div>
     </div>

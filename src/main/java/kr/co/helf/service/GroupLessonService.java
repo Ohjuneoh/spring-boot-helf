@@ -23,9 +23,9 @@ public class GroupLessonService {
         groupLessonMapper.insertLesson(lesson);
     }
     // 레슨번호로 레슨 상세조회
-    public Lesson getLessonByNo(int lessonNo){
-        return groupLessonMapper.getLessonByNo(lessonNo);
-
+    public Lesson getLessonByNo(int no){
+        Lesson lesson = groupLessonMapper.getLessonByNo(no);
+        return lesson;
     }
     //
     // 레슨 목록 조회(페이징처리)
@@ -42,5 +42,11 @@ public class GroupLessonService {
         List<Lesson> lessons = groupLessonMapper.getAllLessons(param);
 
         return Map.of("lessons", lessons, "pagination", pagination);
+    }
+    // 신청 조회수 증가
+    public void updateReqCount(int lessonNo){
+        Lesson lesson = new Lesson(lessonNo);
+        lesson.setReqCnt(lesson.getReqCnt() + 1);
+        groupLessonMapper.updateReqCount(lesson);
     }
 }

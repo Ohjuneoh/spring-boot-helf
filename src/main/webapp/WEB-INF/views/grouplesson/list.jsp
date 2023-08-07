@@ -86,6 +86,7 @@
 					<div class="card" >
 						<div class="card-header bg-dark" style="color: #ffffff">
 							수업 목록
+							<!-- 트레이너로 로그인 시 신규 수업 등록 버튼 보이게 함-->
 							<sec:authorize access="hasRole('ROLE_TRAINER')">
 								<span class="float-end">
 									<a href="/grouplesson/registration" class="btn btn-primary btn-sm ">신규 수업 등록</a>
@@ -99,7 +100,7 @@
 			                        	<th style="width: 20%">수업 번호</th>
 			                        	<th style="width: 25%">수업명</th>
 			                        	<th style="width: 20%">강사명</th>
-			                        	<th style="width: 20%">모집총원</th>
+			                        	<th style="width: 20%">신청인원/모집총원</th>
 			                        	<th style="width: 15%">모집여부</th>
 			                     	</tr>
 								</thead>
@@ -118,7 +119,7 @@
 				                        	<td>${lesson.no }</td>
 											<td><a href="detail?no=${lesson.no }">${lesson.name }</a></td>
 											<td>${lesson.user.name }</td>
-											<td>${lesson.quota }</td>
+											<td>${lesson.reqCnt }/${lesson.quota }</td>
 				                        	<td>${lesson.reservation }</td>
 		                    		 	</tr>
 									</c:forEach>
