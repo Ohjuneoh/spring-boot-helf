@@ -27,4 +27,8 @@ public class Lesson {
     private Date date;
     private User user;
     private Membership membership;
+
+    public Lesson(int no){
+        this.no = no;
+    }
 }

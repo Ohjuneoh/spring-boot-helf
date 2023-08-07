@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,8 +58,17 @@ public class GroupLessonController {
     }
 
     @GetMapping("/detail")
-    public String lessonDetail(){
-
+    public String lessonDetail(@RequestParam("no") int lessonNo, Model model){
+        Lesson lesson = groupLessonService.getLessonByNo(lessonNo);
+        model.addAttribute("lesson", lesson);
         return "/grouplesson/detail";
+    }
+
+    // 신청 시 신청인원 증가
+    @GetMapping("/read")
+    public String reqCount(@RequestParam("no") int lessonNo){
+        groupLessonService.updateReqCount(lessonNo);
+
+        return "redirect:/grouplesson/detail?no="+lessonNo;
     }
 }

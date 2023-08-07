@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.helf.mapper.GroupLessonMapper">
+
+    <!-- 트레이너 PT 개설 -->
     <insert id="insertLesson" parameterType="Lesson">
         insert into helf_lesson(lesson_no,lesson_name,lesson_time,lesson_description,lesson_req_cnt,lesson_quota,
                                 lesson_date,user_id)
         values(helf_lesson_seq.nextval,#{name},#{time},#{description},#{reqCnt},#{quota},#{date},#{user.id})
     </insert>
 
+    <!-- 모든 행 조회(페이징처리) -->
     <select id="getTotalRows" parameterType="map" resultType="int">
         select count(*)
         from helf_lesson
     </select>
+    <!-- 모든 PT수업 조회(페이징처리)-->
     <select id="getAllLessons" resultType="Lesson" parameterType="map">
         select *
         from(select
                  a.lesson_no as no,
                  a.lesson_name as name,
                  b.user_name as "user.name",
+                 a.lesson_req_cnt as reqCnt,
                  a.lesson_quota as quota,
                  a.lesson_reservation as reservation,
                  row_number() over (order by a.lesson_no asc) rownumber
@@ -27,6 +32,8 @@
         where
             rownumber between #{begin} and #{end}
     </select>
+
+    <!-- 레슨번호로 PT 상세조회 -->
     <select id="getLessonByNo" resultType="Lesson" parameterType="int">
         select
             a.lesson_no as no,
@@ -38,16 +45,33 @@
             a.lesson_quota as quota,
             a.lesson_reservation as reservation,
             a.lesson_type as type,
-            a.lesson_date as date,
+            a.lesson_date as "date",
             b.user_id as "user.id",
-            b.user_name as "user.name",
-            b.user_type as "user.type"
+            b.user_name as "user.name"
         from
             helf_lesson a, helf_users b
         where
-            lesson_no = #{value}
+            lesson_no = #{no}
           and a.user_id = b.user_id
-          and b.user_type = 'TRAINER'
     </select>
 
+    <!-- 신청 시 조회수 증가 -->
+    <update id="updateReqCount" parameterType="Lesson">
+        update
+            helf_lesson
+        set
+            lesson_req_cnt =#{reqCnt}
+        where
+            lesson_no = #{no}
+    </update>
+
+    <!-- 모집인원 신청인원 같을 시 모집여부 변경 -->
+    <update id="updateReservation" parameterType="Lesson">
+        update
+            helf_lesson
+        set
+            lesson_reservation = '모집완료'
+        where
+            lesson_req_cnt = lesson_quota;
+    </update>
 </mapper>
