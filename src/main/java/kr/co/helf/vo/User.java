@@ -29,12 +29,11 @@ public class User implements UserDetails{
 	private Rank rank;
 	private int point;
 	private String mobileCarrier;
-	
 	public User(){}
 	public User(String id) {
 		this.id = id;
 	}
-	
+
 	// 직원(사용자)의 보유권한을 반환한다.
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -70,6 +69,4 @@ public class User implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
-		
-	
 }

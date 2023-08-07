@@ -2,14 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.helf.mapper.GroupLessonMapper">
     <insert id="insertLesson" parameterType="Lesson">
-        insert into helf_lesson(lesson_no,lesson_name,lesson_time,lesson_description,lesson_disabled,lesson_req_cnt,lesson_quota,
-                                lesson_reservation,lesson_date,user_id)
-        values(helf_lesson_seq.nextval,#{name},#{time},#{description},#{disabled},#{reqCnt},#{quota},#{reservation},#{date},#{user.id})
+        insert into helf_lesson(lesson_no,lesson_name,lesson_time,lesson_description,lesson_req_cnt,lesson_quota,
+                                lesson_date,user_id)
+        values(helf_lesson_seq.nextval,#{name},#{time},#{description},#{reqCnt},#{quota},#{date},#{user.id})
     </insert>
 
     <select id="getTotalRows" parameterType="map" resultType="int">
         select count(*)
         from helf_lesson
+    </select>
+    <select id="getAllLessons" resultType="Lesson" parameterType="map">
+        select *
+        from(select
+                 a.lesson_no as no,
+                 a.lesson_name as name,
+                 b.user_name as "user.name",
+                 a.lesson_quota as quota,
+                 a.lesson_reservation as reservation,
+                 row_number() over (order by a.lesson_no asc) rownumber
+             from
+                helf_lesson a, helf_users b
+             where a.user_id = b.user_id
+            )
+        where
+            rownumber between #{begin} and #{end}
     </select>
     <select id="getLessonByNo" resultType="Lesson" parameterType="int">
         select
