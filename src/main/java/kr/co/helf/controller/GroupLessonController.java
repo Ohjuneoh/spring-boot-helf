@@ -5,6 +5,7 @@ import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/grouplesson")
@@ -21,7 +24,7 @@ public class GroupLessonController {
     private final GroupLessonService groupLessonService;
     @GetMapping("/registration")
     public String lessonForm() {
-        return "/grouplesson/trainerform";
+        return "/grouplesson/form";
     }
     @PostMapping("/registration")
     public String lesson(@AuthenticationPrincipal User user,
@@ -44,9 +47,20 @@ public class GroupLessonController {
         return "redirect:/grouplesson/list";
     }
 
-    @GetMapping(value = "list")
-    public String lessonList() {
+    @GetMapping(value = "/list")
+    public String lessonList(@RequestParam(name ="page", required = false,defaultValue ="1")int page, Model model) {
+        Map<String,Object> param = new HashMap<String,Object>();
+        param.put("page", page);
+
+        Map<String,Object> result = groupLessonService.getAllLessons(param);
+
+        model.addAttribute("result", result);
         return "grouplesson/list";
     }
 
+    @GetMapping("/detail")
+    public String lessonDetail(){
+
+        return "/grouplesson/detail";
+    }
 }
