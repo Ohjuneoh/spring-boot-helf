@@ -96,7 +96,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row g-5">
+ 			<div class="row g-5">
         		<div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s" id="user-img">
             		<div class="team-item bg-light rounded overflow-hidden">
                		 	<div class="team-img position-relative overflow-hidden">
@@ -127,13 +127,14 @@
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
         <div class="container py-5">
         	<!-- 회원 폼 -->
-		     <form action="/user/register/user" id="registerform-user" style="display: none" method="post">
+		   	<form action="/user/register/user" id="registerform-user" style="display: none" method="post">
 				<div class="row g-3">
 				<div>
 					<h3>회원 회원가입</h3>
 				</div>
+				
 				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" id="id" name="id" placeholder="아이디" style="height: 55px;">
+				         <input type="text" class="form-control bg-light border-0" id="id" name="id" placeholder="아이디" style="height: 55px;">
 				    </div>
 				    <div class="col-12">
 				        <input type="password" class="form-control bg-light border-0" id="password" name="password" placeholder="비밀번호" style="height: 55px;">
@@ -141,6 +142,7 @@
 				    <div class="col-12">
 				        <input type="text" class="form-control bg-light border-0" id="email" name="email" placeholder="이메일" style="height: 55px;">
 				    </div>
+				    
 				    <div class="col-12">
 				    	<div class="row">
 				    		<div class="col-md-6">
@@ -156,6 +158,7 @@
 				    		</div>
 				    	</div>  
 				    </div>
+				    
 				    <div class="col-12">
 				    	<div class="row">
 				    		<div class="col-md-6">
@@ -182,9 +185,11 @@
 							    <input type="checkbox" id="agreeCheckbox-1" class="normal">
 							    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
 							</label>
+							
 						  	<div class="card card-body bg-light border-0">
 						   		내용넣어주세요
 						  	</div>
+						  	
 							<label>
 							    <input type="checkbox" id="agreeCheckbox-2" class="normal">
 							    <strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
@@ -207,6 +212,7 @@
 				    </div>
 				</div>
 		 	</form>
+		 	
             <!-- 트레이너 폼 -->
 		 	<form action="/user/register/trainer" id="registerform-trainer" style="display: none" method="post">
 				<div class="row g-3">
@@ -424,7 +430,7 @@
 	   });
 	
 	
-
+	// 회원가입 폼 선택
 	   $(document).ready(function() {
 	   $('#user-img').on('click', function() {
 	   		$('#trainer-img').hide();

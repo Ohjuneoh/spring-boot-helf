@@ -11,7 +11,7 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="himg/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +34,7 @@
     <!-- Date Picker  -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
-
+<!-- 위에 모든 페이지까지 공통부분 건들 x -->
 <body>
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -48,6 +48,7 @@
     <!-- Topnavbar End -->
 
 
+
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0 h-10 ">
 		<jsp:include page="/WEB-INF/views/common/navbar.jsp">
@@ -57,8 +58,8 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">LESSONLIST</h1>
-                    <a href="" class="h5 text-white">수업 목록</a>
+                    <h1 class="display-4 text-white animated zoomIn">REGISTER</h1>
+                    <a href="" class="h5 text-white">수업 등록</a>
                 </div>
             </div>
         </div>
@@ -79,53 +80,61 @@
                 </div>
             </div>
         </div>
+    <!-- Lesson Category Start  -->
     </div>
+    <div class="container-fluid py-1 wow fadeInUp " data-wow-delay="0.1s">
+	    
+        <div class="container py-5">
+        	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+	        	<div class="container ">
+	            	<div class="row g-1" >
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+    <!-- Lesson Category End -->
+    <!-- Lesson Register Form Start  -->
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
-		<div class="container py-5">
-			<div class="row mb-3">
-				<div class="col-12">
-					<div class="card" >
-						<div class="card-header bg-dark" style="color: #ffffff">
-							수업목록
-							<span class="float-end">
-								<a href="add" class="btn btn-primary btn-sm ">신규 수업 등록</a>
-							</span>
-						</div>
-						<div class="card-body">
-							<div class="d-flex justify-content-start mb-3">
-								<select class="form-select me-3" style="width:150px" name="sort" onchange="changeSort()">
-									<option >수업유형</option>
-									<option >개인수업</option>
-									<option >그룹수업</option>
-			            		</select>
-            				</div>
-			               <table class="table">
-			               		<thead>
-			                     	<tr>
-			                        	<th>수업번호</th>
-			                        	<th>수업명</th>
-			                        	<th>강사명</th>
-			                        	<th>모집총원</th>
-			                        	<th>모집여부</th>
-			                     	</tr>
-			                  	</thead>
-			                  	<tbody>
-		                  			<tr>
-				                        <td>1</td>
-				                        <td>1</td>
-				                        <td>1</td>
-				                        <td>1</td>
-				                        <td>1</td>
-		                    		 </tr>
-		                 			<tr>
-	                 					<td colspan="5" class="text-center">검색결과가 존재하지 않습니다.</td>
-		                 			</tr>
-			             		</tbody>
-			               </table>
-        				</div>
-    				</div>
-    			</div>
-    		</div>
+        <div class="container py-5">
+		 	<form class="" id="group-lesson-form" method="post" action="/grouplesson/registration">
+		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+	        		<div class="container ">
+	            		<div class="row g-1" >
+                    		<div class="section-title position-relative pb-3 mb-5">
+                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">수업개설</h5>
+                        		<h1 class="mb-0" style="font-size: 15px;" >내용을 입력해주세요</h1>
+			               	</div>
+				    	</div>
+				 	</div>
+				</div>
+				<div class="row g-1">
+				    <div class="col-6">
+				        <input type="text" class="form-control bg-light border-0" name="name" placeholder="수업명" style="height: 55px;">
+				    </div>
+					<div class="col-6">
+						<input type="text" class="form-control bg-light border-0" name="quota" placeholder="총 인원" style="height: 55px;">
+					</div>
+				    <div class="col-6">
+				    	<input type="text" class="form-control bg-light border-0"  id="date" name="date" style="height: 55px;" placeholder="수업날짜">
+				    </div>
+					<div class="col-6">
+					    <select  class="form-select bg-light border-0" name="time" style="height: 55px;">
+					      <option value=""  >시간</option>
+					      <option value="10~12" class="form-control bg-light border-0" >10:00 ~ 12:00</option>
+					      <option value="13~14" class="form-control bg-light border-0" >13:00 ~ 15:00</option>
+					      <option value="14~16" class="form-control bg-light border-0" >14:00 ~ 16:00</option>
+					      <option value="16~18" class="form-control bg-light border-0" >16:00 ~ 18:00</option>
+					      <option value="18~20" class="form-control bg-light border-0" >18:00 ~ 20:00</option>
+					      <option value="20~22" class="form-control bg-light border-0" >20:00 ~ 22:00</option>
+					    </select>
+					</div>
+					<div class="col-12">
+					  <textarea class="form-control bg-light border-0" name="description" style="height: 300px;" placeholder="내용"></textarea>
+					</div>
+				</div>
+				<button type="submit" class=" btn btn-primary mt-1 float-end">등록</button>
+		 	</form>
         </div>
     </div>
     <!-- Lesson Register Form End  -->
@@ -223,6 +232,14 @@
 	<script src="/resources/js/main.js"></script>
     
 <script>
+$( function() {
+    $("#date").datepicker({
+   		dateFormat: 'yy/mm/dd'
+    });
+});
+
+
+	
 
 </script>
     

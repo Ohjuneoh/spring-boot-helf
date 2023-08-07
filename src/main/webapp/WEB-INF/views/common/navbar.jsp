@@ -26,14 +26,14 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업(고객)</a>
                 <div class="dropdown-menu m-0">
-                    <a href="/lesson/reservation" class="dropdown-item">수업 예약</a>
+                    <a href="/grouplesson/list" class="dropdown-item">수업 예약</a>
                     <a href="detail" class="dropdown-item">그룹수업 시간표</a>
                 </div>
             </div>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">문의</a>
                 <div class="dropdown-menu m-0">
-                    <a href="price" class="dropdown-item">공지사항</a>
+                    <a href="price" clasdass="dropdown-item">공지사항</a>
                     <a href="feature" class="dropdown-item">자주 묻는 질문(F&Q)</a>
                     <a href="team" class="dropdown-item">1대1 문의</a>
                 </div>
