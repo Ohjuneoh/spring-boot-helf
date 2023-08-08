@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.helf.mapper.PersonalLessonMapper">
+
+	<select id="getCareerByTrainerNo" parameterType="int" resultType="Career">
+		select
+			career_no,
+			career_name,
+			career_start_date,
+			career_end_date,
+			trainer_no
+		from helf_trainer_career
+		where
+			trainer_no = #{value}
+		order by
+			career_start_date;
+	</select>
+	<!-- User 테이블에서 트레이너 번호로 전체 트레이너 찾기  -->
+	<select id="getUserByTrainerNo" parameterType="int" resultType="User">
+				select
+			user_id					as id,
+			user_email				as email,
+			user_name				as name,
+			user_tel				as tel,
+			user_encrypted_password as encryptedPassword,
+			user_gender				as gender,
+			user_status				as status,
+			user_mobile_carrier		as mobileCarrier,
+			user_create_date		as createDate,
+			user_update_date		as updateDate,
+			user_point				as point,
+			rank_no					as "rank.no",
+			user_type				as type
+			
+		from
+			helf_users
+		where 
+			trainer_no = #{value}
+	</select>
+	<resultMap type="Trainer" id="TrainerWithCareersResultMap">
+    	<id column="Trainer_no" property="trainerNo"/>
+    	<result column="Trainer_file" property="trainerFile"/>
+    	<association property="user" resultMap="User" column="user_id" >
+    		<id column="user_id" property="id"/>
+    	</association>
+    	<collection property="careers" ofType="Career">
+        	<id column="Career_no" property="careerNo"/>
+        	<result column="Career_name" property="careerName"/>
+        	<result column="Career_start_date" property="careerStartDate"/>
+        	<result column="Career_end_date" property="careerEndDate"/>
+    	</collection>
+	</resultMap>
+	<select id="getAllTrainers" resultType="Trainer">
+		select
+			b.trainer_no,
+			a.user_name	as name,
+			b.trainer_file,
+			c.career_no,
+			c.career_start_date,
+			c.career_end_date
+		from
+			helf_users a, helf_trainers b, helf_trainer_career c
+		where
+			a.user_id = b.user_id
+        and
+			c.trainer_no = b.trainer_no
+		order by
+			trainer_no
+	</select>
+</mapper>

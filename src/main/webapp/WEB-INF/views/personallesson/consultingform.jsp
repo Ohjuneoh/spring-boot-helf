@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
-    <link href="https://cdmnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
@@ -96,8 +96,9 @@
 	            				<img src="/resources/img/sampletrainer.jpg"  class="img-fluid"/>
 	            			</div>
 		           			<div class="col-3"> 
-		            			<h1 class="mb-5">마동석 강사</h1>
+		            			<h1 class="mb-5"><strong>강사</strong></h1>
 		            			<h4 class="mb-3">주요 약력</h4>
+		            			
 		            			<h6 class="text-muted">성균관대 스포츠학과 졸업</h6>
 		            			<h6 class="text-muted">PASS 입시체육학원 강사</h6>
 		            			<h6 class="text-muted">SKKU 스포츠의학 수료</h6>
@@ -114,7 +115,7 @@
 		 	</form>
         </div>
     </div>
-    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
+    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px; display:none;">
         <div class="container py-5">
 		 	<form class="" id="group-lesson-form">
 		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
