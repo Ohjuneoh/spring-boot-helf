@@ -31,9 +31,6 @@ public class PersonalLessonControler {
     @GetMapping("/consulting")
     public String trainerList(Model model) {
     	
-    	
-    	List<Trainer> trainerList = personalLessonService.getAllTrainers();
-    	model.addAttribute("trainers", trainerList);
         return "personallesson/consultingform";
     }
 
