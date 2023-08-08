@@ -30,8 +30,8 @@ public class PersonalLessonControler {
     //유저가 트레이너에게 상담신청하는 페이지
     @GetMapping("/consulting")
     public String trainerList(Model model) {
-    	List<Trainer> trainerList = personalLessonService.getAllTrainers();
-    	model.addAttribute("trainers", trainerList);
+
+
         return "personallesson/consultingform";
     }
 
