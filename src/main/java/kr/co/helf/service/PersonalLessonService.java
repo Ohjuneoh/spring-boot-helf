@@ -19,8 +19,8 @@ public class PersonalLessonService {
 	private final PersonalLessonMapper personalLessonMapper;
 
 	//전체 트레이너 조회
-	public List<User> getAllTrainers(){
-		return personalLessonMapper.getAllTrainers();
+	public List<Trainer> getAllTrainers(){
+		return personalLessonMapper.getAllTrainersWithCareer();
 	}
 	
 	//트레이너 번호로 경력을 조회

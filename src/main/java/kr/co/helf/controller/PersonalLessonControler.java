@@ -1,6 +1,7 @@
 package kr.co.helf.controller;
 
 import kr.co.helf.service.PersonalLessonService;
+import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.User;
 
 import java.util.List;
@@ -21,17 +22,18 @@ public class PersonalLessonControler {
 	
 
 	//트레이너가 자신의 강의에 수강신청한 유저목록을 조회하는 페이지
-    @GetMapping("/userlist")
-    public String trainerUserList() {
-        return "personallesson/list";
-    }
+//    @GetMapping("/userlist")
+//    public String trainerUserList() {
+//        return "personallesson/list";
+//    }
     
     //유저가 트레이너에게 상담신청하는 페이지
     @GetMapping("/consulting")
-    public String personalLessonRegistration(Model model) {
-    	List<User> trainerList = personalLessonService.getAllTrainers();
-    	model.addAttribute("trainers", trainerList);
+    public String trainerList(Model model) {
     	
+    	
+    	List<Trainer> trainerList = personalLessonService.getAllTrainers();
+    	model.addAttribute("trainers", trainerList);
         return "personallesson/consultingform";
     }
 

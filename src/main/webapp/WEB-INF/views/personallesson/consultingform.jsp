@@ -96,8 +96,9 @@
 	            				<img src="/resources/img/sampletrainer.jpg"  class="img-fluid"/>
 	            			</div>
 		           			<div class="col-3"> 
-		            			<h1 class="mb-5">마동석 강사</h1>
+		            			<h1 class="mb-5"><strong>강사</strong></h1>
 		            			<h4 class="mb-3">주요 약력</h4>
+		            			
 		            			<h6 class="text-muted">성균관대 스포츠학과 졸업</h6>
 		            			<h6 class="text-muted">PASS 입시체육학원 강사</h6>
 		            			<h6 class="text-muted">SKKU 스포츠의학 수료</h6>
