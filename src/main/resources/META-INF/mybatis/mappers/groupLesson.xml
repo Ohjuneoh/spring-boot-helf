@@ -23,7 +23,8 @@
                  b.user_name as "user.name",
                  a.lesson_req_cnt as reqCnt,
                  a.lesson_quota as quota,
-                 a.lesson_reservation as reservation,
+                 a.lesson_date as "date",
+                 a.lesson_time as time,
                  row_number() over (order by a.lesson_no asc) rownumber
              from
                 helf_lesson a, helf_users b
