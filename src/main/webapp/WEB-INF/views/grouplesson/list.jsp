@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -63,8 +64,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="modal fade" id="searchModal" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
@@ -87,33 +86,44 @@
 					<div class="card" >
 						<div class="card-header bg-dark" style="color: #ffffff">
 							수업 목록
-							<span class="float-end">
-								<a href="/grouplesson/registration" class="btn btn-primary btn-sm ">신규 수업 등록</a>
-							</span>
+							<!-- 트레이너로 로그인 시 신규 수업 등록 버튼 보이게 함-->
+							<sec:authorize access="hasRole('ROLE_TRAINER')">
+								<span class="float-end">
+									<a href="/grouplesson/registration" class="btn btn-primary btn-sm ">신규 수업 등록</a>
+								</span>
+							</sec:authorize>
 						</div>
 						<div class="card-body">
 			               <table class="table">
 			               		<thead>
-			                     	<tr>
-			                        	<th>수업 번호</th>
-			                        	<th>수업명</th>
-			                        	<th>강사명</th>
-			                        	<th>모집총원</th>
-			                        	<th>모집여부</th>
+									<tr>
+			                        	<th style="width: 20%">수업 번호</th>
+			                        	<th style="width: 25%">수업명</th>
+			                        	<th style="width: 20%">강사명</th>
+			                        	<th style="width: 20%">신청인원/모집총원</th>
+			                        	<th style="width: 15%">모집여부</th>
 			                     	</tr>
-			                  	</thead>
-			                  	<tbody>
-		                  			<tr>
-				                        <td>1</td>
-										<td>1</td>
-										<td>1</td>
-										<td>1</td>
-				                        <td>1</td>
-		                    		 </tr>
-		                 			<tr>
-	                 					<td colspan="5" class="text-center">검색결과가 존재하지 않습니다.</td>
-		                 			</tr>
-			             		</tbody>
+								</thead>
+							   <tbody>
+							   		<c:choose>
+										<c:when test="${empty result.lessons }">
+											<c:forEach var="lesson" items="${result.lessons }">
+							   					<tr>
+								   					<td colspan="5" class="text-center">이용권을 구매한 고객만 수업을 조회할 수 있습니다.</td>
+							   					</tr>
+											</c:forEach>
+										</c:when>
+									</c:choose>
+							   		<c:forEach var="lesson" items="${result.lessons }">
+										<tr>
+				                        	<td>${lesson.no }</td>
+											<td><a href="detail?no=${lesson.no }">${lesson.name }</a></td>
+											<td>${lesson.user.name }</td>
+											<td>${lesson.reqCnt }/${lesson.quota }</td>
+				                        	<td>${lesson.reservation }</td>
+		                    		 	</tr>
+									</c:forEach>
+							   </tbody>
 			               </table>
         				</div>
     				</div>
@@ -121,6 +131,25 @@
     		</div>
         </div>
     </div>
+	<div class="row mb-3" >
+		<div class="col-12">
+			<nav>
+				<ul class="pagination justify-content-center">
+					<li class="page-item ${result.pagination.first ? 'disabled' : '' }">
+						<a class="page-link"  href="list?page=${result.pagination.prePage }" >이전</a>
+					</li>
+				<c:forEach var="num" begin="${result.pagination.beginPage }" end="${result.pagination.endPage }">
+					<li class="page-item ${result.pagination.page eq num ? 'active' : '' }">
+						<a class="page-link" href="list?page=${num }" >${num }</a>
+					</li>
+				</c:forEach>
+					<li class="page-item ${result.pagination.last ? 'disabled' : '' }">
+						<a class="page-link" href="list?page=${result.pagination.nextPage }" >다음</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
     <!-- Lesson Register Form End  -->
 	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
 	    <div class="container">
@@ -214,11 +243,11 @@
 
     <!-- Template Javascript -->
 	<script src="/resources/js/main.js"></script>
-    
+
 <script>
 
 </script>
-    
+
     
 </body>
 
