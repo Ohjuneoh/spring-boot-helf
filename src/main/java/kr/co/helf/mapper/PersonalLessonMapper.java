@@ -18,4 +18,5 @@ public interface PersonalLessonMapper {
 	//트레이너 번호로 트레이너 조회
 	Trainer getTrainerByTrainerNo(int no);
 
+
 }

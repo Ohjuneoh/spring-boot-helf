@@ -11,13 +11,14 @@ import lombok.Data;
 @Alias("Trainer")
 public class Trainer {
 	
-	private int trainerNo;
-	private String trainerFile;
+	private int no;
+	private String file;
 	private Date resignationDate;
 	private String title;
 	private User user;
 	private Date hiredDate;
 	private List<Career> careers;
+
 	
 	
 

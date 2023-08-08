@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @Alias("Career")
 public class Career {
 	
-	private int careerNo;
-	private String careerName;
-	private Date careerStartDate;
-	private Date careerEndDate;
+	private int no;
+	private String name;
+	private Date startDate;
+	private Date endDate;
 	private Trainer trainer;
 	
 }
