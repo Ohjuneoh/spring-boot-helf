@@ -98,12 +98,13 @@
 		           			<div class="col-3"> 
 		            			<h1 class="mb-5">마동석 강사</strong></h1>
 		            			<h4 class="mb-3">주요 약력</h4>
-		            			
+		            		<c:forEach var="trainers " items="${trainerList }">
 		            			<h6 class="text-muted">성균관대 스포츠학과 졸업</h6>
-		            			<h6 class="text-muted">PASS 입시체육학원 강사</h6>
-		            			<h6 class="text-muted">SKKU 스포츠의학 수료</h6>
-		            			<h6 class="text-muted">SKKU 인체해부학 수료</h6>
-		            			<h6 class="text-muted">현 HELF 트레이너</h6>
+							</c:forEach>
+<%--		            			<h6 class="text-muted">PASS 입시체육학원 강사</h6>--%>
+<%--		            			<h6 class="text-muted">SKKU 스포츠의학 수료</h6>--%>
+<%--		            			<h6 class="text-muted">SKKU 인체해부학 수료</h6>--%>
+<%--		            			<h6 class="text-muted">현 HELF 트레이너</h6>--%>
 		            		</div>
 		            		<div class="col-3"> 
 		            			<button class="btn btn-primary btn-lg">신청하기</button>
@@ -117,7 +118,7 @@
     </div>
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px; display:none;">
         <div class="container py-5">
-		 	<form class="" id="group-lesson-form">
+		 	<form class="" id="">
 		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
 	        		<div class="container ">
 	            		<div class="row g-1" >
