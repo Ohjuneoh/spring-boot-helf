@@ -1,9 +1,10 @@
 package kr.co.helf.service;
 
 import kr.co.helf.dto.Pagination;
-import kr.co.helf.form.GroupLessonForm;
+import kr.co.helf.form.ModifyForm;
 import kr.co.helf.mapper.GroupLessonMapper;
 import kr.co.helf.vo.Lesson;
+import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -49,4 +50,23 @@ public class GroupLessonService {
         lesson.setReqCnt(lesson.getReqCnt() + 1);
         groupLessonMapper.updateReqCount(lesson);
     }
+    // 레슨 번호로 레슨 수정
+    public void updateLesson(ModifyForm form, User user){
+        Lesson lesson = groupLessonMapper.getLessonByNo(form.getNo());
+        if(!lesson.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("작성자만 수정할 수 있습니다.");
+        }
+        BeanUtils.copyProperties(form,lesson);
+        groupLessonMapper.updateLesson(form);
+    }
+    // 레슨 번호로 레슨 삭제
+    public void deleteLesson(int lessonNo,User user){
+        Lesson lesson = groupLessonMapper.getLessonByNo(lessonNo);
+        if(!lesson.getUser().getId().equals((user.getId()))){
+            throw new RuntimeException("작성자만 삭제할 수 있습니다.");
+        }
+        lesson.setDisabled("Y");
+        groupLessonMapper.deleteLesson(lesson);
+    }
+
 }

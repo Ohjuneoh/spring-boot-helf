@@ -19,9 +19,5 @@ public class LessonApply {
     private Lesson lesson;
     private User user;
     private Date applyDate;
-    private String physicalAbnomality;
-    private String exerciseGoal;
-    private Date requestDate;
-    private String requestTime;
 
 }
