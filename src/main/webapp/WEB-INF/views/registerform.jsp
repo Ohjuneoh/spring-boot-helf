@@ -40,6 +40,10 @@ body {
 </head>
 
 <body>
+<a href="https://kauth.kakao.com/oauth/authorize
+    ?client_id=1e7deeb121bcd76884a1c13a03e49354
+    &redirect_uri=http://localhost:8080/user/register/user
+    &response_type=code">로그인</a>
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner"></div>
@@ -132,32 +136,52 @@ body {
     <!-- 회원가입 폼  -->        
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
         <div class="container py-5">
+        
         	<!-- 회원 폼 -->
 		   	<form:form action="/user/register/user" id="registerform-user" style="display: none" method="post" modelAttribute="addUserForm" >
 				<div class="row g-3">
-				<div>
-					<h3>회원 회원가입</h3>
-				</div>
-				
+					<div class="mb-4">
+						<h3>회원 회원가입</h3>
+					</div>
+					
+					<div class="row" >
+						<h5>아이디</h5>
+						    <div class="col-sm-6 input-wrapper">
+						         <form:input type="text" class="form-control bg-light border-0" id="id" path="id" placeholder="4-12자, 영어소문자를 입력하세요." style="height: 55px; width: 620px;" />
+						    	 <div class="check_font" id="id_check"></div>
+						    </div>
+						    	<div class="col-sm-6 button-wrapper">
+						        <input type="button" value="중복체크" onClick="idCheck()" class="btn btn-primary" style="height: 53px; width: 100px;" />
+						    </div>
+					</div>
+					
+					<div class="row">
+						<div class="col-12">
+					         <form:errors path="id" class="text-danger"></form:errors>
+						</div>
+					</div>
+					 
 				    <div class="col-12">
-				         <form:input type="text" class="form-control bg-light border-0" id="id" path="id" placeholder="아이디" style="height: 55px;" />
-				         <input type="button" value="중복체크" onClick="idCheck()" />
-				         <form:errors path="id" class="text-danger"></form:errors>
-				    </div>
-				    <div class="col-12">
-				        <form:input type="password" class="form-control bg-light border-0" id="password" path="password" placeholder="비밀번호" style="height: 55px;"/>
+				    	<h5>비밀번호</h5>
+				        <form:input type="password" class="form-control bg-light border-0" id="password" path="password" placeholder="4-12자, 영문+숫자+특수문자를 꼭 포함하여 입력하세요." style="height: 55px;"/>
+				   		<div class="check_font" id="password_check"></div>
 				   		<form:errors path="password" class="text-danger"></form:errors>
 				    </div>
 				    <div class="col-12">
-				        <form:input type="text" class="form-control bg-light border-0" id="email" path="email" placeholder="이메일" style="height: 55px;"/>
-				    	<form:errors path="email" class="text-danger"></form:errors>
+					    <h5>이메일</h5> 
+					        <form:input type="text" class="form-control bg-light border-0" id="email" path="email" placeholder="example@gmail.com ('@'를 포함하세요.)" style="height: 55px;"/>
+					    	<div class="check_font" id="email_check"></div>
+					    	<form:errors path="email" class="text-danger"></form:errors>
 				    </div>
 				    
 				    <div class="col-12">
+				    <h5>이름</h5>
 				    	<div class="row">
 				    		<div class="col-md-6">
-					        	<form:input type="text" class="form-control bg-light border-0" id="name"  path="name" placeholder="이름" style="height: 55px;" />
-				    			<form:errors path="name" class="text-danger"></form:errors>
+					        	<form:input type="text" class="form-control bg-light border-0" id="name" path="name" placeholder="홍길동 (한글만 입력하세요.)" style="height: 55px;" />
+					    			<div class="check_font" id="name_check">
+					    				<form:errors path="name" class="text-danger"></form:errors>
+					    			</div>
 				    		</div>
 	
 						    <div class="col-md-3">
@@ -171,9 +195,11 @@ body {
 				    </div>
 				    
 				    <div class="col-12">
+				    <h5>전화번호</h5>
 				    	<div class="row">
 				    		<div class="col-md-6">
-					        	<form:input type="text" class="form-control bg-light border-0" id="tel" path="tel" placeholder="전화번호" style="height: 55px;" />
+					        	<form:input type="text" class="form-control bg-light border-0" id="tel" path="tel" placeholder="010-1111-1234 (특수문자는 '-'만 입력가능합니다. )" style="height: 55px;" />
+				    			<div class="check_font" id="tel_check"></div>
 				    			<form:errors path="tel" class="text-danger"></form:errors>
 				    		</div>
 						    <div class="col-md-6">
@@ -290,8 +316,8 @@ body {
 		 					  <label for="check_all">전체 동의합니다.</label>
 						</div>
 										    
-				    <div class="col-12">
-				        <button class="btn btn-dark w-100 py-3" type="submit">가입하기</button>
+				    <div class="col-12" >
+				        <button class="btn btn-dark w-100 py-3" type="submit" >가입하기</button>
 				    </div>
 				</div>
 		 	</form:form>
@@ -374,9 +400,9 @@ body {
 							  <input type="checkbox" id="check_all" >
 	  						  <label for="check_all">전체 동의합니다.</label>
 						</div>				    
-				    <div class="col-12">
-				        <button class="btn btn-dark w-100 py-3" type="submit">가입하기</button>
-				    </div>
+					    <div class="col-12">
+					        <button class="btn btn-dark w-100 py-3" type="submit">가입하기</button>
+					    </div>
 				</div>
 		 	</form>
 		 	
@@ -494,14 +520,15 @@ body {
 	   	});
 
 	    $('#trainer-img').on('click', function() {
-	   	$('#user-img').hide();
-	   	$('#registerform-user').hide();
-	   	$('#register-form').hide();
-	   	$('#registerform-trainer').show();
-	   	$(this).hide();
+		   	$('#user-img').hide();
+		   	$('#registerform-user').hide();
+		   	$('#register-form').hide();
+		   	$('#registerform-trainer').show();
+		   	$(this).hide();
 	   	});
 	    
 	    // 이용약관 체크박스 
+	    	// 각각 체크했을 때, 전체동의에 체크&해제된다.
 		$("#collapseExample :checkbox.normal").change(function() {
 			let allChecked = true;
 
@@ -511,12 +538,13 @@ body {
 			
 			$("#check_all").prop("checked", allChecked);
 		});
-		
+	    
+			// 전체동의&해제
 		$("#check_all").change(function() {
 			$("#collapseExample :checkbox.normal").prop("checked", $(this).prop("checked"))
 		});
 	
-		// 이용약관
+		// 이용약관 부트스트랩
 		var scrollSpy = new bootstrap.ScrollSpy(document.body, {
 			  target: '#list-example'
 		});
@@ -524,7 +552,165 @@ body {
 		var firstScrollSpyEl = document.querySelector('[data-bs-spy="scroll"]')
 		firstScrollSpyEl.addEventListener('activate.bs.scrollspy', function () {
 		})
+		
+		
+		//모든 공백 체크 정규식
+		var empJ = /\s/g;
+		//아이디 정규식
+		var idJ = /^[a-z]{4,12}$/;
+		// 비밀번호 정규식
+		var pwJ = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{4,12}$/;
+		// 이름 정규식
+		var nameJ = /^[가-힣]{2,6}$/;
+		// 이메일 검사 정규식
+		var mailJ = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		// 휴대폰 번호 정규식
+		var phoneJ = /^01([0|1|6|7|8|9]?)?-?([0-9]{3,4})?-?([0-9]{4})$/;
+		
+		
+		
+		let idValid = false;
+		let passwordValid = false;
+		let emailValid = false;
+		let nameValid = false;
+		let telValid = false;
+		
+		
+		// 아이디 유효성검사
+		$("#id").blur(function() {
+			if (idJ.test($(this).val())) {
+					console.log(idJ.test($(this).val()));
+					$("#id_check").text('');
+					idValid = true;
+			} else {
+				$('#id_check').text('아이디를 확인해주세요!');
+				$('#id_check').css('color', 'red');
+				idValid= false;
+			}
+		});
+		
+		// 비밀번호 유효성검사
+		$("#password").blur(function() {
+			if (pwJ.test($(this).val())) {
+					console.log(pwJ.test($(this).val()));
+					$("#password_check").text('');
+					passwordValid = true;
+			} else {
+				$('#password_check').text('비밀번호를 확인해주세요!');
+				$('#password_check').css('color', 'red');
+				passwordValid = false;
+			}
+		});
+		
+		// 이메일 유효성검사
+		$("#email").blur(function() {
+			if (mailJ.test($(this).val())) {
+					console.log(mailJ.test($(this).val()));
+					$("#email_check").text('');
+					emailValid = true;
+			} else {
+				$('#email_check').text('이메일을 확인해주세요!');
+				$('#email_check').css('color', 'red');
+				emailValid = false;
+			}
+		});
+		
 
-	</script>
+		// 이름 유효성검사
+		$("#name").blur(function() {
+			if (nameJ.test($(this).val())) {
+					console.log(nameJ.test($(this).val()));
+					$("#name_check").text('');
+					nameValid = true;
+			} else {
+				$('#name_check').text('이름을 확인해주세요!');
+				$('#name_check').css('color', 'red');
+				nameValid = false;
+			}
+		});
+
+		// 전화번호 유효성검사
+		$("#tel").blur(function() {
+			if (phoneJ.test($(this).val())) {
+					console.log(phoneJ.test($(this).val()));
+					$("#tel_check").text('');
+					telValid = true;
+			} else {
+				$('#tel_check').text('전화번호를 확인해주세요!');
+				$('#tel_check').css('color', 'red');
+				telValid = false;
+			}
+		});
+		
+		// 유효성검사 통과못했을 때, 제출 막음
+		$("#registerform-user").submit(function(event) {
+			
+			// 성별 선택하지 않았을때, 제출 막음
+			let genderVaild = $("#gender").val();
+			
+			if (!genderVaild) {
+				alert("성별을 선택하세요.");
+				return false;
+			}
+			
+			// 통신사 선택하지 않았을때, 제출막음
+			let mobileCarrierVaild = $("#mobileCarrier").val();
+			
+			if (!mobileCarrierVaild) {
+				alert("통신사를 선택하세요.");
+				return false;
+			}
+			
+			// 이용약관 체크하지 않았을때, 제출막음
+			let agree1Valid = $("#agreeCheckbox-1").prop('checked');
+			
+			if (!agree1Valid) {
+				alert("이용약관을 체크하세요.");
+				return false;
+			}
+			
+			// 이용약관 체크하지 않았을때, 제출막음
+			let agree2Valid = $("#agreeCheckbox-2").prop('checked');
+			
+			if (!agree2Valid) {
+				alert("이용약관을 체크하세요.");
+				return false;
+			}
+			
+			if(idValid && nameValid && passwordValid && nameValid) {
+				return true;
+			
+			} else {
+				alert("올바른 값이 입력되지 않았습니다.");
+				event.preventDefault();
+				return false;
+			}
+		});
+		</script>
+		
+		<a href="javascript:KaKaoLogin();"><img src="https://www.gb.go.kr/Main/Images/ko/member/certi_kakao_login.png" /></a>
+		<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+		<script>
+			// 카카오 로그인
+			// http://localhost:5500/examples/html/kakao_login.html
+			// a630922f49a1190790a4a40faab78ff4
+			window.KaKao.init("a630922f49a1190790a4a40faab78ff4");
+			
+			function KaKaoLogin() {
+				window.KaKao.Auth.login({
+					scope: 'profile_nickname, account_email, gender',
+					sucess: function(authObj) {
+						console.log(authObj);
+						window.KaKao.API.request({
+							url:'/v2/user/me',
+							sucess: res => {
+							 const KaKao_account = res.KaKao_account;
+							 console.log(KaKao_account);
+							}
+						});
+					}
+				});
+			}
+		</script>
 </body>
 </html>
