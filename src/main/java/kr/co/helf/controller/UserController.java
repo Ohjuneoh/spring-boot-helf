@@ -13,6 +13,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.service.UserService;
@@ -42,7 +43,7 @@ public class UserController {
 	}
 	
 
-	// 회원가입 요청
+	// 회원가입 요청(유저)
 	@PostMapping(value="/register/user") 
 	public String registerUser(@Valid AddUserForm form, BindingResult bindingResult, Model model) {
 		// 검증 
@@ -63,16 +64,23 @@ public class UserController {
 	}
 		// 회원가입 성공 시 
 		userService.createUser(form);
-		return "redirect:/";
+		return "/register";
 }
 	
-	// 회원가입 요청
+	// 회원가입 요청(트레이너)
 	@PostMapping(value="/register/trainer") 
 	public String registerTrainer(AddUserForm form) {
 		userService.createTrainer(form);
 		
 		return "redirect:/";
 	}
+	
+	// 카카오 api(로그인,회원가입) 요청
+    @RequestMapping("/login")
+    public String home(@RequestParam(value = "code", required = false) String code) throws Exception{
+        System.out.println("#########" + code);
+        return "testPage";
+    }
 	
 	
 	// 아이디찾기화면 요청처리
