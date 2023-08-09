@@ -19,8 +19,6 @@ import lombok.RequiredArgsConstructor;
 public class PersonalLessonControler {
 	
 	private final PersonalLessonService personalLessonService;
-	
-
 	//트레이너가 자신의 강의에 수강신청한 유저목록을 조회하는 페이지
 //    @GetMapping("/userlist")
 //    public String trainerUserList() {

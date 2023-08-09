@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -97,11 +98,11 @@
 			               <table class="table">
 			               		<thead>
 									<tr>
-			                        	<th style="width: 20%">수업 번호</th>
-			                        	<th style="width: 25%">수업명</th>
+			                        	<th style="width: 15%">수업 번호</th>
+			                        	<th style="width: 20%">수업명</th>
 			                        	<th style="width: 20%">강사명</th>
 			                        	<th style="width: 20%">신청인원/모집총원</th>
-			                        	<th style="width: 15%">모집여부</th>
+			                        	<th style="width: 25%">레슨시간</th>
 			                     	</tr>
 								</thead>
 							   <tbody>
@@ -120,7 +121,7 @@
 											<td><a href="detail?no=${lesson.no }">${lesson.name }</a></td>
 											<td>${lesson.user.name }</td>
 											<td>${lesson.reqCnt }/${lesson.quota }</td>
-				                        	<td>${lesson.reservation }</td>
+				                        	<td><fmt:formatDate value="${lesson.date }" pattern="yyyy년 M월 d일" /> ${lesson.time }시 </td>
 		                    		 	</tr>
 									</c:forEach>
 							   </tbody>

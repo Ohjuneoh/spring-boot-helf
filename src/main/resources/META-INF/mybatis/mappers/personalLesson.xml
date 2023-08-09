@@ -61,11 +61,10 @@
 			c.career_start_date,
 			c.career_end_date
 		from
-			helf_users a, helf_trainers b, helf_trainer_career c
+		    helf_users a, helf_trainers b, helf_trainer_career c
 		where
 			a.user_id = b.user_id
-        and
-			c.trainer_no = b.trainer_no
+			and c.trainer_no = b.trainer_no
 		order by
 			trainer_no
 	</select>

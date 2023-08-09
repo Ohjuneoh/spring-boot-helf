@@ -102,6 +102,9 @@
 		            			<c:forEach var="career" items="${trainer.careers}">
 			            			<h6 class="text-muted">${career.careerName}</h6>
 			            		</c:forEach>
+		            		<c:forEach var="trainers " items="${trainerList }">
+		            			<h6 class="text-muted">성균관대 스포츠학과 졸업</h6>
+							</c:forEach>
 		            		</div>
 		            		<div class="col-3"> 
 		            			<button class="btn btn-primary btn-lg">신청하기</button>
@@ -116,7 +119,7 @@
     </div>
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px; display:none;">
         <div class="container py-5">
-		 	<form class="" id="group-lesson-form">
+		 	<form class="" id="">
 		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
 	        		<div class="container ">
 	            		<div class="row g-1" >
@@ -208,7 +211,6 @@
 	                <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
 	                    <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights Reserved. 
 			
-			<!--/*** This template is free as long as you keep the footer authorâs credit link/attribution link/backlink. If you'd like to use the template without the footer authorâs credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 			Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
 	                </div>
 	            </div>

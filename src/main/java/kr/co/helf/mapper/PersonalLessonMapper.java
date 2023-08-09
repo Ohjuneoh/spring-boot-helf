@@ -13,4 +13,5 @@ public interface PersonalLessonMapper {
 	List<Trainer> getAllTrainersWithCareer();
 
 
+
 }
