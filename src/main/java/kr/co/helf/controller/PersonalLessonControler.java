@@ -19,8 +19,6 @@ import lombok.RequiredArgsConstructor;
 public class PersonalLessonControler {
 	
 	private final PersonalLessonService personalLessonService;
-	
-
 	//트레이너가 자신의 강의에 수강신청한 유저목록을 조회하는 페이지
 //    @GetMapping("/userlist")
 //    public String trainerUserList() {
@@ -28,12 +26,12 @@ public class PersonalLessonControler {
 //    }
     
     //유저가 트레이너에게 상담신청하는 페이지
-    @GetMapping("/consulting")
-    public String trainerList(Model model) {
-
-
-        return "personallesson/consultingform";
-    }
+	@GetMapping("/consulting")
+	public String trainerList(Model model) {
+		List<Trainer> trainers = personalLessonService.getTrainers();
+		model.addAttribute("trainers", trainers); // 트레이너 목록을 뷰에 전달
+		return "personallesson/consultingform";
+	}
 
 
 

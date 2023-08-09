@@ -37,16 +37,35 @@
 		where 
 			trainer_no = #{value}
 	</select>
-
-	<select id="getAllTrainersWithCareer" resultType="Trainer">
+	<resultMap type="kr.co.helf.vo.Trainer" id="getAllTrainersWithCareer" >
+    	<id column="Trainer_no" property="trainerNo"/>
+    	<result column="Trainer_file" property="trainerFile"/>
+    	<association property="user" javaType="kr.co.helf.vo.User">
+    		<id column="user_id" property="id"/>
+    		<result column="name" property="name"/>
+    	</association>
+    	<collection property="careers" ofType="Career">
+        	<id column="career_no" property="careerNo"/>
+        	<result column="career_name" property="careerName"/>
+        	<result column="career_start_date" property="careerStartDate"/>
+        	<result column="career_end_date" property="careerEndDate"/>
+    	</collection>
+	</resultMap>
+	<select id="getAllTrainersWithCareer" resultMap="getAllTrainersWithCareer">
 		select
-		    a.user_name as "user.name",
-			b.trainer_file as "trainer.file",
-			c.career_name as "career_name"
+			b.trainer_no,
+			a.user_name	as name,
+			b.trainer_file,
+			c.career_no,
+			c.career_name,
+			c.career_start_date,
+			c.career_end_date
 		from
 		    helf_users a, helf_trainers b, helf_trainer_career c
 		where
 			a.user_id = b.user_id
 			and c.trainer_no = b.trainer_no
+		order by
+			trainer_no
 	</select>
 </mapper>
