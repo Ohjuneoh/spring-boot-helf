@@ -92,23 +92,22 @@
                         		<h6 class="mb-0" >해당 강사에게 무료 PT 상담 요청이 진행되며, 회원님의 담당강사로 배정되어 1:1 상담 및 관리를 해드립니다.</h6>
 								<h6 class="mb-0">센터의 사정에 의해 다른 담당강사가 배정될 수 있습니다. 배정된 담당강사가 확인 후 회원님께 연락을 드립니다</h6>
 			               	</div>
+			               	<c:forEach var="trainer" items="${trainers}">
 			               	<div class="col-6" >
-	            				<img src="/resources/img/sampletrainer.jpg"  class="img-fluid"/>
+	            				<img src="/resources/img/${trainer.trainerFile}"  class="img-fluid"/>
 	            			</div>
 		           			<div class="col-3"> 
-		            			<h1 class="mb-5">마동석 강사</strong></h1>
+		            			<h1 class="mb-5">${trainer.user.name}</h1>
 		            			<h4 class="mb-3">주요 약력</h4>
-		            			
-		            			<h6 class="text-muted">성균관대 스포츠학과 졸업</h6>
-		            			<h6 class="text-muted">PASS 입시체육학원 강사</h6>
-		            			<h6 class="text-muted">SKKU 스포츠의학 수료</h6>
-		            			<h6 class="text-muted">SKKU 인체해부학 수료</h6>
-		            			<h6 class="text-muted">현 HELF 트레이너</h6>
+		            			<c:forEach var="career" items="${trainer.careers}">
+			            			<h6 class="text-muted">${career.careerName}</h6>
+			            		</c:forEach>
 		            		</div>
 		            		<div class="col-3"> 
 		            			<button class="btn btn-primary btn-lg">신청하기</button>
 		            		</div>
 		            		<hr width="90%" color="gray"></hr>
+		            		</c:forEach>
 				    	</div>
 				 	</div>
 				</div>
