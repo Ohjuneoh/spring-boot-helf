@@ -23,12 +23,16 @@
                  b.user_name as "user.name",
                  a.lesson_req_cnt as reqCnt,
                  a.lesson_quota as quota,
+                 a.lesson_disabled as disabled,
                  a.lesson_date as "date",
+                 a.lesson_type as type,
                  a.lesson_time as time,
                  row_number() over (order by a.lesson_no asc) rownumber
              from
                 helf_lesson a, helf_users b
              where a.user_id = b.user_id
+                   and a.lesson_disabled = 'N'
+                   and a.lesson_type = 'group'
             )
         where
             rownumber between #{begin} and #{end}
@@ -75,4 +79,35 @@
         where
             lesson_req_cnt = lesson_quota;
     </update>
+
+    <!-- 개설된 PT 수정 -->
+    <update id="updateLesson" parameterType="Lesson">
+        update
+            helf_lesson
+        set
+            lesson_name = #{name},
+            lesson_date = #{date},
+            lesson_time = #{time},
+            lesson_quota = #{quota},
+            lesson_description = #{description}
+        where
+            lesson_no =#{no}
+    </update>
+    <!-- 개설된 레슨 삭제 -->
+    <update id="deleteLesson" parameterType="Lesson">
+        update
+            helf_lesson
+        set
+            lesson_disabled = 'Y'
+        where
+            lesson_no =#{no}
+    </update>
+    
+    <!-- 유저가 레슨 신청 -->
+    <insert id="insertApplyLesson" parameterType="LessonApply">
+        insert into
+                (lesson_apply_no,lesson_no,user_id)
+        values(helf_lesson_apply_seq.nextval,#{lesson.no},#{user.id})
+    </insert>
+
 </mapper>
