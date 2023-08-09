@@ -120,12 +120,11 @@
 					<div class="col-6">
 					    <select  class="form-select bg-light border-0" name="time" style="height: 55px;">
 					      <option value=""  >시간</option>
-					      <option value="10~12" class="form-control bg-light border-0" >10:00 ~ 12:00</option>
-					      <option value="13~14" class="form-control bg-light border-0" >13:00 ~ 15:00</option>
-					      <option value="14~16" class="form-control bg-light border-0" >14:00 ~ 16:00</option>
-					      <option value="16~18" class="form-control bg-light border-0" >16:00 ~ 18:00</option>
-					      <option value="18~20" class="form-control bg-light border-0" >18:00 ~ 20:00</option>
-					      <option value="20~22" class="form-control bg-light border-0" >20:00 ~ 22:00</option>
+							<option value="10~12" class="form-control bg-light border-0" >10:00 ~ 12:00</option>
+							<option value="13~15" class="form-control bg-light border-0" >13:00 ~ 15:00</option>
+							<option value="15~17" class="form-control bg-light border-0" >15:00 ~ 17:00</option>
+							<option value="17~19" class="form-control bg-light border-0" >17:00 ~ 19:00</option>
+							<option value="20~22" class="form-control bg-light border-0" >20:00 ~ 22:00</option>
 					    </select>
 					</div>
 					<div class="col-12">

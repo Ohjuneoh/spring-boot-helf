@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
 
@@ -11,10 +12,16 @@ import java.util.Date;
 @Setter
 @ToString
 @NoArgsConstructor
+@Alias("LessonApply")
 public class LessonApply {
     private int no;
-    private String status;
+    private String attendanceStatus;
     private Lesson lesson;
     private User user;
-    private Date date;
+    private Date applyDate;
+    private String physicalAbnomality;
+    private String exerciseGoal;
+    private Date requestDate;
+    private String requestTime;
+
 }
