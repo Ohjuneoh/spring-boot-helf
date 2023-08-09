@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import kr.co.helf.mapper.PersonalLessonMapper;
-import kr.co.helf.vo.Career;
+import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.Trainer;
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +20,12 @@ public class PersonalLessonService {
 	public List<Trainer> getTrainers(){
 		return personalLessonMapper.getAllTrainersWithCareer();
 	}
+	
+	//1대1 PT 예약 추가
+	public void personalLessonApply(LessonApply lessonApply) {
+		personalLessonMapper.insertLessonApply(lessonApply);
+	}
+	
 	
 
 

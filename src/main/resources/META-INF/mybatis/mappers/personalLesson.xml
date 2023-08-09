@@ -38,8 +38,8 @@
 			trainer_no = #{value}
 	</select>
 	<resultMap type="kr.co.helf.vo.Trainer" id="getAllTrainersWithCareer" >
-    	<id column="Trainer_no" property="trainerNo"/>
-    	<result column="Trainer_file" property="trainerFile"/>
+    	<id column="trainer_no" property="trainerNo"/>
+    	<result column="trainer_file" property="trainerFile"/>
     	<association property="user" javaType="kr.co.helf.vo.User">
     		<id column="user_id" property="id"/>
     		<result column="name" property="name"/>

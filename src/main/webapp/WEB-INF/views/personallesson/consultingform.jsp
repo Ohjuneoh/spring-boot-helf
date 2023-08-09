@@ -21,6 +21,7 @@
     <!-- Icon Font Stylesheet -->
      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    
 
     <!-- Libraries Stylesheet -->
     <link href="/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -33,6 +34,8 @@
     <link href="/resources/css/style.css" rel="stylesheet">
     <!-- Date Picker  -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Datetime Picker -->
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 </head>
 <!-- 위에 모든 페이지까지 공통부분 건들 x -->
 <body>
@@ -59,6 +62,7 @@
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
                     <h1 class="display-4 text-white animated zoomIn">CONSULTING</h1>
                     <a href="" class="h5 text-white">상담신청</a>
+                    
                 </div>
             </div>
         </div>
@@ -80,7 +84,7 @@
             </div>
         </div>
     </div>
-   	<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
+   	<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;" id="trainer-select">
         <div class="container py-5">
 		 	<form class="" id="group-lesson-form">
 		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
@@ -97,17 +101,14 @@
 	            				<img src="/resources/img/${trainer.trainerFile}"  class="img-fluid"/>
 	            			</div>
 		           			<div class="col-3"> 
-		            			<h1 class="mb-5">${trainer.user.name}</h1>
+		            			<h1 class="mb-5">${trainer.user.name}<strong style="margin-left: 10px; color: gray;">강사</strong></h1>
 		            			<h4 class="mb-3">주요 약력</h4>
 		            			<c:forEach var="career" items="${trainer.careers}">
 			            			<h6 class="text-muted">${career.careerName}</h6>
 			            		</c:forEach>
-		            		<c:forEach var="trainers " items="${trainerList }">
-		            			<h6 class="text-muted">성균관대 스포츠학과 졸업</h6>
-							</c:forEach>
 		            		</div>
 		            		<div class="col-3"> 
-		            			<button class="btn btn-primary btn-lg">신청하기</button>
+		            			<button class="btn btn-primary btn-lg" data-trainer-no="${trainer.trainerNo}">신청하기</button>
 		            		</div>
 		            		<hr width="90%" color="gray"></hr>
 		            		</c:forEach>
@@ -117,10 +118,11 @@
 		 	</form>
         </div>
     </div>
-    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px; display:none;">
+    <div class="container-fluid py-0"  style="margin-top: 1px; display:none;" id="registration-form">
         <div class="container py-5">
 		 	<form class="" id="">
-		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+		 		 <input type="hidden" id="trainerNumber" name="trainerNumber">
+		    	<div class="container-fluid d-flex justify-content-center" data-wow-delay="0.1s" >
 	        		<div class="container ">
 	            		<div class="row g-1" >
                     		<div class="section-title position-relative pb-3 mb-5">
@@ -130,16 +132,32 @@
 				    	</div>
 				 	</div>
 				</div>
+				 	<hr width="100%" color="gray"></hr>
 				<div class="row g-1">
 				    <div class="col-12">
-				        <input type="text" class="form-control bg-light border-0" id="name" placeholder="수업명" style="height: 55px;">
-				    </div>
-				    <div class="col-6">
-				    	<input type="text" class="form-control bg-light border-0"  id="date" style="height: 55px;" placeholder="수업날짜">
+				    	<h3 class="mb-2 text-primary" >PT 목표</h3>
+				        <input type="text" class="form-control bg-light border-0" id="goal" placeholder="PT를 통해 궁극적으로 이루고자하는 구체적인 목표나 기대가 있으시면 기재 바랍니다." style="height: 55px;">
 				    </div>
 					<div class="col-12">
-					  <textarea class="form-control bg-light border-0" id="content" style="height: 300px;" placeholder="내용"></textarea>
+						<h3 class="mb-2 mt-2 text-primary" >신체 이상유무</h3>	
+						<textarea class="form-control bg-light border-0" id="abnormality" style="height: 300px;" placeholder="육체적, 정신적(골절, 고혈압, 당뇨 등) 병력 및 신체 이상 사항이 있으신 경우 자세히 기재 바랍니다."></textarea>
 					</div>
+					<div class="col-3">
+					    <div class="input-group">
+					        <span class="input-group-text bg-light border-0"><i class="bi bi-calendar-check-fill"></i></span>
+					        <input type="text" class="form-control bg-light border-0" id="date" style="height: 55px;" placeholder="희망 상담일">
+					    </div>
+					</div>
+				    <div class="col-3">
+					    <div class="input-group">
+					        <span class="input-group-text bg-light border-0"><i class="bi bi-alarm-fill"></i></span>
+					        <input type="text" class="form-control bg-light border-0" id="time" style="height: 55px;" placeholder="희망 상담시간">
+					    </div>
+					</div>
+					<div class="col-6 text-end mt-2">
+					    <button id="back" class="btn btn-secondary">이전</button>
+					    <button type="submit" class="btn btn-primary ">신청하기</button>
+					</div>    
 				</div>
 		 	</form>
         </div>
@@ -228,6 +246,8 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    
     <script src="/resources/lib/wow/wow.min.js"></script>
     <script src="/resources/lib/easing/easing.min.js"></script>
     <script src="/resources/lib/waypoints/waypoints.min.js"></script>
@@ -244,9 +264,30 @@ $( function() {
     });
 });
 
+$( function() {
+    $("#time").datetimepicker({
+    	  datepicker:false,
+    	  format:'H:i'
+	});
+});
 
-	
+$(document).ready(function() {
+    // trainer-select 내의 신청하기 버튼에 클릭 이벤트 리스너 추가
+    $('#trainer-select').on('click', '.btn-primary', function() {
+    	
+    	//이벤트의 기본 동작을 막는다.
+    	event.preventDefault();
+        // 클릭한 버튼의 data-trainer-id 값을 가져온다.
+        var trainerId = $(this).data('trainer-no');
 
+        // trainer-select를 숨기고 registration-form을 보이게 한다.
+        $('#trainer-select').hide();
+        $('#registration-form').show();
+
+        // 트레이너 ID를 registration-form의 hidden input에 전달한다.
+        $('#registration-form input[name="trainerNumber"]').val(trainerId);
+    });
+});
 </script>
     
     
