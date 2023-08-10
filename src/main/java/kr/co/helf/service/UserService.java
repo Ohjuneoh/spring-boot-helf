@@ -21,8 +21,8 @@ public class UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	
 	public void createUser(AddUserForm form) {
-		
 		
 		User user = new User();
 		
@@ -65,6 +65,12 @@ public class UserService {
 		return userMapper.getUsersByDigits(fourDigits);
 
 	}
+	
+	
+	public int idCheck(String userId) throws Exception {
+		return userMapper.idCheck(userId);
+	}
+	
 }
 
 
