@@ -25,6 +25,7 @@ public class AddOrderForm {
 	private Integer secondOptionPeriod;		// 옵션2 기간 (내 옵션)
 	private Integer secondOptionPrice;		// 옵션2 가격 (결제)
 	
+	private int membershipAndOptionPrice;
 	private int surtax;						// 부가세
 	private int totalPrice;					// 총 가격 (결제)
 	
@@ -34,21 +35,26 @@ public class AddOrderForm {
 	private Date secondOptionEndDate;		// 옵션1 만기일 (내 옵션)
 	private int usePoint;					// 사용 포인트 (포인트 내역)
 	
-	public int totalPrice() {
-		this.totalPrice = this.membershipPrice;
+	public int membershipAndOptionPrice() {
+		this.membershipAndOptionPrice += this.membershipPrice;
 		
 		if(this.firstOptionPrice != null) {
-			this.totalPrice = this.firstOptionPrice;
+			this.membershipAndOptionPrice += this.firstOptionPrice;
 		}
 		if(this.secondOptionPrice != null) {
-			this.totalPrice = this.secondOptionPrice;
+			this.membershipAndOptionPrice += this.secondOptionPrice;
 		}
 		
-		return totalPrice;
+		return membershipAndOptionPrice;
 	}
 	
 	public int surtax(int firstOptionPrice, int secondOptionPrice) {
 		this.surtax = (this.membershipPrice + firstOptionPrice + secondOptionPrice) / 10;
 		return surtax;
+	}
+	
+	public int totalPrice() {
+		this.totalPrice = this.membershipAndOptionPrice + this.surtax;
+		return totalPrice;
 	}
 }

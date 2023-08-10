@@ -171,7 +171,7 @@
 		   						</th>
 		   						<td></td>
 		   						<td>
-		   							<fmt:formatNumber value="${form.totalPrice }" pattern="###,###"/>원
+		   							<fmt:formatNumber value="${form.membershipAndOptionPrice }" pattern="###,###"/>원
 		   							<br/><br/>
 		   							+ <fmt:formatNumber value="${form.surtax }" pattern="###,###"/>원
 		   						</td>
