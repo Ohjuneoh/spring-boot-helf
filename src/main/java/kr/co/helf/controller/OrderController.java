@@ -60,7 +60,8 @@ public class OrderController {
 	
 	@GetMapping("/period")
 //	@PreAuthorize("hasRole('ROLE_USER')")
-	public String period(@ModelAttribute("addOrderForm") AddOrderForm form, Model model) {
+	public String period(@ModelAttribute("addOrderForm") AddOrderForm form, Model model,
+						 @AuthenticationPrincipal User user) {
 		Optional<MembershipJoinCategory> optionalMembershipJoinCat =  orderService.getMembershipByNo(form.getNo());
 		MembershipJoinCategory membershipJoinCat = optionalMembershipJoinCat.orElseThrow(
 														() -> new RuntimeException("번호에 해당하는 이용권이 없다.")
@@ -77,6 +78,7 @@ public class OrderController {
 			form.membershipAndOptionPrice(form.getMembershipPrice(), form.getFirstOptionPrice(), form.getSecondOptionPrice());
 			form.totalPrice(form.getMembershipAndOptionPrice(), form.getSurtax());
 			
+			model.addAttribute("user", user);
 			model.addAttribute("form", form);
 			
 			return "membership/orderStep4";
@@ -112,7 +114,7 @@ public class OrderController {
 		return "membership/orderStep3";
 	}
 	
-	@GetMapping("/order")
+	@PostMapping("/order")
 //	@PreAuthorize("hasRole('ROLE_USER')")
 	public String order(@ModelAttribute("addOrderForm") AddOrderForm form, Model model,
 						@AuthenticationPrincipal User user,

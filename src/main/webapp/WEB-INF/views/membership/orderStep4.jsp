@@ -112,116 +112,127 @@
 		  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
 		  		<span class="border border-primary rounded-circle d-inline-block bg-primary" style="height:125px; width:125px; 
 		  			  padding-top:46px; padding-left:-2px;">
-		  			<strong>
+		  			<strong style="color:white">
 				  		결제
 		  			</strong>
 		  		</span>
-				<div class="offset-1" style="margin: 100px;">
-					<h4 class="text-start">
-						<strong style="color:gray">결제 내역</strong>
-					</h4>
-					<hr style="border: 2px solid gray;"/>
-					<table class="table table-bordered" style="margin: 50px; width: 900px;">
-		   				<thead>
-		   					<tr class="table-primary" style="width: 1200px;">
-		   						<th>상품명</th>
-		   						<th>기간/횟수</th>
-		   						<th>상품가</th>
-		   					</tr>
-		   					<tr>
-		   						<th>
-		   							${form.membershipName }
-			   						<c:if test="${form.firstOptionPeriod ne 0 }">
-					   						<br/><br/>${form.firstOptionDetaileName }
-			   						</c:if>
-			   						<c:if test="${form.secondOptionPeriod ne 0 }">
-				   						<br/><br/>${form.secondOptionDetaileName }
-			   						</c:if>
-		   						</th>
-			   					<td>
-			   						<c:if test="${form.periodTime eq null }">
-				   						${form.periodDuration }개월
-			   						</c:if>
-			   						<c:if test="${form.periodTime ne null }">
-			   							${form.periodTime }회
-			   						</c:if>
-			   						<c:if test="${form.firstOptionPeriod ne 0 }">
-					   					<br/><br/>${form.firstOptionPeriod }개월
-			   						</c:if>
-			   						<c:if test="${form.secondOptionPeriod ne 0 }">
-				   						<br/><br/>${form.secondOptionPeriod }개월
-			   						</c:if>
-			   					</td>
-			   					<td>
-			   						<fmt:formatNumber value="${form.membershipPrice }" pattern="###,###"/>원
-			   						<c:if test="${form.firstOptionPeriod ne 0 }">
-					   					<br/><br/>
-					   					<fmt:formatNumber value="${form.firstOptionPrice }" pattern="###,###"/>원
-			   						</c:if>
-			   						<c:if test="${form.secondOptionPeriod ne 0 }">
-					   					<br/><br/>
-					   					<fmt:formatNumber value="${form.secondOptionPrice }" pattern="###,###"/>원
-			   						</c:if>
-			   					</td>
-		   					</tr>
-		   					<tr>
-		   						<th>
-		   							상품 합계 금액<br/><br/>
-		   							부가세
-		   						</th>
-		   						<td></td>
-		   						<td>
-		   							<fmt:formatNumber value="${form.membershipAndOptionPrice }" pattern="###,###"/>원
-		   							<br/><br/>
-		   							+ <fmt:formatNumber value="${form.surtax }" pattern="###,###"/>원
-		   						</td>
-		   					</tr>
-		   					<tr>
-		   						<th>
-		   							포인트 할인
-		   							<br/><br/>
-		   						</th>
-								<td>
-		   							사용 가능 적립금 <strong>${user.point }P</strong>
-		   							<br/><br/>
-		   						</td>
-		   						<td>
-		   							<input type="number" style="width: 100px;">
-		   							<div style="margin: 3px;">
-			   							<button class="btn btn-primary btn-sm">전체</button>
-			   							<button class="btn btn-success btn-sm">적용</button>
-		   							</div>
-		   						</td>
-		   					</tr>
-		   					<tr>
-		   						<th>
-		   							<strong>총 결제 금액</strong>
-		   						</th>
-		   						<td></td>
-		   						<td>
-		   							<strong>
-		   								<fmt:formatNumber value="${form.totalPrice }" pattern="###,###"/>원
-		   							</strong>
-		   						</td>
-		   					</tr>
-		   				</thead>
-					</table>
-				</div>
-				<div class="offset-1" style="margin: 100px;">
-					<h4 class="text-start">
-						<strong style="color:gray">시작일</strong>
-					</h4>
-					<hr style="border: 2px solid gray;"/>
-					<input type="date" style="width: 300px; height: 50px; margin: 50px;"/>
-					~
-					<input style="width: 300px; height: 50px; margin: 50px;"/>
-				</div>
-				<div class="offset-1" style="margin: 100px;">
-					<h4 class="text-start">
-						<strong style="color:gray">결제수단</strong>
-					</h4>
-					<hr style="border: 2px solid gray;"/>
-				</div>
+		  		<form action="" method="post">
+					<div class="offset-1" style="margin: 100px;">
+						<h4 class="text-start">
+							<strong style="color:gray">결제 내역</strong>
+						</h4>
+						<hr style="border: 2px solid gray;"/>
+						<table class="table table-bordered" style="margin: 50px; width: 900px;">
+			   				<thead>
+			   					<tr class="table-primary" style="width: 1200px;">
+			   						<th>상품명</th>
+			   						<th>기간/횟수</th>
+			   						<th>상품가</th>
+			   					</tr>
+			   					<tr>
+			   						<th>
+			   							${form.membershipName }
+				   						<c:if test="${form.firstOptionPeriod ne 0 }">
+						   						<br/><br/>${form.firstOptionDetaileName }
+				   						</c:if>
+				   						<c:if test="${form.secondOptionPeriod ne 0 }">
+					   						<br/><br/>${form.secondOptionDetaileName }
+				   						</c:if>
+			   						</th>
+				   					<td>
+				   						<c:if test="${form.periodTime eq null }">
+					   						${form.periodDuration }개월
+				   						</c:if>
+				   						<c:if test="${form.periodTime ne null }">
+				   							${form.periodTime }회
+				   						</c:if>
+				   						<c:if test="${form.firstOptionPeriod ne 0 }">
+						   					<br/><br/>${form.firstOptionPeriod }개월
+				   						</c:if>
+				   						<c:if test="${form.secondOptionPeriod ne 0 }">
+					   						<br/><br/>${form.secondOptionPeriod }개월
+				   						</c:if>
+				   					</td>
+				   					<td>
+				   						<fmt:formatNumber value="${form.membershipPrice }" pattern="###,###"/>원
+				   						<c:if test="${form.firstOptionPeriod ne 0 }">
+						   					<br/><br/>
+						   					<fmt:formatNumber value="${form.firstOptionPrice }" pattern="###,###"/>원
+				   						</c:if>
+				   						<c:if test="${form.secondOptionPeriod ne 0 }">
+						   					<br/><br/>
+						   					<fmt:formatNumber value="${form.secondOptionPrice }" pattern="###,###"/>원
+				   						</c:if>
+				   					</td>
+			   					</tr>
+			   					<tr>
+			   						<th>
+			   							상품 합계 금액<br/><br/>
+			   							부가세
+			   						</th>
+			   						<td></td>
+			   						<td>
+			   							<fmt:formatNumber value="${form.membershipAndOptionPrice }" pattern="###,###"/>원
+			   							<br/><br/>
+			   							+ <fmt:formatNumber value="${form.surtax }" pattern="###,###"/>원
+			   						</td>
+			   					</tr>
+			   					<tr>
+			   						<th>
+			   							포인트 할인
+			   							<br/><br/>
+			   						</th>
+									<td>
+			   							사용 가능 적립금<strong> <span id="user-point">${user.point }</span>P</strong>
+			   							<br/><br/>
+			   						</td>
+			   						<td>
+			   							<input id="use-point" type="number" min="0" style="width: 100px;" value="0">
+			   							<a href="list" id="point-return" class="bi bi-arrow-clockwise"></a>
+			   							<div style="margin: 3px; margin-left: -15px;">
+				   							<button type="button" id="btn-all" class="btn btn-primary btn-sm" >전체</button>
+				   							<button type="button"  id="btn-apply" class="btn btn-success btn-sm" >적용</button>
+			   							</div>
+			   						</td>
+			   					</tr>
+			   					<tr>
+			   						<th>
+			   							<strong>총 결제 금액</strong>
+			   						</th>
+			   						<td></td>
+			   						<td>
+			   							<strong style="font-size: 20px; color:red">
+			   								<span id="total-price-text">
+			   									<fmt:formatNumber value="${form.totalPrice }" pattern="###,###"/>
+			   								</span>원
+			   							</strong>
+			   							<input type="hidden" name="totalPrice" value="${form.totalPrice }">
+			   						</td>
+			   					</tr>
+			   				</thead>
+						</table>
+					</div>
+					<div class="offset-1" style="margin: 100px;">
+						<h4 class="text-start">
+							<strong style="color:gray">시작일</strong>
+						</h4>
+						<hr style="border: 2px solid gray;"/>
+						<div class="border border-black border-2 p-3 text-center" >
+							<input type="date" style="width: 300px; height: 35px; " /> <span class="ps-3 pe-3">~</span>
+							<input type="date" style="width: 300px; height: 35px; " disabled class="border-0"/> 
+						</div>
+					</div>
+					<div class="offset-1" style="margin: 100px;">
+						<h4 class="text-start">
+							<strong style="color:gray">결제수단</strong>
+						</h4>
+						<hr style="border: 2px solid gray;"/>
+					</div>
+					<div class="offset-10">
+						<a href="list" class="btn btn-danger">취소</a>
+						<button type="submit" id="btn-next" class="btn btn-primary disabled">결제</button>
+					</div>	
+				</form>
 			</div>
 		</div>
 	</div>
@@ -242,7 +253,52 @@
 </body>
 <script type="text/javascript">
 $(function() {
-
+	let prevUserPoint = $("#user-point").text();
+	let prevPrice = $("input[name=totalPrice]").val();
+	
+	$("#point-return").click(function (event) {
+		event.preventDefault();
+		
+		$("#user-point").text(prevUserPoint);
+		
+		$("input[name=totalPrice]").val(prevPrice);
+		
+		let returnPriceText = new Number(prevPrice).toLocaleString();
+		$("#total-price-text").text(returnPriceText);
+		
+		$("#use-point").val(0);
+		$("#btn-apply").removeClass("disabled");
+	})
+	
+	$("#btn-all").click(function () {
+		let allPoint = $("#user-point").text();
+		$("#use-point").val(allPoint);
+		$("#user-point").text(0);
+	});
+	
+	$("#btn-apply").click(function () {
+		$(this).addClass("disabled")
+		let totalPrice = $("input[name=totalPrice]").val();
+		let usePoint = $("input[id=use-point]").val();
+		let userPoint = $("#user-point").text();
+		
+		if(usePoint > prevUserPoint) {
+			alert("포인트가 부족합니다.");
+			$(this).removeClass("disabled");
+			return;
+		}
+		
+		if(userPoint != 0) {
+			userPoint = userPoint - usePoint;
+			$("#user-point").text(userPoint);
+		}
+		
+		totalPrice = totalPrice - usePoint;
+		$("input[name=totalPrice]").val(totalPrice);
+		
+		let totalPriceText = new Number(totalPrice).toLocaleString();
+		$("#total-price-text").text(totalPriceText);
+	});
 })
 </script>
 </html>
