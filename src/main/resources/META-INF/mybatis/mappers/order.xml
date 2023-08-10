@@ -95,7 +95,5 @@
 		select option_no	as no,
 			   option_name	as name
 		from helf_membership_option
-		where option_name not in '선택안함'
 	</select>
-	
 </mapper>

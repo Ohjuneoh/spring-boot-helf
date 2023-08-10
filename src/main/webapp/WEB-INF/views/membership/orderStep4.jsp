@@ -131,10 +131,10 @@
 		   					<tr>
 		   						<th>
 		   							${form.membershipName }
-			   						<c:if test="${form.firstOptionDetaileNo ne null }">
+			   						<c:if test="${form.firstOptionPeriod ne 0 }">
 					   						<br/><br/>${form.firstOptionDetaileName }
 			   						</c:if>
-			   						<c:if test="${form.secondOptionDetaileNo ne null }">
+			   						<c:if test="${form.secondOptionPeriod ne 0 }">
 				   						<br/><br/>${form.secondOptionDetaileName }
 			   						</c:if>
 		   						</th>
@@ -145,20 +145,20 @@
 			   						<c:if test="${form.periodTime ne null }">
 			   							${form.periodTime }회
 			   						</c:if>
-			   						<c:if test="${form.firstOptionDetaileNo ne null }">
+			   						<c:if test="${form.firstOptionPeriod ne 0 }">
 					   					<br/><br/>${form.firstOptionPeriod }개월
 			   						</c:if>
-			   						<c:if test="${form.secondOptionDetaileNo ne null }">
+			   						<c:if test="${form.secondOptionPeriod ne 0 }">
 				   						<br/><br/>${form.secondOptionPeriod }개월
 			   						</c:if>
 			   					</td>
 			   					<td>
 			   						<fmt:formatNumber value="${form.membershipPrice }" pattern="###,###"/>원
-			   						<c:if test="${form.firstOptionDetaileNo ne null }">
+			   						<c:if test="${form.firstOptionPeriod ne 0 }">
 					   					<br/><br/>
 					   					<fmt:formatNumber value="${form.firstOptionPrice }" pattern="###,###"/>원
 			   						</c:if>
-			   						<c:if test="${form.secondOptionDetaileNo ne null }">
+			   						<c:if test="${form.secondOptionPeriod ne 0 }">
 					   					<br/><br/>
 					   					<fmt:formatNumber value="${form.secondOptionPrice }" pattern="###,###"/>원
 			   						</c:if>
@@ -212,6 +212,9 @@
 						<strong style="color:gray">시작일</strong>
 					</h4>
 					<hr style="border: 2px solid gray;"/>
+					<input type="date" style="width: 300px; height: 50px; margin: 50px;"/>
+					~
+					<input style="width: 300px; height: 50px; margin: 50px;"/>
 				</div>
 				<div class="offset-1" style="margin: 100px;">
 					<h4 class="text-start">
