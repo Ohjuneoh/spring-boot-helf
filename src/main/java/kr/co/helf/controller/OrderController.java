@@ -73,6 +73,10 @@ public class OrderController {
 			form.setPeriodDuration(oneDayPeriod.getDuration());
 			form.setPeriodTime(oneDayPeriod.getProperty());
 			
+			form.surtax(form.getFirstOptionPrice(), form.getSecondOptionPrice());
+			form.membershipAndOptionPrice(form.getMembershipPrice(), form.getFirstOptionPrice(), form.getSecondOptionPrice());
+			form.totalPrice(form.getMembershipAndOptionPrice(), form.getSurtax());
+			
 			model.addAttribute("form", form);
 			
 			return "membership/orderStep4";
@@ -133,8 +137,8 @@ public class OrderController {
 		}
 		
 		form.surtax(lockerDetaile.getPrice(), wearDetaile.getPrice());
-		form.membershipAndOptionPrice();
-		form.totalPrice();
+		form.membershipAndOptionPrice(form.getMembershipPrice(), form.getFirstOptionPrice(), form.getSecondOptionPrice());
+		form.totalPrice(form.getMembershipAndOptionPrice(), form.getSurtax());
 		model.addAttribute("form", form);
 		model.addAttribute("user", user);
 		
