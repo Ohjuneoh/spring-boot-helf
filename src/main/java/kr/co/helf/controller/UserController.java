@@ -13,10 +13,14 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.service.UserService;
+import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -26,7 +30,6 @@ public class UserController {
 	
 	@Autowired
 	UserService userService = new UserService();
-	
 	
 	// 로그인화면 요청처리
 	@GetMapping(value="/loginform")
@@ -45,43 +48,43 @@ public class UserController {
 
 	// 회원가입 요청(유저)
 	@PostMapping(value="/register/user") 
-	public String registerUser(@Valid AddUserForm form, BindingResult bindingResult, Model model) {
-		// 검증 
-		if (bindingResult.hasErrors()) {
-			
-			// 회원가입 실패 시 입력 데이터 값 유지
-			model.addAttribute("form", form );
-			
-			// 유효성 검사를 통과하지 못 한 필드와 메시지 핸들링 
-			Map<String, String> errorMap = new HashMap<>();
+	public String registerUser(AddUserForm form, RedirectAttributes attributes) {
 
-			for(FieldError error : bindingResult.getFieldErrors()) {
-				errorMap.put("valid_"+error.getField(), error.getDefaultMessage());
-			}
-		// 회원가입 페이지로 리턴
-		return "/registerform";
+		userService.createUser(form);
+		attributes.addFlashAttribute("name", form.getName());
+		
+		return "redirect:/user/welcome";
 		
 	}
-		// 회원가입 성공 시 
-		userService.createUser(form);
-		return "/register";
-}
+	
+	// 요청 완료화면 요청
+	@GetMapping("/welcome")
+	public String welcomePage(Model model) {
+		
+		return "welcome"; 	// "WEB-INF/views/" + welcome + ".jsp"
+	}
 	
 	// 회원가입 요청(트레이너)
 	@PostMapping(value="/register/trainer") 
-	public String registerTrainer(AddUserForm form) {
+	public String registerTrainer(AddUserForm form, RedirectAttributes attributes) {
 		userService.createTrainer(form);
 		
 		return "redirect:/";
 	}
-	
-	// 카카오 api(로그인,회원가입) 요청
-    @RequestMapping("/login")
-    public String home(@RequestParam(value = "code", required = false) String code) throws Exception{
-        System.out.println("#########" + code);
-        return "testPage";
-    }
-	
+
+	// 아이디 중복검사 요청
+	@RequestMapping(value ="/idChk", method = RequestMethod.POST)
+	@ResponseBody
+	public String idCheck(String userId) throws Exception{
+		int result = userService.idCheck(userId);
+		
+		if(result != 0) {
+			return "fail";	// 중복 아이디가 존재
+			
+		} else {
+			return "success";	// 중복 아이디 x
+		}
+	} 
 	
 	// 아이디찾기화면 요청처리
 	@GetMapping(value="/findId")

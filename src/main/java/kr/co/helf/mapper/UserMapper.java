@@ -17,4 +17,6 @@ public interface UserMapper {
 	List<User> getUsersByDigits(String fourDigits);
 
 	void insertTrainer(User user);
+	
+	int idCheck (String userId);
 }

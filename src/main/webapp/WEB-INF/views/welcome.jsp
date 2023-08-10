@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -93,7 +94,8 @@
 								<div class="text-table mt-2">
 									<div>
 										<i class="bi bi-emoji-laughing-fill" style="font-size: 48px;"></i>
-										<p><span style="color: rgb(35, 38, 40); font-size: 24px;"><strong style="color: blue">홍길동</strong>님, 만나서 반가워요!</span></p>
+										<p><span style="color: rgb(35, 38, 40); font-size: 24px;"><strong style="color: blue">${name}</strong>님, 만나서 반가워요!</span></p>
+									
 									</div>
 								</div>		
 							</div>
