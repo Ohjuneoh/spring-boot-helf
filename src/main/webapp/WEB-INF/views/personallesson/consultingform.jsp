@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -86,7 +87,7 @@
     </div>
    	<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;" id="trainer-select">
         <div class="container py-5">
-		 	<form class="" id="group-lesson-form">
+		 	<form class="" id="group-lesson-form" >
 		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
 	        		<div class="container ">
 	            		<div class="row g-1" >
@@ -104,8 +105,11 @@
 		            			<h1 class="mb-5">${trainer.user.name}<strong style="margin-left: 10px; color: gray;">강사</strong></h1>
 		            			<h4 class="mb-3">주요 약력</h4>
 		            			<c:forEach var="career" items="${trainer.careers}">
-			            			<h6 class="text-muted">${career.careerName}</h6>
-			            		</c:forEach>
+								    <h6 class="text-muted mb-3">
+								        <fmt:formatDate value="${career.careerStartDate}" pattern="yyyy-MM" /> ~ <fmt:formatDate value="${career.careerEndDate}" pattern="yyyy-MM" />
+								        <span><strong>${career.careerName}</strong></span>
+								    </h6>
+								</c:forEach>
 		            		</div>
 		            		<div class="col-3"> 
 		            			<button class="btn btn-primary btn-lg" data-trainer-no="${trainer.trainerNo}">신청하기</button>
@@ -119,46 +123,46 @@
         </div>
     </div>
     <div class="container-fluid py-0"  style="margin-top: 1px; display:none;" id="registration-form">
-        <div class="container py-5">
-		 	<form class="" id="">
-		 		 <input type="hidden" id="trainerNumber" name="trainerNumber">
-		    	<div class="container-fluid d-flex justify-content-center" data-wow-delay="0.1s" >
-	        		<div class="container ">
-	            		<div class="row g-1" >
-                    		<div class="section-title position-relative pb-3 mb-5">
-                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">1:1 PT 신청</h5>
-                        		<h1 class="mb-0" style="font-size: 15px;" >내용을 입력해주세요</h1>
-			               	</div>
-				    	</div>
-				 	</div>
-				</div>
-				 	<hr width="100%" color="gray"></hr>
-				<div class="row g-1">
-				    <div class="col-12">
-				    	<h3 class="mb-2 text-primary" >PT 목표</h3>
-				        <input type="text" class="form-control bg-light border-0" id="goal" placeholder="PT를 통해 궁극적으로 이루고자하는 구체적인 목표나 기대가 있으시면 기재 바랍니다." style="height: 55px;">
+    	<div class="container py-5">
+			<div class="container-fluid d-flex justify-content-center" data-wow-delay="0.1s" >
+	        	<div class="container ">
+	            	<div class="row g-1" >
+                    	<div class="section-title position-relative pb-3 mb-5">
+                        	<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">1:1 PT 신청</h5>
+                        	<h1 class="mb-0" style="font-size: 15px;" >내용을 입력해주세요</h1>
+						</div>
 				    </div>
-					<div class="col-12">
-						<h3 class="mb-2 mt-2 text-primary" >신체 이상유무</h3>	
-						<textarea class="form-control bg-light border-0" id="abnormality" style="height: 300px;" placeholder="육체적, 정신적(골절, 고혈압, 당뇨 등) 병력 및 신체 이상 사항이 있으신 경우 자세히 기재 바랍니다."></textarea>
-					</div>
-					<div class="col-3">
-					    <div class="input-group">
-					        <span class="input-group-text bg-light border-0"><i class="bi bi-calendar-check-fill"></i></span>
-					        <input type="text" class="form-control bg-light border-0" id="date" style="height: 55px;" placeholder="희망 상담일">
-					    </div>
-					</div>
-				    <div class="col-3">
-					    <div class="input-group">
-					        <span class="input-group-text bg-light border-0"><i class="bi bi-alarm-fill"></i></span>
-					        <input type="text" class="form-control bg-light border-0" id="time" style="height: 55px;" placeholder="희망 상담시간">
-					    </div>
-					</div>
-					<div class="col-6 text-end mt-2">
-					    <button id="back" class="btn btn-secondary">이전</button>
-					    <button type="submit" class="btn btn-primary ">신청하기</button>
-					</div>    
 				</div>
+			</div>
+			<hr width="100%" color="gray"></hr>
+		 	<form method="post" action="/personallesson/consulting">
+		 		<input type="hidden" id="trainerNumber" name="trainerNumber">
+					<div class="row g-1">
+				    	<div class="col-12">
+				    		<h3 class="mb-2 text-primary" >PT 목표</h3>
+				        		<input type="text" class="form-control bg-light border-0" name="goal" placeholder="PT를 통해 궁극적으로 이루고자하는 구체적인 목표나 기대가 있으시면 기재 바랍니다." style="height: 55px;">
+				    	</div>
+						<div class="col-12">
+							<h3 class="mb-2 mt-2 text-primary" >신체 이상유무</h3>	
+							<textarea class="form-control bg-light border-0" name="abnormalities" style="height: 300px;" placeholder="육체적, 정신적(골절, 고혈압, 당뇨 등) 병력 및 신체 이상 사항이 있으신 경우 자세히 기재 바랍니다."></textarea>
+						</div>
+						<div class="col-3">
+					    	<div class="input-group">
+					        	<span class="input-group-text bg-light border-0"><i class="bi bi-calendar-check-fill"></i></span>
+					        	<input type="text" class="form-control bg-light border-0" name="date" id="date" style="height: 55px;" placeholder="희망 상담일">
+					    	</div>
+						</div>
+				    	<div class="col-3">
+					    	<div class="input-group">
+					        	<span class="input-group-text bg-light border-0"><i class="bi bi-alarm-fill"></i></span>
+					        	<input type="text" class="form-control bg-light border-0" name="time" id="time" style="height: 55px;" placeholder="희망 상담시간">
+					    	</div>
+						</div>
+						<div class="col-6 text-end mt-2">
+						    <button type="button" id="back" class="btn btn-secondary">이전</button>
+						    <button type="submit" class="btn btn-primary ">신청하기</button>
+						</div>    
+					</div>
 		 	</form>
         </div>
     </div>
@@ -273,10 +277,9 @@ $( function() {
 
 $(document).ready(function() {
     // trainer-select 내의 신청하기 버튼에 클릭 이벤트 리스너 추가
-    $('#trainer-select').on('click', '.btn-primary', function() {
-    	
-    	//이벤트의 기본 동작을 막는다.
-    	event.preventDefault();
+    $('#trainer-select').on('click', '.btn-primary', function(event) { // event 인자 추가
+        // 이벤트의 기본 동작을 막는다.
+        event.preventDefault();
         // 클릭한 버튼의 data-trainer-id 값을 가져온다.
         var trainerId = $(this).data('trainer-no');
 
@@ -286,6 +289,15 @@ $(document).ready(function() {
 
         // 트레이너 ID를 registration-form의 hidden input에 전달한다.
         $('#registration-form input[name="trainerNumber"]').val(trainerId);
+    });
+
+    // 이전 버튼에 클릭 이벤트 리스너 추가
+    $('#back').click(function(event) { // event 인자 추가
+        // 이벤트의 기본 동작을 막는다. (폼 제출 방지)
+        event.preventDefault();
+
+        $('#trainer-select').show();
+        $('#registration-form').hide();
     });
 });
 </script>

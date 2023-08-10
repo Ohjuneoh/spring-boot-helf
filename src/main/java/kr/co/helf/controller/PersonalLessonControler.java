@@ -1,6 +1,7 @@
 package kr.co.helf.controller;
 
 import kr.co.helf.service.PersonalLessonService;
+import kr.co.helf.vo.Consultation;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.User;
@@ -33,24 +34,29 @@ public class PersonalLessonControler {
 		return "personallesson/consultingform";
 	}
 	
-//	@PostMapping("/consulting")
-//	public String consulting(@AuthenticationPrincipal User user,
-//							 @RequestParam("goal") String goal,
-//							 @RequestParam("abnormality") String abnormality,
-//							 @RequestParam("date") Date date,
-//							 @RequestParam("time") String time){
-//		LessonApply lessonApply = new LessonApply();
-//		lessonApply.setExerciseGoal(goal);
-//		lessonApply.setPhysicalAbnomality(abnormality);
-//		lessonApply.setRequestDate(date);
-//		lessonApply.setRequestTime(time);
-//		
-//		lessonApply.setUser(user);
-//		
-//		personalLessonService.personalLessonApply(lessonApply);
-//		
-//		
-//		
-//	}
+	@PostMapping("/consulting")
+	public String createConsultation(@AuthenticationPrincipal User user,
+							 @RequestParam("goal") String goal,
+							 @RequestParam("abnormalities") String abnormalities,
+							 @RequestParam("date") Date date,
+							 @RequestParam("time") String time,
+							 @RequestParam("trainerNumber") int trainerNumber){
+		
+		Consultation consultation = new Consultation();
+		consultation.setGoal(goal);
+		consultation.setAbnormalities(abnormalities);
+		consultation.setRequestDate(date);
+		consultation.setRequestTime(time);
+		consultation.setUser(user);
+		Trainer trainer = new Trainer();
+		trainer.setTrainerNo(trainerNumber);
+		
+		consultation.setTrainer(trainer);
+		
+		personalLessonService.createConsultation(consultation);
+		
+		return "redirect:/personallesson/consulting";
+		
+	}
 	
 }

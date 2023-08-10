@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import kr.co.helf.vo.LessonApply;
+import kr.co.helf.vo.Consultation;
 import kr.co.helf.vo.Trainer;
 
 @Mapper
@@ -14,7 +14,7 @@ public interface PersonalLessonMapper {
 	List<Trainer> getAllTrainersWithCareer();
 	
 	//1대1 PT 예약
-	void insertLessonApply(LessonApply lessonApply);
+	void insertConsultation(Consultation consultation);
 
 
 
