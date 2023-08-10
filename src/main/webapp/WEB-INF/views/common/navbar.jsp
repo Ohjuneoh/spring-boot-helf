@@ -27,14 +27,14 @@
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업(고객)</a>
                 <div class="dropdown-menu m-0">
                     <a href="/grouplesson/list" class="dropdown-item">그룹 수업</a>
-                    <a href="/personallesson/consulting" class="dropdown-item">개인 PT 신청</a>
+                    <a href="/personallesson/consultation" class="dropdown-item">개인 PT 신청</a>
                 </div>
             </div>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업(트레이너)</a>
                 <div class="dropdown-menu m-0">
                     <a href="/grouplesson/list" class="dropdown-item">그룹 수업</a>
-                    <a href="/personallesson/consulting" class="dropdown-item">개인 PT</a>
+                    <a href="/personallesson/list" class="dropdown-item">개인 PT</a>
                 </div>
             </div>
             <div class="nav-item dropdown">

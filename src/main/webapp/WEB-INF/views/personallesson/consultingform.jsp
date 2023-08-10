@@ -61,7 +61,7 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">CONSULTING</h1>
+                    <h1 class="display-4 text-white animated zoomIn">CONSULTATION</h1>
                     <a href="" class="h5 text-white">상담신청</a>
                     
                 </div>
@@ -277,27 +277,29 @@ $( function() {
 
 $(document).ready(function() {
     // trainer-select 내의 신청하기 버튼에 클릭 이벤트 리스너 추가
-    $('#trainer-select').on('click', '.btn-primary', function(event) { // event 인자 추가
-        // 이벤트의 기본 동작을 막는다.
+    $('#trainer-select').on('click', '.btn-primary', function(event) {
         event.preventDefault();
-        // 클릭한 버튼의 data-trainer-id 값을 가져온다.
-        var trainerId = $(this).data('trainer-no');
+        var trainerNo = $(this).data('trainer-no');
 
-        // trainer-select를 숨기고 registration-form을 보이게 한다.
         $('#trainer-select').hide();
         $('#registration-form').show();
 
-        // 트레이너 ID를 registration-form의 hidden input에 전달한다.
-        $('#registration-form input[name="trainerNumber"]').val(trainerId);
+        $('#registration-form input[name="trainerNumber"]').val(trainerNo);
     });
 
     // 이전 버튼에 클릭 이벤트 리스너 추가
-    $('#back').click(function(event) { // event 인자 추가
-        // 이벤트의 기본 동작을 막는다. (폼 제출 방지)
+    $('#back').click(function(event) {
         event.preventDefault();
 
         $('#trainer-select').show();
         $('#registration-form').hide();
+    });
+
+    // registration-form의 제출 이벤트에 리스너 추가
+    $('#registration-form').submit(function(event) {
+
+        // 알림을 띄운다.
+        alert('신청이 완료되었습니다.');
     });
 });
 </script>
