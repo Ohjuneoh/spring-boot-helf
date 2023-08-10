@@ -1,20 +1,21 @@
 package kr.co.helf.vo;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.type.Alias;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import lombok.Data;
 
 @Data
 @Alias("User")
-public class User implements UserDetails{
+public class User implements UserDetails, OAuth2User {
 
 	private String id;
 	private String email;
@@ -29,9 +30,22 @@ public class User implements UserDetails{
 	private Rank rank;
 	private int point;
 	private String mobileCarrier;
+	
+	
+	private Map<String, Object> attributes;
+
 	public User(){}
 	public User(String id) {
 		this.id = id;
+	}
+	
+	public User(Map<String, Object> attributes) {
+		this.attributes=attributes;
+	}
+
+	@Override
+	public Map<String, Object> getAttributes() {
+		return attributes;
 	}
 
 	// 직원(사용자)의 보유권한을 반환한다.
@@ -68,5 +82,8 @@ public class User implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		return true;
-	}
+	} 
+		
+	
+	
 }

@@ -132,6 +132,16 @@ body {
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
         <div class="container py-5">
         
+		<div class="row mb-3">
+			<div class="col-12">
+				<div class="d-grid gap-2">
+					<a href="/oauth2/authorization/kakao" onclick="kakao_login_call()" >
+					    <img src="https://atimg.sonyunara.com/attrangs/banner/kakao-pc.jpg" style="width: 700px;">
+					</a>
+				</div>
+			</div>
+		</div>
+        
         	<!-- 회원 폼 -->
 		   	<form:form action="/user/register/user" id="registerform-user" style="display: none" method="post" modelAttribute="addUserForm" >
 				<div class="row g-3">

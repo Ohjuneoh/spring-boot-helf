@@ -81,6 +81,15 @@
 	                                	<a href="/user/registerform"  class="btn" >회원가입</a>
 	                                </div>
 	                            </div>
+	                            <div class="row mb-3">
+									<div class="col-12">
+										<div class="d-grid gap-2">
+											<a href="/oauth2/authorization/kakao" onclick="kakao_login_call()" >
+											    <img src="https://atimg.sonyunara.com/attrangs/banner/kakao-pc.jpg" style="width: 700px;">
+											</a>
+										</div>
+									</div>
+								</div>
                         	</form>
                         </div>
                     </div>

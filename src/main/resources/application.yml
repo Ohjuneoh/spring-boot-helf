@@ -19,7 +19,32 @@ spring:
   mvc:
     view:
       prefix: /WEB-INF/views/
-      suffix: .jsp       
+      suffix: .jsp     
+        
+# 카카오로그인
+  security:
+    oauth2:
+      client:
+        registration:
+         kakao:
+            client-id: 865ca56d4eae2d238a0d945acadb5b41
+            client-secret: ZiYibBStxCyjOUW1BgEiPc9IbpfPzxbF
+            client-authentication-method: POST
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/kakao"
+            scope:
+            - profile_nickname
+            - profile_image
+            - account_email
+            client-name: Kakao
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id            
+
+          
 # mybatis 관련 설정정보 저장하기
 mybatis:
   mapper-locations:
@@ -28,5 +53,3 @@ mybatis:
     jdbc-type-for-null: 'NULL'
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
   type-aliases-package: kr.co.helf.vo
-
-# 

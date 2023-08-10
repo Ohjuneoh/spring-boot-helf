@@ -1,4 +1,4 @@
-package kr.co.helf.service;
+package kr.co.helf.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 import kr.co.helf.mapper.UserMapper;
 import kr.co.helf.vo.User;
 
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
+	
 	@Autowired
 	private UserMapper userDao;
 	
-		
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 		
@@ -26,4 +26,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 		return user;
 	}
+
 }
