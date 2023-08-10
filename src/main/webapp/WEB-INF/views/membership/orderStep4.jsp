@@ -132,10 +132,10 @@
 		   						<th>
 		   							${form.membershipName }
 			   						<c:if test="${form.firstOptionDetaileNo ne null }">
-					   						<br/><br/>${form.firstOptionDetaileName }<br/><br/>
+					   						<br/><br/>${form.firstOptionDetaileName }
 			   						</c:if>
 			   						<c:if test="${form.secondOptionDetaileNo ne null }">
-				   						${form.secondOptionDetaileName }
+				   						<br/><br/>${form.secondOptionDetaileName }
 			   						</c:if>
 		   						</th>
 			   					<td>
@@ -146,10 +146,10 @@
 			   							${form.periodTime }회
 			   						</c:if>
 			   						<c:if test="${form.firstOptionDetaileNo ne null }">
-					   					<br/><br/>${form.firstOptionPeriod }개월<br/><br/>
+					   					<br/><br/>${form.firstOptionPeriod }개월
 			   						</c:if>
 			   						<c:if test="${form.secondOptionDetaileNo ne null }">
-				   						${form.secondOptionPeriod }개월
+				   						<br/><br/>${form.secondOptionPeriod }개월
 			   						</c:if>
 			   					</td>
 			   					<td>
@@ -167,23 +167,42 @@
 		   					<tr>
 		   						<th>
 		   							상품 합계 금액<br/><br/>
-		   							부가세<br/><br/>
-			   						포인트 할인
+		   							부가세
 		   						</th>
-		   						<td>
-		   							사용 가능 적립금 <strong>${user.point }P</strong>
-		   						</td>
+		   						<td></td>
 		   						<td>
 		   							<fmt:formatNumber value="${form.totalPrice }" pattern="###,###"/>원
 		   							<br/><br/>
 		   							+ <fmt:formatNumber value="${form.surtax }" pattern="###,###"/>원
-		   							<br/><br/>
 		   						</td>
 		   					</tr>
 		   					<tr>
 		   						<th>
-		   							총 결제 금액
+		   							포인트 할인
+		   							<br/><br/>
 		   						</th>
+								<td>
+		   							사용 가능 적립금 <strong>${user.point }P</strong>
+		   							<br/><br/>
+		   						</td>
+		   						<td>
+		   							<input type="number" style="width: 100px;">
+		   							<div style="margin: 3px;">
+			   							<button class="btn btn-primary btn-sm">전체</button>
+			   							<button class="btn btn-success btn-sm">적용</button>
+		   							</div>
+		   						</td>
+		   					</tr>
+		   					<tr>
+		   						<th>
+		   							<strong>총 결제 금액</strong>
+		   						</th>
+		   						<td></td>
+		   						<td>
+		   							<strong>
+		   								<fmt:formatNumber value="${form.totalPrice }" pattern="###,###"/>원
+		   							</strong>
+		   						</td>
 		   					</tr>
 		   				</thead>
 					</table>
