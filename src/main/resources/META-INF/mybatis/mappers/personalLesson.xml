@@ -38,8 +38,8 @@
 			trainer_no = #{value}
 	</select>
 	<resultMap type="kr.co.helf.vo.Trainer" id="getAllTrainersWithCareer" >
-    	<id column="Trainer_no" property="trainerNo"/>
-    	<result column="Trainer_file" property="trainerFile"/>
+    	<id column="trainer_no" property="trainerNo"/>
+    	<result column="trainer_file" property="trainerFile"/>
     	<association property="user" javaType="kr.co.helf.vo.User">
     		<id column="user_id" property="id"/>
     		<result column="name" property="name"/>
@@ -68,4 +68,15 @@
 		order by
 			trainer_no
 	</select>
+	<insert id="insertConsultation" parameterType="Consultation">
+		insert into helf_lesson_consultation(lesson_consultation_no, 
+											 lesson_consultation_exercise_goal,
+											 lesson_consultation_physical_abnormalities,
+											 lesson_consultation_request_date,
+											 lesson_consultation_request_time,
+											 user_id,
+											 trainer_no)
+		values(helf_lesson_consultation_seq.nextval, #{goal}, #{abnormalities}, #{applicationDate}, #{requestTime}, #{user.id}, #{trainer.trainerNo})
+	</insert>
+	
 </mapper>
