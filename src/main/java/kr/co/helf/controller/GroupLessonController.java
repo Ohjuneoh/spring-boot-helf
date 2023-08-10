@@ -69,11 +69,10 @@ public class GroupLessonController {
         return "grouplesson/detail";
     }
 
-    // 신청 시 신청인원 증가
+    // 유저가 수업신청 시 신청인원 증가 , LessonApply 테이블에 저장
     @GetMapping("/request")
-    public String reqCount(@RequestParam("no") int lessonNo){
-        groupLessonService.updateReqCount(lessonNo);
-
+    public String reqCount(@RequestParam("no") int lessonNo,@AuthenticationPrincipal User user) {
+        groupLessonService.updateApplyLesson(lessonNo,user);
         return "redirect:/grouplesson/list";
     }
 

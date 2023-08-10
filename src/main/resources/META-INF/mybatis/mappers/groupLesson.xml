@@ -103,9 +103,10 @@
             lesson_no =#{no}
     </update>
     
-    <!-- 유저가 레슨 신청 -->
+
+    <!-- 유저가 레슨 신청 시 레슨 신청 테이블에 저장 -->
     <insert id="insertApplyLesson" parameterType="LessonApply">
-        insert into
+        insert into helf_lesson_apply
                 (lesson_apply_no,lesson_no,user_id)
         values(helf_lesson_apply_seq.nextval,#{lesson.no},#{user.id})
     </insert>
