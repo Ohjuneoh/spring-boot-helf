@@ -1,10 +1,19 @@
 package kr.co.helf.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.service.UserService;
@@ -27,26 +36,51 @@ public class UserController {
 
 	// 회원가입화면 요청처리
 	@GetMapping(value="/registerform")
-	public String registerForm() {
+	public String registerForm(Model model) {
+		
+		model.addAttribute("addUserForm", new AddUserForm());
 		return "/registerform";
 	}
 	
 
-	// 회원가입 요청
+	// 회원가입 요청(유저)
 	@PostMapping(value="/register/user") 
-	public String registerUser(AddUserForm form) {
-		userService.createUser(form);
+	public String registerUser(@Valid AddUserForm form, BindingResult bindingResult, Model model) {
+		// 검증 
+		if (bindingResult.hasErrors()) {
+			
+			// 회원가입 실패 시 입력 데이터 값 유지
+			model.addAttribute("form", form );
+			
+			// 유효성 검사를 통과하지 못 한 필드와 메시지 핸들링 
+			Map<String, String> errorMap = new HashMap<>();
+
+			for(FieldError error : bindingResult.getFieldErrors()) {
+				errorMap.put("valid_"+error.getField(), error.getDefaultMessage());
+			}
+		// 회원가입 페이지로 리턴
+		return "/registerform";
 		
-		return "redirect:/";
 	}
+		// 회원가입 성공 시 
+		userService.createUser(form);
+		return "/register";
+}
 	
-	// 회원가입 요청
+	// 회원가입 요청(트레이너)
 	@PostMapping(value="/register/trainer") 
 	public String registerTrainer(AddUserForm form) {
 		userService.createTrainer(form);
 		
 		return "redirect:/";
 	}
+	
+	// 카카오 api(로그인,회원가입) 요청
+    @RequestMapping("/login")
+    public String home(@RequestParam(value = "code", required = false) String code) throws Exception{
+        System.out.println("#########" + code);
+        return "testPage";
+    }
 	
 	
 	// 아이디찾기화면 요청처리
