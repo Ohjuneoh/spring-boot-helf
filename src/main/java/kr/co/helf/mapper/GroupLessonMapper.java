@@ -26,4 +26,6 @@ public interface GroupLessonMapper {
     void updateReservation(Lesson lesson);
     // 레슨 삭제(lesson_disabled 상태 -> 'Y')로 변경
     void deleteLesson(Lesson lesson);
+//     유저가 레슨신청 -> lessonApply 테이블에 저장
+    void insertApplyLesson(LessonApply lessonApply);
 }

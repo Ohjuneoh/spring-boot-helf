@@ -100,13 +100,15 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <c:forEach var="lessonApply" items="${applyList }">
                                 <tr>
-                                    <td>xxx</td>
-                                    <td>xxxx</td>
-                                    <td>xxxx</td>
-                                    <td>xxxx</td>
-                                    <td>xxxx</td>
+                                    <td>${lessonApply.lesson.no }</td>
+                                    <td>${lessonApply.lesson.name }</td>
+                                    <td>${lessonApply.user.name }</td>
+                                    <td><fmt:formatDate value="${lessonApply.lesson.date }" pattern="yyyy년 M월 d일" /> ${lessonApply.lesson.time }시</td>
+                                    <td>${lessonApply.attendanceStatus }</td>
                                 </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -115,25 +117,7 @@
         </div>
     </div>
 </div>
-<div class="row mb-3" >
-    <div class="col-12">
-        <nav>
-            <ul class="pagination justify-content-center">
-                <li class="page-item ${result.pagination.first ? 'disabled' : '' }">
-                    <a class="page-link"  href="list?page=${result.pagination.prePage }" >이전</a>
-                </li>
-                <c:forEach var="num" begin="${result.pagination.beginPage }" end="${result.pagination.endPage }">
-                    <li class="page-item ${result.pagination.page eq num ? 'active' : '' }">
-                        <a class="page-link" href="list?page=${num }" >${num }</a>
-                    </li>
-                </c:forEach>
-                <li class="page-item ${result.pagination.last ? 'disabled' : '' }">
-                    <a class="page-link" href="list?page=${result.pagination.nextPage }" >다음</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
+
 <!-- Lesson Register Form End  -->
 <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
     <div class="container">

@@ -253,7 +253,7 @@
 <script>
     $( function() {
         $("#btn-apply").click(function(event){
-            location.href = "/grouplesson/detail";
+            location.href = "/grouplesson/request?no=${lesson.no }";
         });
     });
 
