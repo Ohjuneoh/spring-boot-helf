@@ -86,7 +86,7 @@
 			</div>
 			<div class="text-center" style="margin: 100px;">
 				<span class="border border-primary rounded-circle d-inline-block bg-primary" style="height:125px; width:125px; padding-top:46px; padding-left:1px;">
-					<strong>이용약관</strong>
+					<strong style="color:white">이용약관</strong>
 				</span>
 		  		<c:if test="${membershipJoinCat.getCatName() ne '하루운동'}">
 			  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
@@ -110,8 +110,14 @@
 				  		결제
 		  			</strong>
 		  		</span>
-				<div style="margin: 80px;" class="text-start">
-					<div class="card card-body bg-light border-0" style="height:400px; width:900px;">
+				<div class="offset-1" style="margin: 80px;">
+					<h4 class="text-start">
+						<strong style="color:gray">센터 이용정책</strong>
+					</h4>
+					<hr style="border: 2px solid gray;"/>
+				</div>		  		
+				<div class="text-start offset-2">
+					<div class="card card-body bg-light border-0" style="height:400px; width:700px;">
 						내용넣어주세요
 					</div>
 					<br/>
@@ -120,8 +126,14 @@
 						<strong class="text-start" style="color: red;">[필수]</strong> 이용약관에 동의합니다.
 					</label> 
 				</div>
-				<div class="text-start" style="margin: 80px;">
-					<div class="card card-body bg-light border-0" style="height:400px; width:900px;">
+				<div class="offset-1" style="margin: 80px;">
+					<h4 class="text-start">
+						<strong style="color:gray">환불정책</strong>
+					</h4>
+					<hr style="border: 2px solid gray;"/>
+				</div>					
+				<div class="text-start offset-2">
+					<div class="card card-body bg-light border-0" style="height:400px; width:700px;">
 						내용넣어주세요
 					</div>
 					<br/>

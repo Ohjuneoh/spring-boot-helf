@@ -103,7 +103,7 @@
 		  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
 		 		<span class="border border-primary rounded-circle d-inline-block bg-primary" style="height:125px; width:125px; 
 		 			  padding-top:46px; padding-left:1px;">
-		  			<strong>
+		  			<strong style="color:white">
 				 		부가상품
 		  			</strong>
 		 		</span>
@@ -143,7 +143,7 @@
 				</c:forEach>
 		  		
 				<div class="offset-10">
-					<form id="form-xxx" method="get" action="order">
+					<form id="form-xxx" method="post" action="order">
 						<input type="hidden" name="lockerNo" />
 						<input type="hidden" name="wearNo" />
 						<a href="list" class="btn btn-danger">취소</a>
