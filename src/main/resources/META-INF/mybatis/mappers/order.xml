@@ -13,15 +13,17 @@
 		order by membership_no desc
 	</select>
 
-	<select id="getMembershipByNo" resultType="membership" parameterType="int">
-		select membership_no			as no,
-			   membership_name			as name,
-			   membership_description	as description,
-			   Membership_delete		as state,
-			   category_no				as "category.no",
-			   membership_price			as price
-		from helf_membership
-		where membership_no = #{value}
+	<select id="getMembershipJoinCatByNo" resultType="membershipJoinCat" parameterType="int">
+		select A.membership_no			as no,
+			   A.membership_name		as name,
+			   A.membership_price		as price,
+			   A.category_no			as catNo,
+			   B.category_name			as catName,
+			   B.category_property		as catProperty,
+			   B.category_use_option	as useOption
+		from helf_membership A, helf_membership_category B
+		where A.category_no = B.category_no
+		and A.membership_no = #{value}
 	</select>
 	
 	<select id="getPeriodsByType" resultType="Period" parameterType="string">
@@ -32,6 +34,20 @@
 				period_addprice			as addPrice
 		from helf_membership_period
 		where period_type = #{value}
+		<if test="type == '횟수'">
+			and period_property > 1
+		</if>
+	</select>
+
+	<select id="getPeriodsByOne" resultType="Period" parameterType="string">
+		select period_no				as no, 
+			    period_type				as type,	
+				period_property			as property,
+				period_duration			as duration,
+				period_addprice			as addPrice
+		from helf_membership_period
+		where period_type = #{value}
+		and period_property = 1
 	</select>
 
 	<select id="getPeriodByNo" resultType="Period" parameterType="int">
@@ -41,7 +57,7 @@
 			   period_duration			as duration,
 			   period_addprice			as addPrice
 		from helf_membership_period
-		where period_no = ${value}
+		where period_no = #{value}
 	</select>
 	
 	<select id="getCategoryByNo" parameterType="int" resultType="category">
@@ -52,4 +68,34 @@
 		from helf_membership_category
 		where category_no = #{value}
 	</select>
+	
+	<select id="getOptionDetailes" resultType="optionJoinDetaile">
+		select B.detaile_no			as no, 
+			   A.option_name		as name, 
+			   B.detaile_period		as period, 
+			   B.Detaile_price		as price,
+			   A.option_no			as "option.no"
+		from helf_membership_option A, helf_membership_option_detaile B
+		where A.option_no = B.option_no
+		order by B.detaile_price 
+	</select>
+	
+	<select id="getOptionDetaileByNo" parameterType="int" resultType="optionJoinDetaile">
+		select B.detaile_no			as no, 
+			   A.option_name		as name, 
+			   B.detaile_period		as period, 
+			   B.Detaile_price		as price,
+			   A.option_no			as "option.no"
+		from helf_membership_option A, helf_membership_option_detaile B
+		where A.option_no = B.option_no
+		and detaile_no = #{value}
+	</select>
+	
+	<select id="getOptions" resultType="option">
+		select option_no	as no,
+			   option_name	as name
+		from helf_membership_option
+		where option_name not in '선택안함'
+	</select>
+	
 </mapper>

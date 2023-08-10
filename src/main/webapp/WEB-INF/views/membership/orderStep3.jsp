@@ -114,25 +114,45 @@
 				  		결제
 		  			</strong>
 		  		</span>
-				<div class="offset-1" style="margin: 100px;">
-					<h4 class="text-start">
-						<strong style="color:gray">부가 상품 고르기</strong>
-					</h4>
-					<hr style="border: 2px solid gray;"/>
-				</div>
-				<div>
-					<span class="offset-10">
+		  		
+		  		<c:forEach var="option" items="${options }">
+			  		<div class="text-start offset-1" style="margin: 100px;">
+						<h4>
+							<strong style="color:gray">${option.name }</strong>
+						</h4>
+						<hr style="border: 2px solid gray;" />
+			  		</div>
+					<div class="offset-1" style="margin: 100px;">
+						<c:forEach var="optionDetaile" items="${optionDetailes }">
+							<c:if test="${option.name eq optionDetaile.name }">
+								<button id="btn-${optionDetaile.no }" data-option-no="${optionDetaile.no }" data-option-name="${option.name }" type="button" 
+										class="btn btn-outline-primary btn-lg" style="width: 200px; height: 200px; margin: 20px;">
+									<c:if test="${optionDetaile.period == 0}">
+										선택안함
+									</c:if>
+									<c:if test="${optionDetaile.period != 0}">
+										${optionDetaile.period}개월
+										<br />
+										<br />
+										+ <fmt:formatNumber value="${optionDetaile.price }" />
+									</c:if>
+								</button>
+							</c:if>
+					  	</c:forEach>
+					</div>
+				</c:forEach>
+		  		
+				<div class="offset-10">
+					<form id="form-xxx" method="get" action="order">
+						<input type="hidden" name="lockerNo" />
+						<input type="hidden" name="wearNo" />
 						<a href="list" class="btn btn-danger">취소</a>
-					</span>
-					<span class="text-end">
-						<a href="period" id="btn-next" class="btn btn-primary disabled">다음</a>
-					</span>
+						<button type="submit" id="btn-next" class="btn btn-primary disabled">다음</button>
+					</form>
 				</div>				
-				
 			</div>
 		</div>
 	</div>
-	
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -149,7 +169,29 @@
 </body>
 <script type="text/javascript">
 $(function() {
+	
+	let clickedLocker = false;
+	let clickedWear = false;
+	
+	$('[id^="btn"]').on('click', function() {
+		$(this).addClass('active');
+		$(this).siblings().removeClass('active');
+		
+		let option = $(this).attr("data-option-name");
+		let no = $(this).attr("data-option-no");
 
+		if (option == "락커") {
+			$("#form-xxx :input[name=lockerNo]").val(no);	
+			clickedLocker = true;
+		} else if (option == "운동복") {
+			$("#form-xxx :input[name=wearNo]").val(no);
+			clickedWear = true;
+		}
+		
+		if (clickedLocker && clickedWear) {
+			$("#btn-next").removeClass('disabled');			
+		} 
+	});
 })
 </script>
 </html>

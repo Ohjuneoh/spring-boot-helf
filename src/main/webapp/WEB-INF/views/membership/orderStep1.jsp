@@ -88,7 +88,7 @@
 				<span class="border border-primary rounded-circle d-inline-block bg-primary" style="height:125px; width:125px; padding-top:46px; padding-left:1px;">
 					<strong>이용약관</strong>
 				</span>
-		  		<c:if test="${category.getName() ne '하루운동'}">
+		  		<c:if test="${membershipJoinCat.getCatName() ne '하루운동'}">
 			  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
 			  		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
 			  			  padding-top:46px; padding-left:1px;">
@@ -110,8 +110,8 @@
 				  		결제
 		  			</strong>
 		  		</span>
-				<div style="margin: 100px;" class="text-start">
-					<div class="card card-body bg-light border-0" style="height:600px; width:900px;">
+				<div style="margin: 80px;" class="text-start">
+					<div class="card card-body bg-light border-0" style="height:400px; width:900px;">
 						내용넣어주세요
 					</div>
 					<br/>
@@ -120,8 +120,8 @@
 						<strong class="text-start" style="color: red;">[필수]</strong> 이용약관에 동의합니다.
 					</label> 
 				</div>
-				<div class="text-start" style="margin: 100px;">
-					<div class="card card-body bg-light border-0" style="height:600px; width:900px;">
+				<div class="text-start" style="margin: 80px;">
+					<div class="card card-body bg-light border-0" style="height:400px; width:900px;">
 						내용넣어주세요
 					</div>
 					<br/>
@@ -141,7 +141,6 @@
 			</div>
 		</div>
 	</div>
-	
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

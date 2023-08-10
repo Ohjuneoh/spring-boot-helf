@@ -9,7 +9,7 @@ public class Period {
 
 	private int no;
 	private String type;
-	private String property;
+	private int property;
 	private int duration;
 	private int addPrice;
 }

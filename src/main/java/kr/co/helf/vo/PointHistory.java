@@ -11,6 +11,6 @@ public class PointHistory {
 
 	private int no;
 	private int usePoint;
-	private Date userDate;
+	private Date useDate;
 	private User user;
 }

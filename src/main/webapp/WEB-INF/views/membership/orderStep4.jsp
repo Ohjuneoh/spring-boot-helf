@@ -93,7 +93,7 @@
 					  padding-top:46px; padding-left:1px;">
 					<strong>이용약관</strong>
 				</span>
-				<c:if test="${category.getName() ne '하루운동'}">
+				<c:if test="${membershipJoinCat.getCatName() ne '하루운동'}">
 			  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
 			  		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
 			  			  padding-top:46px; padding-left:1px;">
@@ -118,12 +118,88 @@
 		  		</span>
 				<div class="offset-1" style="margin: 100px;">
 					<h4 class="text-start">
-						<strong style="color:gray">부가 상품 고르기</strong>
+						<strong style="color:gray">결제 내역</strong>
+					</h4>
+					<hr style="border: 2px solid gray;"/>
+					<table class="table table-bordered" style="margin: 50px; width: 900px;">
+		   				<thead>
+		   					<tr class="table-primary" style="width: 1200px;">
+		   						<th>상품명</th>
+		   						<th>기간/횟수</th>
+		   						<th>상품가</th>
+		   					</tr>
+		   					<tr>
+		   						<th>
+		   							${form.membershipName }
+			   						<c:if test="${form.firstOptionDetaileNo ne null }">
+					   						<br/><br/>${form.firstOptionDetaileName }<br/><br/>
+			   						</c:if>
+			   						<c:if test="${form.secondOptionDetaileNo ne null }">
+				   						${form.secondOptionDetaileName }
+			   						</c:if>
+		   						</th>
+			   					<td>
+			   						<c:if test="${form.periodTime eq null }">
+				   						${form.periodDuration }개월
+			   						</c:if>
+			   						<c:if test="${form.periodTime ne null }">
+			   							${form.periodTime }회
+			   						</c:if>
+			   						<c:if test="${form.firstOptionDetaileNo ne null }">
+					   					<br/><br/>${form.firstOptionPeriod }개월<br/><br/>
+			   						</c:if>
+			   						<c:if test="${form.secondOptionDetaileNo ne null }">
+				   						${form.secondOptionPeriod }개월
+			   						</c:if>
+			   					</td>
+			   					<td>
+			   						<fmt:formatNumber value="${form.membershipPrice }" pattern="###,###"/>원
+			   						<c:if test="${form.firstOptionDetaileNo ne null }">
+					   					<br/><br/>
+					   					<fmt:formatNumber value="${form.firstOptionPrice }" pattern="###,###"/>원
+			   						</c:if>
+			   						<c:if test="${form.secondOptionDetaileNo ne null }">
+					   					<br/><br/>
+					   					<fmt:formatNumber value="${form.secondOptionPrice }" pattern="###,###"/>원
+			   						</c:if>
+			   					</td>
+		   					</tr>
+		   					<tr>
+		   						<th>
+		   							상품 합계 금액<br/><br/>
+		   							부가세<br/><br/>
+			   						포인트 할인
+		   						</th>
+		   						<td>
+		   							사용 가능 적립금 <strong>${user.point }P</strong>
+		   						</td>
+		   						<td>
+		   							<fmt:formatNumber value="${form.totalPrice }" pattern="###,###"/>원
+		   							<br/><br/>
+		   							+ <fmt:formatNumber value="${form.surtax }" pattern="###,###"/>원
+		   							<br/><br/>
+		   						</td>
+		   					</tr>
+		   					<tr>
+		   						<th>
+		   							총 결제 금액
+		   						</th>
+		   					</tr>
+		   				</thead>
+					</table>
+				</div>
+				<div class="offset-1" style="margin: 100px;">
+					<h4 class="text-start">
+						<strong style="color:gray">시작일</strong>
 					</h4>
 					<hr style="border: 2px solid gray;"/>
 				</div>
-
-				
+				<div class="offset-1" style="margin: 100px;">
+					<h4 class="text-start">
+						<strong style="color:gray">결제수단</strong>
+					</h4>
+					<hr style="border: 2px solid gray;"/>
+				</div>
 			</div>
 		</div>
 	</div>

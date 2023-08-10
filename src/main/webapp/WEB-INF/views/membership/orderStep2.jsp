@@ -88,7 +88,7 @@
 			<br/>
 			<br/>
 			<br/>
-			<div class="text-center ">
+			<div class="text-center" >
 				<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
 					  padding-top:46px; padding-left:1px;">
 					<strong>이용약관</strong>
@@ -122,27 +122,26 @@
 				</div>
 				<div class="offset-2" style="margin: 100px;">
 					<c:forEach var="period" items="${periods }">
-						<button id="btn-period-${period.no }" type="button" class="btn btn-outline-primary btn-lg" 
+						<button	data-period-no="${period.no }" 
+							id="btn-period-${period.no }" type="button" class="btn btn-outline-primary btn-lg" 
 								style="width: 200px; height: 200px; margin: 20px;">
-							${period.property } ${period.property == '기간' ? '개월' : '회'}
+							${period.property }${period.type eq "기간" ? "개월" : "회"}
 							<br/>
 							<br/>
-							+ ${period.addPrice }
+							+ <fmt:formatNumber value="${period.addPrice }" />
 						</button>
 					</c:forEach>
 				</div>
-				<div>
-					<span class="offset-10">
+				<div class="offset-10"> 
+					<form id="form-xxx" method="post" action="option">
+						<input type="hidden" name="period" />
 						<a href="list" class="btn btn-danger">취소</a>
-					</span>
-					<span class="text-end">
-						<a href="period" id="btn-next" class="btn btn-primary disabled">다음</a>
-					</span>
+						<button type="submit" id="btn-next" class="btn btn-primary disabled">다음</button>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -159,7 +158,15 @@
 </body>
 <script type="text/javascript">
 $(function() {
-
+	$('[id^="btn-period"]').on('click', function() {
+		$(this).addClass('active');
+		$(this).siblings().removeClass('active');
+		$("#btn-next").removeClass('disabled');
+		
+		let no = $(this).attr("data-period-no");
+		$("#form-xxx :input[name=period]").val(no)
+	});
+	
 })
 </script>
 </html>
