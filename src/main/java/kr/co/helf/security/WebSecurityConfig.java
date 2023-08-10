@@ -1,5 +1,6 @@
 package kr.co.helf.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -15,25 +16,20 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig {
 	
+	@Autowired
+	CustomOAuth2UserService oAuth2UserService;
+	
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		return http
-				// 사이트간 요청위조 방지 기능을 비활성화한다. 수정 
+	public SecurityFilterChain formLoginFilterChaing(HttpSecurity http) throws Exception {
+		 http
 				.csrf()
 					.disable()
-					// Form 로그인 인증 기능을 사용한다.
 				.formLogin()
-					// 사용자정의 로그인 페이지를 요청하는 URL을 지정한다.
 					.loginPage("/user/loginform")
-					// 아이디에 해당하는 파라미터값의 이름을 지정한다.
 					.usernameParameter("id")
-					// 비밀번호에 해당하는 파라미터값의 이름을 지정한다.
 					.passwordParameter("password")
-					// Form 로그인 인증작업을 요청하는 URL을 지정한다.
 					.loginProcessingUrl("/user/login")
-					// 로그인 성공시 재요청 URL을 지정한다.
 					.defaultSuccessUrl("/")
-					// 로그인 실패시 재요청 URL을 지정한다.
 					.failureUrl("/user/loginform?error=fail")
 				.and()
 					.logout()
@@ -49,8 +45,18 @@ public class WebSecurityConfig {
 						response.sendRedirect("/user/loginform?error=forbidden");
 					})
 				.and()
-					.build();
+	                .oauth2Login()
+	                .loginPage("/user/loginform")
+	                .defaultSuccessUrl("/")
+	                .userInfoEndpoint()
+	                .userService(oAuth2UserService);
+				
+		return http.build();
+		
+		
 	}
+	
+
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
