@@ -22,6 +22,8 @@ public class UserService {
 	private PasswordEncoder passwordEncoder;
 	
 	public void createUser(AddUserForm form) {
+		
+		
 		User user = new User();
 		
 		BeanUtils.copyProperties(form, user);
@@ -30,11 +32,12 @@ public class UserService {
 		String encryptedPassword = passwordEncoder.encode(form.getPassword());
 		user.setEncryptedPassword(encryptedPassword);
 		
-		// 등급, 타입 담기
+		// 등급, 타입,포인트 담기
 		user.setType("ROLE_USER");
 		Rank rank = new Rank();
 		rank.setNo(1);
 		user.setRank(rank);
+		user.setPoint(1000);
 		
 		userMapper.insertUser(user);
 		
