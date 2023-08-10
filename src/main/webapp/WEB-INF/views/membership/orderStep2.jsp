@@ -52,7 +52,7 @@
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0 h-10 ">
 		<jsp:include page="../common/navbar.jsp">
-			<jsp:param name="menu" value="수업"/>
+			<jsp:param name="menu" value="이용권"/>
 		</jsp:include>
     <!-- Navbar End -->
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
@@ -88,36 +88,60 @@
 			<br/>
 			<br/>
 			<br/>
-			<div class="text-center">
-				<span class="border border-primary rounded-circle d-inline-block bg-primary" style="height:125px; width:125px; padding-top:46px; padding-left:1px;">
+			<div class="text-center" >
+				<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
+					  padding-top:46px; padding-left:1px;">
 					<strong>이용약관</strong>
 				</span>
 		  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
-		  		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; padding-top:46px; padding-left:1px;">
+		  		<span class="border border-primary rounded-circle d-inline-block bg-primary" style="height:125px; width:125px; 
+		  			  padding-top:46px; padding-left:1px;">
 		  			<strong>
 			  			기간설정
 		  			</strong>
 		  		</span>
 		  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
-		 		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; padding-top:46px; padding-left:1px;">
+		 		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
+		 			  padding-top:46px; padding-left:1px;">
 		  			<strong>
 				 		부가상품
 		  			</strong>
 		 		</span>
 		  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
-		  		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; padding-top:46px; padding-left:-2px;">
+		  		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
+		  			  padding-top:46px; padding-left:-2px;">
 		  			<strong>
 				  		결제
 		  			</strong>
 		  		</span>
+				<div class="offset-1" style="margin: 100px;">
+					<h4 class="text-start">
+						<strong style="color:gray">기간 고르기</strong>
+					</h4>
+					<hr style="border: 2px solid gray;"/>
+				</div>
+				<div class="offset-2" style="margin: 100px;">
+					<c:forEach var="period" items="${periods }">
+						<button	data-period-no="${period.no }" 
+							id="btn-period-${period.no }" type="button" class="btn btn-outline-primary btn-lg" 
+								style="width: 200px; height: 200px; margin: 20px;">
+							${period.property }${period.type eq "기간" ? "개월" : "회"}
+							<br/>
+							<br/>
+							+ <fmt:formatNumber value="${period.addPrice }" />
+						</button>
+					</c:forEach>
+				</div>
+				<div class="offset-10"> 
+					<form id="form-xxx" method="post" action="option">
+						<input type="hidden" name="period" />
+						<a href="list" class="btn btn-danger">취소</a>
+						<button type="submit" id="btn-next" class="btn btn-primary disabled">다음</button>
+					</form>
+				</div>
 			</div>
-			
 		</div>
 	</div>
-	
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
-
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -132,4 +156,17 @@
     <!-- Template Javascript -->
 	<script src="/resources/js/main.js"></script>
 </body>
+<script type="text/javascript">
+$(function() {
+	$('[id^="btn-period"]').on('click', function() {
+		$(this).addClass('active');
+		$(this).siblings().removeClass('active');
+		$("#btn-next").removeClass('disabled');
+		
+		let no = $(this).attr("data-period-no");
+		$("#form-xxx :input[name=period]").val(no)
+	});
+	
+})
+</script>
 </html>

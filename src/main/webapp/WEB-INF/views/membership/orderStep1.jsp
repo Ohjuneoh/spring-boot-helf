@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -52,14 +51,14 @@
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0 h-10 ">
 		<jsp:include page="../common/navbar.jsp">
-			<jsp:param name="menu" value="수업"/>
+			<jsp:param name="menu" value="이용권"/>
 		</jsp:include>
     <!-- Navbar End -->
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">MEMBERSHIP</h1>
-                    <a href="" class="h5 text-white">이용권 목록</a>
+                    <h1 class="display-4 text-white animated zoomIn">ORDER</h1>
+                    <a href="" class="h5 text-white">이용권 구매</a>
                 </div>
             </div>
         </div>
@@ -79,40 +78,69 @@
 			</div>
 		</div>
 	</div>
-    
-    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+	<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
 		<div class="container py-5">
 			<div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-				<h5 class="fw-bold text-primary text-uppercase">Our Products</h5>
-				<h1 class="mb-0">이용권을 선택하세요</h1>
+				<h5 class="fw-bold text-primary text-uppercase">Your Order</h5>
+				<h1 class="mb-0">구매를 진행하세요</h1>
 			</div>
-			<div class="row g-5">
-				<c:forEach var="membership" items="${memberships}">
-					<div id="box-membership-${membership.no }" class="offset-2 col-lg-8 col-md-6 wow zoomIn" data-wow-delay="0.3s">
-						<div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-							<div class="service-icon">
-								<i class="bi bi-trophy-fill text-white"></i>
-							</div>
-							<h4 class="mb-3">${membership.name }</h4>
-							<div class="d-none">
-								<br/>
-								<h2>
-									<strong class="text-primary">
-										<fmt:formatNumber value="${membership.price }" pattern="###,###" />원
-									</strong>
-								</h2>
-								<br/>
-								<p>${membership.description }</p>
-							</div>
-							<a class="btn btn-lg btn-primary rounded" href="condition?no=${membership.no }">
-                            	<i class="bi bi-arrow-right"></i>
-                        	</a>
-						</div> 
+			<div class="text-center" style="margin: 100px;">
+				<span class="border border-primary rounded-circle d-inline-block bg-primary" style="height:125px; width:125px; padding-top:46px; padding-left:1px;">
+					<strong>이용약관</strong>
+				</span>
+		  		<c:if test="${membershipJoinCat.getCatName() ne '하루운동'}">
+			  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
+			  		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
+			  			  padding-top:46px; padding-left:1px;">
+			  			<strong>
+				  			기간설정
+			  			</strong>
+			  		</span>
+			  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
+			 		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
+			 			  padding-top:46px; padding-left:1px;">
+			  			<strong>
+					 		부가상품
+			  			</strong>
+			 		</span>
+				</c:if>
+		  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
+		  		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; padding-top:46px; padding-left:-2px;">
+		  			<strong>
+				  		결제
+		  			</strong>
+		  		</span>
+				<div style="margin: 80px;" class="text-start">
+					<div class="card card-body bg-light border-0" style="height:400px; width:900px;">
+						내용넣어주세요
 					</div>
-				</c:forEach>
+					<br/>
+					<label>
+						<input id="condition-check1" type="checkbox" class="normal">
+						<strong class="text-start" style="color: red;">[필수]</strong> 이용약관에 동의합니다.
+					</label> 
+				</div>
+				<div class="text-start" style="margin: 80px;">
+					<div class="card card-body bg-light border-0" style="height:400px; width:900px;">
+						내용넣어주세요
+					</div>
+					<br/>
+					<label>
+						<input id="condition-check2" type="checkbox" class="normal">
+						<strong style="color: red;">[필수]</strong> 이용약관에 동의합니다.
+					</label> 
+				</div>
+			</div>
+			<div>
+				<span class="offset-10">
+					<a href="list" class="btn btn-danger">취소</a>
+				</span>
+				<span class="text-end">
+					<a href="period" id="btn-next" class="btn btn-primary disabled">다음</a>
+				</span>
 			</div>
 		</div>
-    </div>
+	</div>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -129,15 +157,17 @@
 </body>
 <script type="text/javascript">
 $(function() {
-	$("div[id^=box-membership]").hover(function() {
-		$(this).find('div.service-item').find(".service-icon").addClass('d-none')
-		                                .next().addClass('d-none')
-		                                .next().removeClass('d-none')
-	}, function() {
-		$(this).find('div.service-item').find(".service-icon").removeClass('d-none')
-        								.next().removeClass('d-none')
-        								.next().addClass('d-none')
+	
+	$("#condition-check1, #condition-check2").change(function() {
+		let check1 = $("#condition-check1").prop("checked");
+		let check2 = $("#condition-check2").prop("checked");
+		
+		if (check1 && check2) {
+			$("#btn-next").removeClass('disabled');
+		} else {
+			$("#btn-next").addClass('disabled');
+		}
 	});
-});
+})
 </script>
 </html>

@@ -52,14 +52,14 @@
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0 h-10 ">
 		<jsp:include page="../common/navbar.jsp">
-			<jsp:param name="menu" value="수업"/>
+			<jsp:param name="menu" value="이용권"/>
 		</jsp:include>
     <!-- Navbar End -->
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">MEMBERSHIP</h1>
-                    <a href="" class="h5 text-white">이용권 목록</a>
+                    <h1 class="display-4 text-white animated zoomIn">ORDER</h1>
+                    <a href="" class="h5 text-white">이용권 구매</a>
                 </div>
             </div>
         </div>
@@ -79,40 +79,80 @@
 			</div>
 		</div>
 	</div>
-    
-    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+	<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
 		<div class="container py-5">
 			<div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-				<h5 class="fw-bold text-primary text-uppercase">Our Products</h5>
-				<h1 class="mb-0">이용권을 선택하세요</h1>
+				<h5 class="fw-bold text-primary text-uppercase">Your Order</h5>
+				<h1 class="mb-0">구매를 진행하세요</h1>
 			</div>
-			<div class="row g-5">
-				<c:forEach var="membership" items="${memberships}">
-					<div id="box-membership-${membership.no }" class="offset-2 col-lg-8 col-md-6 wow zoomIn" data-wow-delay="0.3s">
-						<div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-							<div class="service-icon">
-								<i class="bi bi-trophy-fill text-white"></i>
-							</div>
-							<h4 class="mb-3">${membership.name }</h4>
-							<div class="d-none">
-								<br/>
-								<h2>
-									<strong class="text-primary">
-										<fmt:formatNumber value="${membership.price }" pattern="###,###" />원
-									</strong>
-								</h2>
-								<br/>
-								<p>${membership.description }</p>
-							</div>
-							<a class="btn btn-lg btn-primary rounded" href="condition?no=${membership.no }">
-                            	<i class="bi bi-arrow-right"></i>
-                        	</a>
-						</div> 
+			<br/>
+			<br/>
+			<br/>
+			<div class="text-center ">
+				<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
+					  padding-top:46px; padding-left:1px;">
+					<strong>이용약관</strong>
+				</span>
+		  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
+		  		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
+		  			  padding-top:46px; padding-left:1px;">
+		  			<strong>
+			  			기간설정
+		  			</strong>
+		  		</span>
+		  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
+		 		<span class="border border-primary rounded-circle d-inline-block bg-primary" style="height:125px; width:125px; 
+		 			  padding-top:46px; padding-left:1px;">
+		  			<strong>
+				 		부가상품
+		  			</strong>
+		 		</span>
+		  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
+		  		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
+		  			  padding-top:46px; padding-left:-2px;">
+		  			<strong>
+				  		결제
+		  			</strong>
+		  		</span>
+		  		
+		  		<c:forEach var="option" items="${options }">
+			  		<div class="text-start offset-1" style="margin: 100px;">
+						<h4>
+							<strong style="color:gray">${option.name }</strong>
+						</h4>
+						<hr style="border: 2px solid gray;" />
+			  		</div>
+					<div class="offset-1" style="margin: 100px;">
+						<c:forEach var="optionDetaile" items="${optionDetailes }">
+							<c:if test="${option.name eq optionDetaile.name }">
+								<button id="btn-${optionDetaile.no }" data-option-no="${optionDetaile.no }" data-option-name="${option.name }" type="button" 
+										class="btn btn-outline-primary btn-lg" style="width: 200px; height: 200px; margin: 20px;">
+									<c:if test="${optionDetaile.period == 0}">
+										선택안함
+									</c:if>
+									<c:if test="${optionDetaile.period != 0}">
+										${optionDetaile.period}개월
+										<br />
+										<br />
+										+ <fmt:formatNumber value="${optionDetaile.price }" />
+									</c:if>
+								</button>
+							</c:if>
+					  	</c:forEach>
 					</div>
 				</c:forEach>
+		  		
+				<div class="offset-10">
+					<form id="form-xxx" method="get" action="order">
+						<input type="hidden" name="lockerNo" />
+						<input type="hidden" name="wearNo" />
+						<a href="list" class="btn btn-danger">취소</a>
+						<button type="submit" id="btn-next" class="btn btn-primary disabled">다음</button>
+					</form>
+				</div>				
 			</div>
 		</div>
-    </div>
+	</div>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -129,15 +169,29 @@
 </body>
 <script type="text/javascript">
 $(function() {
-	$("div[id^=box-membership]").hover(function() {
-		$(this).find('div.service-item').find(".service-icon").addClass('d-none')
-		                                .next().addClass('d-none')
-		                                .next().removeClass('d-none')
-	}, function() {
-		$(this).find('div.service-item').find(".service-icon").removeClass('d-none')
-        								.next().removeClass('d-none')
-        								.next().addClass('d-none')
+	
+	let clickedLocker = false;
+	let clickedWear = false;
+	
+	$('[id^="btn"]').on('click', function() {
+		$(this).addClass('active');
+		$(this).siblings().removeClass('active');
+		
+		let option = $(this).attr("data-option-name");
+		let no = $(this).attr("data-option-no");
+
+		if (option == "락커") {
+			$("#form-xxx :input[name=lockerNo]").val(no);	
+			clickedLocker = true;
+		} else if (option == "운동복") {
+			$("#form-xxx :input[name=wearNo]").val(no);
+			clickedWear = true;
+		}
+		
+		if (clickedLocker && clickedWear) {
+			$("#btn-next").removeClass('disabled');			
+		} 
 	});
-});
+})
 </script>
 </html>
