@@ -133,6 +133,7 @@ public class OrderController {
 		}
 		
 		form.surtax(lockerDetaile.getPrice(), wearDetaile.getPrice());
+		form.membershipAndOptionPrice();
 		form.totalPrice();
 		model.addAttribute("form", form);
 		model.addAttribute("user", user);
