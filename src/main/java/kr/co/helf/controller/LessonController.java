@@ -20,11 +20,18 @@ public class LessonController {
 
     private final LessonService lessonService;
 
-    @GetMapping("/mylesson")
+    @GetMapping("/user-my-lesson")
     public String lessonList(@AuthenticationPrincipal User user, Model model) {
         List<LessonApply> applyList = lessonService.getAllMyLessons(user.getId());
         model.addAttribute("applyList",applyList);
 
         return "lesson/mylesson";
+    }
+    @GetMapping("/trainer-my-lesson")
+    public String trainerList(@AuthenticationPrincipal User user, Model model){
+        List<Lesson> createList = lessonService.getAllCreateLessons(user.getId());
+        model.addAttribute("createList",createList);
+
+        return "lesson/trainerlesson";
     }
 }

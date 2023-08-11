@@ -46,29 +46,28 @@ public class GroupLessonService {
     }
     // 유저가 수업신청 시 조회수 증가 , LessonApply 테이블에 저장
     public void updateApplyLesson(int lessonNo,User user) {
-        Lesson lesson = groupLessonMapper.getLessonByNo(lessonNo);
-        lesson.setReqCnt(lesson.getReqCnt() + 1);
-        LessonApply lessonApply = new LessonApply();
+        LessonApply lessonApply = groupLessonMapper.getLessonApplyByLessonNoAndUserID(lessonNo, user.getId());
+        if (lessonApply != null) {
+            throw new RuntimeException("이미 신청한 레슨입니다.");
+        }
+
+        lessonApply = new LessonApply();
         lessonApply.setUser(user);
+        Lesson lesson = groupLessonMapper.getLessonByNo(lessonNo);
         lessonApply.setLesson(lesson);
+        lesson.setReqCnt(lesson.getReqCnt() + 1);
         groupLessonMapper.insertApplyLesson(lessonApply);
         groupLessonMapper.updateReqCount(lesson);
     }
     // 레슨 번호로 레슨 수정
     public void updateLesson(ModifyForm form, User user) {
         Lesson lesson = groupLessonMapper.getLessonByNo(form.getNo());
-        if(!lesson.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("작성자만 수정할 수 있습니다.");
-        }
         BeanUtils.copyProperties(form,lesson);
         groupLessonMapper.updateLesson(form);
     }
     // 레슨 번호로 레슨 삭제
     public void deleteLesson(int lessonNo,User user) {
         Lesson lesson = groupLessonMapper.getLessonByNo(lessonNo);
-        if(!lesson.getUser().getId().equals((user.getId()))){
-            throw new RuntimeException("작성자만 삭제할 수 있습니다.");
-        }
         lesson.setDisabled("Y");
         groupLessonMapper.deleteLesson(lesson);
     }

@@ -26,14 +26,14 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업(고객)</a>
                 <div class="dropdown-menu m-0">
-                    <a href="/grouplesson/list" class="dropdown-item">그룹 수업</a>
+                    <a href="/group-lesson/list" class="dropdown-item">그룹 수업</a>
                     <a href="/personallesson/consulting" class="dropdown-item">개인 PT 신청</a>
                 </div>
             </div>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업(트레이너)</a>
                 <div class="dropdown-menu m-0">
-                    <a href="/grouplesson/list" class="dropdown-item">그룹 수업</a>
+                    <a href="/group-lesson/list" class="dropdown-item">그룹 수업</a>
                     <a href="/personallesson/consulting" class="dropdown-item">개인 PT</a>
                 </div>
             </div>
@@ -49,11 +49,20 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">마이페이지</a>
                 <div class="dropdown-menu m-0">
+                    <sec:authorize access="hasRole('ROLE_USER')">
                     <a href="price" class="dropdown-item">내 정보 조회</a>
-                    <a href="/lesson/mylesson" class="dropdown-item">내 수업 조회</a>
+                    <a href="/lesson/user-my-lesson" class="dropdown-item">내 수업 조회</a>
                     <a href="feature" class="dropdown-item">내 이용권</a>
                     <a href="team" class="dropdown-item">내 쿠폰</a>
                     <a href="team" class="dropdown-item">구매내역</a>
+                    </sec:authorize>
+                    <sec:authorize access="hasRole('ROLE_TRAINER')">
+                        <a href="price" class="dropdown-item">내 정보 조회</a>
+                        <a href="/lesson/trainer-my-lesson" class="dropdown-item">내 수업 조회</a>
+                        <a href="feature" class="dropdown-item">내 이용권</a>
+                        <a href="team" class="dropdown-item">내 쿠폰</a>
+                        <a href="team" class="dropdown-item">구매내역</a>
+                    </sec:authorize>
                 </div>
             </div>
             </sec:authorize>
