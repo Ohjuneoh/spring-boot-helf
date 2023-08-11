@@ -94,19 +94,19 @@
                             <tr>
                                 <th style="width: 15%">레슨 번호</th>
                                 <th style="width: 20%">수업명</th>
-                                <th style="width: 20%">강사명</th>
+                                <th style="width: 20%">신청인원/총 인원</th>
                                 <th style="width: 20%">레슨시간</th>
-                                <th style="width: 25%">출석 상태</th>
+                                <th style="width: 25%">출석체크</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="lessonApply" items="${applyList }">
+                            <c:forEach var="lesson" items="${createList }">
                                 <tr>
-                                    <td>${lessonApply.lesson.no }</td>
-                                    <td><a href="/group-lesson/detail?no=${lessonApply.lesson.no }">${lessonApply.lesson.name }</a></td>
-                                    <td>${lessonApply.user.name }</td>
-                                    <td><fmt:formatDate value="${lessonApply.lesson.date }" pattern="yyyy년 M월 d일" /> ${lessonApply.lesson.time }시</td>
-                                    <td>${lessonApply.attendanceStatus }</td>
+                                    <td>${lesson.no }</td>
+                                    <td>${lesson.name }</td>
+                                    <td>${lesson.reqCnt }/${lesson.quota }</td>
+                                    <td><fmt:formatDate value="${lesson.date }" pattern="yyyy년 M월 d일" /> ${lesson.time }시</td>
+                                    <td><button type="button" id="btn-attendance" class="btn btn-primary btn-sm">출석</button></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
