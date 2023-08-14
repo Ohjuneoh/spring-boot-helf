@@ -78,5 +78,40 @@
 											 trainer_no)
 		values(helf_lesson_consultation_seq.nextval, #{goal}, #{abnormalities}, #{applicationDate}, #{requestTime}, #{user.id}, #{trainer.trainerNo})
 	</insert>
+	<!-- <resultMap type="kr.co.helf.vo.User" id="getAllUserWithConsultation" >
+    	<id column="user_id" property="userId"/>
+    	<result column="user_name" property="userName"/>
+    	<association property="rank" javaType="kr.co.helf.vo.Rank">
+    		<id column="rank_no" property="no"/>
+    		<result column="rank_name" property="name"/>
+    	</association>
+    	<collection property="consultation" ofType="Consultation">
+        	<id column="lesson_consultation_no" property="consultationNo"/>
+        	<result column="lesson_consultation_status" property="consultationStatus"/>
+        	<result column="lesson_consultation_application_date" property="applicationDate"/>
+        	<result column="lesson_consultation_request_date" property="requestDate"/>
+        	<result column="lesson_consultation_request_time" property="requestTime"/>
+        	<result column="lesson_consultation_request_time" property="requestTime"/>
+        	<result column="user_id" property="id"/>
+        	<result column="trainer_no" property="trainerNo"/>
+    	</collection>
+	</resultMap>
+	<select id="getAllUserWithConsultation" resultMap="getAllUserWithConsultation">
+		select
+			b.trainer_no,
+			a.user_name	as name,
+			b.trainer_file,
+			c.career_no,
+			c.career_name,
+			c.career_start_date,
+			c.career_end_date
+		from
+		    helf_users a, helf_trainers b, helf_trainer_career c
+		where
+			a.user_id = b.user_id
+			and c.trainer_no = b.trainer_no
+		order by
+			trainer_no
+	</select> -->
 	
 </mapper>
