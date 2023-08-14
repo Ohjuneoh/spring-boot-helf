@@ -80,7 +80,35 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
+    <div class="container-fluid mt-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container ">
+            <div class="section-title text-start position-relative pb-3 mb-5" style="max-width: 600px;">
+                <h1 class="fw-bold text-primary text-uppercase">상담신청 목록</h1>
+                <h5 class="mb-0">목록을 확인하세요</h5>
+            </div>
+            <div class="row g-0">
+                <div class="col-lg-4 wow slideInUp mb-3" data-wow-delay="0.3s">
+                    <div class="bg-white rounded shadow position-relative" style="z-index: 1;">
+                        <div class="border-bottom py-4 px-5 mb-4">
+                            <h5 class="text-primary mb-2">Bronze</h5>
+                            <h4 class="text-uppercase">오준오 회원님</h4>
+                        </div>
+                        <div class="p-5 pt-0">
+                            
+                            <div class="d-flex justify-content-between mb-3"><strong>상태 :</strong><span>대기중</span><i class="fa fa-bell text-primary pt-1 text-end"></i></div>
+                            <div class="d-flex justify-content-between mb-3"><strong>신청일 :</strong><span>2020-05-30</span><i class="fa fa-calendar text-secondary pt-1 text-end"></i></div>
+                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청일 :</strong><span>2020-06-03</span><i class="fa fa-calendar text-primary pt-1 text-end"></i></div>
+                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청시간 :</strong><span>17:00</span><i class="fa fa-clock text-primary pt-1 text-end"></i></div>
+                            <div class="d-flex justify-content-center">
+                            <a href="" class="btn btn-primary py-2 px-4 mt-5">상세보기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px; display: none;">
 		<div class="container py-5">
 			<div class="row mb-3">
 				<div class="col-12">

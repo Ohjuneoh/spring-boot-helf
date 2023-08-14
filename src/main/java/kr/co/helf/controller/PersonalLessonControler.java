@@ -27,14 +27,14 @@ public class PersonalLessonControler {
 	private final PersonalLessonService personalLessonService;
 
     //유저가 트레이너에게 상담신청하는 페이지
-	@GetMapping("/consulting")
+	@GetMapping("/consultation")
 	public String consultingForm(Model model) {
 		List<Trainer> trainers = personalLessonService.getTrainers();
 		model.addAttribute("trainers", trainers); // 트레이너 목록을 뷰에 전달
 		return "personallesson/consultingform";
 	}
-	
-	@PostMapping("/consulting")
+	//상담신청 제출
+	@PostMapping("/consultation")
 	public String createConsultation(@AuthenticationPrincipal User user,
 							 @RequestParam("goal") String goal,
 							 @RequestParam("abnormalities") String abnormalities,
@@ -55,8 +55,14 @@ public class PersonalLessonControler {
 		
 		personalLessonService.createConsultation(consultation);
 		
-		return "redirect:/personallesson/consulting";
+		return "redirect:/personallesson/consultation";
 		
+	}
+	
+	//트레이너 1대1 상담신청 조회
+	@GetMapping("/list")
+	public String consultationList(Model model) {
+		return "personallesson/consultationlist";
 	}
 	
 }

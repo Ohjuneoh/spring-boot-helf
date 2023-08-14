@@ -26,6 +26,7 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업(고객)</a>
                 <div class="dropdown-menu m-0">
+
                     <a href="/group-lesson/list" class="dropdown-item">그룹 수업</a>
                     <a href="/personallesson/consulting" class="dropdown-item">개인 PT 신청</a>
                 </div>
