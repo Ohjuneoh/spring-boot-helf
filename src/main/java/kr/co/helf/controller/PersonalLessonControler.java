@@ -60,7 +60,7 @@ public class PersonalLessonControler {
 	}
 	
 	//트레이너 1대1 상담신청 조회
-	@GetMapping("/list")
+	@GetMapping("/personal-list")
 	public String consultationList(Model model) {
 		return "personallesson/consultationlist";
 	}
