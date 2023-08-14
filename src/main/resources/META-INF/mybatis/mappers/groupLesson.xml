@@ -103,11 +103,24 @@
             lesson_no =#{no}
     </update>
     
-    <!-- 유저가 레슨 신청 -->
+
+    <!-- 유저가 레슨 신청 시 레슨 신청 테이블에 저장 -->
     <insert id="insertApplyLesson" parameterType="LessonApply">
-        insert into
+        insert into helf_lesson_apply
                 (lesson_apply_no,lesson_no,user_id)
         values(helf_lesson_apply_seq.nextval,#{lesson.no},#{user.id})
     </insert>
+
+    <!-- 유저가 동일수업 신청 x -->
+    <select id="getLessonApplyByLessonNoAndUserID" resultType="LessonApply">
+        select lesson_apply_no as no,
+               lesson_apply_attendance_status as attendanceStatus,
+               lesson_no as "lesson.no",
+               user_id as "user.Id",
+               lesson_apply_date as applyDate
+        from helf_lesson_apply
+        where user_id =#{userId}
+            and lesson_no =#{no}
+    </select>
 
 </mapper>

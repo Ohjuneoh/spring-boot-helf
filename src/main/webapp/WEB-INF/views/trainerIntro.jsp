@@ -95,13 +95,10 @@
                         <div class="team-img position-relative overflow-hidden">
                             <img class="img-fluid w-100" src="/resources/img/team-1.jpg" alt="" >
                         </div>
-                        
                         <div class="text-center py-4">
                             <h4 class="text-primary">이민혁</h4>
                             <p class="text-uppercase m-0">점장</p>
                         </div>
-                        
-           
                     </div>
                 </div>
                 <div class="col-lg-3 wow slideInUp" data-wow-delay="0.6s">
@@ -314,27 +311,32 @@
     </div>
     <!-- Footer End -->
     
+    <!-- 강사 모달창  -->
     <div class="modal" tabindex="-1" id="modal-teacher">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">트레이너 상세정보</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>
-        	자격<br>
-        	경력<br>
-        	수상이력<br>
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary">강사후기 보러가기</button>
-      </div>
-    </div>
-  </div>
-</div>
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	    
+	      <div class="modal-header">
+	        <h5 class="modal-title">트레이너 상세정보</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      
+	      <div class="modal-body">
+	        <p>
+	        	자격<br>
+	        	경력<br>
+	        	수상이력<br>
+	        </p>
+	      </div>
+	      
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary">강사후기 보러가기</button>
+	      </div>
+	      
+	    </div>
+	  </div>
+	</div>
 
 
     <!-- Back to Top -->

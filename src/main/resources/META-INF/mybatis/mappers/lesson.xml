@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.helf.mapper.LessonMapper">
-    <!-- 유저가 레슨 신청 -->
-    <insert id="insertApplyLesson" parameterType="LessonApply">
-        insert into
-                (lesson_apply_no,lesson_no,user_id)
-            values(helf_lesson_apply_seq.nextval,#{lesson.no},#{user.id})
-    </insert>
+    <!-- 내가 신청한 모든 수업 조회(유저) -->
+    <select id="getAllMyLessons" resultType="LessonApply" parameterType="string">
+        select
+            a.lesson_apply_attendance_status as attendanceStatus,
+            b.lesson_no as "lesson.no",
+            b.lesson_name as "lesson.name",
+            c.user_name as "user.name",
+            b.lesson_date as "lesson.date",
+            b.lesson_time as "lesson.time"
+        from
+            helf_lesson_apply a, helf_lesson b, helf_users c
+        where
+            a.lesson_no = b.lesson_no
+          and b.user_id = c.user_id
+          and a.user_id = #{value}
+    </select>
+    <!-- 내가 개설한 모든 수업 조회(트레이너) -->
+    <select id="getAllCreateLessons" resultType="Lesson" parameterType="string">
+        select
+            a.lesson_no as no,
+	        a.lesson_name as name,
+	        a.lesson_req_cnt as reqCnt,
+	        a.lesson_quota as quota,
+	        a.lesson_date as "date",
+	        a.lesson_time as time,
+	        b.user_name
+        from
+            helf_lesson a, helf_users b
+        where
+            a.user_id =b.user_id
+          and a.user_id =#{value}
+    </select>
+    
 </mapper>

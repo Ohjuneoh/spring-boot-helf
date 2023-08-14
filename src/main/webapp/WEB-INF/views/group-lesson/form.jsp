@@ -1,7 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -36,7 +34,7 @@
     <!-- Date Picker  -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
-
+<!-- 위에 모든 페이지까지 공통부분 건들 x -->
 <body>
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -50,6 +48,7 @@
     <!-- Topnavbar End -->
 
 
+
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0 h-10 ">
 		<jsp:include page="/WEB-INF/views/common/navbar.jsp">
@@ -59,12 +58,14 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">LESSONLIST</h1>
-                    <a href="" class="h5 text-white">수업 목록</a>
+                    <h1 class="display-4 text-white animated zoomIn">REGISTER</h1>
+                    <a href="" class="h5 text-white">수업 등록</a>
                 </div>
             </div>
         </div>
     </div>
+
+
     <div class="modal fade" id="searchModal" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
@@ -79,78 +80,64 @@
                 </div>
             </div>
         </div>
+    <!-- Lesson Category Start  -->
     </div>
-    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
-		<div class="container py-5">
-			<div class="row mb-3">
-				<div class="col-12">
-					<div class="card" >
-						<div class="card-header bg-dark" style="color: #ffffff">
-							수업 목록
-							<!-- 트레이너로 로그인 시 신규 수업 등록 버튼 보이게 함-->
-							<sec:authorize access="hasRole('ROLE_TRAINER')">
-								<span class="float-end">
-									<a href="/grouplesson/registration" class="btn btn-primary btn-sm ">신규 수업 등록</a>
-								</span>
-							</sec:authorize>
-						</div>
-						<div class="card-body">
-			               <table class="table">
-			               		<thead>
-									<tr>
-			                        	<th style="width: 15%">수업 번호</th>
-			                        	<th style="width: 20%">수업명</th>
-			                        	<th style="width: 20%">강사명</th>
-			                        	<th style="width: 20%">신청인원/모집총원</th>
-			                        	<th style="width: 25%">레슨시간</th>
-			                     	</tr>
-								</thead>
-							   <tbody>
-							   		<c:choose>
-										<c:when test="${empty result.lessons }">
-											<c:forEach var="lesson" items="${result.lessons }">
-							   					<tr>
-								   					<td colspan="5" class="text-center">이용권을 구매한 고객만 수업을 조회할 수 있습니다.</td>
-							   					</tr>
-											</c:forEach>
-										</c:when>
-									</c:choose>
-							   		<c:forEach var="lesson" items="${result.lessons }">
-										<tr>
-				                        	<td>${lesson.no }</td>
-											<td><a href="detail?no=${lesson.no }">${lesson.name }</a></td>
-											<td>${lesson.user.name }</td>
-											<td>${lesson.reqCnt }/${lesson.quota }</td>
-				                        	<td><fmt:formatDate value="${lesson.date }" pattern="yyyy년 M월 d일" /> ${lesson.time }시 </td>
-		                    		 	</tr>
-									</c:forEach>
-							   </tbody>
-			               </table>
-        				</div>
-    				</div>
-    			</div>
-    		</div>
+    <div class="container-fluid py-1 wow fadeInUp " data-wow-delay="0.1s">
+        <div class="container py-5">
+        	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+	        	<div class="container ">
+	            	<div class="row g-1" >
+					</div>
+				</div>
+			</div>
         </div>
     </div>
-	<div class="row mb-3" >
-		<div class="col-12">
-			<nav>
-				<ul class="pagination justify-content-center">
-					<li class="page-item ${result.pagination.first ? 'disabled' : '' }">
-						<a class="page-link"  href="list?page=${result.pagination.prePage }" >이전</a>
-					</li>
-				<c:forEach var="num" begin="${result.pagination.beginPage }" end="${result.pagination.endPage }">
-					<li class="page-item ${result.pagination.page eq num ? 'active' : '' }">
-						<a class="page-link" href="list?page=${num }" >${num }</a>
-					</li>
-				</c:forEach>
-					<li class="page-item ${result.pagination.last ? 'disabled' : '' }">
-						<a class="page-link" href="list?page=${result.pagination.nextPage }" >다음</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</div>
+    <!-- Lesson Category End -->
+    <!-- Lesson Register Form Start  -->
+    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
+        <div class="container py-5">
+		 	<form class="" id="group-lesson-form" method="post" action="/group-lesson/registration">
+		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+	        		<div class="container ">
+	            		<div class="row g-1" >
+                    		<div class="section-title position-relative pb-3 mb-5">
+                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">수업개설</h5>
+                        		<h1 class="mb-0" style="font-size: 15px;" >내용을 입력해주세요</h1>
+			               	</div>
+				    	</div>
+				 	</div>
+				</div>
+				<div class="row g-1">
+				    <div class="col-6">
+				        <input type="text" class="form-control bg-light border-0" name="name" placeholder="수업명" style="height: 55px;">
+				    </div>
+					<div class="col-6">
+						<input type="text" class="form-control bg-light border-0" name="quota" placeholder="총 인원" style="height: 55px;">
+					</div>
+				    <div class="col-6">
+				    	<input type="text" class="form-control bg-light border-0"  id="date" name="date" style="height: 55px;" placeholder="수업날짜">
+				    </div>
+					<div class="col-6">
+					    <select  class="form-select bg-light border-0" name="time" style="height: 55px;">
+					      <option value=""  >시간</option>
+							<option value="10~12" class="form-control bg-light border-0" >10:00 ~ 12:00</option>
+							<option value="13~15" class="form-control bg-light border-0" >13:00 ~ 15:00</option>
+							<option value="15~17" class="form-control bg-light border-0" >15:00 ~ 17:00</option>
+							<option value="17~19" class="form-control bg-light border-0" >17:00 ~ 19:00</option>
+							<option value="20~22" class="form-control bg-light border-0" >20:00 ~ 22:00</option>
+					    </select>
+					</div>
+					<div class="col-12">
+					  <textarea class="form-control bg-light border-0" name="description" style="height: 300px;" placeholder="내용"></textarea>
+					</div>
+				</div>
+				<div>
+					<button type="button" id="btn-cancel" class=" btn btn-danger mt-1 float-end" style="margin-left: 5px;">취소</button>
+					<button type="submit" class=" btn btn-primary mt-1 float-end">등록</button>
+				</div>
+			</form>
+        </div>
+    </div>
     <!-- Lesson Register Form End  -->
 	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
 	    <div class="container">
@@ -244,11 +231,22 @@
 
     <!-- Template Javascript -->
 	<script src="/resources/js/main.js"></script>
-
+    
 <script>
+$( function() {
+    $("#date").datepicker({
+   		dateFormat: 'yy/mm/dd'
+    });
+	$("#btn-cancel").click(function(event){
+		location.href = "/group-lesson/list";
+	});
+});
+
+
+	
 
 </script>
-
+    
     
 </body>
 

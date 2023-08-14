@@ -20,6 +20,8 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp     
+
+
         
 # 카카오로그인
   security:
@@ -28,7 +30,7 @@ spring:
         registration:
          kakao:
             client-id: 865ca56d4eae2d238a0d945acadb5b41
-            client-secret: ZiYibBStxCyjOUW1BgEiPc9IbpfPzxbF
+            client-secret: ZiYibBStxCyjOUW1BgEiPc9IbpfPzxbF 
             client-authentication-method: POST
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/kakao"
@@ -43,7 +45,6 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id            
-
           
 # mybatis 관련 설정정보 저장하기
 mybatis:

@@ -4,6 +4,7 @@ import kr.co.helf.form.ModifyForm;
 import kr.co.helf.service.GroupLessonService;
 import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/grouplesson")
+@Slf4j
+@RequestMapping("/group-lesson")
 @RequiredArgsConstructor
 public class GroupLessonController {
 
@@ -25,7 +27,7 @@ public class GroupLessonController {
     // 레슨 등록
     @GetMapping("/registration")
     public String lessonForm() {
-        return "/grouplesson/form";
+        return "/group-lesson/form";
     }
     // 레슨 등록
     @PostMapping("/registration")
@@ -46,7 +48,7 @@ public class GroupLessonController {
         lesson.setUser(user);
 
         groupLessonService.createLesson(lesson);
-        return "redirect:/grouplesson/list";
+        return "redirect:/group-lesson/list";
     }
 
     // 전체 게시글 조회(페이징 처리 포함)
@@ -58,7 +60,7 @@ public class GroupLessonController {
         Map<String,Object> result = groupLessonService.getAllLessons(param);
 
         model.addAttribute("result", result);
-        return "grouplesson/list";
+        return "group-lesson/list";
     }
 
     // 개설된 레슨 상세
@@ -66,15 +68,15 @@ public class GroupLessonController {
     public String lessonDetail(@RequestParam("no") int lessonNo, Model model){
         Lesson lesson = groupLessonService.getLessonByNo(lessonNo);
         model.addAttribute("lesson", lesson);
-        return "grouplesson/detail";
+        return "group-lesson/detail";
     }
 
-    // 신청 시 신청인원 증가
+    // 유저가 수업신청 시 신청인원 증가 , LessonApply 테이블에 저장, 중복신청 x(예외처리 서비스에선 구현, 컨트롤러에서 @exceptionhandler 사용해서 구현해야 함)
     @GetMapping("/request")
-    public String reqCount(@RequestParam("no") int lessonNo){
-        groupLessonService.updateReqCount(lessonNo);
-
-        return "redirect:/grouplesson/list";
+    public String reqCount(@RequestParam("no") int lessonNo,@AuthenticationPrincipal User user) {
+        log.info("레슨번호 -> {}, 유저아이디 ->{}",lessonNo,user.getId() );
+        groupLessonService.updateApplyLesson(lessonNo,user);
+        return "redirect:/group-lesson/list";
     }
 
     // 개설된 수업 수정
@@ -83,7 +85,7 @@ public class GroupLessonController {
         Lesson lesson = groupLessonService.getLessonByNo(lessonNo);
         model.addAttribute("lesson", lesson);
 
-        return "grouplesson/modifyform";
+        return "group-lesson/modifyform";
     }
     // 개설된 수업 수정
     @PostMapping("/modify")
@@ -104,14 +106,14 @@ public class GroupLessonController {
 
         groupLessonService.updateLesson(form,user);
 
-        return "redirect:/grouplesson/list";
+        return "redirect:/group-lesson/list";
     }
     // 개설된 레슨 삭제
     @GetMapping("/delete")
     public String deleteLesson(@RequestParam("no") int lessonNo, @AuthenticationPrincipal User user){
         groupLessonService.deleteLesson(lessonNo,user);
 
-        return "redirect:/grouplesson/list";
+        return "redirect:/group-lesson/list";
     }
 
 }

@@ -96,7 +96,7 @@
 		  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
 		  		<span class="border border-primary rounded-circle d-inline-block bg-primary" style="height:125px; width:125px; 
 		  			  padding-top:46px; padding-left:1px;">
-		  			<strong>
+		  			<strong style="color:white">
 			  			기간설정
 		  			</strong>
 		  		</span>
@@ -116,7 +116,7 @@
 		  		</span>
 				<div class="offset-1" style="margin: 100px;">
 					<h4 class="text-start">
-						<strong style="color:gray">기간 고르기</strong>
+						<strong style="color:gray">기간/횟수</strong>
 					</h4>
 					<hr style="border: 2px solid gray;"/>
 				</div>
