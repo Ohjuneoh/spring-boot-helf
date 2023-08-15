@@ -92,7 +92,7 @@
 	        		<div class="container ">
 	            		<div class="row g-1" >
                     		<div class="section-title position-relative pb-3 mb-5">
-                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">HELF TRAINERS</h5>
+                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">STEP 1</h5>
                         		<h2 class="mb-3" >트레이너를 선택해주세요</h2>
                         		<h6 class="mb-0" >해당 강사에게 무료 PT 상담 요청이 진행되며, 회원님의 담당강사로 배정되어 1:1 상담 및 관리를 해드립니다.</h6>
 								<h6 class="mb-0">센터의 사정에 의해 다른 담당강사가 배정될 수 있습니다. 배정된 담당강사가 확인 후 회원님께 연락을 드립니다</h6>
@@ -112,7 +112,7 @@
 								</c:forEach>
 		            		</div>
 		            		<div class="col-3"> 
-		            			<button class="btn btn-primary btn-lg" data-trainer-no="${trainer.trainerNo}">신청하기</button>
+		            			<button class="btn btn-primary btn-lg" data-trainer-no="${trainer.trainerNo}">선택하기</button>
 		            		</div>
 		            		<hr width="90%" color="gray"></hr>
 		            		</c:forEach>
@@ -128,14 +128,14 @@
 	        	<div class="container ">
 	            	<div class="row g-1" >
                     	<div class="section-title position-relative pb-3 mb-5">
-                        	<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">1:1 PT 신청</h5>
-                        	<h1 class="mb-0" style="font-size: 15px;" >내용을 입력해주세요</h1>
+                        	<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">STEP 2</h5>
+                        	<h1 class="mb-0" style="font-size: 15px;" >상담 내용을 입력해주세요</h1>
 						</div>
 				    </div>
 				</div>
 			</div>
 			<hr width="100%" color="gray"></hr>
-		 	<form method="post" action="/personallesson/consulting">
+		 	<form method="post" action="/personal-lesson/consultation">
 		 		<input type="hidden" id="trainerNumber" name="trainerNumber">
 					<div class="row g-1">
 				    	<div class="col-12">
@@ -160,7 +160,7 @@
 						</div>
 						<div class="col-6 text-end mt-2">
 						    <button type="button" id="back" class="btn btn-secondary">이전</button>
-						    <button type="submit" class="btn btn-primary ">신청하기</button>
+						    <button type="submit" class="btn btn-primary ">다음</button>
 						</div>    
 					</div>
 		 	</form>
@@ -290,14 +290,12 @@ $(document).ready(function() {
     // 이전 버튼에 클릭 이벤트 리스너 추가
     $('#back').click(function(event) {
         event.preventDefault();
-
         $('#trainer-select').show();
         $('#registration-form').hide();
     });
 
     // registration-form의 제출 이벤트에 리스너 추가
     $('#registration-form').submit(function(event) {
-
         // 알림을 띄운다.
         alert('신청이 완료되었습니다.');
     });

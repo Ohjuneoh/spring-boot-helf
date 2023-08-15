@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/personallesson")
+@RequestMapping("/personal-lesson")
 @RequiredArgsConstructor
-public class PersonalLessonControler {
+public class PersonalLessonController {
 	
 	private final PersonalLessonService personalLessonService;
 
@@ -31,7 +31,7 @@ public class PersonalLessonControler {
 	public String consultingForm(Model model) {
 		List<Trainer> trainers = personalLessonService.getTrainers();
 		model.addAttribute("trainers", trainers); // 트레이너 목록을 뷰에 전달
-		return "personallesson/consultingform";
+		return "personal-lesson/consultingform";
 	}
 	//상담신청 제출
 	@PostMapping("/consultation")
@@ -55,14 +55,14 @@ public class PersonalLessonControler {
 		
 		personalLessonService.createConsultation(consultation);
 		
-		return "redirect:/personallesson/consultation";
+		return "redirect:/personal-lesson/consultation";
 		
 	}
 	
 	//트레이너 1대1 상담신청 조회
-	@GetMapping("/personal-list")
+	@GetMapping("/list")
 	public String consultationList(Model model) {
-		return "personallesson/consultationlist";
+		return "personal-lesson/consultationlist";
 	}
 	
 }
