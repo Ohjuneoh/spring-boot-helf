@@ -24,6 +24,7 @@ public class Consultation {
 	private String requestTime;
 	private User user;
 	private Trainer trainer;
+	private MyMembership myMembership;
 	
 
 }

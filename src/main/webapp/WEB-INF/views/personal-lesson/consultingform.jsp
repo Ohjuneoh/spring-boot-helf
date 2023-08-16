@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -20,8 +20,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     
 
     <!-- Libraries Stylesheet -->
@@ -92,7 +93,7 @@
 	        		<div class="container ">
 	            		<div class="row g-1" >
                     		<div class="section-title position-relative pb-3 mb-5">
-                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">STEP 1</h5>
+                        		<h1 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">STEP1</h1>
                         		<h2 class="mb-3" >트레이너를 선택해주세요</h2>
                         		<h6 class="mb-0" >해당 강사에게 무료 PT 상담 요청이 진행되며, 회원님의 담당강사로 배정되어 1:1 상담 및 관리를 해드립니다.</h6>
 								<h6 class="mb-0">센터의 사정에 의해 다른 담당강사가 배정될 수 있습니다. 배정된 담당강사가 확인 후 회원님께 연락을 드립니다</h6>
@@ -128,23 +129,22 @@
 	        	<div class="container ">
 	            	<div class="row g-1" >
                     	<div class="section-title position-relative pb-3 mb-5">
-                        	<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">STEP 2</h5>
-                        	<h1 class="mb-0" style="font-size: 15px;" >상담 내용을 입력해주세요</h1>
+                        	<h1 class="fw-bold text-primary text-uppercase" >STEP2</h1>
+                        	<h5 class="mb-0" >상담 내용을 입력해주세요</h5>
 						</div>
 				    </div>
 				</div>
 			</div>
-			<hr width="100%" color="gray"></hr>
-		 	<form method="post" action="/personal-lesson/consultation">
+		 	<form>
 		 		<input type="hidden" id="trainerNumber" name="trainerNumber">
 					<div class="row g-1">
 				    	<div class="col-12">
 				    		<h3 class="mb-2 text-primary" >PT 목표</h3>
-				        		<input type="text" class="form-control bg-light border-0" name="goal" placeholder="PT를 통해 궁극적으로 이루고자하는 구체적인 목표나 기대가 있으시면 기재 바랍니다." style="height: 55px;">
+				        		<input id="goal" type="text" class="form-control bg-light border-0" name="goal" placeholder="PT를 통해 궁극적으로 이루고자하는 구체적인 목표나 기대가 있으시면 기재 바랍니다." style="height: 55px;">
 				    	</div>
 						<div class="col-12">
 							<h3 class="mb-2 mt-2 text-primary" >신체 이상유무</h3>	
-							<textarea class="form-control bg-light border-0" name="abnormalities" style="height: 300px;" placeholder="육체적, 정신적(골절, 고혈압, 당뇨 등) 병력 및 신체 이상 사항이 있으신 경우 자세히 기재 바랍니다."></textarea>
+							<textarea id="abnormalities" class="form-control bg-light border-0" name="abnormalities" style="height: 300px;" placeholder="육체적, 정신적(골절, 고혈압, 당뇨 등) 병력 및 신체 이상 사항이 있으신 경우 자세히 기재 바랍니다."></textarea>
 						</div>
 						<div class="col-3">
 					    	<div class="input-group">
@@ -159,14 +159,67 @@
 					    	</div>
 						</div>
 						<div class="col-6 text-end mt-2">
-						    <button type="button" id="back" class="btn btn-secondary">이전</button>
-						    <button type="submit" class="btn btn-primary ">다음</button>
+						    <button type="button" id="consultation-back" class="btn btn-secondary">이전</button>
+						    <button type="button" id="next" class="btn btn-primary ">다음</button>
 						</div>    
 					</div>
 		 	</form>
         </div>
     </div>
-    <!-- Lesson Register Form End  -->
+     <div class="container-fluid py-5" id="membership-list" style="display:none;">
+        <div class="container py-5">
+            <div class="section-title position-relative pb-3 mb-5">
+        			<h1 class="fw-bold text-primary text-uppercase" >STEP3</h1>
+        			<h5 class="mb-0" >사용하실 회원권을 선택해주세요</h5>
+			</div>
+			<form method="post" action="/personal-lesson/consultation" id="mainForm">
+				<input type="hidden" name="trainerNumber" id="final-trainerNumber">
+			    <input type="hidden" name="goal" id="final-goal">
+			    <input type="hidden" name="abnormalities" id="final-abnormalities">
+			    <input type="hidden" name="date" id="final-date">
+			    <input type="hidden" name="time" id="final-time">
+	            <div class="row g-5">
+	           		<c:choose>
+	           			<c:when test="${not empty memberships}">
+			            	<c:forEach var="mymembership" items="${memberships}">
+				                <div class="col-lg-4 col-md-6 " >
+				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+				                        <div class="service-icon">
+				                            <i class="fa fa-user-tie text-white"></i>
+				                        </div>
+				                        <h4 class="mb-3">${mymembership.membership.name}</h4>
+				                        <div class="w-100 text-start px-1"> 
+				            				<p class="m-0">
+				               					<span class="label-text"><strong>멤버십 구매일 :</strong></span> 
+				               					<span class="date-text"><fmt:formatDate value="${mymembership.myMembership.startDate}" pattern="yyyy-MM-dd" /></span>
+				            				</p>
+				            				<p class="m-0">
+				               					<span class="label-text"><strong>멤버십 만료일 :</strong></span> 
+				               					<span class="date-text"><fmt:formatDate value="${mymembership.myMembership.endDate}" pattern="yyyy-MM-dd" /></span>
+				            				</p>
+				            				<p class="m-0">
+				               					<span class="label-text"><strong>남은 횟수 : </strong></span> 
+				               					<span class="date-text">${mymembership.myMembership.remainderCnt}</span>
+				            				</p>
+				       					</div>
+				                        <button type="button" class="selectBtn btn btn-primary btn-sm"  data-membership-no="${mymembership.myMembership.no}">선택</button>
+				                    </div>
+				                </div>
+			                </c:forEach>
+			        	</c:when>
+			        	<c:otherwise>
+	                        <div class="col-12">
+	                            <strong>보유중인 회원권이 없습니다.</strong>
+	                        </div>
+                    	</c:otherwise>     
+		        	</c:choose>        
+		        	<div class="col-12 text-end mt-2">
+						    <button type="button" id="membership-back" class="btn btn-secondary">이전</button>
+					</div> 
+	            </div>
+            </form>
+        </div>
+    </div>
 	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
 	    <div class="container">
 	        <div class="row gx-5">
@@ -287,17 +340,49 @@ $(document).ready(function() {
         $('#registration-form input[name="trainerNumber"]').val(trainerNo);
     });
 
-    // 이전 버튼에 클릭 이벤트 리스너 추가
-    $('#back').click(function(event) {
+    //상담페이지 이전 버튼에 클릭 이벤트 리스너 추가
+    $('#consultation-back').click(function(event) {
         event.preventDefault();
         $('#trainer-select').show();
         $('#registration-form').hide();
+    });
+
+    //상담페이지 다음 버튼에 클릭 이벤트 리스너 추가
+    $('#next').click(function(event) {
+        event.preventDefault();
+        $('#final-trainerNumber').val($('#trainerNumber').val());
+        $('#final-goal').val($('#goal').val());
+        $('#final-abnormalities').val($('#abnormalities').val());
+        $('#final-date').val($('#date').val());
+        $('#final-time').val($('#time').val());
+        $('#registration-form').hide();
+        $('#membership-list').show();
+    });
+    //회원권 선택 페이지 이전 버튼에 클릭 이벤트 리스너 추가
+    $('#membership-back').click(function(event) {
+        event.preventDefault();
+        $('#registration-form').show();
+        $('#membership-list').hide();
     });
 
     // registration-form의 제출 이벤트에 리스너 추가
     $('#registration-form').submit(function(event) {
         // 알림을 띄운다.
         alert('신청이 완료되었습니다.');
+    });
+});
+//membershipNo를 input 박스로 전달
+$(document).ready(function(){
+    $(".selectBtn").click(function(){
+        var membershipNoValue = $(this).data("membership-no");
+        
+        var inputField = $("<input>").attr({
+            type: "hidden",
+            name: "membershipNo",
+            value: membershipNoValue
+        });
+
+        $("#mainForm").append(inputField).submit();
     });
 });
 </script>
