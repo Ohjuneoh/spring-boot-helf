@@ -41,6 +41,7 @@
         select
             a.lesson_apply_attendance_status as attendanceStatus,
             b.lesson_no as "lesson.no",
+            a.user_id as "user.id",
             c.user_name as "user.name"
         from
             helf_lesson_apply a, helf_lesson b, helf_users c

@@ -260,8 +260,8 @@
                         <td>\${apply.user.name }</td>
                         <td>\${apply.attendanceStatus }</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-sm">출석</button>
-                            <button type="button" class="btn btn-danger btn-sm">결석</button>
+                            <button type="button" class="btn btn-primary btn-sm" data-select="\${apply.user.id }">출석</button>
+                            <button type="button" class="btn btn-danger btn-sm" data-select="\${apply.user.id }">결석</button>
                         </td>
                     </tr>
                 `;
@@ -274,19 +274,21 @@
             let $button1 = $(this);
             let $button2 = $(this).next();
             let lessonNo = $('#current-lesson-no').val();
-            $.getJSON("trainer-user-attendance", {lessonNo:lessonNo,status:'Y'}, function() {
+            let userId = $button1[0].dataset.select;
+            $.getJSON("trainer-user-attendance", {lessonNo:lessonNo,status:'Y', userId:userId}, function() {
                 $button1.addClass('disabled');
                 $button2.removeClass('disabled');
             })
         })
         // 모달창에 결석버튼 클릭 시
         $("#table-users tbody").on('click', '.btn-danger', function() {
-            // let $button1 = $(this).next;
-            // let $button2 = $(this);
+            let $button1 = $(this).next;
+            let $button2 = $(this);
             let lessonNo = $('#current-lesson-no').val();
-            $.getJSON("trainer-user-attendance", {lessonNo:lessonNo,status:'N'}, function() {
-                // $button1.removeClass('disabled');
-                // $button2.addClass('disabled');
+            let userId = $button2[0].dataset.select;
+            $.getJSON("trainer-user-attendance", {lessonNo:lessonNo,status:'N', userId:userId}, function() {
+                $button1.removeClass('disabled');
+                $button2.addClass('disabled');
             })
         })
     })
