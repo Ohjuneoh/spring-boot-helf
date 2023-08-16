@@ -21,7 +21,8 @@ public class AddUserForm {
 	
 	private String password;
 	
-	private String email;
+	private String email1;
+	private String email2;
 	
 	private String name;
 	

@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
-
 <head>
     <meta charset="utf-8">
     <title>HELF</title>
@@ -35,6 +34,8 @@
     <link href="/resources/css/style.css" rel="stylesheet">
     <!-- Date Picker  -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- 썸머노트  -->
+    <link rel="stylesheet" href="/resources/css/summernote/summernote-lite.css">
 </head>
 
 <body>
@@ -59,8 +60,8 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">NOTICE</h1>
-                    <a href="" class="h5 text-white">공지 사항</a>
+                    <h1 class="display-4 text-white animated zoomIn">NOTICE 작성</h1>
+                    <a href="" class="h5 text-white">공지사항 작성</a>
                 </div>
             </div>
         </div>
@@ -80,79 +81,39 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
-		<div class="container py-5">
-			<div class="row mb-3">
-				<div class="col-12 d-flex justify-content-center" >
-					<div id="boardlist" class="wrap_inner" style="width: 1200px;">
-						<div class="card-body">
-			               <table class="table">
-			               		<thead>
-									<tr>
-			                        	<th style="width: 15%; text-align: center;">글번호</th>
-			                        	<th style="width: 50%; text-align: center;">제목</th>
-			                        	<th style="width: 25%; text-align: center;">작성일</th>
-			                        	<th style="width: 40%; text-align: center;">조회수</th>
-			                     	</tr>
-								</thead>
-							   <tbody>
-						            <tr class="notice">
-										<td style="text-align: center;"><i class="bi bi-megaphone-fill" style="color: blue; font-size: 20px;"></i></td>
-										<td class="tal" style="text-align: center;"><a href="/board/view.php?boardid=csnotice&amp;index_no=569">쇼핑몰 이용 가이드 (구매전필독해주세요♡)</a></td>
-										<td class="date" style="text-align: center;">2021.11.03</td>
-										<td class="date" style="text-align: center;">100</td>
-									</tr>		
-									<tr>
-			                        	<td style="text-align: center;">1</td>
-										<td style="text-align: center;"><a href="/board/view.php?boardid=csnotice&amp;index_no=569">공지사항 입니다.</a></td>
-			                        	<td style="text-align: center;">2022.01.01</td>
-										<td class="date" style="text-align: center;">100</td>
-	                    		 	</tr>
-									<tr>
-			                        	<td style="text-align: center;">1</td>
-										<td style="text-align: center;"><a href="/board/view.php?boardid=csnotice&amp;index_no=569">공지사항 입니다.</a></td>
-			                        	<td style="text-align: center;">2022.01.01</td>
-										<td class="date" style="text-align: center;">100</td>
-	                    		 	</tr>
-									<tr>
-			                        	<td style="text-align: center;">1</td>
-										<td style="text-align: center;"><a href="/board/view.php?boardid=csnotice&amp;index_no=569">공지사항 입니다.</a></td>
-			                        	<td style="text-align: center;">2022.01.01</td>
-										<td class="date" style="text-align: center;">100</td>
-	                    		 	</tr>
-							   </tbody>
-			               </table>
-			               <div class="ExpandMoreBtn_more_btn_box__5lBg8 d-flex justify-content-end align-items-center">
-								<a href="noticeform" class="btn btn-primary btn-sm" >
-									글쓰기
-								</a>
-							</div>
-        				</div>
-    				</div>
-    			</div>
-    		</div>
-        </div>
-    </div>
-    
-	<div class="row mb-3" >
-		<div class="col-12" style="text-align: center;">
-			<nav>
-				<ul class="pagination justify-content-center">
-					<li class="page-item ${result.pagination.first ? 'disabled' : '' }">
-						<a class="page-link"  href="list?page=${result.pagination.prePage }" >이전</a>
-					</li>
-				<c:forEach var="num" begin="${result.pagination.beginPage }" end="${result.pagination.endPage }">
-					<li class="page-item ${result.pagination.page eq num ? 'active' : '' }">
-						<a class="page-link" href="list?page=${num }" >${num }</a>
-					</li>
-				</c:forEach>
-					<li class="page-item ${result.pagination.last ? 'disabled' : '' }">
-						<a class="page-link" href="list?page=${result.pagination.nextPage }" >다음</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</div>
+   
+        <div class="container-fluid py-4 wow fadeInUp" data-wow-delay="0.1s">
+   
+	        <div class="container py-3">
+			   	<div>
+			   		<h3>공지사항 작성하기</h3>
+			   	</div>
+	            <div class="row g-5">
+	                <div class="col-lg-13">
+	                    <div class=" rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s">
+	                        <form method="post">
+	                            <div class="row g-3">
+	                                <div class="col-12" >
+	                                    <select class="form-select bg-light border-0" style="height: 55px;">
+	                                        <option selected>주요 공지사항</option>
+	                                        <option value="1">일반 공지사항</option>
+	                                    </select>
+	                                </div>
+	                                <div class="col-xl-12">
+	                                    <input type="text" class="form-control bg-light border-0" placeholder="제목" style="height: 55px;">
+	                                </div>
+	                        		<textarea id="summernote" name="editordata"></textarea>
+	                                <div class="col-12">
+	                                    <button class="btn btn-dark w-100 py-3" type="submit">작성하기</button>
+	                                </div>
+	                            </div>
+	                        </form>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+    	</div>
+
 	
     <!-- Lesson Register Form End  -->
 	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
@@ -236,24 +197,30 @@
 
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/resources/lib/wow/wow.min.js"></script>
-    <script src="/resources/lib/easing/easing.min.js"></script>
-    <script src="/resources/lib/waypoints/waypoints.min.js"></script>
-    <script src="/resources/lib/counterup/counterup.min.js"></script>
-    <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/resources/lib/wow/wow.min.js"></script>
+<script src="/resources/lib/easing/easing.min.js"></script>
+<script src="/resources/lib/waypoints/waypoints.min.js"></script>
+<script src="/resources/lib/counterup/counterup.min.js"></script>
+<script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="/resources/js/main.js"></script>
 
-    <!-- Template Javascript -->
-	<script src="/resources/js/main.js"></script>
+<script src="/resources/js/summernote/summernote-lite.js"></script>
+<script src="/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 
-<script>
+<script type="text/javascript">
 
-
+// 썸머노트 
+$(document).ready(function() {
+    $('#summernote').summernote({
+        height: 300,
+        lang: "ko-KR"
+    });
+});
 </script>
 
-    
 </body>
 
 </html>
