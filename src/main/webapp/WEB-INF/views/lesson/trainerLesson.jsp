@@ -89,8 +89,9 @@
                         수업 목록
                     </div>
                     <div class="card-body">
-                        <table class="table">
+                        <table class="table" id="table-lessons">
                             <thead>
+                            <tbody>
                             <tr>
                                 <th style="width: 15%">레슨 번호</th>
                                 <th style="width: 20%">수업명</th>
@@ -98,6 +99,7 @@
                                 <th style="width: 20%">레슨시간</th>
                                 <th style="width: 25%">출석체크</th>
                             </tr>
+                            </tbody>
                             </thead>
                             <tbody>
                             <c:forEach var="lesson" items="${createList }">
@@ -106,11 +108,40 @@
                                     <td>${lesson.name }</td>
                                     <td>${lesson.reqCnt }/${lesson.quota }</td>
                                     <td><fmt:formatDate value="${lesson.date }" pattern="yyyy년 M월 d일" /> ${lesson.time }시</td>
-                                    <td><button type="button" id="btn-attendance" class="btn btn-primary btn-sm">출석</button></td>
+                                    <td><button type="button" data-lesson-no="${lesson.no}" data-bs-toggle="modal" data-bs-target="#insert" class="btn btn-primary btn-sm">출석</button></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
                         </table>
+                        <!-- 트레이너가 출석버튼 클릭시 뜨는 모달 창 -->
+                        <div class="modal fade" id="insert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">출석</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <input type="hidden" id="current-lesson-no" />
+                                        <table class="table" id="table-users" >
+                                            <thead>
+                                            <tr>
+                                                <th style="width:35%">수강생 명</th>
+                                                <th style="width:30%">출석상태</th>
+                                                <th style="width:35%">출석체크</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -213,7 +244,52 @@
 <script src="/resources/js/main.js"></script>
 
 <script>
+    // 트레이너가 개설한 수업에 대해서 수강생 조회
+    $(function() {
+        $("#table-lessons tbody button").click(function() {
 
+            let $tbody = $('#table-users tbody').empty();
+
+            let lessonNo = $(this).attr('data-lesson-no');
+            $("#current-lesson-no").val(lessonNo);
+            $.getJSON("trainer-user-apply", {lessonNo:lessonNo}, function(LessonApplies) {
+                LessonApplies.forEach(function(apply, index) {
+                    console.log(apply);
+                    let tr = `
+                    <tr>
+                        <td>\${apply.user.name }</td>
+                        <td>\${apply.attendanceStatus }</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm">출석</button>
+                            <button type="button" class="btn btn-danger btn-sm">결석</button>
+                        </td>
+                    </tr>
+                `;
+                    $tbody.append(tr);
+                })
+            })
+        });
+        // 모달창에 출석버튼 클릭 시
+        $("#table-users tbody").on('click', '.btn-primary', function(){
+            let $button1 = $(this);
+            let $button2 = $(this).next();
+            let lessonNo = $('#current-lesson-no').val();
+            $.getJSON("trainer-user-attendance", {lessonNo:lessonNo,status:'Y'}, function() {
+                $button1.addClass('disabled');
+                $button2.removeClass('disabled');
+            })
+        })
+        // 모달창에 결석버튼 클릭 시
+        $("#table-users tbody").on('click', '.btn-danger', function() {
+            // let $button1 = $(this).next;
+            // let $button2 = $(this);
+            let lessonNo = $('#current-lesson-no').val();
+            $.getJSON("trainer-user-attendance", {lessonNo:lessonNo,status:'N'}, function() {
+                // $button1.removeClass('disabled');
+                // $button2.addClass('disabled');
+            })
+        })
+    })
 </script>
 
 
