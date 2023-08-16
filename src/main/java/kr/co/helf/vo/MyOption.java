@@ -1,6 +1,6 @@
 package kr.co.helf.vo;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.apache.ibatis.type.Alias;
 
@@ -14,9 +14,9 @@ public class MyOption {
 
 	private int no;
 	private String state;
-	private Date startDate;
-	private Date endDate;
+	private LocalDate startDate;		// 자동
+	private LocalDate endDate;
 	private int duration;
+	private OptionDetail optionDetail;
 	private MyMembership myMembership;
-	private OptionJoinDetaile optionDetaile;
 }
