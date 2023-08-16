@@ -46,8 +46,8 @@ public class LessonController {
     // 개설한 수업에 대한 출석체크
     @GetMapping("/trainer-user-attendance")
     @ResponseBody
-    public void updateAttendance(@AuthenticationPrincipal User user,int lessonNo,String status){
-        lessonService.updateAttendance(lessonNo,user,status);
+    public void updateAttendance(int lessonNo,String userId,String status){
+        lessonService.updateAttendance(lessonNo,userId,status);
     }
 
 
