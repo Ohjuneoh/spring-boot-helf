@@ -1,8 +1,10 @@
 package kr.co.helf.controller;
 
+import kr.co.helf.dto.UserMyMemberships;
 import kr.co.helf.service.PersonalLessonService;
 import kr.co.helf.vo.Consultation;
 import kr.co.helf.vo.LessonApply;
+import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.User;
 
@@ -28,9 +30,11 @@ public class PersonalLessonController {
 
     //유저가 트레이너에게 상담신청하는 페이지
 	@GetMapping("/consultation")
-	public String consultingForm(Model model) {
+	public String consultingForm(@AuthenticationPrincipal User user, Model model) {
 		List<Trainer> trainers = personalLessonService.getTrainers();
-		model.addAttribute("trainers", trainers); // 트레이너 목록을 뷰에 전달
+		List<UserMyMemberships> memberships = personalLessonService.getUserMembershipById(user.getId());
+		model.addAttribute("memberships",memberships);
+		model.addAttribute("trainers", trainers); 
 		return "personal-lesson/consultingform";
 	}
 	//상담신청 제출
@@ -40,7 +44,8 @@ public class PersonalLessonController {
 							 @RequestParam("abnormalities") String abnormalities,
 							 @RequestParam("date") Date date,
 							 @RequestParam("time") String time,
-							 @RequestParam("trainerNumber") int trainerNumber){
+							 @RequestParam("trainerNumber") int trainerNumber,
+							 @RequestParam("membershipNo") int membershipNo){
 		
 		Consultation consultation = new Consultation();
 		consultation.setGoal(goal);
@@ -48,10 +53,13 @@ public class PersonalLessonController {
 		consultation.setRequestDate(date);
 		consultation.setRequestTime(time);
 		consultation.setUser(user);
+		MyMembership myMembership = new MyMembership();
+		myMembership.setNo(membershipNo);
 		Trainer trainer = new Trainer();
 		trainer.setTrainerNo(trainerNumber);
 		
 		consultation.setTrainer(trainer);
+		consultation.setMyMembership(myMembership);
 		
 		personalLessonService.createConsultation(consultation);
 		

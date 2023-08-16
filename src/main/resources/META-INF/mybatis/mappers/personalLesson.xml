@@ -75,9 +75,39 @@
 											 lesson_consultation_request_date,
 											 lesson_consultation_request_time,
 											 user_id,
-											 trainer_no)
-		values(helf_lesson_consultation_seq.nextval, #{goal}, #{abnormalities}, #{applicationDate}, #{requestTime}, #{user.id}, #{trainer.trainerNo})
+											 trainer_no,
+											 my_membership_no)
+		values(helf_lesson_consultation_seq.nextval, #{goal}, #{abnormalities}, #{applicationDate}, #{requestTime}, #{user.id}, #{trainer.trainerNo}, #{myMembership.no})
 	</insert>
+	<resultMap id="UserMyMembershipsMap" type="kr.co.helf.dto.UserMyMemberships">
+	    <!-- Membership 객체 매핑 -->
+	    <association property="membership" javaType="kr.co.helf.vo.Membership">
+	        <result column="membership_no" property="no"/>
+	        <result column="membership_name" property="name"/>
+	    </association>
+	
+	    <!-- MyMembership 객체 리스트 매핑 -->
+	    <collection property="myMembership" ofType="kr.co.helf.vo.MyMembership">
+	        <result column="my_membership_startdate" property="startDate"/>
+	        <result column="my_membership_no" property="no"/>
+	        <result column="my_membership_enddate" property="endDate"/>
+	        <result column="my_membership_remainder_cnt" property="remainderCnt"/>
+	        <result column="my_membership_state" property="state"/>
+	    </collection>
+	</resultMap>
+	<select id="getUserMyMembershipById" parameterType="string"  resultMap="UserMyMembershipsMap">
+		select b.membership_no,
+				b.my_membership_no,
+		        a.membership_name,
+		        b.my_membership_startdate,
+		        b.my_membership_enddate,
+		        b.my_membership_remainder_cnt,
+	       		b.my_membership_state
+		from 	helf_membership a, helf_my_membership b
+		where 	a.membership_no = b.membership_no
+		and 	b.user_id=#{userId}
+		ORDER BY b.my_membership_no asc
+	</select>
 	<!-- <resultMap type="kr.co.helf.vo.User" id="getAllUserWithConsultation" >
     	<id column="user_id" property="id"/>
     	<result column="user_name" property="name"/>
