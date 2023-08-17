@@ -155,7 +155,7 @@
 				</c:forEach>
 				
 				<div class="offset-10"> 
-					<form id="form-xxx" method="post" action="order-check">
+					<form id="form-xxx" method="post" action="check">
 						<input type="hidden" name="periodNo" />
 						<input type="hidden" name="lockerNo" />
 						<input type="hidden" name="wearNo" />

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.co.helf.form.AddOrderForm;
-import kr.co.helf.kakaopay.KakaoApproveResponse;
 import kr.co.helf.kakaopay.KakaoPayReadyResponse;
 import kr.co.helf.kakaopay.KakaoPayService;
 import kr.co.helf.service.OrderService;
@@ -29,13 +28,11 @@ import kr.co.helf.vo.Period;
 import kr.co.helf.vo.Rank;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("/membership")
+@RequestMapping("/order")
 @RequiredArgsConstructor
 @SessionAttributes({"addOrderForm", "tid"})
-@Slf4j
 public class OrderController {
 	
 	private final OrderService orderService;
@@ -46,7 +43,7 @@ public class OrderController {
 		List<Membership> memberships = orderService.getAllMembership();
 		model.addAttribute("memberships", memberships);
 		
-		return "membership/list";
+		return "order/membership-list";
 	}
 	
 	@GetMapping("/condition")
@@ -65,7 +62,7 @@ public class OrderController {
 
 		model.addAttribute("addOrderForm", form);
 		
-		return "membership/orderStep1";
+		return "order/step1";
 	}
 	
 	@GetMapping("/period")
@@ -82,7 +79,7 @@ public class OrderController {
 			model.addAttribute("user", user);
 			model.addAttribute("form", form);
 			
-			return "membership/orderStep3";
+			return "order/step3";
 		}
 		
 		List<Option> options = orderService.getOptions();
@@ -94,10 +91,10 @@ public class OrderController {
 		List<Period> periods = orderService.getAllPeriodByType(membershipJoinCat.getCatProperty());
 		model.addAttribute("periods", periods);
 		
-		return "membership/orderStep2";
+		return "order/step2";
 	}
 	
-	@PostMapping("/order-check")
+	@PostMapping("/check")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String orderCheck(@ModelAttribute("addOrderForm") AddOrderForm form, Model model, 
 							 @AuthenticationPrincipal User user) {
@@ -133,8 +130,7 @@ public class OrderController {
 		model.addAttribute("form", form);
 		model.addAttribute("user", user);
 		
-		log.info("이용권 -> {}", form);
-		return "membership/orderStep3";
+		return "order/step3";
 	}
 	
 	@PostMapping("/kakaopay-ready")
@@ -146,7 +142,7 @@ public class OrderController {
 		return ready;
 	}
 	
-	@GetMapping("/order")
+	@GetMapping("/")
 	public String order(@ModelAttribute("addOrderForm")  AddOrderForm form, @AuthenticationPrincipal User user, 
 						@ModelAttribute("tid")  String tid, @RequestParam("pg_token") String pgToken) {
 		
@@ -154,21 +150,21 @@ public class OrderController {
 		orderService.updateUser(form, user);
 		orderService.insertOrder(form, user);
 		
-		return "redirect:/membership/order-completed";
+		return "redirect:/order/completed";
 	}
 	
-	@GetMapping("/order-completed")
+	@GetMapping("/completed")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String orderCompleted() {
-		return "membership/orderCompleted";
+		return "order/completed";
 	}
 	
-	@GetMapping("/order-fail")
+	@GetMapping("/kakaopay-fail")
 	public void orderFail() {
 		throw new RuntimeException("결제가 실패했습니다.");
 	}
 
-	@GetMapping("/order-cancle")
+	@GetMapping("/kakaopay-cancle")
 	public void orderCancle() {
 		throw new RuntimeException("결제가 최소되었습니다.");
 	}

@@ -31,9 +31,9 @@ public class KakaoPayService {
 		param.add("total_amount", String.valueOf(form.getTotalPrice()));
 		param.add("tax_free_amount", "0");
 		param.add("vat_amount", String.valueOf(form.getSurtax()));
-		param.add("approval_url", "http://localhost/membership/order"); // 성공 시 redirect url
-		param.add("cancel_url", "http://localhost/membership/list"); // 취소 시 redirect url
-		param.add("fail_url", "http://localhost/membership/order-fail"); // 실패 시 redirect url
+		param.add("approval_url", "http://localhost/order/"); // 성공 시 redirect url
+		param.add("cancel_url", "http://localhost/order/membership-list"); // 취소 시 redirect url
+		param.add("fail_url", "http://localhost/order/fail"); // 실패 시 redirect url
 		
 		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(param, this.getHeaders());
 		

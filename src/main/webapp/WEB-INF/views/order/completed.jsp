@@ -84,12 +84,9 @@
 			<div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
 				<h5 class="fw-bold text-primary text-uppercase">Your Order</h5>
 				<h1 class="mb-0">구매가 완료되었습니다</h1>
-				<div style="margin: 100px;">
-					<h4>구매해주셔서 감사합니다</h4>
-					<br/>
-					<br/>
-					<a href="../my-membership/list" type="button" class="btn btn-primary btn-lg">내 이용권 보러가기</a>
-				</div>
+			</div>
+			<div style="display: flex; justify-content: center; align-items: center;">
+				<a href="../membership/list" type="button" class="btn btn-primary btn-lg">내 이용권 보러가기</a>
 			</div>
 		</div>
 	</div>
