@@ -83,90 +83,17 @@
 		<div class="container py-5">
 			<div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
 				<h5 class="fw-bold text-primary text-uppercase">Your Order</h5>
-				<h1 class="mb-0">구매를 진행하세요</h1>
-			</div>
-			<br/>
-			<br/>
-			<br/>
-			<div class="text-center" >
-				<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
-					  padding-top:46px; padding-left:1px;">
-					<strong>이용약관</strong>
-				</span>
-		  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
-		  		<span class="border border-primary rounded-circle d-inline-block bg-primary" style="height:125px; width:125px; 
-		  			  padding-top:46px; padding-left:1px;">
-		  			<strong style="color:white">
-			  			세부설정
-		  			</strong>
-		  		</span>
-		  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
-		  		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
-		  			  padding-top:46px; padding-left:-2px;">
-		  			<strong>
-				  		결제
-		  			</strong>
-		  		</span>
-				<div class="offset-1" style="margin: 100px;">
-					<h4 class="text-start">
-						<strong style="color:gray">기간/횟수</strong>
-					</h4>
-					<hr style="border: 2px solid gray;"/>
-				</div>
-				<div class="offset-2" style="margin: 100px;">
-					<c:forEach var="period" items="${periods }">
-						<button	data-period-no="${period.no }" 
-							id="btn-period-${period.no }" type="button" class="btn btn-outline-primary btn-lg" 
-								style="width: 200px; height: 200px; margin: 20px;">
-							${period.property }${period.type eq "기간" ? "개월" : "회"}
-							<br/>
-							<br/>
-							+ <fmt:formatNumber value="${period.addPrice }" />
-						</button>
-					</c:forEach>
-				</div>
-				
-				<c:forEach var="option" items="${options }">
-			  		<div class="text-start offset-1" style="margin: 100px;">
-						<h4>
-							<strong style="color:gray">${option.name }</strong>
-						</h4>
-						<hr style="border: 2px solid gray;" />
-			  		</div>
-					<div class="offset-1" style="margin: 100px;">
-						<c:forEach var="optionJoinDetail" items="${optionJoinDetails }">
-							<c:if test="${option.name eq optionJoinDetail.name }">
-								<button id="btn-option-${optionJoinDetail.no }" data-option-no="${optionJoinDetail.no }" 
-										data-option-name="${option.name }" type="button" class="btn btn-outline-primary btn-lg" 
-										style="width: 200px; height: 200px; margin: 20px;">
-									<c:if test="${optionJoinDetail.period == 0}">
-										선택안함
-									</c:if>
-									<c:if test="${optionJoinDetail.period != 0}">
-										${optionJoinDetail.period}개월
-										<br />
-										<br />
-										+ <fmt:formatNumber value="${optionJoinDetail.price }" />
-									</c:if>
-								</button>
-							</c:if>
-					  	</c:forEach>
-					</div>
-				</c:forEach>
-				
-				<div class="offset-10"> 
-					<form id="form-xxx" method="post" action="order-check">
-						<input type="hidden" name="periodNo" />
-						<input type="hidden" name="lockerNo" />
-						<input type="hidden" name="wearNo" />
-						<a href="list" class="btn btn-danger">취소</a>
-						<button type="submit" id="btn-next" class="btn btn-primary disabled">다음</button>
-					</form>
+				<h1 class="mb-0">구매가 완료되었습니다</h1>
+				<div style="margin: 100px;">
+					<h4>구매해주셔서 감사합니다</h4>
+					<br/>
+					<br/>
+					<a href="../my-membership/list" type="button" class="btn btn-primary btn-lg">내 이용권 보러가기</a>
 				</div>
 			</div>
 		</div>
 	</div>
-
+	
 	<!-- Footer Start -->
 	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
 		<div class="container">
@@ -259,8 +186,8 @@
     <!-- Footer End -->
     
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
-
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>	
+	
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -275,48 +202,5 @@
 	<script src="/resources/js/main.js"></script>
 </body>
 <script type="text/javascript">
-$(function() {
-	
-	let clickedPeriod = false;
-	let clickedLocker = false;
-	let clickedWear = false;
-
-	$('[id^="btn-period"]').on('click', function() {
-		$(this).addClass('active');
-		$(this).siblings().removeClass('active');
-		
-		let no = $(this).attr("data-period-no");
-		$("#form-xxx :input[name=periodNo]").val(no);
-		
-		clickedPeriod = true;
-		
-		if (clickedPeriod && clickedLocker && clickedWear) {
-			$("#btn-next").removeClass('disabled');			
-		} 
-	});
-	
-	$('[id^="btn-option"]').on('click', function() {
-		$(this).addClass('active');
-		$(this).siblings().removeClass('active');
-		
-		let option = $(this).attr("data-option-name");
-		let no = $(this).attr("data-option-no");
-
-		if (option == "락커") {
-			$("#form-xxx :input[name=lockerNo]").val(no);	
-			clickedLocker = true;
-			
-		} else if (option == "운동복") {
-			$("#form-xxx :input[name=wearNo]").val(no);
-			clickedWear = true;
-		}
-		
-		if (clickedPeriod && clickedLocker && clickedWear) {
-			$("#btn-next").removeClass('disabled');			
-		} 
-	});
-	
-	
-})
 </script>
 </html>

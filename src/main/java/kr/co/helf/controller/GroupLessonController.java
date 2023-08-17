@@ -85,7 +85,7 @@ public class GroupLessonController {
         Lesson lesson = groupLessonService.getLessonByNo(lessonNo);
         model.addAttribute("lesson", lesson);
 
-        return "group-lesson/modifyform";
+        return "group-lesson/modifyForm";
     }
     // 개설된 수업 수정
     @PostMapping("/modify")

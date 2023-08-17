@@ -12,4 +12,5 @@ public class Rank {
 	private String name;
 	private int criteria;
 	private String benefit;
+	private double pointRate;
 }
