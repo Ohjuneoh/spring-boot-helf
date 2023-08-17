@@ -59,7 +59,7 @@ public class UserController {
 	
 	// 요청 완료화면 요청
 	@GetMapping("/welcome")
-	public String welcomePage(Model model) {
+	public String welcomePage() {
 		
 		return "welcome"; 	// "WEB-INF/views/" + welcome + ".jsp"
 	}

@@ -73,7 +73,7 @@
 	                                <div class="col-12">
 	                                    <button class="btn btn-dark w-100 py-3" type="submit">로그인</button>
 	                                </div>
-	                                <div class="col-12">
+	                                <div class="col-12 mb-3">
 	                                	<a href="/user/findId"  class="btn" >아이디 찾기</a>
 	                                	<span>│</span>
 	                                	<a href="/user/findPwd"  class="btn" >비밀번호 찾기</a>
@@ -81,6 +81,15 @@
 	                                	<a href="/user/registerform"  class="btn" >회원가입</a>
 	                                </div>
 	                            </div>
+	                            <div class="row mb-3">
+									<div class="col-12">
+										<div class="d-grid gap-2">
+											<a href="/oauth2/authorization/kakao" onclick="kakao_login_call()">
+											    <img src="https://atimg.sonyunara.com/attrangs/banner/kakao-pc.jpg" style="width: 700px;">
+											</a>
+										</div>
+									</div>
+								</div>
                         	</form>
                         </div>
                     </div>

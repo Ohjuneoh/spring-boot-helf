@@ -84,41 +84,49 @@
 		<div class="container py-5">
 			<div class="row mb-3">
 				<div class="col-12 d-flex justify-content-center" >
-					<div id="boardlist" class="wrap_inner" style="width: 1100px;">
+					<div id="boardlist" class="wrap_inner" style="width: 1200px;">
 						<div class="card-body">
 			               <table class="table">
 			               		<thead>
 									<tr>
 			                        	<th style="width: 15%; text-align: center;">글번호</th>
-			                        	<th style="width: 60%; text-align: center;">제목</th>
+			                        	<th style="width: 50%; text-align: center;">제목</th>
 			                        	<th style="width: 25%; text-align: center;">작성일</th>
+			                        	<th style="width: 40%; text-align: center;">조회수</th>
 			                     	</tr>
 								</thead>
 							   <tbody>
 						            <tr class="notice">
 										<td style="text-align: center;"><i class="bi bi-megaphone-fill" style="color: blue; font-size: 20px;"></i></td>
 										<td class="tal" style="text-align: center;"><a href="/board/view.php?boardid=csnotice&amp;index_no=569">쇼핑몰 이용 가이드 (구매전필독해주세요♡)</a></td>
-										<!-- <td>아뜨랑스</td> -->
 										<td class="date" style="text-align: center;">2021.11.03</td>
-										<!-- <td class="view">85,384</td> -->
+										<td class="date" style="text-align: center;">100</td>
 									</tr>		
 									<tr>
 			                        	<td style="text-align: center;">1</td>
 										<td style="text-align: center;"><a href="/board/view.php?boardid=csnotice&amp;index_no=569">공지사항 입니다.</a></td>
 			                        	<td style="text-align: center;">2022.01.01</td>
+										<td class="date" style="text-align: center;">100</td>
 	                    		 	</tr>
 									<tr>
 			                        	<td style="text-align: center;">1</td>
 										<td style="text-align: center;"><a href="/board/view.php?boardid=csnotice&amp;index_no=569">공지사항 입니다.</a></td>
 			                        	<td style="text-align: center;">2022.01.01</td>
+										<td class="date" style="text-align: center;">100</td>
 	                    		 	</tr>
 									<tr>
 			                        	<td style="text-align: center;">1</td>
 										<td style="text-align: center;"><a href="/board/view.php?boardid=csnotice&amp;index_no=569">공지사항 입니다.</a></td>
 			                        	<td style="text-align: center;">2022.01.01</td>
+										<td class="date" style="text-align: center;">100</td>
 	                    		 	</tr>
 							   </tbody>
 			               </table>
+			               <div class="ExpandMoreBtn_more_btn_box__5lBg8 d-flex justify-content-end align-items-center">
+								<a href="noticeform" class="btn btn-primary btn-sm" >
+									글쓰기
+								</a>
+							</div>
         				</div>
     				</div>
     			</div>
@@ -241,6 +249,7 @@
 	<script src="/resources/js/main.js"></script>
 
 <script>
+
 
 </script>
 

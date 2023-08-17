@@ -1,20 +1,23 @@
 package kr.co.helf.vo;
 
-import java.util.Date;
+import java.time.LocalDate;
+
+import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
+@Alias("myMembership")
 public class MyMembership {
 
 	private int no;
-	private Date startDate;
-	private Date endDate;
-	private int remainderCnt;
+	private LocalDate startDate;			// 자동
+	private LocalDate endDate;			// 자동
+	private Integer remainderCnt;		// 자동
 	private String state;
-	private User user;
-	private Period period;
-	private Membership membership;
+	private User user;				// 넣어야됨
+	private Period period;			// 넣어야됨
+	private Membership membership;	// 넣어야됨
 }
