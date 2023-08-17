@@ -19,7 +19,14 @@ import java.util.List;
 @RequestMapping("/lesson")
 public class LessonController {
 
+<<<<<<< Updated upstream
     private final LessonService lessonService;
+=======
+	@GetMapping(value = "registration")
+	public String lessonRegist() {
+		return "lesson/trainerform";
+	}
+>>>>>>> Stashed changes
 
     // 유저가 신청한 모든 수업 조회
     @GetMapping("/user-my-lesson")
