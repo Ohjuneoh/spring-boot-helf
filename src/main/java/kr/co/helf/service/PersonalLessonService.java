@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.helf.dto.UserMyMemberships;
 import kr.co.helf.mapper.PersonalLessonMapper;
+import kr.co.helf.vo.Career;
 import kr.co.helf.vo.Consultation;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.Trainer;
@@ -34,7 +35,10 @@ public class PersonalLessonService {
 	
 	
 
-
+	// 나의 오늘 수업 리스트 조회(개인+그룹) - 채경 작성
+	public List<LessonApply> getMyTodayLessons(String userId){
+		return personalLessonMapper.getMyTodayLessonsByUserId(userId);
+	}
 	
 }
 

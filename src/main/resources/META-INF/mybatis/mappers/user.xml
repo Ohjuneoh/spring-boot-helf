@@ -46,8 +46,19 @@
 	<select id="getUsersByDigits" parameterType="string" resultType="kr.co.helf.vo.User">
 		select
 			user_id					as id,
+			user_email				as email,
+			user_name				as name,
 			user_tel				as tel,
-			user_name				as name
+			user_encrypted_password as encryptedPassword,
+			user_gender				as gender,
+			user_status				as status,
+			user_mobile_carrier		as mobileCarrier,
+			user_create_date		as createDate,
+			user_update_date		as updateDate,
+			user_point				as point,
+			rank_no					as "rank.no",
+			user_type				as type
+			
 		from
 			helf_users
 		where substr(user_tel, 10, 4) = #{value}
@@ -57,4 +68,39 @@
 	<select id="idCheck" resultType="int" parameterType="string">
 		select count(*) from helf_users where user_id = #{value}
 	</select>
+	
+	<!-- 유저의 이용가능한 이용권 조회  // 추후 이용권 부분으로 옮길 예정 -->
+	<select id="getMyMembership" resultType="kr.co.helf.vo.MyMembership" parameterType="string">
+		select
+			A.my_membership_no		as no,
+			A.my_membership_startdate	as startDate,
+			A.my_membership_enddate	as endDate,
+			A.my_membership_remainder_cnt	as remainderCnt,
+			A.my_membership_state			as state,
+			A.user_id						as "user.id",
+			A.membership_no					as "membership.no",
+			B.membership_name				as "membership_name",
+			C.category_no					as "membership.category.no",
+			D.user_type						as "user.type",
+			D.user_name						as "user.name"
+			
+		from
+			helf_my_membership A
+		Join
+			helf_users D on A.user_id = D.user_id
+		Join
+			helf_membership B on A.membership_no = B.membership_no
+		Join
+			helf_membership_category C on B.category_no = C.category_no	
+		where A.user_id = #{value}
+        and A.my_membership_state = 'Y'
+        and C.category_no IN (1, 2)
+	</select>
+	
+	<insert id="insertAttendance" parameterType="string">
+		insert into helf_customer_attendance
+    				(customer_attendance_no, user_id)
+		values 
+    				(helf_customer_attendance_seq.nextval, #{value})
+	</insert>
 </mapper>

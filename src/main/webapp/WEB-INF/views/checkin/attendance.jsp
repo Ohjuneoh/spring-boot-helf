@@ -2,24 +2,30 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="kr">
 <style>
-	.modal-font-size {
-    font-size: 20px;
+/* Button-like appearance */
+.btn-like {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 5px;
+    border: 2px solid blue;
+    background-color: transparent;
+    color: blue;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
-#modal-table-users td, #modal-table-users th {
-    padding-bottom: 20px;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 1.5em;
+/* Selected state appearance */
+input[type="radio"]:checked + .btn-like {
+    background-color: blue;
+    color: white;
 }
-	
-	
+
 </style>
 <head>
-    <title>HELF 입장하기</title>
     <meta charset="utf-8">
+    <title>HELF 입장하기</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -45,9 +51,9 @@
 
     <!-- Template Stylesheet -->
     <link href="/resources/css/style.css" rel="stylesheet">
-    
-    <!--jQuery library -->
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<!-- Box Stylesheet -->
+	<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -98,70 +104,87 @@
         </div>
     </div>
     <!-- Full Screen Search End -->
-
-    <!-- Concept -입장하기 form Start -->
-    <div class="container-fluid py-5 text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-12">
-                <div class="section-title position-relative pb-3 mb-5">
-                    <div class="align-items-center justify-content-center text-center h-100 bg-primary p-4">
-                        <a href="index.html" class="navbar-brand">
-                             <h1 class="m-0 text-white"><i class="fa fa-user-tie me-2"></i>입장하기</h1>
-                        </a>
-                        <p class="mt-3 mb-4">1. 회원번호 네 자리를 입력해주세요.<br> 
-                        					 2. 입장 버튼을 눌러주세요.<br>
-                        					 3. 1:1 수업 혹은 그룹 수업은 ‘수업’ 버튼을 눌러주세요. <br>
-                        					 4. 시설이용은 ‘시설이용’ 버튼을 눌러주세요. </p>
-                        <form id="checkinForm" method="get" action="customer-verification">
-                            <div class="input-group">
-                                <input type="text" class="form-control border-white p-3" placeholder="휴대폰 뒷번호 네 자리" id="fourDigits" name="fourDigits">
-                                <button type="button" class="btn btn-dark btn-lg"  id="btn-open-modal">입장</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Concept -입장하기 form End  -->
     
-    
-    <!-- Modal 회원정보 Start -->
-   <div class="modal fade" id="userModal" data-bs-backdrop="static" role="dialog" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">>
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="staticBackdropLabel">회원 목록</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <p class="modal-font-size">본인 정보를 확인하시고 '선택' 버튼을 눌러주세요.</p>
-              
-                <table class="table" id="modal-table-users">
-                	<thead>
-                		<tr>
-                			<th>이름</th>
-                			<th>휴대폰 번호</th>
-                			<th></th>
-                		</tr>
-                	</thead>
-                	<tbody>
-                		
-                	</tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-   </div>
-	<!-- Modal 회원정보 End -->
-    
- <!-- Footer Start -->
+    <!-- 직원 출퇴근 기록하기 form Start -->
+     <div class="container">
+		<div class="row row-cols-1 row-cols-md-2 g-4">
+  			<div class="col">
+    			<p class="d-inline-flex gap-1">
+  					<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    					출퇴근 등록하기
+  					</button>
+				</p>
+				<div class="collapse" id="collapseExample">
+  					<div class="card card-body" style="width: 1200px;">
+    					<form action="attendance-register" method="get">
+    						<input type="radio" class="btn-check" id="in" name="attendance" value="in" autocomplete="off">
+    						<label for="in" class="btn btn-outline-primary" style=" margin-right: 30px;">출근</label>
+    						
+    						<input type="radio" class="btn-check" id="out" name="attendance" value="out" autocomplete="off">
+    						<label for="out" class="btn btn-outline-primary" style=" margin-right: 30px;">퇴근</label>
+    						
+    						
+    						<select name="dropdown" id="dropdown" class="btn btn-outline-primary"> 
+    							<option value="">--기타--</option>
+    							<option value="late">지각</option>
+    							<option value="break">외출</option>
+    							<option value="outside">외근</option>
+    							<option value="return">복귀</option>
+    						</select>
+    						<div>
+								<div>
+									<span>사유</span>
+									<input type="text" id="cause" name="cause" style="width:100%;" class="form-control">
+    							</div>
+    						</div>
+    					</form>
+  					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 직원 출퇴근 기록하기 form End -->
+	
+	<!-- 직원 출퇴근 내역 목록 Start -->
+	<div class="card-body">
+		<div class="d-flex justify-content-start mb-3">
+			<select class="form-select me-3" style="width: 150px;" name="sort" onchange="changeSort()">
+				<option value="in" ${param.sort eq 'in' ? 'selected' : ''}>출근</option>
+				<option value="out" ${param.sort eq 'out' ? 'selected' : '' }>퇴근</option>
+				<option value="late" ${param.sort eq 'late' ? 'selected' : '' }>지각</option>
+				<option value="break" ${param.sort eq 'break' ? 'selected' : '' }>외출</option>
+				<option value="outside" ${param.sort eq 'outside' ? 'selected' : '' }>외근</option>
+				<option value="return" ${param.sort eq 'return' ? 'selected' : '' }>복귀</option>
+			</select>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th></th>
+					<th>날짜 및 시간</th>
+					<th>출근 상태</th>
+					<th>기타</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:choose>
+					<c:when test="${not empty result.attendances}">
+						<c:forEach var="attendance" items="${result.attendances }">
+							<tr>
+								<td>${attendance.no }</td>
+								<td>${attendance.Date }</td>
+								<td>${attendance.state}</td>
+								<td>${attendance.cause }</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+				</c:choose>
+			</tbody>
+		</table>
+	</div>
+	<!-- 직원 출퇴근 내역 목록 End -->
+	
+     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container">
             <div class="row gx-5">
@@ -263,77 +286,27 @@
     <script src="/resources/lib/waypoints/waypoints.min.js"></script>
     <script src="/resources/lib/counterup/counterup.min.js"></script>
     <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
+    
+    <script type="text/javascript">
+    document.getElementById("dropdown").addEventListener("change", function() {
+        if (this.value) {
+            document.getElementById("in").checked = false;
+            document.getElementById("out").checked = false;
+        }
+    });
 
-<script type="text/javascript">
-	// 부트스트랩의 모달 객체 생성하기
-	const userModal = new bootstrap.Modal('#userModal', {
-		keyboard: false
-	});
-	
-	
-	$("#btn-open-modal").click(function() {
-		$("#modal-table-users tbody").empty();
-        const fourDigits = $("#fourDigits").val();
-        $.ajax({
-            type: "GET",
-            url: "/checkin/customer-verification", // The URL to the server endpoint to fetch data
-            data: { fourDigits: fourDigits }, // Send the input data to the server
-            success: function (users) {
-            	
-            	users.forEach(function(user, index) {
-            		let maskedTel = user.tel.replace(/(\d{3})-\d{4}-(\d{4})/, "$1-****-$2");
-            		let firstNameChar = user.name.charAt(0);
-                    let lastNameChar = user.name.charAt(user.name.length - 1);
-                    let maskedName = firstNameChar + '*'.repeat(user.name.length - 2) + lastNameChar;
-
-            		
-            		let tr = `
-            			<tr>
-            				<td>\${maskedName}</td>
-            				<td>\${maskedTel}</td>
-            				<td><a href="/checkin/check-in-choice?id=\${user.id}" class="btn btn-outline-primary">선택</a></td>
-            			</tr>
-            			<tr>
-            	        	<td>&nbsp;</td>
-            	        	<td>&nbsp;</td>
-            	        	<td></td>
-            	    	</tr>
-            	    	<tr>
-        	        		<td>&nbsp;</td>
-        	        		<td>&nbsp;</td>
-        	        		<td></td>
-        	    		</tr>
-        	    		<tr>
-    	        			<td>&nbsp;</td>
-    	        			<td>&nbsp;</td>
-    	        			<td></td>
-    	    			</tr>
-    	    			<tr>
-	        				<td>&nbsp;</td>
-	        				<td>&nbsp;</td>
-	        				<td></td>
-	    				</tr>
-            		`
-            		$("#modal-table-users tbody").append(tr);
-            	});
-            	
-                // 모달 창 띄우기 
-                $("#userModal").modal("show");
-            },
-            error: function (xhr, status, error) {
-                // Handle errors if any
-                console.error("Error:", error);
-            }
+    const radios = document.querySelectorAll('input[type="radio"]');
+    radios.forEach(function(radio) {
+        radio.addEventListener("change", function() {
+            document.getElementById("dropdown").selectedIndex = 0;
         });
-				
-	});
-	
-	
-	
-	
-</script>
+    });
+
+	</script>
 </body>
+
 </html>

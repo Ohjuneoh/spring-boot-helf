@@ -1,6 +1,7 @@
 package kr.co.helf.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.mapper.UserMapper;
+import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.Rank;
 import kr.co.helf.vo.User;
 
@@ -71,6 +73,15 @@ public class UserService {
 	
 	public int idCheck(String userId) throws Exception {
 		return userMapper.idCheck(userId);
+	}
+	
+	// // 입장시 회원권 유저 아이디로 조회 - 채경 (추후 membershipService로 이동 예정) 
+	public Optional<MyMembership> getMyMembershipDetail(String userId){
+		return userMapper.getMyMembership(userId);
+	}
+	
+	public void createAttendance(String userId) {
+		userMapper.insertAttendance(userId);
 	}
 	
 }

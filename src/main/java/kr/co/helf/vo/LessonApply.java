@@ -19,5 +19,6 @@ public class LessonApply {
     private Lesson lesson;
     private User user;
     private Date applyDate;
+    private MyMembership myMembership;
 
 }
