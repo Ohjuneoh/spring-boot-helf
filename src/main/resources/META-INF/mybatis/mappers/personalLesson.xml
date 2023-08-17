@@ -68,4 +68,35 @@
 		order by
 			trainer_no
 	</select>
+	
+	<!--입장 form - 오늘 수업 조회 written by 채경 -->
+	<select id="getMyTodayLessonsByUserId" resultType="kr.co.helf.vo.LessonApply">
+		select C.user_id						as "user.id", 
+				C.user_name						as "user.name", 
+				C.user_type						as "user.type",
+				D.user_id						as "lesson.user.id", 
+				D.user_name						as "lesson.user.name", 
+				D.user_type						as "lesson.user.type",
+				A.lesson_name					as "lesson.name", 
+				A.lesson_time					as "lesson.time", 
+				A.lesson_date					as "lesson.date",
+				B.my_membership_no				as "myMembership.no",
+                E.my_membership_remainder_cnt	as "myMembership.remainderCnt",
+                E.my_membership_endDate			as "myMembership.endDate",
+                F.category_no					as "myMembership.membership.category.no"
+		from 
+			helf_lesson A, helf_Lesson_Apply B, helf_users C, helf_users D, helf_my_membership E, helf_membership F
+		where 
+			C.user_id = #{value}
+			and A.lesson_no = B.lesson_no
+			and B.user_id = C.user_id
+			and A.user_id = D.user_id 
+			and A.lesson_date = trunc(sysdate)
+            and B.my_membership_no = E.my_membership_no
+            and E.membership_no = F.membership_no
+		order by
+			A.lesson_time
+	</select>
+	
+	
 </mapper>

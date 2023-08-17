@@ -3,7 +3,37 @@
 <!DOCTYPE html>
 <html lang="kr">
 <style>
+.card-img-top {
+    width: 5px;
+    height: auto;
+}
+.grid {
+    display: flex;
+    flex-direction: column;
+}
 
+.g-row {
+    display: flex;
+}
+
+.g-col-6 {
+    flex: 0 0 50%; /* This ensures that the column takes up 50% of the parent width */
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* If you want a space between the rows, you can use margin or padding */
+.g-row + .g-row {
+    margin-top: 10px;
+}
+
+.inline-div {
+    display: inline-block;
+    /* Optional: You can add some margin for spacing between the divs */
+    margin-right: 10px;
+}
 </style>
 <head>
     <meta charset="utf-8">
@@ -89,22 +119,98 @@
     
     <!-- Concept -입장종류 선택하기 form Start -->
     <div class="container">
-    	<div class="box" id="box1" onclick="showModal('Box 1')">Enter</div>
-    	<div class="box" id="box2" onclick="showModal('Box 2')">Enter</div>
-  	</div>
+		<div class="row row-cols-1 row-cols-md-2 g-4">
+  			<div class="col">
+   				 <div class="card text-center">
+      			 <img src="/resources/img/personal-training.jpg" class="card-img-top" alt="gym">
+      				<div class="card-body">
+        				<h5 class="card-title">수업</h5>
+        					<p class="card-text"> 미리 예약한 수업을 출석해요. <br></p>
+        				<button type="button" class="btn btn-primary"  id="btn-open-lesson-modal">출석하기</button>
+      				</div>
+    			</div>
+  			</div>
+  			<div class="col">
+    			<div class="card text-center">
+      			<img src="/resources/img/gym.jpg" class="card-img-top" alt="personal-training">
+      				<div class="card-body">
+       					<h5 class="card-title">시설 이용</h5>
+       					<p class="card-text">입장하기 버튼을 눌러서 입장해요.<br></p>
+        				<button type="button" class="btn btn-primary"  id="btn-open-gym-modal">입장하기</button>
+      				</div>
+   				</div>
+  	  		</div>
+		</div>
+	</div>
   	<!-- Concept -입장종류 선택하기 form End  -->
-  	
-  	
-  	
-  	<div id="modal" class="modal">
-    	<div class="modal-content">
-      		<span class="close" onclick="closeModal()">&times;</span>
-      		<p id="modalText">Modal content goes here.</p>
+ 	
+ 	<!-- 시설 이용 modal Start-->
+    <div class="modal" tabindex="-1" id="welcome-modal">
+    	<div class="modal-dialog modal-xl">
+    		<div class="modal-content" style="padding: 100px;"> 
+    			<div style="display: flex; justify-content: center;">
+    					<img src="/resources/img/check-mark-icon.jpg" class="card-img-top" alt="check-mark-icon" style="width:100px; height:100px;">
+    			</div>
+    			<br>
+    				<div class="modal-box" id="user-welcome">
+    					<h2 style="text-align: center;"><span id="span-user-name">김채경</span> 회원님</h2>
+    					<h3 style="text-align: center;">'<span id="span-my-membership-cat"></span>' 입장했어요!</h3>
+    				</div>	
+    				<br>
+    			<div class="card text-bg-light mb-3"> 
+    				<div class="card-body">
+    					<div class="grid text-center">
+        					<!-- Grouping 1 -->
+        					<div class="g-row">
+           						<div class="g-col-6">잔여횟수</div>
+            					<div id="remaining-counts" class="g-col-6">30회</div>
+        					</div>
+							<!-- Grouping 2 -->
+        					<div class="g-row">
+            					<div class="g-col-6">잔여기간</div>
+            					<div class="g-col-6">
+                					<div id="end-date" class="inline-div">2023년 08월 07일</div> 
+                					<div id="remaining-days" class="inline-div">170일</div>
+            					</div>
+        					</div>
+    					</div>
+					</div>
+    			</div>	
+    			<br>
+    			<div class="d-grid gap-2 mx-auto">
+    				<a href="/checkin/check-in" class="btn btn-primary" aria-label="close">확인</a>
+    			</div>
+    		</div>
     	</div>
-  	</div>
+    </div>
+    <!-- 시설 이용 modal End --> 
     
-    
-    
+    <!-- 수업 선택 modal Start-->
+    <div class="modal" tabindex="-1" id="welcome-lesson-modal">
+    	<div class="modal-dialog modal-xl">
+    		<div class="modal-content" style="padding: 100px;"> 
+    			<h2 style="text-align: center;">오늘의 수업 목록</h2>
+    			<br>
+    			<table class="table" id="modal-table-lessons">
+    				<thead>
+    					<tr>
+    						<th>수업 시간</th>
+    						<th>수업명</th>
+    						<th>강사명</th>
+   							<th></th>
+   						</tr>
+   					</thead>
+   					<tbody>
+    					
+   					</tbody>
+   				</table>
+    			<div class="d-grid gap-2 mx-auto">
+    				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+    			</div>
+    		</div>
+    	</div>
+    </div> 
+     <!-- 수업 출석 modal End--> 
     
      <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
@@ -208,9 +314,134 @@
     <script src="/resources/lib/waypoints/waypoints.min.js"></script>
     <script src="/resources/lib/counterup/counterup.min.js"></script>
     <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
+    
+    <script type="text/javascript">
+	// 부트스트랩의 모달 객체 생성하기
+	const welcomeModal = new bootstrap.Modal('#welcome-modal', {
+		keyboard: false
+	});
+	
+	const welcomeLessonModal = new bootstrap.Modal('#welcome-lesson-modal', {
+		keyboard: false
+	});
+	
+	
+	$("#btn-open-lesson-modal").click(function(){
+		$("#modal-table-lessons tbody").empty();
+		const requestUserId = '${param.id}'
+		$.ajax({
+			type: "GET",
+			url: "/checkin/lesson",
+			data:{id:requestUserId},
+			success: function(myLessonLists){
+				
+				myLessonLists.forEach(function(lessonApply, index){
+				let lessonTimestamp = new Date(lessonApply.lesson.date);
+				let lessonDate = lessonTimestamp.toISOString().split('T')[0];
+				let lessonTime = lessonApply.lesson.time;
+				let lessonName = lessonApply.lesson.name;
+				let teacherName = lessonApply.lesson.user.name;
+				let userName = lessonApply.user.name;
+				let membershipCat =	lessonApply.myMembership.membership.category.no;
+				let myMembershipRemainderCnt = lessonApply.myMembership.remainderCnt;
+				let myMembershipEndDate = lessonApply.myMembership.endDate;
+					
+					let tr = `
+						<tr>
+							<td>\${lessonDate} \${lessonTime}</td>
+							<td>\${lessonName}</td>
+							<td>\${teacherName}</td>
+							<td><button class="btn btn-outline-primary"
+								data-user-name = "\${userName}"
+								data-membership-cat = "\${membershipCat}"
+								data-my-membership-remainder-cnt = "\${myMembershipRemainderCnt}"
+								data-my-membership-end-date = "\${myMembershipEndDate}">출석</button>
+							</td>
+						</tr>
+					`
+					$("#modal-table-lessons tbody").append(tr);
+				});
+				$("#welcome-lesson-modal").modal("show");
+			},
+			error: function (xhr, status, error) {
+                // Handle errors if any
+                console.error("Error:", error);
+			}
+		});
+	});
+	
+	$("#modal-table-lessons tbody").on('click', 'button', function() {
+		const userId = '${param.id}'
+		
+		let userName = $(this).attr('data-user-name');
+		let membershipCat = $(this).attr('data-membership-cat');
+		let myMembershipRemainderCnt = $(this).attr('data-my-membership-remainder-cnt');
+		let myMembershipEndDate = $(this).attr('data-my-membership-end-date');
+		
+		$("#span-user-name").text(userName);
+		
+		$("#span-my-membership-cat").text('수업');
+		$("#remaining-counts").text(myMembershipRemainderCnt + "회");
+		
+		
+		$("#end-date").text(myMembershipEndDate.substr(0, 10));
+		
+		let now = dayjs();
+		let myMembershipEndDate2 = dayjs(myMembershipEndDate);
+		let differenceInDays = myMembershipEndDate2.diff(now, 'day');
+		$("#remaining-days").text(differenceInDays + "일"); 
+		
+		$("#welcome-lesson-modal").modal("hide");
+		$("#welcome-modal").modal("show");
+		
+		$.ajax({
+			type: "POST",
+			url: "/checkin/check-lesson-attendance",
+			data:{userId: userId},
+			success: function(){
+				console.log("Data sent successfully");
+			},
+			 error: function(error){
+	                console.error("Error:", error);
+	                alert("There was an error processing your request.");
+	            }
+		});
+	});
+	
+	
+	$("#btn-open-gym-modal").click(function(){
+		const userId = '${param.id}'
+		$.ajax({
+			type: "GET",
+			url: "/checkin/welcome",
+			data: {userId:userId},
+			success: function(myMembership){
+				
+				$("#span-user-name").text(myMembership.user.name);
+				$("#span-my-membership-cat").text('헬스'); 
+				$("#remaining-counts").text('무제한');
+				let endDate = myMembership.endDate;
+				$("#end-date").text(endDate.substr(0, 10));
+				
+				let now = dayjs();
+				let endDate2 = dayjs(endDate);
+				let differenceInDays = endDate2.diff(now, 'day');
+				$("#remaining-days").text(differenceInDays + "일"); 
+
+				$("#welcome-modal").modal("show");
+			},
+			error: function(xhr, status, error){
+				console.error("Error:", error);
+			}
+		});
+		
+	});
+	
+	</script>
 </body>
 
 </html>
