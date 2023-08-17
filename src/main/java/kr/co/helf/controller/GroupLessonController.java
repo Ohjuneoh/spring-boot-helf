@@ -52,11 +52,11 @@ public class GroupLessonController {
 
     // 전체 게시글 조회(페이징 처리 포함)
     @GetMapping(value = "/list")
-    public String lessonList(@RequestParam(name ="page", required = false,defaultValue ="1")int page, Model model) {
+    public String lessonList(@AuthenticationPrincipal User user, @RequestParam(name ="page", required = false,defaultValue ="1")int page, Model model) {
         Map<String,Object> param = new HashMap<String,Object>();
         param.put("page", page);
 
-        Map<String,Object> result = groupLessonService.getAllLessons(param);
+        Map<String,Object> result = groupLessonService.getAllLessons(user.getId(),param);
 
         model.addAttribute("result", result);
         return "group-lesson/list";
@@ -85,7 +85,7 @@ public class GroupLessonController {
         return response;
     }
 
-    // 개설된 수업 수정
+    // 개설된 수업 수정 화면요청
     @GetMapping("/modify")
     public String getLessonModify(@RequestParam("no") int lessonNo,Model model){
         Lesson lesson = groupLessonService.getLessonByNo(lessonNo);

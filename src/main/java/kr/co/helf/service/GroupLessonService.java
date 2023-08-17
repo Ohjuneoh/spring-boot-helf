@@ -5,11 +5,13 @@ import kr.co.helf.form.ModifyForm;
 import kr.co.helf.mapper.GroupLessonMapper;
 import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.LessonApply;
+import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,19 +32,28 @@ public class GroupLessonService {
     }
     //
     // 레슨 목록 조회(페이징처리)
-    public Map<String,Object> getAllLessons(Map<String,Object> param) {
-        int totalRows = groupLessonMapper.getTotalRows(param);
-        int page = (int) param.get("page");
+    public Map<String,Object> getAllLessons(String userId, Map<String,Object> param) {
+        Map<String, Object> result = new HashMap<>();
 
-        Pagination pagination = new Pagination(page, totalRows);
-        int begin = pagination.getBegin();
-        int end = pagination.getEnd();
-        param.put("begin", begin);
-        param.put("end", end);
+        MyMembership m = groupLessonMapper.getMyMembershipById(userId);
+        if (m != null) {
+            int totalRows = groupLessonMapper.getTotalRows(param);
+            int page = (int) param.get("page");
 
-        List<Lesson> lessons = groupLessonMapper.getAllLessons(param);
+            Pagination pagination = new Pagination(page, totalRows);
+            int begin = pagination.getBegin();
+            int end = pagination.getEnd();
+            param.put("begin", begin);
+            param.put("end", end);
 
-        return Map.of("lessons", lessons, "pagination", pagination);
+            List<Lesson> lessons = groupLessonMapper.getAllLessons(param);
+
+            result.put("lessons", lessons);
+            result.put("pagination", pagination);
+        }
+
+        return result;
+
     }
     // 유저가 수업신청 시 조회수 증가 , LessonApply 테이블에 저장
     public void updateApplyLesson(int lessonNo,User user) {
