@@ -103,7 +103,7 @@
                             <c:forEach var="lessonApply" items="${applyList }">
                                 <tr>
                                     <td>${lessonApply.lesson.no }</td>
-                                    <td><a href="/grouplesson/detail?no=${lessonApply.lesson.no }">${lessonApply.lesson.name }</a></td>
+                                    <td><a href="/group-lesson/detail?no=${lessonApply.lesson.no }">${lessonApply.lesson.name }</a></td>
                                     <td>${lessonApply.user.name }</td>
                                     <td><fmt:formatDate value="${lessonApply.lesson.date }" pattern="yyyy년 M월 d일" /> ${lessonApply.lesson.time }시</td>
                                     <td>${lessonApply.attendanceStatus }</td>

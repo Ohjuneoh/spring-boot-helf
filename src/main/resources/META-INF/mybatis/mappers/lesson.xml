@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.helf.mapper.LessonMapper">
+    <!-- 내가 신청한 모든 수업 조회(유저) -->
     <select id="getAllMyLessons" resultType="LessonApply" parameterType="string">
         select
             a.lesson_apply_attendance_status as attendanceStatus,
@@ -16,4 +17,48 @@
           and b.user_id = c.user_id
           and a.user_id = #{value}
     </select>
+    <!-- 내가 개설한 모든 수업 조회(트레이너) -->
+    <select id="getAllCreateLessons" resultType="Lesson" parameterType="string">
+        select
+            a.lesson_no as no,
+	        a.lesson_name as name,
+	        a.lesson_req_cnt as reqCnt,
+	        a.lesson_quota as quota,
+	        a.lesson_date as "date",
+	        a.lesson_time as time,
+	        b.user_name
+        from
+            helf_lesson a, helf_users b
+        where
+            a.user_id =b.user_id
+          and a.user_id =#{value}
+        order by a.lesson_no asc
+
+    </select>
+
+    <!-- 신청테이블에 레슨번호에 해당하는 수강생 전체 조회-->
+    <select id="getAllUsersByNo" resultType="LessonApply" parameterType="int">
+        select
+            a.lesson_apply_attendance_status as attendanceStatus,
+            b.lesson_no as "lesson.no",
+            a.user_id as "user.id",
+            c.user_name as "user.name"
+        from
+            helf_lesson_apply a, helf_lesson b, helf_users c
+        where
+            a.lesson_no = b.lesson_no
+          and a.user_id = c.user_id
+          and a.lesson_no = #{value}
+    </select>
+
+    <!-- 출석버튼 클릭 시 출석상태 변경 -->
+    <update id="updateAttendance">
+        update
+            helf_lesson_apply
+        set
+            lesson_apply_attendance_status = #{status}
+        where
+            lesson_no =#{no}
+            and user_id = #{userId}
+    </update>
 </mapper>

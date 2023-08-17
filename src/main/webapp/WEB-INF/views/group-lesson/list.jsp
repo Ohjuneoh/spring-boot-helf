@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -20,9 +21,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    
 
     <!-- Libraries Stylesheet -->
     <link href="/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -35,10 +35,8 @@
     <link href="/resources/css/style.css" rel="stylesheet">
     <!-- Date Picker  -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <!-- Datetime Picker -->
-    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 </head>
-<!-- 위에 모든 페이지까지 공통부분 건들 x -->
+
 <body>
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -61,15 +59,12 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">CONSULTING</h1>
-                    <a href="" class="h5 text-white">상담신청</a>
-                    
+                    <h1 class="display-4 text-white animated zoomIn">LESSONLIST</h1>
+                    <a href="" class="h5 text-white">수업 목록</a>
                 </div>
             </div>
         </div>
     </div>
-
-
     <div class="modal fade" id="searchModal" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
@@ -85,87 +80,77 @@
             </div>
         </div>
     </div>
-   	<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;" id="trainer-select">
-        <div class="container py-5">
-		 	<form class="" id="group-lesson-form" >
-		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
-	        		<div class="container ">
-	            		<div class="row g-1" >
-                    		<div class="section-title position-relative pb-3 mb-5">
-                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">HELF TRAINERS</h5>
-                        		<h2 class="mb-3" >트레이너를 선택해주세요</h2>
-                        		<h6 class="mb-0" >해당 강사에게 무료 PT 상담 요청이 진행되며, 회원님의 담당강사로 배정되어 1:1 상담 및 관리를 해드립니다.</h6>
-								<h6 class="mb-0">센터의 사정에 의해 다른 담당강사가 배정될 수 있습니다. 배정된 담당강사가 확인 후 회원님께 연락을 드립니다</h6>
-			               	</div>
-			               	<c:forEach var="trainer" items="${trainers}">
-			               	<div class="col-6" >
-	            				<img src="/resources/img/${trainer.trainerFile}"  class="img-fluid"/>
-	            			</div>
-		           			<div class="col-3"> 
-		            			<h1 class="mb-5">${trainer.user.name}<strong style="margin-left: 10px; color: gray;">강사</strong></h1>
-		            			<h4 class="mb-3">주요 약력</h4>
-		            			<c:forEach var="career" items="${trainer.careers}">
-								    <h6 class="text-muted mb-3">
-								        <fmt:formatDate value="${career.careerStartDate}" pattern="yyyy-MM" /> ~ <fmt:formatDate value="${career.careerEndDate}" pattern="yyyy-MM" />
-								        <span><strong>${career.careerName}</strong></span>
-								    </h6>
-								</c:forEach>
-		            		</div>
-		            		<div class="col-3"> 
-		            			<button class="btn btn-primary btn-lg" data-trainer-no="${trainer.trainerNo}">신청하기</button>
-		            		</div>
-		            		<hr width="90%" color="gray"></hr>
-		            		</c:forEach>
-				    	</div>
-				 	</div>
-				</div>
-		 	</form>
+    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
+		<div class="container py-5">
+			<div class="row mb-3">
+				<div class="col-12">
+					<div class="card" >
+						<div class="card-header bg-dark" style="color: #ffffff">
+							수업 목록
+							<!-- 트레이너로 로그인 시 신규 수업 등록 버튼 보이게 함-->
+							<sec:authorize access="hasRole('ROLE_TRAINER')">
+								<span class="float-end">
+									<a href="/group-lesson/registration" class="btn btn-primary btn-sm ">신규 수업 등록</a>
+								</span>
+							</sec:authorize>
+						</div>
+						<div class="card-body">
+			               <table class="table">
+			               		<thead>
+									<tr>
+			                        	<th style="width: 15%">수업 번호</th>
+			                        	<th style="width: 20%">수업명</th>
+			                        	<th style="width: 20%">강사명</th>
+			                        	<th style="width: 20%">신청인원/모집총원</th>
+			                        	<th style="width: 25%">레슨시간</th>
+			                     	</tr>
+								</thead>
+							   <tbody>
+							   		<c:choose>
+										<c:when test="${empty result.lessons }">
+											<c:forEach var="lesson" items="${result.lessons }">
+							   					<tr>
+								   					<td colspan="5" class="text-center">이용권을 구매한 고객만 수업을 조회할 수 있습니다.</td>
+							   					</tr>
+											</c:forEach>
+										</c:when>
+									</c:choose>
+							   		<c:forEach var="lesson" items="${result.lessons }">
+										<tr>
+				                        	<td>${lesson.no }</td>
+											<td><a href="detail?no=${lesson.no }">${lesson.name }</a></td>
+											<td>${lesson.user.name }</td>
+											<td>${lesson.reqCnt }/${lesson.quota }</td>
+				                        	<td><fmt:formatDate value="${lesson.date }" pattern="yyyy년 M월 d일" /> ${lesson.time }시 </td>
+		                    		 	</tr>
+									</c:forEach>
+							   </tbody>
+			               </table>
+        				</div>
+    				</div>
+    			</div>
+    		</div>
         </div>
     </div>
-    <div class="container-fluid py-0"  style="margin-top: 1px; display:none;" id="registration-form">
-    	<div class="container py-5">
-			<div class="container-fluid d-flex justify-content-center" data-wow-delay="0.1s" >
-	        	<div class="container ">
-	            	<div class="row g-1" >
-                    	<div class="section-title position-relative pb-3 mb-5">
-                        	<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">1:1 PT 신청</h5>
-                        	<h1 class="mb-0" style="font-size: 15px;" >내용을 입력해주세요</h1>
-						</div>
-				    </div>
-				</div>
-			</div>
-			<hr width="100%" color="gray"></hr>
-		 	<form method="post" action="/personallesson/consulting">
-		 		<input type="hidden" id="trainerNumber" name="trainerNumber">
-					<div class="row g-1">
-				    	<div class="col-12">
-				    		<h3 class="mb-2 text-primary" >PT 목표</h3>
-				        		<input type="text" class="form-control bg-light border-0" name="goal" placeholder="PT를 통해 궁극적으로 이루고자하는 구체적인 목표나 기대가 있으시면 기재 바랍니다." style="height: 55px;">
-				    	</div>
-						<div class="col-12">
-							<h3 class="mb-2 mt-2 text-primary" >신체 이상유무</h3>	
-							<textarea class="form-control bg-light border-0" name="abnormalities" style="height: 300px;" placeholder="육체적, 정신적(골절, 고혈압, 당뇨 등) 병력 및 신체 이상 사항이 있으신 경우 자세히 기재 바랍니다."></textarea>
-						</div>
-						<div class="col-3">
-					    	<div class="input-group">
-					        	<span class="input-group-text bg-light border-0"><i class="bi bi-calendar-check-fill"></i></span>
-					        	<input type="text" class="form-control bg-light border-0" name="date" id="date" style="height: 55px;" placeholder="희망 상담일">
-					    	</div>
-						</div>
-				    	<div class="col-3">
-					    	<div class="input-group">
-					        	<span class="input-group-text bg-light border-0"><i class="bi bi-alarm-fill"></i></span>
-					        	<input type="text" class="form-control bg-light border-0" name="time" id="time" style="height: 55px;" placeholder="희망 상담시간">
-					    	</div>
-						</div>
-						<div class="col-6 text-end mt-2">
-						    <button type="button" id="back" class="btn btn-secondary">이전</button>
-						    <button type="submit" class="btn btn-primary ">신청하기</button>
-						</div>    
-					</div>
-		 	</form>
-        </div>
-    </div>
+	<div class="row mb-3" >
+		<div class="col-12">
+			<nav>
+				<ul class="pagination justify-content-center">
+					<li class="page-item ${result.pagination.first ? 'disabled' : '' }">
+						<a class="page-link"  href="list?page=${result.pagination.prePage }" >이전</a>
+					</li>
+				<c:forEach var="num" begin="${result.pagination.beginPage }" end="${result.pagination.endPage }">
+					<li class="page-item ${result.pagination.page eq num ? 'active' : '' }">
+						<a class="page-link" href="list?page=${num }" >${num }</a>
+					</li>
+				</c:forEach>
+					<li class="page-item ${result.pagination.last ? 'disabled' : '' }">
+						<a class="page-link" href="list?page=${result.pagination.nextPage }" >다음</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
     <!-- Lesson Register Form End  -->
 	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
 	    <div class="container">
@@ -233,6 +218,7 @@
 	                <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
 	                    <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights Reserved. 
 			
+			<!--/*** This template is free as long as you keep the footer authorâs credit link/attribution link/backlink. If you'd like to use the template without the footer authorâs credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 			Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
 	                </div>
 	            </div>
@@ -250,8 +236,6 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-    
     <script src="/resources/lib/wow/wow.min.js"></script>
     <script src="/resources/lib/easing/easing.min.js"></script>
     <script src="/resources/lib/waypoints/waypoints.min.js"></script>
@@ -260,48 +244,11 @@
 
     <!-- Template Javascript -->
 	<script src="/resources/js/main.js"></script>
-    
+
 <script>
-$( function() {
-    $("#date").datepicker({
-   		dateFormat: 'yy/mm/dd'
-    });
-});
 
-$( function() {
-    $("#time").datetimepicker({
-    	  datepicker:false,
-    	  format:'H:i'
-	});
-});
-
-$(document).ready(function() {
-    // trainer-select 내의 신청하기 버튼에 클릭 이벤트 리스너 추가
-    $('#trainer-select').on('click', '.btn-primary', function(event) { // event 인자 추가
-        // 이벤트의 기본 동작을 막는다.
-        event.preventDefault();
-        // 클릭한 버튼의 data-trainer-id 값을 가져온다.
-        var trainerId = $(this).data('trainer-no');
-
-        // trainer-select를 숨기고 registration-form을 보이게 한다.
-        $('#trainer-select').hide();
-        $('#registration-form').show();
-
-        // 트레이너 ID를 registration-form의 hidden input에 전달한다.
-        $('#registration-form input[name="trainerNumber"]').val(trainerId);
-    });
-
-    // 이전 버튼에 클릭 이벤트 리스너 추가
-    $('#back').click(function(event) { // event 인자 추가
-        // 이벤트의 기본 동작을 막는다. (폼 제출 방지)
-        event.preventDefault();
-
-        $('#trainer-select').show();
-        $('#registration-form').hide();
-    });
-});
 </script>
-    
+
     
 </body>
 

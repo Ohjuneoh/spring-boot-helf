@@ -1,8 +1,7 @@
-<%@ page import="kr.co.helf.vo.Lesson" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -12,7 +11,6 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -38,7 +36,7 @@
     <!-- Date Picker  -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
-<!-- 위에 모든 페이지까지 공통부분 건들 x -->
+
 <body>
 <!-- Spinner Start -->
 <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -52,7 +50,6 @@
 <!-- Topnavbar End -->
 
 
-
 <!-- Navbar Start -->
 <div class="container-fluid position-relative p-0 h-10 ">
     <jsp:include page="/WEB-INF/views/common/navbar.jsp">
@@ -62,100 +59,96 @@
     <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
         <div class="row py-5">
             <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                <h1 class="display-4 text-white animated zoomIn">REGISTER</h1>
-                <a href="" class="h5 text-white">수업 등록</a>
+                <h1 class="display-4 text-white animated zoomIn">LESSONLIST</h1>
+                <a href="" class="h5 text-white">수업 목록</a>
             </div>
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="row mb-3">
-        <div class="col-12">
-            <h1 class="border bg-light fs-4 p-2">그룹레슨 상세 정보</h1>
+<div class="modal fade" id="searchModal" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
+            <div class="modal-header border-0">
+                <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex align-items-center justify-content-center">
+                <div class="input-group" style="max-width: 600px;">
+                    <input type="text" class="form-control bg-transparent border-primary p-3" placeholder="Type search keyword">
+                    <button class="btn btn-primary px-4"><i class="bi bi-search"></i></button>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row mb-3">
-        <div class="col-12">
-            <p>그룹레슨 상세정보를 확인할 수 있습니다.</p>
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <th class="table-dark" style="width: 15%;">레슨번호</th>
-                        <td style="width: 35%;">${lesson.no }</td>
-                        <th class="table-dark" style="width: 15%;">레슨명</th>
-                        <td style="width: 35%;">${lesson.name }</td>
-                    </tr>
-                    <tr>
-                        <!-- 레슨 날짜에 레슨날짜+레슨시간 출력-->
-                        <th class="table-dark" style="width: 15%;">레슨날짜</th>
-                        <td style="width: 35%;"><fmt:formatDate value="${lesson.date }" pattern="yyyy년 M월 d일" /> ${lesson.time }시 </td>
-                        <th class="table-dark" style="width: 15%;">강사명</th>
-                        <td style="width: 35%;">${lesson.user.name }</td>
-                    </tr>
-                    <tr>
-                        <th class="table-dark" style="width: 15%;">신청인원</th>
-                        <td style="width: 35%;">${lesson.reqCnt }명</td>
-                        <th class="table-dark" style="width: 15%;">총 인원</th>
-                        <td style="width: 35%;">${lesson.quota }명</td>
-                    </tr>
-                    <tr>
-                        <th class="table-dark" style="width: 15%;">레슨모집 상태</th>
-                        <c:if test="${lesson.reqCnt != lesson.quota}">
-                            <td  style="width: 85%" colspan="3">
-                                <span class="badge text-bg-success p-2">모집중</span>
-                            </td>
-                        </c:if>
-                        <c:if test="${lesson.reqCnt == lesson.quota}">
-                            <td  style="width: 85%" colspan="3">
-                                <span class="badge text-bg-danger p-2">모집완료</span>
-                            </td>
-                        </c:if>
-                    </tr>
-                    <tr>
-                        <th class="table-dark" style="width: 15%;">설명</th>
-                        <td style="width: 85%; height: 200px;" colspan="3">${lesson.description }</td>
-                    </tr>
-                </tbody>
-            </table>
-            <!-- 유저가 수업 신청 시 뜨는 모달 창 -->
-            <div class="modal fade" id="insert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
+</div>
+<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
+    <div class="container py-5">
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="card" >
+                    <div class="card-header bg-dark" style="color: #ffffff">
+                        수업 목록
+                    </div>
+                    <div class="card-body">
+                        <table class="table" id="table-lessons">
+                            <thead>
+                            <tbody>
+                            <tr>
+                                <th style="width: 15%">레슨 번호</th>
+                                <th style="width: 20%">수업명</th>
+                                <th style="width: 20%">신청인원/총 인원</th>
+                                <th style="width: 20%">레슨시간</th>
+                                <th style="width: 25%">출석체크</th>
+                            </tr>
+                            </tbody>
+                            </thead>
+                            <tbody>
+                            <c:forEach var="lesson" items="${createList }">
+                                <tr>
+                                    <td>${lesson.no }</td>
+                                    <td>${lesson.name }</td>
+                                    <td>${lesson.reqCnt }/${lesson.quota }</td>
+                                    <td><fmt:formatDate value="${lesson.date }" pattern="yyyy년 M월 d일" /> ${lesson.time }시</td>
+                                    <td><button type="button" data-lesson-no="${lesson.no}" data-bs-toggle="modal" data-bs-target="#insert" class="btn btn-primary btn-sm">출석</button></td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                        <!-- 트레이너가 출석버튼 클릭시 뜨는 모달 창 -->
+                        <div class="modal fade" id="insert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">신청 </h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">출석</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
 
-                        <div class="modal-body">
-                            <br />
-                            <p>그룹수업 신청을 하시겠습니까?</p>
-                        </div>
+                                    <div class="modal-body">
+                                        <input type="hidden" id="current-lesson-no" />
+                                        <table class="table" id="table-users" >
+                                            <thead>
+                                            <tr>
+                                                <th style="width:35%">수강생 명</th>
+                                                <th style="width:30%">출석상태</th>
+                                                <th style="width:35%">출석체크</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary btn-sm" id="btn-apply">예</button>
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">아니오</button>
+                                    <div class="modal-footer">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="text-end">
-                <!-- 유저로 로그인 시 detail.jsp에 보이는 화면 -->
-                <sec:authorize access="hasRole('ROLE_USER')">
-                <a href="/grouplesson/request?no=${lesson.no }" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#insert">신청</a>
-                <a href="/grouplesson/list" class="btn btn-primary btn-sm">목록</a>
-                </sec:authorize>
-                <!-- 트레이너로 로그인 시 detail.jsp에 보이는 화면 -->
-                <sec:authorize access="hasRole('ROLE_TRAINER')">
-                <a href="/grouplesson/modify?no=${lesson.no }" class="btn btn-warning btn-sm">수정</a>
-                <a href="/grouplesson/list" class="btn btn-primary btn-sm">목록</a>
-                <a href="/grouplesson/delete?no=${lesson.no }" class="btn btn-danger btn-sm">삭제</a>
-                </sec:authorize>
-            </div>
         </div>
     </div>
 </div>
+
 <!-- Lesson Register Form End  -->
 <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
     <div class="container">
@@ -251,15 +244,54 @@
 <script src="/resources/js/main.js"></script>
 
 <script>
-    $( function() {
-        $("#btn-apply").click(function(event){
-            location.href = "/grouplesson/request?no=${lesson.no }";
+    // 트레이너가 개설한 수업에 대해서 수강생 조회
+    $(function() {
+        $("#table-lessons tbody button").click(function() {
+
+            let $tbody = $('#table-users tbody').empty();
+
+            let lessonNo = $(this).attr('data-lesson-no');
+            $("#current-lesson-no").val(lessonNo);
+            $.getJSON("trainer-user-apply", {lessonNo:lessonNo}, function(LessonApplies) {
+                LessonApplies.forEach(function(apply, index) {
+                    console.log(apply);
+                    let tr = `
+                    <tr>
+                        <td>\${apply.user.name }</td>
+                        <td>\${apply.attendanceStatus }</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm" data-select="\${apply.user.id }">출석</button>
+                            <button type="button" class="btn btn-danger btn-sm" data-select="\${apply.user.id }">결석</button>
+                        </td>
+                    </tr>
+                `;
+                    $tbody.append(tr);
+                })
+            })
         });
-    });
-
-
-
-
+        // 모달창에 출석버튼 클릭 시
+        $("#table-users tbody").on('click', '.btn-primary', function(){
+            let $button1 = $(this);
+            let $button2 = $(this).next();
+            let lessonNo = $('#current-lesson-no').val();
+            let userId = $button1[0].dataset.select;
+            $.getJSON("trainer-user-attendance", {lessonNo:lessonNo,status:'Y', userId:userId}, function() {
+                $button1.addClass('disabled');
+                $button2.removeClass('disabled');
+            })
+        })
+        // 모달창에 결석버튼 클릭 시
+        $("#table-users tbody").on('click', '.btn-danger', function() {
+            let $button1 = $(this).next;
+            let $button2 = $(this);
+            let lessonNo = $('#current-lesson-no').val();
+            let userId = $button2[0].dataset.select;
+            $.getJSON("trainer-user-attendance", {lessonNo:lessonNo,status:'N', userId:userId}, function() {
+                $button1.removeClass('disabled');
+                $button2.addClass('disabled');
+            })
+        })
+    })
 </script>
 
 

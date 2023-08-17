@@ -3,7 +3,9 @@ package kr.co.helf.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import kr.co.helf.dto.UserMyMemberships;
 import kr.co.helf.vo.Consultation;
 import kr.co.helf.vo.Trainer;
 
@@ -15,6 +17,8 @@ public interface PersonalLessonMapper {
 	
 	//1대1 PT 예약
 	void insertConsultation(Consultation consultation);
+
+	List<UserMyMemberships> getUserMyMembershipById(String userId);
 
 
 
