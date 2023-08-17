@@ -5,10 +5,10 @@ import org.apache.ibatis.type.Alias;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @Data
-@Alias("optionJoinDetaile")
-public class OptionJoinDetaile {
+@NoArgsConstructor
+@Alias("optionJoinDetail")
+public class OptionJoinDetail {
 
 	private int no;
 	private String name;

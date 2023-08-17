@@ -23,6 +23,13 @@ public class LessonService {
     public List<Lesson> getAllCreateLessons(String userId){
         return lessonMapper.getAllCreateLessons(userId);
     }
-
+    // 개설한 수업에 대해 유저목록 조회
+    public List<LessonApply> getAllUsers(int lessonNo){
+        return lessonMapper.getAllUsersByNo(lessonNo);
+    }
+    // 개설한 수업에 대한 유저 출석체크
+    public void updateAttendance(int lessonNo, String userId,String status){
+        lessonMapper.updateAttendance(lessonNo,userId,status);
+    }
 
 }

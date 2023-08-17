@@ -1,5 +1,7 @@
 package kr.co.helf.vo;
 
+import java.time.LocalDate;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,4 +15,6 @@ public class Membership {
 	private String state;
 	private Category category;
 	private int price;
+	private LocalDate createDate;
+	private LocalDate deleteDate;
 }

@@ -1,56 +1,64 @@
 package kr.co.helf.form;
 
-import java.util.Date;
+import java.time.LocalDate;
+
+import org.apache.ibatis.type.Alias;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
+@Alias("addOrderForm")
 public class AddOrderForm {
 
-	private int no;							// 멤버십 번호 (내 이용권)
+	private int membershipNo;				// 멤버십 번호 (내 이용권)
 	private String membershipName;
-	private int membershipPrice;			// 멤버십 가격 (결제)
+	private int membershipDefaltPrice;		// 멤버십 기본 가격
+	private int membershipPrice;			// 멤버십 기본 가격 + 기간가격 (결제)
 	private int periodNo;					// 이용권 기간번호 (내 이용권)
 	private int periodDuration;
-	private Integer periodTime;				// 횟수권이라면 이용권 횟수 (내 이용권)
+	private Integer remainderCnt;			// 횟수권이라면 이용권 횟수 (내 이용권)
 	
-	private int firstOptionDetaileNo;	// 옵션1 번호 (내 옵션)
-	private String firstOptionDetaileName;	
-	private int firstOptionPeriod;		// 옵션1 기간 (내 옵션)
-	private int firstOptionPrice;		// 옵션1 가격 (결제)
-	private int secondOptionDetaileNo;	// 옵션2 번호 (내 옵션)
-	private String secondOptionDetaileName;	
-	private int secondOptionPeriod;		// 옵션2 기간 (내 옵션)
-	private int secondOptionPrice;		// 옵션2 가격 (결제)
+	private int lockerNo;					// 락커 번호 (내 옵션)
+	private String lockerName;	
+	private int lockerPeriod;				// 락커 기간 (내 옵션)
+	private int lockerPrice;				// 락커 가격 (결제)
+	private int wearNo;						// 운동복 번호 (내 옵션)
+	private String wearName;	
+	private int wearPeriod;					// 운동복 기간 (내 옵션)
+	private int wearPrice;					// 운동복 가격 (결제)
 	
-	private int membershipAndOptionPrice;
+	private int membershipOptionPrice;
 	private int surtax;						// 부가세
+	private int usePoint;					// 사용 포인트 (포인트 내역)
 	private int totalPrice;					// 총 가격 (결제)
 	
-	private Date startDate;					// 시작일 (내 이용권)
-	private Date endDate;					// 만기일 (내 이용권)
-	private Date firstOptionEndDate;		// 옵션1 만기일 (내 옵션)
-	private Date secondOptionEndDate;		// 옵션1 만기일 (내 옵션)
-	private int usePoint;					// 사용 포인트 (포인트 내역)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate startDate;					// 시작일 (내 이용권)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate endDate;						// 만기일 (내 이용권)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate lockerEndDate;				// 락커 만기일 (내 옵션)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate wearEndDate;					// 운동복 만기일 (내 옵션)
+	private int savePoint;					// 적립 포인트 (회원)
 	
-	public int membershipAndOptionPrice(int membershipPrice, int firstOptionPrice, int secondOptionPrice) {
-		this.membershipAndOptionPrice = membershipPrice;
+	public int membershipOptionPrice(int lcokerPrice, int wearPrice) {
+		this.membershipOptionPrice = this.membershipPrice;
 		
-		this.membershipAndOptionPrice += firstOptionPrice;
-		this.membershipAndOptionPrice += secondOptionPrice;
+		this.membershipOptionPrice += lcokerPrice;
+		this.membershipOptionPrice += wearPrice;
 		
-		return membershipAndOptionPrice;
+		return membershipOptionPrice;
 	}
 	
-	public int surtax(int firstOptionPrice, int secondOptionPrice) {
-		this.surtax = (this.membershipPrice + firstOptionPrice + secondOptionPrice) / 10;
-		return surtax;
+	public void surtax(int lcokerPrice, int wearPrice) {
+		this.surtax = (this.membershipPrice + lcokerPrice + wearPrice) / 10;
 	}
 	
-	public int totalPrice(int membershipAndOptionPrice, int surtax) {
-		this.totalPrice = membershipAndOptionPrice + surtax;
-		return totalPrice;
+	public void totalPrice(int membershipOptionPrice, int surtax) {
+		this.totalPrice = membershipOptionPrice + surtax;
 	}
 }

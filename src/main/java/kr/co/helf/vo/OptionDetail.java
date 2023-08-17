@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-@Alias("optionDetaile")
-public class OptionDetaile {
+@Alias("optionDetail")
+public class OptionDetail {
 	
 	private int no;
 	private int period;
