@@ -18,14 +18,13 @@ import java.util.List;
 @RequestMapping("/lesson")
 public class LessonController {
 
-<<<<<<< Updated upstream
+
     private final LessonService lessonService;
-=======
+
 	@GetMapping(value = "registration")
 	public String lessonRegist() {
 		return "lesson/trainerform";
 	}
->>>>>>> Stashed changes
 
     @GetMapping("/user-my-lesson")
     public String lessonList(@AuthenticationPrincipal User user, Model model) {
