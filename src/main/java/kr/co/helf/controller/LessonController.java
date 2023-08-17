@@ -22,7 +22,7 @@ public class LessonController {
 
     private final LessonService lessonService;
 
-	@GetMapping(value = "registration")
+    @GetMapping(value = "registration")
 	public String lessonRegist() {
 		return "lesson/trainerform";
 	}
@@ -55,9 +55,4 @@ public class LessonController {
     public void updateAttendance(int lessonNo,String userId,String status){
         lessonService.updateAttendance(lessonNo,userId,status);
     }
-
-
-
-
-
 }
