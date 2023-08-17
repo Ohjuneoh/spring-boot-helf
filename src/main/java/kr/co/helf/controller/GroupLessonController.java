@@ -4,15 +4,13 @@ import kr.co.helf.form.ModifyForm;
 import kr.co.helf.service.GroupLessonService;
 import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.User;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +19,7 @@ import java.util.Map;
 @Slf4j
 @RequestMapping("/group-lesson")
 @RequiredArgsConstructor
+@ControllerAdvice
 public class GroupLessonController {
 
     private final GroupLessonService groupLessonService;
@@ -71,12 +70,19 @@ public class GroupLessonController {
         return "group-lesson/detail";
     }
 
-    // 유저가 수업신청 시 신청인원 증가 , LessonApply 테이블에 저장, 중복신청 x(예외처리 서비스에선 구현, 컨트롤러에서 @exceptionhandler 사용해서 구현해야 함)
+    // 유저가 수업신청 시 신청인원 증가 , LessonApply 테이블에 저장, 중복신청 불가
     @GetMapping("/request")
-    public String reqCount(@RequestParam("no") int lessonNo,@AuthenticationPrincipal User user) {
-        log.info("레슨번호 -> {}, 유저아이디 ->{}",lessonNo,user.getId() );
-        groupLessonService.updateApplyLesson(lessonNo,user);
-        return "redirect:/group-lesson/list";
+    @ResponseBody
+    public Map<String, String> reqCount(@RequestParam("no") int lessonNo, @AuthenticationPrincipal User user) {
+        Map<String,String> response = new HashMap<>();
+        // 맵에 status란 이름으로 값을 담아서 jsp에서 예외처리 하는 로직
+        try {
+            groupLessonService.updateApplyLesson(lessonNo,user);
+            response.put("status","success");
+        } catch (Exception ex) {
+            response.put("status","fail");
+        }
+        return response;
     }
 
     // 개설된 수업 수정
