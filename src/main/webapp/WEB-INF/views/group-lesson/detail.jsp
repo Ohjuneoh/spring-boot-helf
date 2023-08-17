@@ -128,6 +128,7 @@
                         </div>
 
                         <div class="modal-body">
+                            <input type="hidden" id="lesson-no" value="${lesson.no }"/>
                             <br />
                             <p>그룹수업 신청을 하시겠습니까?</p>
                         </div>
@@ -255,11 +256,23 @@
 <script src="/resources/js/main.js"></script>
 
 <script>
-    $( function() {
+    // 수업 신청시 예외처리
+    $(function() {
         $("#btn-apply").click(function(event){
-            location.href = "/group-lesson/request?no=${lesson.no }";
+            let lessonNo = $('#lesson-no').val();
+            $.get("request", {no: lessonNo})
+                // controller에서 맵에 status란 이름으로 담긴 값이 success면 신청완료. fail이면 신청불가
+                .done(function(data) {
+                    if(data.status === "success"){
+                        alert("신청이 완료되었습니다.")
+                    }else{
+                        alert("이미 신청한 레슨입니다.");
+                    }
+                })
         });
     });
+
+
 
 
 
