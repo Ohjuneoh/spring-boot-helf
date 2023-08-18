@@ -124,7 +124,8 @@
 			trainer_attendance_date				as "date",
 			user_id								as "user.id",
 			trainer_attendance_cause			as cause,
-			trainer_attendance_state			as state
+			trainer_attendance_state			as state,
+			row_number() over (order by trainer_attendance_no desc) row_number
 		from helf_trainer_attendance
 		where
 			user_id = #{userId}
@@ -133,7 +134,7 @@
 			</if>
 		order by trainer_attendance_no desc
 	) 
-	where rownum between #{begin} and #{end}
+	where row_number between #{begin} and #{end}
 	</select>
 	
 	<!-- 직원 출퇴근 등록 - 채경 -->

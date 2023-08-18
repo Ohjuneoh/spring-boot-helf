@@ -84,21 +84,23 @@ public class CheckInController {
 		return "checkin/checkInChoice";
 	}
 	
-	// 직원 출퇴근 화면 요청과 매핑되는 요청핸들러 메소
+	// 직원 출퇴근 화면 요청과 매핑되는 요청핸들러 메소드
 	@GetMapping("/attendance")
 	@PreAuthorize("hasRole('ROLE_TRAINER')")
-	public String attendance(@RequestParam(name="opt", required=false, defaultValue="") String opt,
+	public String attendance(@RequestParam(name="state", required=false, defaultValue="") String state,
 			@RequestParam(name="page", required=false, defaultValue="1") int page,
 			@RequestParam(name="keyword", required=false, defaultValue="") String keyword, 
 			@AuthenticationPrincipal User user, 
 			Model model) {
-		log.info("opt='{}', page='{}', keyword='{}'", opt, page, keyword);
+		log.info("state='{}', page='{}', keyword='{}'", state, page, keyword);
 		
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("page", page);
 		param.put("userId", user.getId());
-		if(StringUtils.hasText(opt) && StringUtils.hasText(keyword)) {
-			param.put("opt", opt);
+//		if (!"전체".equals(state)) {
+//			param.put("state", state);			
+//		}
+		if(StringUtils.hasText(keyword)) {
 			param.put("keyword", keyword);
 		}
 		
@@ -108,6 +110,7 @@ public class CheckInController {
 		return "checkin/attendance";
 	}
 	
+	// 직원 출퇴근 등록 처리와 매핑되는 요청핸들러 메소드 
 	@GetMapping("/attendance-register")
 	@PreAuthorize("hasRole('ROLE_TRAINER')")
 	public String attendanceRegister(@RequestParam(name="attendance") String attendanceState,
