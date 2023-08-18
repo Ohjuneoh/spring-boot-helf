@@ -60,7 +60,7 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">NOTICE 작성</h1>
+                    <h1 class="display-4 text-white animated zoomIn">NOTICE FORM</h1>
                     <a href="" class="h5 text-white">공지사항 작성</a>
                 </div>
             </div>
@@ -94,15 +94,15 @@
 	                        <form method="post">
 	                            <div class="row g-3">
 	                                <div class="col-12" >
-	                                    <select class="form-select bg-light border-0" style="height: 55px;">
-	                                        <option selected>주요 공지사항</option>
-	                                        <option value="1">일반 공지사항</option>
+	                                    <select class="form-select bg-light border-0" name="main" style="height: 55px;">
+	                                        <option value="Y">주요 공지사항</option>
+	                                        <option value="N">일반 공지사항</option>
 	                                    </select>
 	                                </div>
 	                                <div class="col-xl-12">
-	                                    <input type="text" class="form-control bg-light border-0" placeholder="제목" style="height: 55px;">
+	                                    <input type="text" class="form-control bg-light border-0" name="title" placeholder="제목" style="height: 55px;">
 	                                </div>
-	                        		<textarea id="summernote" name="editordata"></textarea>
+	                        		<textarea id="summernote" name="name"></textarea>
 	                                <div class="col-12">
 	                                    <button class="btn btn-dark w-100 py-3" type="submit">작성하기</button>
 	                                </div>

@@ -103,4 +103,42 @@
 		values 
     				(helf_customer_attendance_seq.nextval, #{value})
 	</insert>
+	
+	<!-- 직원 출퇴근 내역 총 행의 갯수  -->
+	<select id="getTotalRows" parameterType="map" resultType="int">
+	select count(*)
+	from helf_trainer_attendance
+	where
+		user_id = #{userId}
+		<if test="state != null">
+			and trainer_attendance_state = #{state}
+		</if>
+	</select>
+	
+	<!-- 직원 출퇴근 내역  - 채경 -->
+	<select id="getTrainerAttendances" parameterType="map" resultType="kr.co.helf.vo.TrainerAttendance">
+	select *
+	from (
+		select 
+			trainer_attendance_no				as no,
+			trainer_attendance_date				as "date",
+			user_id								as "user.id",
+			trainer_attendance_cause			as cause,
+			trainer_attendance_state			as state
+		from helf_trainer_attendance
+		where
+			user_id = #{userId}
+			<if test="state != null">
+				and trainer_attendance_state = #{state}
+			</if>
+		order by trainer_attendance_no desc
+	) 
+	where rownum between #{begin} and #{end}
+	</select>
+	
+	<!-- 직원 출퇴근 등록 - 채경 -->
+	<insert id="insertTrainerAttendances" parameterType="map">
+		insert into helf_trainer_attendance(trainer_attendance_no, user_id, trainer_attendance_state, trainer_attendance_cause)
+		values(helf_trainer_attendance_seq.nextval, #{userId}, #{state}, #{cause})	
+	</insert>
 </mapper>

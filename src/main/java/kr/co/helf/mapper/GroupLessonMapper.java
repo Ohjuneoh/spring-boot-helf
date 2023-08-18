@@ -3,6 +3,7 @@ package kr.co.helf.mapper;
 import kr.co.helf.form.ModifyForm;
 import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.LessonApply;
+import kr.co.helf.vo.MyMembership;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -34,5 +35,6 @@ public interface GroupLessonMapper {
     // 유저가 동일 수업 신청 x
     // @Param은 mapper에서도 적을 수 있고, 저 이름으로 담긴 변수는 xml에서 사용된다.
     LessonApply getLessonApplyByLessonNoAndUserID(@Param("no") int no, @Param("userId") String userId);
-
+    // 그룹 PT 멤버십을 가진 유저만 전체 리스트 조회 가능
+    MyMembership getMyMembershipById(@Param("userId") String userId);
 }

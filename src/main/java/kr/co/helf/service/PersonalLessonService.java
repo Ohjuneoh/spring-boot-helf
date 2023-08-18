@@ -37,7 +37,6 @@ public class PersonalLessonService {
 	}
 	
 	
-
 	// 나의 오늘 수업 리스트 조회(개인+그룹) - 채경 작성
 	public List<LessonApply> getMyTodayLessons(String userId){
 		return personalLessonMapper.getMyTodayLessonsByUserId(userId);

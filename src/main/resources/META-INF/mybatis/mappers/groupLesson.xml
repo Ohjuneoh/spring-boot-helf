@@ -122,5 +122,14 @@
         where user_id =#{userId}
             and lesson_no =#{no}
     </select>
-
+<!-- 그룹 PT 멤버십을 가진 유저만 전체 리스트 조회 가능 -->
+    <select id="getMyMembershipById" resultType="myMembership">
+        select a.user_id as "user.id",
+               b.membership_name as "membership.name"
+        from helf_my_membership a, helf_membership b
+        where a.user_id = #{userId}
+            and a.my_membership_state = 'Y'
+            and a.membership_no = b.membership_no
+          and b.category_no = 3
+    </select>
 </mapper>

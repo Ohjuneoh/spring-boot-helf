@@ -57,6 +57,7 @@
                         <a href="feature" class="dropdown-item">내 이용권</a>
                         <a href="team" class="dropdown-item">내 쿠폰</a>
                         <a href="team" class="dropdown-item">구매내역</a>
+                        <a href="/checkin/attendance" class="dropdown-item">출퇴근 내역</a>
                     </sec:authorize>
                 </div>
             </div>
