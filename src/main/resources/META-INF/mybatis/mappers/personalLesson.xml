@@ -109,7 +109,7 @@
 											 user_id,
 											 trainer_no,
 											 my_membership_no)
-		values(helf_lesson_consultation_seq.nextval, #{goal}, #{abnormalities}, #{applicationDate}, #{requestTime}, #{user.id}, #{trainer.trainerNo}, #{myMembership.no})
+		values(helf_lesson_consultation_seq.nextval, #{goal}, #{abnormalities}, #{requestDate}, #{requestTime}, #{user.id}, #{trainer.trainerNo}, #{myMembership.no})
 	</insert>
 	<resultMap id="UserMyMembershipsMap" type="kr.co.helf.dto.UserMyMemberships">
 	    <!-- Membership 객체 매핑 -->
@@ -145,21 +145,6 @@
 		from helf_trainers
 		where user_id = #{userId}
 	</select>
-	<!-- <select id="getAllConsultationByTrainerNo" parameterType="int" resultType="Consultation">
-		select lesson_consultation_no as consultationNo,
-		        lesson_consultation_status 				as consultationStatus,
-		        lesson_no                 			 	as lessonNo,
-		        lesson_consultation_application_date 	as applicationDate,
-		        lesson_consultation_exercise_goal   	as goal,
-		        lesson_consultation_physical_abnormalities as abnormalities,
-		        lesson_consultation_request_date    	as requestDate,
-		        lesson_consultation_request_time    	as requestTime,
-		        user_id                             	as userId,
-		        trainer_no                         		as trainerNo,
-		        my_membership_no                     	as myMembershipNo
-		from helf_lesson_consultation
-		where trainer_no = #{trainerNo}
-	</select> -->
 	<select id="getUserByUserId" parameterType="string" resultType="User">
 		select user_id  as id,
         		user_name as name,
@@ -214,6 +199,7 @@
 		from helf_lesson_consultation a, helf_users b
 		where trainer_no = #{trainerNo}
 		and a.user_id = b.user_id
+		order by a.lesson_consultation_request_date asc
 	</select>
 	
 	
