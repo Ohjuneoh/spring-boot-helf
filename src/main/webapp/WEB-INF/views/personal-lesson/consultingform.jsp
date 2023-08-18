@@ -191,11 +191,11 @@
 				                        <div class="w-100 text-start px-1"> 
 				            				<p class="m-0">
 				               					<span class="label-text"><strong>멤버십 구매일 :</strong></span> 
-				               					<span class="date-text"><fmt:formatDate value="${mymembership.myMembership.startDate}" pattern="yyyy-MM-dd" /></span>
+				               					<span class="date-text">${mymembership.myMembership.startDate}</span>
 				            				</p>
 				            				<p class="m-0">
 				               					<span class="label-text"><strong>멤버십 만료일 :</strong></span> 
-				               					<span class="date-text"><fmt:formatDate value="${mymembership.myMembership.endDate}" pattern="yyyy-MM-dd" /></span>
+				               					<span class="date-text">${mymembership.myMembership.endDate}</span>
 				            				</p>
 				            				<p class="m-0">
 				               					<span class="label-text"><strong>남은 횟수 : </strong></span> 
