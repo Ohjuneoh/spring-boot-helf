@@ -1,11 +1,16 @@
 package kr.co.helf.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.helf.dto.AttendanceList;
 import kr.co.helf.service.PersonalLessonService;
 import kr.co.helf.service.UserService;
 import kr.co.helf.vo.LessonApply;
@@ -80,13 +86,41 @@ public class CheckInController {
 	
 	// 직원 출퇴근 화면 요청과 매핑되는 요청핸들러 메소
 	@GetMapping("/attendance")
-	public String attendanceForm() {
+	@PreAuthorize("hasRole('ROLE_TRAINER')")
+	public String attendance(@RequestParam(name="opt", required=false, defaultValue="") String opt,
+			@RequestParam(name="page", required=false, defaultValue="1") int page,
+			@RequestParam(name="keyword", required=false, defaultValue="") String keyword, 
+			@AuthenticationPrincipal User user, 
+			Model model) {
+		log.info("opt='{}', page='{}', keyword='{}'", opt, page, keyword);
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("page", page);
+		param.put("userId", user.getId());
+		if(StringUtils.hasText(opt) && StringUtils.hasText(keyword)) {
+			param.put("opt", opt);
+			param.put("keyword", keyword);
+		}
+		
+		AttendanceList result = userService.getTrainerAttendances(param);
+		model.addAttribute("result", result);
+		
 		return "checkin/attendance";
 	}
 	
 	@GetMapping("/attendance-register")
-	public String attendanceRegister() {
-		return "checkin/attendance";
+	@PreAuthorize("hasRole('ROLE_TRAINER')")
+	public String attendanceRegister(@RequestParam(name="attendance") String attendanceState,
+			@RequestParam(name="cause") String cause,
+			@AuthenticationPrincipal User user) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("state", attendanceState);
+		param.put("cause", cause);
+		param.put("userId", user.getId());
+		
+		userService.createTrainerAttendance(param);
+		
+		return "redirect:/checkin/attendance";
 	}
 	
 }
