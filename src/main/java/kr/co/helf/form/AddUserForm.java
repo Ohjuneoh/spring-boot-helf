@@ -9,12 +9,14 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class AddUserForm {
 
 	private String id;
@@ -38,5 +40,5 @@ public class AddUserForm {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date updateDate;
 	
-	
+	private String photofile;
 }
