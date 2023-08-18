@@ -25,6 +25,7 @@ input[type="radio"]:checked + .btn-like {
 .spacing-top {
     margin-top: 20px;
 }
+
 </style>
 <head>
     <meta charset="utf-8">
@@ -119,16 +120,16 @@ input[type="radio"]:checked + .btn-like {
 				</p>
 				<div class="collapse" id="collapseExample">
   					<div class="card card-body" style="width: 1200px;">
-    					<form action="attendance-register" method="get">
-    						<input type="radio" class="btn-check" id="in" name="attendance" value="in" autocomplete="off">
+    					<form action="attendance-register" method="get" id="attendanceForm">
+    						<input type="radio" class="btn-check" id="in" name="attendance" value="출근" autocomplete="off">
     						<label for="in" class="btn btn-outline-primary" style=" margin-right: 20px;">출근</label>
     						
-    						<input type="radio" class="btn-check" id="out" name="attendance" value="out" autocomplete="off">
+    						<input type="radio" class="btn-check" id="out" name="attendance" value="퇴근" autocomplete="off">
     						<label for="out" class="btn btn-outline-primary" style=" margin-right: 20px;">퇴근</label>
     						
     						
     						<select name="attendance" id="others" class="btn btn-outline-primary"> 
-    							<option value="">--기타--</option>
+    							<option value="" selected disabled>--기타--</option>
     							<option value="지각">지각</option>
     							<option value="외출">외출</option>
     							<option value="외근">외근</option>
@@ -146,6 +147,7 @@ input[type="radio"]:checked + .btn-like {
 				</div>
 			</div>
 		</div>
+		<br>
 		<div class="row">
 			<div class="col-12">
 				<div class="card">
@@ -202,17 +204,16 @@ input[type="radio"]:checked + .btn-like {
 						<!-- ** 검색 기능 **  -->
 						<div class="d-flex justify-content-center">
 							<form id="form-attendance-search" class="row row-cols-md-auto g-3 align-items-center" method="get" action="attendance">
-								<input type="hidden" name="opt" value="${param.opt }"/>
 								<input type="hidden" name="page" value="${param.page }"/>
 								<div class="col-12">
-								 	<select class="form-select" name="opt">
-								 		<option value="전체" ${param.opt eq 'all' ? 'selected' : '' }>전체</option>
-										<option value="출근" ${param.opt eq 'in' ? 'selected' : ''}>출근</option>
-										<option value="퇴근" ${param.opt eq 'out' ? 'selected' : '' }>퇴근</option>
-										<option value="지각" ${param.opt eq 'late' ? 'selected' : '' }>지각</option>
-										<option value="외출" ${param.opt eq 'break' ? 'selected' : '' }>외출</option>
-										<option value="외근" ${param.opt eq 'outside' ? 'selected' : '' }>외근</option>
-										<option value="복귀" ${param.opt eq 'return' ? 'selected' : '' }>복귀</option>
+								 	<select class="form-select" name="state">
+								 		<option value="전체" ${param.state eq 'all' ? 'selected' : '' }>전체</option>
+										<option value="출근" ${param.state eq 'in' ? 'selected' : ''}>출근</option>
+										<option value="퇴근" ${param.state eq 'out' ? 'selected' : '' }>퇴근</option>
+										<option value="지각" ${param.state eq 'late' ? 'selected' : '' }>지각</option>
+										<option value="외출" ${param.state eq 'break' ? 'selected' : '' }>외출</option>
+										<option value="외근" ${param.state eq 'outside' ? 'selected' : '' }>외근</option>
+										<option value="복귀" ${param.state eq 'return' ? 'selected' : '' }>복귀</option>
 									</select>
 								</div>
 								<div class="col-12">
@@ -341,21 +342,7 @@ input[type="radio"]:checked + .btn-like {
     <script src="/resources/js/main.js"></script>
     
     <script type="text/javascript">
-    document.getElementById("attendance").addEventListener("change", function() {
-        if (this.value) {
-            document.getElementById("in").checked = false;
-            document.getElementById("out").checked = false;
-        }
-    });
 
-    const radios = document.querySelectorAll('input[type="radio"]');
-    radios.forEach(function(radio) {
-        radio.addEventListener("change", function() {
-            document.getElementById("otherCause").selectedIndex = 0;
-        });
-    });
-
-    
     function changePage(event, page){
     	event.preventDefault();
     	document.querySelector("input[name=page]").value=page;
@@ -363,12 +350,46 @@ input[type="radio"]:checked + .btn-like {
     }
     
     function searchCause(){
-    	document.querySelector("input[name=page]").value=1;
-    	let keyword = document.querySelector("input[name=keyword]").value;
-    	document.querySelector("input[name=page]").value=1;
+    	document.querySelector("input[name=page]").value= 1;
+    	/* let keyword = document.querySelector("input[name=keyword]").value;
+    	if(keyword.trim()===""){
+    		alert("키워드를 입력하세요.");
+    		document.querySelector("input[name=keyword]").focus();
+    		return;
+    	} */
+    	document.querySelector("input[name=page]").value= 1;
     	document.querySelector("#form-attendance-search").submit();
     	
     }
+    
+    // 출퇴근 버튼 한 개만 선택되게 하기 
+ 	$("#in, #out").change(function() {
+ 		$("#others").removeClass('bg-primary text-white').prop('selectedIndex', 0);
+ 	});
+    
+    $("#others").change(function() {
+    	$(this).addClass('bg-primary text-white');
+    	$("#out").prop("checked", false);
+    	$("#in").prop("checked", false);
+    })
+    
+    
+   // 출퇴근 버튼 선택되지 않으면 경고창 띄우기 
+   	$("#attendanceForm").submit(function(){
+   		
+   		let isCheckedIn = $("#in").prop("checked");
+   		let isCheckedOut = $("#out").prop("checked");
+   		let isCheckedOthers = $("#others").val();
+   		
+   		if (!(isCheckedIn || isCheckedOut || isCheckedOthers)) {
+   			alert("출퇴근 항목을 선택하세요");
+    		return false;
+   		}
+   		
+   		return true;
+   	});
+   
+   
 	</script>
 </body>
 

@@ -339,16 +339,21 @@
 			data:{id:requestUserId},
 			success: function(myLessonLists){
 				
+				if (myLessonLists.length == 0) {
+					alert("수업이 없습니다.");
+					return;
+				}
+				
 				myLessonLists.forEach(function(lessonApply, index){
-				let lessonTimestamp = new Date(lessonApply.lesson.date);
-				let lessonDate = lessonTimestamp.toISOString().split('T')[0];
-				let lessonTime = lessonApply.lesson.time;
-				let lessonName = lessonApply.lesson.name;
-				let teacherName = lessonApply.lesson.user.name;
-				let userName = lessonApply.user.name;
-				let membershipCat =	lessonApply.myMembership.membership.category.no;
-				let myMembershipRemainderCnt = lessonApply.myMembership.remainderCnt;
-				let myMembershipEndDate = lessonApply.myMembership.endDate;
+					let lessonTimestamp = new Date(lessonApply.lesson.date);
+					let lessonDate = lessonTimestamp.toISOString().split('T')[0];
+					let lessonTime = lessonApply.lesson.time;
+					let lessonName = lessonApply.lesson.name;
+					let teacherName = lessonApply.lesson.user.name;
+					let userName = lessonApply.user.name;
+					let membershipCat =	lessonApply.myMembership.membership.category.no;
+					let myMembershipRemainderCnt = lessonApply.myMembership.remainderCnt;
+					let myMembershipEndDate = lessonApply.myMembership.endDate;
 					
 					let tr = `
 						<tr>
@@ -420,6 +425,11 @@
 			url: "/checkin/welcome",
 			data: {userId:userId},
 			success: function(myMembership){
+				
+				if (!myMembership || myMembership.length == 0) {
+					alert("사용할 수 있는 이용권이 없습니다.");
+					return;
+				}
 				
 				$("#span-user-name").text(myMembership.user.name);
 				$("#span-my-membership-cat").text('헬스'); 

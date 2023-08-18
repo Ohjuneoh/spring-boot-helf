@@ -277,12 +277,29 @@
 	$("#btn-open-modal").click(function() {
 		$("#modal-table-users tbody").empty();
         const fourDigits = $("#fourDigits").val();
+        if(!fourDigits){
+        	alert("휴대폰 뒷번호 네 자리를 입력하세요.");
+        	return;
+        }
+        if(!/^\d{4}$/.test(fourDigits)){
+        	alert("휴대폰 뒷번호 네 자리를 입력하세요.")
+        	return; 
+        }
         $.ajax({
             type: "GET",
             url: "/checkin/customer-verification", // The URL to the server endpoint to fetch data
             data: { fourDigits: fourDigits }, // Send the input data to the server
             success: function (users) {
             	
+            	$("#modal-table-users tbody").empty();
+            	if(!users || users.length == 0){
+            		let noUsersRow = `
+            						<tr>
+            							<td colspan="3">입력하신 회원 정보가 존재하지 않습니다.</td>
+            						</tr>
+            						`;
+            						$("#modal-table-users tbody").append(noUsersRow);
+            	} else {            	
             	users.forEach(function(user, index) {
             		let maskedTel = user.tel.replace(/(\d{3})-\d{4}-(\d{4})/, "$1-****-$2");
             		let firstNameChar = user.name.charAt(0);
@@ -319,6 +336,7 @@
             		`
             		$("#modal-table-users tbody").append(tr);
             	});
+            	}
             	
                 // 모달 창 띄우기 
                 $("#userModal").modal("show");
