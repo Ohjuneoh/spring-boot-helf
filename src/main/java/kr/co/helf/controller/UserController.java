@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.helf.form.AddUserForm;
@@ -25,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/user")
+@SessionAttributes("AddUserForm")
 @RequiredArgsConstructor
 public class UserController {
 	
@@ -57,21 +59,34 @@ public class UserController {
 		
 	}
 	
-	// 요청 완료화면 요청
-	@GetMapping("/welcome")
+	// 요청 완료화면 요청 
+	@GetMapping(value="/welcome")
 	public String welcomePage() {
 		
 		return "welcome"; 	// "WEB-INF/views/" + welcome + ".jsp"
 	}
 	
-	// 회원가입 요청(트레이너)
+	// 첫번째 회원가입 요청(트레이너)
 	@PostMapping(value="/register/trainer") 
-	public String registerTrainer(AddUserForm form, RedirectAttributes attributes) {
-		userService.createTrainer(form);
+	public String registerTrainer(AddUserForm form) {
 		
-		return "redirect:/";
+		return "register/trainerRegisterform2";
 	}
 
+	
+	// 두번째 트레이너 요청
+	
+	
+	// 회원가입 완료 요청(트레이너) 
+	@PostMapping(value="/register/trainter2")
+	public String registerTrainerForm(AddUserForm form, RedirectAttributes attributes) {
+		userService.createTrainer(form);
+		
+		
+		return "redirect:/user/welcome";
+	}
+	
+	
 	// 아이디 중복검사 요청
 	@RequestMapping(value ="/idChk", method = RequestMethod.POST)
 	@ResponseBody
@@ -85,6 +100,10 @@ public class UserController {
 			return "success";	// 중복 아이디 x
 		}
 	} 
+	
+	
+	
+	
 	
 	// 아이디찾기화면 요청처리
 	@GetMapping(value="/findId")

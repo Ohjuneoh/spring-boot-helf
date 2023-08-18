@@ -20,9 +20,10 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp     
-
-
-        
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 # 카카오로그인
   security:
     oauth2:

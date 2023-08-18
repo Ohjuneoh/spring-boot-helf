@@ -23,7 +23,6 @@ public class UserService {
 	
 	
 	public void createUser(AddUserForm form) {
-		
 		User user = new User();
 		
 		BeanUtils.copyProperties(form, user);
@@ -50,6 +49,8 @@ public class UserService {
 		User user = new User();
 		
 		BeanUtils.copyProperties(form, user);
+		
+		user.setEmail(form.getEmail1() + form.getEmail2());
 		
 		//비밀번호를 암호화해서 저장시키기
 		String encryptedPassword = passwordEncoder.encode(form.getPassword());
