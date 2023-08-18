@@ -5,8 +5,8 @@
     <!-- 트레이너 PT 개설 -->
     <insert id="insertLesson" parameterType="Lesson">
         insert into helf_lesson(lesson_no,lesson_name,lesson_time,lesson_description,lesson_req_cnt,lesson_quota,
-                                lesson_date,user_id)
-        values(helf_lesson_seq.nextval,#{name},#{time},#{description},#{reqCnt},#{quota},#{date},#{user.id})
+                                lesson_type,lesson_date,user_id)
+        values(helf_lesson_seq.nextval,#{name},#{time},#{description},#{reqCnt},#{quota},#{type},#{date},#{user.id})
     </insert>
 
     <!-- 모든 행 조회(페이징처리) -->
@@ -60,7 +60,7 @@
           and a.user_id = b.user_id
     </select>
 
-    <!-- 신청 시 조회수 증가 -->
+    <!-- 신청 시 신청인원 증가 -->
     <update id="updateReqCount" parameterType="Lesson">
         update
             helf_lesson
@@ -71,14 +71,14 @@
     </update>
 
     <!-- 모집인원 신청인원 같을 시 모집여부 변경 -->
-    <update id="updateReservation" parameterType="Lesson">
-        update
-            helf_lesson
-        set
-            lesson_reservation = '모집완료'
-        where
-            lesson_req_cnt = lesson_quota;
-    </update>
+<!--    <update id="updateReservation" parameterType="Lesson">-->
+<!--        update-->
+<!--            helf_lesson-->
+<!--        set-->
+<!--            lesson_reservation = '모집완료'-->
+<!--        where-->
+<!--            lesson_req_cnt = lesson_quota;-->
+<!--    </update>-->
 
     <!-- 개설된 PT 수정 -->
     <update id="updateLesson" parameterType="Lesson">
@@ -122,14 +122,55 @@
         where user_id =#{userId}
             and lesson_no =#{no}
     </select>
-<!-- 그룹 PT 멤버십을 가진 유저만 전체 리스트 조회 가능 -->
+    <!-- 그룹 PT 멤버십을 가진 유저만 전체 리스트 조회 가능 -->
     <select id="getMyMembershipById" resultType="myMembership">
-        select a.user_id as "user.id",
-               b.membership_name as "membership.name"
-        from helf_my_membership a, helf_membership b
-        where a.user_id = #{userId}
+        select
+               a.user_id as "user.id",
+               b.membership_name as "membership.name",
+               c.user_type as "user.type"
+        from
+            helf_my_membership a, helf_membership b , helf_users c
+        where
+            a.user_id = #{userId}
+            and a.user_id = c.user_id
             and a.my_membership_state = 'Y'
             and a.membership_no = b.membership_no
-          and b.category_no = 3
+            and b.category_no = 3
+            and c.user_type = 'ROLE_USER'
     </select>
+    <!-- 그룹 이용권에 해당되는 횟수권을 차감하기 위한 MyMembership 조회 -->
+    <select id="getMyMembershipByUserId" resultType="myMembership" parameterType="string">
+        select
+            a.my_membership_no as no,
+            a.user_id as "user.id",
+            a.my_membership_state as state,
+            a.my_membership_remainder_cnt as remainderCnt
+        from
+            helf_my_membership a, helf_membership b
+        where
+            a.membership_no = b.membership_no
+        and b.category_no = 3
+        and a.user_id = #{value}
+
+
+    </select>
+    <!-- 유저가 레슨 신청 시 이용권 횟수 차감 -->
+    <update id="loseMyMembership" parameterType="myMembership">
+        update
+            helf_my_membership
+        set
+            my_membership_remainder_cnt = #{remainderCnt}
+        where
+            my_membership_no = #{no}
+    </update>
+    <!-- 멤버십 이용권이 모두 소진한 경우 멤버십 상태 변경 -->
+    <update id="updateMembershipState" parameterType="myMembership">
+        update
+            helf_my_membership
+        set
+            my_membership_state = 'N'
+        where
+            my_membership_remainder_cnt = 0
+        and my_membership_no = #{no}
+    </update>
 </mapper>
