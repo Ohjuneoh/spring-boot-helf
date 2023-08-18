@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -87,25 +88,28 @@
                 <h5 class="mb-0">목록을 확인하세요</h5>
             </div>
             <div class="row g-0">
-                <div class="col-lg-4 wow slideInUp mb-3" data-wow-delay="0.3s">
-                    <div class="bg-white rounded shadow position-relative" style="z-index: 1;">
-                        <div class="border-bottom py-4 px-5 mb-4">
-                            <h5 class="text-primary mb-2">Bronze</h5>
-                            <h4 class="text-uppercase">오준오 회원님</h4>
-                        </div>
-                        <div class="p-5 pt-0">
-                            
-                            <div class="d-flex justify-content-between mb-3"><strong>상태 :</strong><span>대기중</span><i class="fa fa-bell text-primary pt-1 text-end"></i></div>
-                            <div class="d-flex justify-content-between mb-3"><strong>신청일 :</strong><span>2020-05-30</span><i class="fa fa-calendar text-secondary pt-1 text-end"></i></div>
-                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청일 :</strong><span>2020-06-03</span><i class="fa fa-calendar text-primary pt-1 text-end"></i></div>
-                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청시간 :</strong><span>17:00</span><i class="fa fa-clock text-primary pt-1 text-end"></i></div>
-                            <div class="d-flex justify-content-center">
-                            <a href="" class="btn btn-primary py-2 px-4 mt-5">상세보기</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+	            <c:forEach var="consultation" items="${consultations}">
+	                <div class="col-lg-4 wow slideInUp mb-3 mr-2" data-wow-delay="0.3s">
+	                    <div class="bg-white rounded shadow position-relative" style="z-index: 1;">
+	                        <div class="border-bottom py-4 px-5 mb-4">
+	                            <h5 class="text-primary mb-2"></h5>
+	                            <h4 class="text-uppercase">${consultation.user.name}</h4>
+	                        </div>
+	                        <div class="p-5 pt-0">
+	                            
+	                            <div class="d-flex justify-content-between mb-3"><strong>상태 :</strong><span>${consultation.consultations.consultationStatus}</span><i class="fa fa-bell text-primary pt-1 text-end"></i></div>
+	                            <div class="d-flex justify-content-between mb-3"><strong>신청일 :</strong><span><fmt:formatDate value="${consultation.consultations.applicationDate}" pattern="yyyy-MM-dd" /></span><i class="fa fa-calendar text-secondary pt-1 text-end"></i></div>
+	                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청일 :</strong><span><fmt:formatDate value="${consultation.consultations.requestDate}" pattern="yyyy-MM-dd" /></span><i class="fa fa-calendar text-primary pt-1 text-end"></i></div>
+	                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청시간 :</strong><span>${consultation.consultations.requestTime}</span><i class="fa fa-clock text-primary pt-1 text-end"></i></div>
+	                            <div class="d-flex justify-content-center">
+	                            <a href="" class="btn btn-primary py-2 px-4 mt-5">상세보기</a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </c:forEach>    
             </div>
+            
         </div>
     </div>
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px; display: none;">

@@ -1,5 +1,6 @@
 package kr.co.helf.controller;
 
+import kr.co.helf.dto.UserConsultations;
 import kr.co.helf.dto.UserMyMemberships;
 import kr.co.helf.service.PersonalLessonService;
 import kr.co.helf.vo.Consultation;
@@ -69,7 +70,11 @@ public class PersonalLessonController {
 	
 	//트레이너 1대1 상담신청 조회
 	@GetMapping("/list")
-	public String consultationList(Model model) {
+	public String consultationList(@AuthenticationPrincipal User user, Model model) {
+		
+		List<UserConsultations> consultations = personalLessonService.getUserConsultationsByTrainerNo(user.getId());
+		
+		model.addAttribute("consultations",consultations);
 		return "personal-lesson/consultationlist";
 	}
 	
