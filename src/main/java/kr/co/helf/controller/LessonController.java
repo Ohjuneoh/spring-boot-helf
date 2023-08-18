@@ -21,11 +21,6 @@ public class LessonController {
 
     private final LessonService lessonService;
 
-    @GetMapping(value = "registration")
-	public String lessonRegist() {
-		return "lesson/trainerform";
-	}
-
     // 유저가 신청한 모든 수업 조회
     @GetMapping("/user-my-lesson")
     public String lessonList(@AuthenticationPrincipal User user, Model model) {

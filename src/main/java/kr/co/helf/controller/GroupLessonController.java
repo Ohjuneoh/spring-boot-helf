@@ -42,6 +42,7 @@ public class GroupLessonController {
         lesson.setQuota(quota);
         lesson.setDate(date);
         lesson.setTime(time);
+        lesson.setType("group");
         lesson.setDescription(description);
         // 로그인한 유저의 아이디 담기
         lesson.setUser(user);
@@ -56,7 +57,7 @@ public class GroupLessonController {
         Map<String,Object> param = new HashMap<String,Object>();
         param.put("page", page);
 
-        Map<String,Object> result = groupLessonService.getAllLessons(user.getId(),param);
+        Map<String,Object> result = groupLessonService.getAllLessons(user.getId(),user.getType(),param);
 
         model.addAttribute("result", result);
         return "group-lesson/list";
@@ -70,7 +71,7 @@ public class GroupLessonController {
         return "group-lesson/detail";
     }
 
-    // 유저가 수업신청 시 신청인원 증가 , LessonApply 테이블에 저장, 중복신청 불가
+    // 유저가 수업신청 시 신청인원 증가 , LessonApply 테이블에 저장, 중복신청 불가, 이용권 횟수 차감, 이용권 모두 소진시 이용권 상태 변경
     @GetMapping("/request")
     @ResponseBody
     public Map<String, String> reqCount(@RequestParam("no") int lessonNo, @AuthenticationPrincipal User user) {
