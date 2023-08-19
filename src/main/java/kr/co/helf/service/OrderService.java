@@ -11,15 +11,15 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import kr.co.helf.dto.MembershipJoinCategory;
+import kr.co.helf.dto.OptionJoinDetail;
 import kr.co.helf.form.AddOrderForm;
 import kr.co.helf.mapper.OrderMapper;
 import kr.co.helf.vo.Membership;
-import kr.co.helf.vo.MembershipJoinCategory;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.MyOption;
 import kr.co.helf.vo.Option;
 import kr.co.helf.vo.OptionDetail;
-import kr.co.helf.vo.OptionJoinDetail;
 import kr.co.helf.vo.Order;
 import kr.co.helf.vo.Period;
 import kr.co.helf.vo.PointHistory;
@@ -53,7 +53,7 @@ public class OrderService {
 		MembershipJoinCategory membershipJoinCat = orderMapper.getMembershipJoinCatByNo(no);
 		Optional<MembershipJoinCategory> optionalMembershipJoinCat = Optional.of(membershipJoinCat);
 		membershipJoinCat = 
-					optionalMembershipJoinCat.orElseThrow(() -> new RuntimeException("번호에 해당하는 이용권이 없다."));
+					optionalMembershipJoinCat.orElseThrow(() -> new RuntimeException());
 		
 		return membershipJoinCat;
 	}
@@ -91,9 +91,9 @@ public class OrderService {
 		form.setSavePoint(savePoint);
 		
 		form.setMembershipPrice(form.getMembershipDefaltPrice());
-		form.surtax(form.getLockerPrice(), form.getWearPrice());
-		form.membershipOptionPrice(form.getLockerPrice(), form.getWearPrice());
-		form.totalPrice(form.getMembershipOptionPrice(), form.getSurtax());
+		form.surtax();
+		form.membershipOptionPrice();
+		form.totalPrice();
 	}
 
 	public void updateUser(AddOrderForm form, User user) {
@@ -127,26 +127,24 @@ public class OrderService {
 		orderMapper.insertMyMembership(myMembership);
 		
 		// 내 옵션
-		if(form.getLockerPeriod() != 0) {
+		if(form.getLockerPrice() != 0) {
 			MyOption myOptionLocker = new MyOption();
 			
-			BeanUtils.copyProperties(form, myOptionLocker);
 			myOptionLocker.setMyMembership(myMembership);
-			myOptionLocker.setEndDate(form.getLockerEndDate());
-			myOptionLocker.setDuration(form.getLockerPeriod());
+//			myOptionLocker.setEndDate(form.getLockerEndDate());
+//			myOptionLocker.setDuration(form.getLockerPeriod());
 			OptionDetail optionDetail = orderMapper.getOptionDetailByNo(form.getLockerNo());
 			myOptionLocker.setOptionDetail(optionDetail);
 			
 			orderMapper.insertMyOption(myOptionLocker);
 		}
 		
-		if(form.getWearPeriod() != 0) {
+		if(form.getWearPrice() != 0) {
 			MyOption myOptionWear = new MyOption();
 			
-			BeanUtils.copyProperties(form, myOptionWear);
 			myOptionWear.setMyMembership(myMembership);
-			myOptionWear.setEndDate(form.getWearEndDate());
-			myOptionWear.setDuration(form.getWearPeriod());
+//			myOptionWear.setEndDate(form.getWearEndDate());
+//			myOptionWear.setDuration(form.getWearPeriod());
 			OptionDetail optionDetail = orderMapper.getOptionDetailByNo(form.getWearNo());
 			myOptionWear.setOptionDetail(optionDetail);
 			
@@ -208,11 +206,15 @@ public class OrderService {
 	}
 
 	public void getMyOptionEndToday() {
-		List<MyOption> todayEndMyOptions = orderMapper.getMyOptionEndToday();
+		List<MyMembership> todayEndMyMemberships = orderMapper.getMyMembershipEndToday();
 		
-		for(MyOption todayEndMyOption : todayEndMyOptions) {
-			todayEndMyOption.setState(IMPOSSIBILITY.getOrderEnum());
-			orderMapper.updateMyOption(todayEndMyOption);
+		for(MyMembership todayEndMyMembership : todayEndMyMemberships) {
+			List<MyOption> todayEndMyOptions = orderMapper.getMyOptionEndToday(todayEndMyMembership.getNo());
+			
+			for(MyOption todayEndMyOption : todayEndMyOptions) {
+				todayEndMyOption.setState(IMPOSSIBILITY.getOrderEnum());
+				orderMapper.updateMyOption(todayEndMyOption);
+			}
 		}
 	}
 }

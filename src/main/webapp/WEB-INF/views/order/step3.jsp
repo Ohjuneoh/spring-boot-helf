@@ -125,10 +125,10 @@
 			   					<tr>
 			   						<th>
 			   							${form.membershipName }
-				   						<c:if test="${form.lockerPeriod ne 0 }">
+				   						<c:if test="${form.lockerPrice ne 0 }">
 						   						<br/><br/>${form.lockerName }
 				   						</c:if>
-				   						<c:if test="${form.wearPeriod ne 0 }">
+				   						<c:if test="${form.wearPrice ne 0 }">
 					   						<br/><br/>${form.wearName }
 				   						</c:if>
 			   						</th>
@@ -140,22 +140,22 @@
 				   							${form.remainderCnt }회
 				   						</c:if>
 				   						<input type="hidden" name="membership-period" value="${form.periodDuration }">
-				   						<c:if test="${form.lockerPeriod ne 0 }">
+				   						<c:if test="${form.lockerPrice ne 0 }">
 						   					<br/><br/>
-						   					<span id="locker-period">${form.lockerPeriod }</span>개월
+						   					<span>${form.periodDuration }</span>개월
 				   						</c:if>
-				   						<c:if test="${form.wearPeriod ne 0 }">
+				   						<c:if test="${form.wearPrice ne 0 }">
 					   						<br/><br/>
-					   						<span id="wear-period">${form.wearPeriod }</span>개월
+					   						<span>${form.periodDuration }</span>개월
 				   						</c:if>
 				   					</td>
 				   					<td>
 				   						<fmt:formatNumber value="${form.membershipPrice }" pattern="###,###"/>원
-				   						<c:if test="${form.lockerPeriod ne 0 }">
+				   						<c:if test="${form.lockerPrice ne 0 }">
 						   					<br/><br/>
 						   					<fmt:formatNumber value="${form.lockerPrice }" pattern="###,###"/>원
 				   						</c:if>
-				   						<c:if test="${form.wearPeriod ne 0 }">
+				   						<c:if test="${form.wearPrice ne 0 }">
 						   					<br/><br/>
 						   					<fmt:formatNumber value="${form.wearPrice }" pattern="###,###"/>원
 				   						</c:if>
@@ -221,8 +221,6 @@
 							<span class="ps-3 pe-3">~</span>
 							<input name="endDateText" type="date" style="width: 300px; height: 35px; " disabled class="border-0"/>
 							<input type="hidden" type="date" name="endDate">
-							<input type="hidden" type="date" name="lockerEndDate">
-							<input type="hidden" type="date" name="wearEndDate">
 						</div>
 					</div>
 <!-- 				<div class="offset-10">
@@ -357,8 +355,6 @@ $(function() {
 		let totalPrice = $("input[name=totalPrice]").val();
 		let startDate = $("input[name=startDate]").val();
 		let endDate = $("input[name=endDate]").val();
-		let lockerEndDate = $("input[name=lockerEndDate]").val();
-		let wearEndDate = $("input[name=wearEndDate]").val();
 		
 		let data = {
 			usePoint:usePoint,
@@ -428,8 +424,6 @@ $(function() {
 		let today = moment().format("YYYY-MM-DD");
 				
 		let membershipPeriod = $("input[name=membership-period]").val();
-		let lockerPeriod = $("#locker-period").text();
-		let wearPeriod = $("#wear-period").text();
 		
 		if(startDate < today) {
 			alert("시작일은 " + today + "이후부터 가능합니다.");
@@ -438,13 +432,9 @@ $(function() {
 		}
 		
 		let endDate =  moment(startDate).add(membershipPeriod, 'M').format("YYYY-MM-DD");
-		let lockerEndDate = moment(startDate).add(lockerPeriod, 'M').format("YYYY-MM-DD");
-		let wearEndDate = moment(startDate).add(wearPeriod, 'M').format("YYYY-MM-DD");
 		
 		$("input[name=endDateText]").val(endDate);
 		$("input[name=endDate]").val(endDate);
-		$("input[name=lockerEndDate]").val(lockerEndDate);
-		$("input[name=wearEndDate]").val(wearEndDate);
 		
 		$("#btn-order").removeClass("disabled");
 	})

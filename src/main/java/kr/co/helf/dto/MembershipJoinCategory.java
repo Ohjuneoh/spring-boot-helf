@@ -1,4 +1,4 @@
-package kr.co.helf.vo;
+package kr.co.helf.dto;
 
 import org.apache.ibatis.type.Alias;
 

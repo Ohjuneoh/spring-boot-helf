@@ -24,12 +24,6 @@ public class MembershipScheduling {
 		// 만기일이 오늘인 사용중인 멤버십을 조회한다. 
 		// 사용불가로 바꾼다.
 		orderService.getMyMembershipEndToday();
-	}
-
-	@Scheduled(cron = "0 0 0 * * ?")
-	public void changeMyOptionEndDate() {
-		// 만기일이 오늘인 내 옵션을 조회한다. 
-		// 상태를 '사용불가'으로 바꾼다.
 		orderService.getMyOptionEndToday();
 	}
 }

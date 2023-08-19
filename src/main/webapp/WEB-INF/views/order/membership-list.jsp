@@ -79,16 +79,30 @@
 			</div>
 		</div>
 	</div>
-    
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
 		<div class="container py-5">
 			<div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
 				<h5 class="fw-bold text-primary text-uppercase">Our Products</h5>
 				<h1 class="mb-0">이용권을 선택하세요</h1>
 			</div>
-			<div class="row g-5">
+			<div class="offset-2 col-lg-8 col-md-6 wow zoomIn row g-5 align-items-center justify-content-center text-center">
+			    <c:if test="${param.error eq 'dup' }">
+					<div class="alert alert-danger" style="height: 50px; width: 800px;">
+						<strong>해당 이용권은 이미 구매한 이용권입니다.</strong>
+					</div>
+				</c:if>
+			    <c:if test="${param.error eq 'kakaopay-fail' }">
+					<div class="alert alert-danger" style="height: 50px; width: 800px;">
+						<strong>해당 이용권의 구매가 실패했습니다.</strong>
+					</div>
+				</c:if>
+			    <c:if test="${param.error eq 'kakaopay-cancle' }">
+					<div class="alert alert-danger" style="height: 50px; width: 800px;">
+						<strong>해당 이용권의 구매가 취소되었습니다.</strong>
+					</div>
+				</c:if>
 				<c:forEach var="membership" items="${memberships}">
-					<div id="box-membership-${membership.no }" class="offset-2 col-lg-8 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+					<div id="box-membership-${membership.no }" data-wow-delay="0.3s">
 						<div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
 							<div class="service-icon">
 								<i class="bi bi-trophy-fill text-white"></i>
@@ -204,6 +218,7 @@
         </div>
     </div>
     <!-- Footer End -->
+    
     
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>

@@ -23,11 +23,9 @@ public class AddOrderForm {
 	
 	private int lockerNo;					// 락커 번호 (내 옵션)
 	private String lockerName;	
-	private int lockerPeriod;				// 락커 기간 (내 옵션)
 	private int lockerPrice;				// 락커 가격 (결제)
 	private int wearNo;						// 운동복 번호 (내 옵션)
 	private String wearName;	
-	private int wearPeriod;					// 운동복 기간 (내 옵션)
 	private int wearPrice;					// 운동복 가격 (결제)
 	
 	private int membershipOptionPrice;
@@ -39,26 +37,21 @@ public class AddOrderForm {
 	private LocalDate startDate;					// 시작일 (내 이용권)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate endDate;						// 만기일 (내 이용권)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate lockerEndDate;				// 락커 만기일 (내 옵션)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate wearEndDate;					// 운동복 만기일 (내 옵션)
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
+//	private LocalDate lockerEndDate;				// 락커 만기일 (내 옵션)
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
+//	private LocalDate wearEndDate;					// 운동복 만기일 (내 옵션)
 	private int savePoint;					// 적립 포인트 (회원)
 	
-	public int membershipOptionPrice(int lcokerPrice, int wearPrice) {
-		this.membershipOptionPrice = this.membershipPrice;
-		
-		this.membershipOptionPrice += lcokerPrice;
-		this.membershipOptionPrice += wearPrice;
-		
-		return membershipOptionPrice;
+	public void membershipOptionPrice() {
+		this.membershipOptionPrice = this.membershipPrice + this.lockerPrice + this.wearPrice;
 	}
 	
-	public void surtax(int lcokerPrice, int wearPrice) {
-		this.surtax = (this.membershipPrice + lcokerPrice + wearPrice) / 10;
+	public void surtax() {
+		this.surtax = (this.membershipPrice + this.lockerPrice + this.wearPrice) / 10;
 	}
 	
-	public void totalPrice(int membershipOptionPrice, int surtax) {
-		this.totalPrice = membershipOptionPrice + surtax;
+	public void totalPrice() {
+		this.totalPrice = this.membershipOptionPrice + this.surtax;
 	}
 }

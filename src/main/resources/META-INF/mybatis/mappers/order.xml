@@ -74,8 +74,8 @@
 	<select id="getOptionJoinDetails" resultType="optionJoinDetail">
 		select B.detail_no			as no, 
 			   A.option_name		as name, 
-			   B.detail_period		as period, 
-			   B.Detail_price		as price,
+			   B.detail_price		as price,
+			   B.detail_type		as type,
 			   A.option_no			as "option.no"
 		from helf_membership_option A, helf_membership_option_detail B
 		where A.option_no = B.option_no
@@ -85,8 +85,8 @@
 	<select id="getOptionJoinDetailByNo" parameterType="int" resultType="optionJoinDetail">
 		select B.detail_no			as no, 
 			   A.option_name		as name, 
-			   B.detail_period		as period, 
-			   B.Detail_price		as price,
+			   B.detail_price		as price,
+			   B.detail_type		as type,
 			   A.option_no			as "option.no"
 		from helf_membership_option A, helf_membership_option_detail B
 		where A.option_no = B.option_no
@@ -95,8 +95,8 @@
 	
 	<select id="getOptionDetailByNo" parameterType="int" resultType="optionDetail">
 		select detail_no		as no,
-			   detail_period	as period,
 			   detail_price		as price,
+			   detail_type		as type,
 			   option_no		as "option.no"
 		from helf_membership_option_detail
 		where detail_no = #{value}
@@ -135,11 +135,9 @@
 
 	<insert id="insertMyOption" parameterType="myOption">
 		insert into helf_membership_my_option
-			(my_option_no, my_option_start_date, my_option_end_date, 
-			 my_option_duration, detail_no, my_membership_no)
+			(my_option_no, detail_no, my_membership_no)
 		values
-			(helf_membership_my_option_seq.nextval, #{startDate}, #{endDate},
-			 #{duration}, #{optionDetail.no}, #{myMembership.no})
+			(helf_membership_my_option_seq.nextval, #{optionDetail.no}, #{myMembership.no})
 	</insert>
 	
 	<insert id="insertHistory" parameterType="pointHistory">
@@ -221,19 +219,16 @@
 		where my_membership_no = #{no}
 	</update>
 
-	<select id="getMyOptionEndToday" resultType="myOption">
+	<select id="getMyOptionEndToday" resultType="myOption" parameterType="int">
 		select my_option_no				as no,
 			   my_option_state			as state,
-			   my_option_start_date		as startDate,
-			   my_option_end_date		as endDate,
-			   my_option_duration		as duration,
 			   detail_no				as "optionDetail.no",
 			   my_membership_no			as "myMembership.no"
 		from helf_membership_my_option
-		where my_option_end_date = sysdate
+		where my_membership_no = #{value}
 	</select>
 	
-	<update id="" parameterType="myOption">
+	<update id="updateMyOption" parameterType="myOption">
 		update helf_membership_my_option
 		<set>
 			 my_option_state = #{state}

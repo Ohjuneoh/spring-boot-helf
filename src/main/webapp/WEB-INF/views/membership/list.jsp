@@ -59,7 +59,6 @@
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
                     <h1 class="display-4 text-white animated zoomIn">MY MEMBERSHIP</h1>
-                    <a href="" class="h5 text-white">내 이용권 확인하기</a>
                 </div>
             </div>
         </div>
@@ -86,44 +85,85 @@
 				<h1 class="mb-0">나의 이용권을 확인하세요</h1>
 			</div>
 		</div>
-		<c:forEach var="myMembership" items="${myMemberships }">
+		
+		<c:if test="${empty list }">
+			<div class="d-grid gap-2 col-6 mx-auto align-items-center justify-content-center text-center">
+				<div>
+					<h4 style="color:gray"><strong>구매하신 이용권이 없습니다.</strong></h4>
+				</div>
+			</div>
+		</c:if>
+		
+		<c:forEach var="dto" items="${list }">
 			<div class="d-grid gap-2 col-6 mx-auto align-items-center justify-content-center text-center"
-				 data-bs-toggle="modal" data-bs-target="#exampleModal">
-				<button id="btn-my-membership-${myMembership.no }" type="button" class="btn btn-outline-info" 
-						style="margin: 30px; height: 180px; width: 500px;">
+				 data-bs-toggle="modal" data-bs-target="#detail-modal-${dto.myMembership.no }">
+				<button id="btn-my-membership-${dto.myMembership.no }" type="button" class="btn btn-outline-info d-inline-block" 
+						style="margin: 30px; height: 200px; width: 600px;">
 					<div class="service-item rounded d-flex flex-column align-items-center justify-content-center text-center "
-     					 style="width: 50px; height: 100px;">
+     					 style="height: 100px;">
 						<div class="service-icon">
 							<i class="bi bi-trophy-fill text-white"></i>
 						</div>
 					</div>
-					${myMembership.membership.name }
+					${dto.myMembership.membership.name }
 				</button>
 			</div>
-			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  		<div class="modal-dialog">
+			<div class="modal fade" id="detail-modal-${dto.myMembership.no }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  		<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="exampleModalLabel">${myMembership.membership.name }</h1>
+							<h1 class="modal-title fs-5" id="exampleModalLabel">상세정보</h1>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
-							<div>
-								${myMembership.startDate } ~ ${myMembership.endDate }
-							</div>
-							<div>
-								
-							</div>
+							<div class="card" >
+								<div class="card-header bg-primary" style="color: #ffffff">
+									<strong style="color:white">${dto.myMembership.membership.name }</strong>
+								</div>
+								<div class="card-body align-items-center justify-content-center text-center">
+									<table class="table">
+			                    		<tbody>
+			                        		<tr>
+			                            		<th>기간</th>
+			                            		<td>${dto.myMembership.startDate } ~ ${dto.myMembership.endDate }</td>
+			                        		</tr>
+			                       			<c:if test="${dto.myMembership.period.type eq '횟수' }">
+				                       			<tr>
+				                           			<th>횟수</th>
+				                           			<td>${dto.myMembership.remainderCnt }회</td>
+				                       			</tr>
+				                        	</c:if>
+				                          	<tr>
+				                            	<th class="${empty dto.myOptions ? 'border-bottom-0' : '' }" >상태</th>
+				                            	<td class="${empty dto.myOptions ? 'border-bottom-0' : '' }" >
+				                            		${dto.myMembership.state }
+				                            	</td>
+				                           	</tr>
+				                           	<c:if test="${not empty dto.myOptions }">
+				                     			<tr>
+				                            		<th class="align-middle border-bottom-0" >옵션</th>
+				                            		<td class="border-bottom-0" >
+				                            			<c:forEach var="myOption" items="${dto.myOptions }">
+					                            			<div>
+																${myOption.optionDetail.option.name }
+					                            			</div>
+														</c:forEach>
+				                            		</td>
+				                            	</tr>
+				                            </c:if>
+				                        </tbody>
+		                    		</table>
+		                    	</div>
+		                    </div>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" >환불하기</button>
+						<div class="align-items-end justify-content-end text-end" style="margin: 15px;">
+							<a href="refound?no=${dto.myMembership.no }" type="button" class="btn btn-danger" >환불하기</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</c:forEach>
 	</div>
-	
 	
 	<!-- Footer Start -->
 	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">

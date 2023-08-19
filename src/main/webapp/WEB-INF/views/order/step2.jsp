@@ -138,16 +138,8 @@
 							<c:if test="${option.name eq optionJoinDetail.name }">
 								<button id="btn-option-${optionJoinDetail.no }" data-option-no="${optionJoinDetail.no }" 
 										data-option-name="${option.name }" type="button" class="btn btn-outline-primary btn-lg" 
-										style="width: 200px; height: 200px; margin: 20px;">
-									<c:if test="${optionJoinDetail.period == 0}">
-										선택안함
-									</c:if>
-									<c:if test="${optionJoinDetail.period != 0}">
-										${optionJoinDetail.period}개월
-										<br />
-										<br />
-										+ <fmt:formatNumber value="${optionJoinDetail.price }" />
-									</c:if>
+										style="width: 300px; height: 200px; margin: 20px;">
+									${optionJoinDetail.type }
 								</button>
 							</c:if>
 					  	</c:forEach>
@@ -315,8 +307,6 @@ $(function() {
 			$("#btn-next").removeClass('disabled');			
 		} 
 	});
-	
-	
 })
 </script>
 </html>

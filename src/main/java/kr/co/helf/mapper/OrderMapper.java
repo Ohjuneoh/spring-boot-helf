@@ -5,13 +5,13 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.helf.dto.MembershipJoinCategory;
+import kr.co.helf.dto.OptionJoinDetail;
 import kr.co.helf.vo.Membership;
-import kr.co.helf.vo.MembershipJoinCategory;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.MyOption;
 import kr.co.helf.vo.Option;
 import kr.co.helf.vo.OptionDetail;
-import kr.co.helf.vo.OptionJoinDetail;
 import kr.co.helf.vo.Order;
 import kr.co.helf.vo.Period;
 import kr.co.helf.vo.PointHistory;
@@ -61,7 +61,7 @@ public interface OrderMapper {
 
 	List<MyMembership> getMyMembershipEndToday();
 
-	List<MyOption> getMyOptionEndToday();
+	List<MyOption> getMyOptionEndToday(int no);
 
 	void updateMyOption(MyOption todayEndMyOption);
 }

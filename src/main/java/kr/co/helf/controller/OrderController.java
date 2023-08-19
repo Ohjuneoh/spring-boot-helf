@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import kr.co.helf.dto.MembershipJoinCategory;
+import kr.co.helf.dto.OptionJoinDetail;
 import kr.co.helf.form.AddOrderForm;
 import kr.co.helf.kakaopay.KakaoPayReadyResponse;
 import kr.co.helf.kakaopay.KakaoPayService;
 import kr.co.helf.service.OrderService;
 import kr.co.helf.vo.Membership;
-import kr.co.helf.vo.MembershipJoinCategory;
 import kr.co.helf.vo.Option;
-import kr.co.helf.vo.OptionJoinDetail;
 import kr.co.helf.vo.Period;
 import kr.co.helf.vo.Rank;
 import kr.co.helf.vo.User;
@@ -50,7 +50,11 @@ public class OrderController {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String condition(@RequestParam("no") int no, @AuthenticationPrincipal User user, Model model) {
 
-		orderService.checkUseMyMembership(no, user.getId());
+		try {
+			orderService.checkUseMyMembership(no, user.getId());
+		} catch (RuntimeException ex) {
+			return "redirect:list?error=dup";
+		}
 		
 		MembershipJoinCategory membershipJoinCat = orderService.getMembershipJoinCatByNo(no);
 		model.addAttribute("membershipJoinCat", membershipJoinCat);
@@ -111,20 +115,16 @@ public class OrderController {
 		OptionJoinDetail wear = orderService.getOptionJoinDetailByNo(form.getWearNo());
 		
 		form.setLockerName(locker.getName());
-		form.setLockerPeriod(locker.getPeriod());
-		form.setLockerPrice(locker.getPrice());
+		form.setLockerPrice(locker.getPrice()*period.getDuration());
 		form.setWearName(wear.getName());
-		form.setWearPeriod(wear.getPeriod());
-		form.setWearPrice(wear.getPrice());
+		form.setWearPrice(wear.getPrice()*period.getDuration());
 		
-		form.surtax(locker.getPrice(), wear.getPrice());
-		int membershipOptionPrice = form.membershipOptionPrice(form.getLockerPrice(), form.getWearPrice());
-		form.totalPrice(form.getMembershipOptionPrice(), form.getSurtax());
+		form.membershipOptionPrice();
+		form.surtax();
+		form.totalPrice();
 		
 		Rank rank = orderService.getRankByNo(user.getRank().getNo());
-		System.out.println(membershipOptionPrice*rank.getPointRate());
-		
-		int savePoint = (int)(membershipOptionPrice*rank.getPointRate());
+		int savePoint = (int)(form.getMembershipOptionPrice()*rank.getPointRate());
 		form.setSavePoint(savePoint);
 		
 		model.addAttribute("form", form);
@@ -136,13 +136,17 @@ public class OrderController {
 	@PostMapping("/kakaopay-ready")
 	@ResponseBody
 	public KakaoPayReadyResponse kakaoReady(@ModelAttribute AddOrderForm form, Model model) {
+		
 		KakaoPayReadyResponse ready = kakaoPayService.kakaoPayReadyResponse(form);
 		model.addAttribute("tid", ready.getTid());
+		// 카카오에서 받은 응답을 KakaoPayReadyResponse 클래스에 저장한다.
+		// 응답으로 받은 tid를  tid 라는 이름으로 세션에 저장한다.
 		
 		return ready;
+		// 성공할시 ready가 kakaopay-progress로 전달된다.
 	}
 	
-	@GetMapping("/")
+	@GetMapping("/kakaopay-progress")
 	public String order(@ModelAttribute("addOrderForm")  AddOrderForm form, @AuthenticationPrincipal User user, 
 						@ModelAttribute("tid")  String tid, @RequestParam("pg_token") String pgToken) {
 		
@@ -160,12 +164,12 @@ public class OrderController {
 	}
 	
 	@GetMapping("/kakaopay-fail")
-	public void orderFail() {
-		throw new RuntimeException("결제가 실패했습니다.");
+	public String orderFail() {
+		return "redirect:list?error=kakaopay-fail";
 	}
 
 	@GetMapping("/kakaopay-cancle")
-	public void orderCancle() {
-		throw new RuntimeException("결제가 최소되었습니다.");
+	public String orderCancle() {
+		return "redirect:list?error=kakaopay-cancle";
 	}
 }
