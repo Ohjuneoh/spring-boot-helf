@@ -77,5 +77,14 @@ public class PersonalLessonController {
 		model.addAttribute("consultations",consultations);
 		return "personal-lesson/consultationlist";
 	}
+//	//트레이너 1대1 상담신청 조회 후 수업개설
+//	@PostMapping("/list")
+//	public String reservation(@RequestParam("userId"),
+//								@RequestParam("trainerNo"),
+//								@RequestParam("myMembershipNo"),
+//								@RequestParam("")) {
+//		
+//	}
+	
 	
 }
