@@ -224,6 +224,7 @@
     </div>
 </div>
 <!-- Footer End -->
+<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
 
 
 <!-- Back to Top -->

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
 <style>
@@ -20,6 +21,9 @@
 input[type="radio"]:checked + .btn-like {
     background-color: blue;
     color: white;
+}
+.spacing-top {
+    margin-top: 20px;
 }
 
 </style>
@@ -116,29 +120,111 @@ input[type="radio"]:checked + .btn-like {
 				</p>
 				<div class="collapse" id="collapseExample">
   					<div class="card card-body" style="width: 1200px;">
-    					<form action="attendance-register" method="get">
-    						<input type="radio" class="btn-check" id="in" name="attendance" value="in" autocomplete="off">
-    						<label for="in" class="btn btn-outline-primary" style=" margin-right: 30px;">출근</label>
+    					<form action="attendance-register" method="get" id="attendanceForm">
+    						<input type="radio" class="btn-check" id="in" name="attendance" value="출근" autocomplete="off">
+    						<label for="in" class="btn btn-outline-primary" style=" margin-right: 20px;">출근</label>
     						
-    						<input type="radio" class="btn-check" id="out" name="attendance" value="out" autocomplete="off">
-    						<label for="out" class="btn btn-outline-primary" style=" margin-right: 30px;">퇴근</label>
+    						<input type="radio" class="btn-check" id="out" name="attendance" value="퇴근" autocomplete="off">
+    						<label for="out" class="btn btn-outline-primary" style=" margin-right: 20px;">퇴근</label>
     						
     						
-    						<select name="dropdown" id="dropdown" class="btn btn-outline-primary"> 
-    							<option value="">--기타--</option>
-    							<option value="late">지각</option>
-    							<option value="break">외출</option>
-    							<option value="outside">외근</option>
-    							<option value="return">복귀</option>
+    						<select name="attendance" id="others" class="btn btn-outline-primary"> 
+    							<option value="" selected disabled>--기타--</option>
+    							<option value="지각">지각</option>
+    							<option value="외출">외출</option>
+    							<option value="외근">외근</option>
+    							<option value="복귀">복귀</option>
     						</select>
-    						<div>
-								<div>
-									<span>사유</span>
-									<input type="text" id="cause" name="cause" style="width:100%;" class="form-control">
-    							</div>
-    						</div>
+    						<br>
+							<div class="spacing-top" style="display: flex; align-items: center;">
+							 	<span style="margin-right: 10px;">사유</span>
+								 <input type="text" id="cause" name="cause" style="width:80%;" class="form-control">
+							</div>
+    						<br>
+    						<button type="submit" class="btn btn-primary">등록</button>
     					</form>
   					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+						<table class="table">
+							<thead>
+								<tr>
+									<th style="width:5%"></th>
+									<th style="width:45%">날짜 및 시간</th>
+									<th style="width:20%">출근 상태</th>
+									<th style="width:30%">기타</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:choose>
+									<c:when test="${not empty result.attendances}">
+										<c:forEach var="attendance" items="${result.attendances }">
+											<tr>
+												<td style="width:5%">${attendance.no }</td>
+												<td style="width:45%"><fmt:formatDate value="${attendance.date }" pattern="yyyy년 M월 d일 a h시 m분" /></td>
+												<td style="width:20%">${attendance.state}</td>
+												<td style="width:30%">${attendance.cause }</td>
+											</tr>
+										</c:forEach>
+									</c:when>
+								</c:choose>
+							</tbody>
+						</table>
+						<!-- 페이지네이션 -->
+						<c:if test="${result.pagination.totalRows gt 0 }">
+							<c:set var="currentPage" value="${result.pagination.page }"/>
+							<c:set var="first" value="${result.pagination.first }"/>
+							<c:set var="last" value="${result.pagination.last }"/>
+							<c:set var="prePage" value="${result.pagination.prePage }" />
+							<c:set var="nextPage" value="${result.pagination.nextPage }"/>
+							<c:set var="beginPage" value="${result.pagination.beginPage }"/>
+							<c:set var="endPage" value="${result.pagination.endPage }"/>
+							<nav>
+								<ul class="pagination justify-content-center">
+									<li class="page-item ${first ? 'disabled' : '' }">
+										<a href="list?page=${prePage }" class="page-link" onclick="changePage(event, ${prePage })">이전</a>
+									</li>
+									<c:forEach var="num" begin="${beginPage }" end="${endPage }">
+										<li class="page-item ${currentPage eq num ? 'active' : '' }">
+											<a href="" class="page-link" onclick="changePage(event, ${num})">${num }</a>
+										</li>
+									</c:forEach>
+									<li class="page-item ${last ? 'disabled' : '' }">
+										<a href="list?page=${nextPage }" class="page-link" onclick="changePage(event, ${nextPage})">다음</a>
+									</li>
+								</ul>
+							</nav>
+						</c:if>
+						<!-- ** 검색 기능 **  -->
+						<div class="d-flex justify-content-center">
+							<form id="form-attendance-search" class="row row-cols-md-auto g-3 align-items-center" method="get" action="attendance">
+								<input type="hidden" name="page" value="${param.page }"/>
+								<div class="col-12">
+								 	<select class="form-select" name="state">
+								 		<option value="전체" ${param.state eq 'all' ? 'selected' : '' }>전체</option>
+										<option value="출근" ${param.state eq 'in' ? 'selected' : ''}>출근</option>
+										<option value="퇴근" ${param.state eq 'out' ? 'selected' : '' }>퇴근</option>
+										<option value="지각" ${param.state eq 'late' ? 'selected' : '' }>지각</option>
+										<option value="외출" ${param.state eq 'break' ? 'selected' : '' }>외출</option>
+										<option value="외근" ${param.state eq 'outside' ? 'selected' : '' }>외근</option>
+										<option value="복귀" ${param.state eq 'return' ? 'selected' : '' }>복귀</option>
+									</select>
+								</div>
+								<div class="col-12">
+									<input type="text" class="form-control" name="keyword" value="${param.keyword }"/>
+								</div>
+								 <div class="col-12">
+			                        <button type="button" class="btn btn-primary btn-sm" onclick="searchCause()">검색</button>
+			                     </div>
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -146,42 +232,6 @@ input[type="radio"]:checked + .btn-like {
 	<!-- 직원 출퇴근 기록하기 form End -->
 	
 	<!-- 직원 출퇴근 내역 목록 Start -->
-	<div class="card-body">
-		<div class="d-flex justify-content-start mb-3">
-			<select class="form-select me-3" style="width: 150px;" name="sort" onchange="changeSort()">
-				<option value="in" ${param.sort eq 'in' ? 'selected' : ''}>출근</option>
-				<option value="out" ${param.sort eq 'out' ? 'selected' : '' }>퇴근</option>
-				<option value="late" ${param.sort eq 'late' ? 'selected' : '' }>지각</option>
-				<option value="break" ${param.sort eq 'break' ? 'selected' : '' }>외출</option>
-				<option value="outside" ${param.sort eq 'outside' ? 'selected' : '' }>외근</option>
-				<option value="return" ${param.sort eq 'return' ? 'selected' : '' }>복귀</option>
-			</select>
-		</div>
-		<table class="table">
-			<thead>
-				<tr>
-					<th></th>
-					<th>날짜 및 시간</th>
-					<th>출근 상태</th>
-					<th>기타</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:choose>
-					<c:when test="${not empty result.attendances}">
-						<c:forEach var="attendance" items="${result.attendances }">
-							<tr>
-								<td>${attendance.no }</td>
-								<td>${attendance.Date }</td>
-								<td>${attendance.state}</td>
-								<td>${attendance.cause }</td>
-							</tr>
-						</c:forEach>
-					</c:when>
-				</c:choose>
-			</tbody>
-		</table>
-	</div>
 	<!-- 직원 출퇴근 내역 목록 End -->
 	
      <!-- Footer Start -->
@@ -292,20 +342,54 @@ input[type="radio"]:checked + .btn-like {
     <script src="/resources/js/main.js"></script>
     
     <script type="text/javascript">
-    document.getElementById("dropdown").addEventListener("change", function() {
-        if (this.value) {
-            document.getElementById("in").checked = false;
-            document.getElementById("out").checked = false;
-        }
-    });
 
-    const radios = document.querySelectorAll('input[type="radio"]');
-    radios.forEach(function(radio) {
-        radio.addEventListener("change", function() {
-            document.getElementById("dropdown").selectedIndex = 0;
-        });
-    });
-
+    function changePage(event, page){
+    	event.preventDefault();
+    	document.querySelector("input[name=page]").value=page;
+    	document.querySelector("#form-attendance-search").submit();
+    }
+    
+    function searchCause(){
+    	document.querySelector("input[name=page]").value= 1;
+    	/* let keyword = document.querySelector("input[name=keyword]").value;
+    	if(keyword.trim()===""){
+    		alert("키워드를 입력하세요.");
+    		document.querySelector("input[name=keyword]").focus();
+    		return;
+    	} */
+    	document.querySelector("input[name=page]").value= 1;
+    	document.querySelector("#form-attendance-search").submit();
+    	
+    }
+    
+    // 출퇴근 버튼 한 개만 선택되게 하기 
+ 	$("#in, #out").change(function() {
+ 		$("#others").removeClass('bg-primary text-white').prop('selectedIndex', 0);
+ 	});
+    
+    $("#others").change(function() {
+    	$(this).addClass('bg-primary text-white');
+    	$("#out").prop("checked", false);
+    	$("#in").prop("checked", false);
+    })
+    
+    
+   // 출퇴근 버튼 선택되지 않으면 경고창 띄우기 
+   	$("#attendanceForm").submit(function(){
+   		
+   		let isCheckedIn = $("#in").prop("checked");
+   		let isCheckedOut = $("#out").prop("checked");
+   		let isCheckedOthers = $("#others").val();
+   		
+   		if (!(isCheckedIn || isCheckedOut || isCheckedOthers)) {
+   			alert("출퇴근 항목을 선택하세요");
+    		return false;
+   		}
+   		
+   		return true;
+   	});
+   
+   
 	</script>
 </body>
 

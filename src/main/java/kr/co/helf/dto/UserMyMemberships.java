@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.ToString;
 
 @Data
-@ToString
 @Alias("UserMyMemberships")
 public class UserMyMemberships {
 	private MyMembership myMembership;

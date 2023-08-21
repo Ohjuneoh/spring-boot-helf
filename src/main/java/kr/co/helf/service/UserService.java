@@ -1,6 +1,7 @@
 package kr.co.helf.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
@@ -8,12 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import kr.co.helf.dto.AttendanceList;
+import kr.co.helf.dto.Pagination;
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.mapper.UserMapper;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.Rank;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.TrainerCareer;
+import kr.co.helf.vo.TrainerAttendance;
 import kr.co.helf.vo.User;
 
 @Service
@@ -98,6 +102,33 @@ public class UserService {
 		userMapper.insertAttendance(userId);
 	}
 	
+	
+	//직원 출석 목록 조회 - 채경 
+	public AttendanceList getTrainerAttendances(Map<String, Object> param) {
+		
+		int totalRows = userMapper.getTotalRows(param);
+		
+		int page = (int) param.get("page");
+		Pagination pagination = new Pagination(page, totalRows);
+		
+		int begin = pagination.getBegin();
+		int end = pagination.getEnd();
+		param.put("begin", begin);
+		param.put("end", end);
+		
+		AttendanceList result = new AttendanceList();
+		List<TrainerAttendance> attendances = userMapper.getTrainerAttendances(param);
+		
+		result.setPagination(pagination);
+		result.setAttendances(attendances);
+		
+ 		return result;
+	}
+	
+	// 직원 출퇴근 등록 - 채경
+	public void createTrainerAttendance(Map<String, Object> param) {
+		userMapper.insertTrainerAttendances(param);
+	}
 }
 
 
