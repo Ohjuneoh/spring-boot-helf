@@ -78,7 +78,7 @@ body {
 
 	<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
 		<div class="container">
-			<form method="post" enctype="multipart/form-data">
+			<form method="post" enctype="multipart/form-data" action="user/register/trainer2">
 				<div class="row" >
 					<div class="mb-4">
 						<h3>트레이너 회원가입</h3>
@@ -92,12 +92,12 @@ body {
 				<div class="row mt-4" >
 					<h5>경력</h5>
 				    	<div class="col-sm-6 input-wrapper">
-				        	 <input type="text" class="form-control bg-light border-0" id="trainer-career" name="trainer-career-name" placeholder="경력 이름을 입력하세요." style="height: 55px; width: 620px;" />
+				        	 <input type="text" class="form-control bg-light border-0" id="trainer-career" name="careerName" placeholder="경력 이름을 입력하세요." style="height: 55px; width: 620px;" />
 				    	</div>
 				    	<div class="col-sm-6">
 					    	<div class="d-flex">
-						         <input type="text" class="form-control bg-light border-0 mr-2" id="datepicker1" name="career-start" placeholder="경력 시작일" style="height: 55px; width: 305px;" />
-						         <input type="text" class="form-control bg-light border-0" id="datepicker2" name="career-end" placeholder="경력 종료일" style="height: 55px; width: 305px;" />
+						         <input type="text" class="form-control bg-light border-0 mr-2" id="datepicker1" name="careerStartDate" placeholder="경력 시작일" style="height: 55px; width: 305px;" />
+						         <input type="text" class="form-control bg-light border-0" id="datepicker2" name="careerEndDate" placeholder="경력 종료일" style="height: 55px; width: 305px;" />
 				    		</div>
 				    	</div>
 				</div>
@@ -105,7 +105,7 @@ body {
 				<div class="row mt-4" >
 					<h5>자기소개</h5>
 					    <div class="col-sm-6 input-wrapper">
-					         <input type="text" class="form-control bg-light border-0" id="" name="" placeholder="자기소개를 입력하세요." style="height: 300px; width: 1280px;" />
+					         <input type="text" class="form-control bg-light border-0" id=""  placeholder="자기소개를 입력하세요." style="height: 300px; width: 1280px;" />
 					    	 <div class="check_font" id="user-id_check"></div>
 					    </div>
 				</div>

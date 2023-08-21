@@ -91,7 +91,7 @@
 	            <div class="row g-5">
 	                <div class="col-lg-13">
 	                    <div class=" rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s">
-	                        <form method="post">
+	                        <form method="post" action="/board/addNotice">
 	                            <div class="row g-3">
 	                                <div class="col-12" >
 	                                    <select class="form-select bg-light border-0" name="main" style="height: 55px;">
@@ -102,7 +102,7 @@
 	                                <div class="col-xl-12">
 	                                    <input type="text" class="form-control bg-light border-0" name="title" placeholder="제목" style="height: 55px;">
 	                                </div>
-	                        		<textarea id="summernote" name="name"></textarea>
+	                        		<textarea id="summernote" name="content" ></textarea>
 	                                <div class="col-12">
 	                                    <button class="btn btn-dark w-100 py-3" type="submit">작성하기</button>
 	                                </div>
