@@ -62,6 +62,4 @@ public interface OrderMapper {
 	List<MyMembership> getMyMembershipEndToday();
 
 	List<MyOption> getMyOptionEndToday(int no);
-
-	void updateMyOption(MyOption todayEndMyOption);
 }

@@ -9,13 +9,16 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.helf.dto.MyMembershipListDto;
+import kr.co.helf.dto.MyOrderDetailDto;
+import kr.co.helf.dto.OrderSearchDto;
 import kr.co.helf.service.MembershipService;
 import kr.co.helf.vo.MyMembership;
+import kr.co.helf.vo.MyOption;
 import kr.co.helf.vo.Order;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
@@ -52,10 +55,46 @@ public class MembershipController {
 		order.setState(WAITREFOUND.getOrderEnum());
 		membershipService.updateOrder(order);
 		
-		MyMembership myMembership = membershipService.getMyMembershipByNo(no);
+		MyMembership myMembership = membershipService.getUseMyMembershipByNo(no);
 		myMembership.setState(IMPOSSIBILITY.getOrderEnum());
 		membershipService.updateMyMembership(myMembership);
 		
 		return "redirect:list";
+	}
+	
+	@GetMapping("/order-list")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public String orderList(@AuthenticationPrincipal User user, Model model,
+							@ModelAttribute OrderSearchDto dto) {
+		
+		if(dto.getPage() == 0) {
+			dto.setPage(1);
+		}
+		
+		List<Order> orderList = membershipService.getOrdersById(user.getId());
+		model.addAttribute("orderList", orderList);
+		System.out.println(orderList);
+		
+		return "membership/order-list";
+	}
+	
+	@GetMapping("/order-detail")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public String orderDetail(@RequestParam("no") int no, Model model, @AuthenticationPrincipal User user) {
+		Order order = membershipService.getOrderByNo(no);
+
+		if(!user.getId().equals(order.getUser().getId())) {
+			return "redirect: loginform?error=wrong-user";
+		}
+		
+		MyOrderDetailDto dto = new MyOrderDetailDto();
+		dto.setOrder(order);
+		
+		List<MyOption> myOptions = membershipService.getMyOptions(order.getMyMembership().getNo());
+		dto.setMyOptions(myOptions);
+		
+		model.addAttribute("dto", dto);
+		
+		return "membership/order-detail";
 	}
 }

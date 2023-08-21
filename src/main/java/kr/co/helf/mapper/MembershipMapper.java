@@ -8,6 +8,7 @@ import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.MyOption;
 import kr.co.helf.vo.Option;
 import kr.co.helf.vo.Order;
+import kr.co.helf.vo.PointHistory;
 
 @Mapper
 public interface MembershipMapper {
@@ -22,7 +23,15 @@ public interface MembershipMapper {
 
 	void updateOrder(Order order);
 
+	MyMembership getUseMyMembershipByNo(int no);
+	
 	MyMembership getMyMembershipByNo(int no);
 
 	void updateMyMembership(MyMembership myMembership);
+
+	List<Order> getOrdersById(String id);
+
+	PointHistory getPointHistoryByNo(int no);
+
+	Order getOrderByNo(int no);
 }

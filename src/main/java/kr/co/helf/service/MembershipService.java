@@ -15,6 +15,7 @@ import kr.co.helf.vo.Option;
 import kr.co.helf.vo.OptionDetail;
 import kr.co.helf.vo.Order;
 import kr.co.helf.vo.Period;
+import kr.co.helf.vo.PointHistory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -82,8 +83,8 @@ public class MembershipService {
 		membershipMapper.updateOrder(order);
 	}
 
-	public MyMembership getMyMembershipByNo(int no) {
-		MyMembership myMembership = membershipMapper.getMyMembershipByNo(no);
+	public MyMembership getUseMyMembershipByNo(int no) {
+		MyMembership myMembership = membershipMapper.getUseMyMembershipByNo(no);
 
 		if(myMembership == null) {
 			throw new RuntimeException();
@@ -94,6 +95,53 @@ public class MembershipService {
 
 	public void updateMyMembership(MyMembership myMembership) {
 		membershipMapper.updateMyMembership(myMembership);
+	}
+
+	public List<Order> getOrdersById(String id) {
+		List<Order> orders = membershipMapper.getOrdersById(id);
+		if(!orders.isEmpty()) {
+			for(Order order : orders) {
+				MyMembership myMembership = membershipMapper.getMyMembershipByNo(order.getMyMembership().getNo());
+				if(myMembership != null) {
+					Membership membership = orderMapper.getMembershipByNo(myMembership.getMembership().getNo());
+					myMembership.setMembership(membership);
+					order.setMyMembership(myMembership);
+				}
+				
+				if(order.getPointHistory() != null) {
+					PointHistory pointHistory = membershipMapper.getPointHistoryByNo(order.getPointHistory().getNo());
+					order.setPointHistory(pointHistory);
+				}
+			}
+		}
+		return orders;
+	}
+
+	public Order getOrderByNo(int no) {
+		Order order = membershipMapper.getOrderByNo(no);
+		
+		if(order == null) {
+			throw new RuntimeException("구매내역이 없습니다.");
+		}
+		
+		MyMembership myMembership = membershipMapper.getMyMembershipByNo(order.getMyMembership().getNo());
+		
+		if(myMembership != null) {
+			Membership membership = orderMapper.getMembershipByNo(myMembership.getMembership().getNo());
+			myMembership.setMembership(membership);
+			
+			Period period = orderMapper.getPeriodByNo(myMembership.getPeriod().getNo());
+			myMembership.setPeriod(period);
+			
+			order.setMyMembership(myMembership);
+		}
+		
+		if(order.getPointHistory() != null) {
+			PointHistory pointHistory = membershipMapper.getPointHistoryByNo(order.getPointHistory().getNo());
+			order.setPointHistory(pointHistory);
+		}
+		
+		return order;
 	}
 
 }

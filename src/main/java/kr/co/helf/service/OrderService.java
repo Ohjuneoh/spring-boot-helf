@@ -130,9 +130,8 @@ public class OrderService {
 		if(form.getLockerPrice() != 0) {
 			MyOption myOptionLocker = new MyOption();
 			
+			myOptionLocker.setPrice(form.getLockerPrice());
 			myOptionLocker.setMyMembership(myMembership);
-//			myOptionLocker.setEndDate(form.getLockerEndDate());
-//			myOptionLocker.setDuration(form.getLockerPeriod());
 			OptionDetail optionDetail = orderMapper.getOptionDetailByNo(form.getLockerNo());
 			myOptionLocker.setOptionDetail(optionDetail);
 			
@@ -142,9 +141,8 @@ public class OrderService {
 		if(form.getWearPrice() != 0) {
 			MyOption myOptionWear = new MyOption();
 			
+			myOptionWear.setPrice(form.getWearPrice());
 			myOptionWear.setMyMembership(myMembership);
-//			myOptionWear.setEndDate(form.getWearEndDate());
-//			myOptionWear.setDuration(form.getWearPeriod());
 			OptionDetail optionDetail = orderMapper.getOptionDetailByNo(form.getWearNo());
 			myOptionWear.setOptionDetail(optionDetail);
 			
@@ -155,7 +153,6 @@ public class OrderService {
 		Order order = new Order();
 
 		BeanUtils.copyProperties(form, order);
-		order.setOptionPrice(form.getLockerPrice() + form.getWearPrice());
 		order.setUser(user);
 		order.setMyMembership(myMembership);
 			
@@ -202,19 +199,6 @@ public class OrderService {
 		for(MyMembership todayEndMyMembership : todayEndMyMemberships) {
 			todayEndMyMembership.setState(IMPOSSIBILITY.getOrderEnum());
 			orderMapper.updateMyMembership(todayEndMyMembership);
-		}
-	}
-
-	public void getMyOptionEndToday() {
-		List<MyMembership> todayEndMyMemberships = orderMapper.getMyMembershipEndToday();
-		
-		for(MyMembership todayEndMyMembership : todayEndMyMemberships) {
-			List<MyOption> todayEndMyOptions = orderMapper.getMyOptionEndToday(todayEndMyMembership.getNo());
-			
-			for(MyOption todayEndMyOption : todayEndMyOptions) {
-				todayEndMyOption.setState(IMPOSSIBILITY.getOrderEnum());
-				orderMapper.updateMyOption(todayEndMyOption);
-			}
 		}
 	}
 }

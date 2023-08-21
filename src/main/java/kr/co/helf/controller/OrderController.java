@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import kr.co.helf.dto.MembershipJoinCategory;
 import kr.co.helf.dto.OptionJoinDetail;
@@ -148,11 +149,14 @@ public class OrderController {
 	
 	@GetMapping("/kakaopay-progress")
 	public String order(@ModelAttribute("addOrderForm")  AddOrderForm form, @AuthenticationPrincipal User user, 
-						@ModelAttribute("tid")  String tid, @RequestParam("pg_token") String pgToken) {
+						@ModelAttribute("tid")  String tid, @RequestParam("pg_token") String pgToken,
+						SessionStatus sessionStatus) {
 		
 		kakaoPayService.approveResponse(tid, pgToken);
 		orderService.updateUser(form, user);
 		orderService.insertOrder(form, user);
+		
+		sessionStatus.setComplete();
 		
 		return "redirect:/order/completed";
 	}

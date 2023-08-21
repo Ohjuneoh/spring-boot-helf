@@ -135,9 +135,9 @@
 
 	<insert id="insertMyOption" parameterType="myOption">
 		insert into helf_membership_my_option
-			(my_option_no, detail_no, my_membership_no)
+			(my_option_no, detail_no, my_membership_no, my_option_price)
 		values
-			(helf_membership_my_option_seq.nextval, #{optionDetail.no}, #{myMembership.no})
+			(helf_membership_my_option_seq.nextval, #{optionDetail.no}, #{myMembership.no}, #{price})
 	</insert>
 	
 	<insert id="insertHistory" parameterType="pointHistory">
@@ -162,10 +162,10 @@
 	
 	<insert id="insertOrder" parameterType="order">
 		insert into helf_orders
-			(orders_no, orders_total_price, user_id, orders_option_price, 
+			(orders_no, orders_total_price, user_id, orders_surtax,
 			 orders_membership_price, my_membership_no, point_history_no)
 		values
-			(helf_order_seq.nextval, #{totalPrice}, #{user.id}, #{optionPrice},
+			(helf_order_seq.nextval, #{totalPrice}, #{user.id}, #{surtax},
 			 #{membershipPrice}, #{myMembership.no}, #{pointHistory.no})
 	</insert>
 	
@@ -221,19 +221,10 @@
 
 	<select id="getMyOptionEndToday" resultType="myOption" parameterType="int">
 		select my_option_no				as no,
-			   my_option_state			as state,
 			   detail_no				as "optionDetail.no",
-			   my_membership_no			as "myMembership.no"
+			   my_membership_no			as "myMembership.no",
+			   my_option_price			as price
 		from helf_membership_my_option
 		where my_membership_no = #{value}
 	</select>
-	
-	<update id="updateMyOption" parameterType="myOption">
-		update helf_membership_my_option
-		<set>
-			 my_option_state = #{state}
-		</set>
-		where my_option_no = #{no}
-	</update>
-	
 </mapper>

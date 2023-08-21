@@ -37,10 +37,6 @@ public class AddOrderForm {
 	private LocalDate startDate;					// 시작일 (내 이용권)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate endDate;						// 만기일 (내 이용권)
-//	@DateTimeFormat(pattern = "yyyy-MM-dd")
-//	private LocalDate lockerEndDate;				// 락커 만기일 (내 옵션)
-//	@DateTimeFormat(pattern = "yyyy-MM-dd")
-//	private LocalDate wearEndDate;					// 운동복 만기일 (내 옵션)
 	private int savePoint;					// 적립 포인트 (회원)
 	
 	public void membershipOptionPrice() {

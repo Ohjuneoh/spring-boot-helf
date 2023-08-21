@@ -17,7 +17,7 @@
 		order by my_membership_no desc
 	</select>
 	
-	<select id="getMyMembershipByNo" parameterType="int" resultType="myMembership">
+	<select id="getUseMyMembershipByNo" parameterType="int" resultType="myMembership">
 		select my_membership_no					as no,
 			   my_membership_startdate			as startDate,
 			   my_membership_enddate			as endDate,
@@ -32,11 +32,25 @@
 		order by my_membership_no desc
 	</select>
 	
+	<select id="getMyMembershipByNo" parameterType="int" resultType="myMembership">
+		select my_membership_no					as no,
+			   my_membership_startdate			as startDate,
+			   my_membership_enddate			as endDate,
+			   my_membership_remainder_cnt		as remainderCnt,
+			   my_membership_state				as state,
+			   user_id							as "user.id",
+			   period_no						as "period.no",
+			   membership_no					as "membership.no"
+		from helf_my_membership
+		where my_membership_no = #{value}
+		order by my_membership_no desc
+	</select>
+	
 	<select id="getMyOptions" parameterType="int" resultType="myOption">
 		select my_option_no			as no,
-			   my_option_state		as state,
 			   detail_no			as "optionDetail.no",
-			   my_membership_no		as "myMembership.no"
+			   my_membership_no		as "myMembership.no",
+			   my_option_price		as price
 		from helf_membership_my_option
 		where my_membership_no = #{value}
 	</select>
@@ -46,6 +60,7 @@
 			   option_name	as name
 		from helf_membership_option
 		where option_no = #{value}
+		order by option_no
 	</select>
 	
 	<select id="getOrderByMyMembershipNo" parameterType="int" resultType="order">
@@ -54,10 +69,10 @@
 			   orders_payment_date		as paymentDate,
 			   orders_payment_state		as state,
 			   user_id					as "user.id",
-			   orders_option_price		as optionPrice,
 			   orders_membership_price	as membershipPrice,
 			   my_membership_no			as "myMembership.no",
-			   point_history_no			as "pointHistory.no"
+			   point_history_no			as "pointHistory.no",
+			   orders_surtax			as surtax
 		from helf_orders
 		where my_membership_no = #{value}
 	</select>
@@ -78,4 +93,43 @@
 		</set>
 		where my_membership_no = #{no}
 	</update>
+	
+	<select id="getOrdersById" parameterType="string" resultType="order">
+		select orders_no				as no,
+			   orders_total_price		as totalPrice,
+			   orders_payment_date		as paymentDate,
+			   orders_payment_state		as state,
+			   user_id					as "user.id",
+			   orders_membership_price	as membershipPrice,
+			   my_membership_no			as "myMembership.no",
+			   point_history_no			as "pointHistory.no",
+			   orders_surtax			as surtax
+		from helf_orders
+		where user_id = #{value}
+		order by orders_no desc
+	</select>
+	
+	<select id="getPointHistoryByNo" parameterType="int" resultType="pointHistory">
+		select point_history_no		as no,
+			   point_history_use	as usePoint,
+			   point_history_date	as useDate,
+			   user_id				as "user.id",
+			   point_history_type	as type
+		from helf_point_history
+		where point_history_no = #{value}
+	</select>
+	
+	<select id="getOrderByNo" parameterType="int" resultType="order">
+		select orders_no				as no,
+			   orders_total_price		as totalPrice,
+			   orders_payment_date		as paymentDate,
+			   orders_payment_state		as state,
+			   user_id					as "user.id",
+			   orders_membership_price	as membershipPrice,
+			   my_membership_no			as "myMembership.no",
+			   point_history_no			as "pointHistory.no",
+			   orders_surtax			as surtax
+		from helf_orders
+		where orders_no = #{value}
+	</select>
 </mapper>

@@ -24,6 +24,5 @@ public class MembershipScheduling {
 		// 만기일이 오늘인 사용중인 멤버십을 조회한다. 
 		// 사용불가로 바꾼다.
 		orderService.getMyMembershipEndToday();
-		orderService.getMyOptionEndToday();
 	}
 }

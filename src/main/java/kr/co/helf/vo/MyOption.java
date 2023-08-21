@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class MyOption {
 
 	private int no;
-	private String state;
 	private OptionDetail optionDetail;
 	private MyMembership myMembership;
+	private int price;
 }

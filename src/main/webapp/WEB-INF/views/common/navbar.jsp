@@ -48,13 +48,11 @@
                     <a href="price" class="dropdown-item">내 정보 조회</a>
                     <a href="/lesson/user-my-lesson" class="dropdown-item">내 수업 조회</a>
                     <a href="/membership/list" class="dropdown-item">내 이용권</a>
-                    <a href="team" class="dropdown-item">구매내역</a>
+                    <a href="/membership/order-list" class="dropdown-item">구매내역</a>
                     </sec:authorize>
                     <sec:authorize access="hasRole('ROLE_TRAINER')">
                         <a href="price" class="dropdown-item">내 정보 조회</a>
                         <a href="/lesson/trainer-my-lesson" class="dropdown-item">내 수업 조회</a>
-                        <a href="feature" class="dropdown-item">내 이용권</a>
-                        <a href="team" class="dropdown-item">구매내역</a>
                     </sec:authorize>
                 </div>
             </div>

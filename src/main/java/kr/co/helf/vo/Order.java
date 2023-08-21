@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 public class Order {
 
 	private int no;
+	private int membershipPrice;			// 자동
+	private int surtax;
 	private int totalPrice;					// 자동
 	private LocalDate paymentDate;
 	private String state;
 	private User user;						// 넣어야됨
-	private int optionPrice;				// 넣어야됨
-	private int membershipPrice;			// 자동
 	private MyMembership myMembership;		// 넣어야됨
 	private  PointHistory pointHistory;
 }
