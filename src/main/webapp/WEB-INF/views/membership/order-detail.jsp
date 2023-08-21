@@ -43,11 +43,10 @@
     </div>
     <!-- Spinner End -->
 
-
     <!-- Topnavbar Start -->
    	<jsp:include page="../common/topnavbar.jsp" />
     <!-- Topnavbar End -->
-    
+
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0 h-10 ">
 		<jsp:include page="../common/navbar.jsp">
@@ -57,7 +56,8 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">MY MEMBERSHIP</h1>
+                    <h1 class="display-4 text-white animated zoomIn">ORDER DETAIL</h1>
+                    <a href="" class="h5 text-white">구매 내역</a>
                 </div>
             </div>
         </div>
@@ -80,91 +80,82 @@
 	<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
 		<div class="container py-5">
 			<div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-				<h5 class="fw-bold text-primary text-uppercase">Your Membership</h5>
-				<h1 class="mb-0">나의 이용권을 확인하세요</h1>
+				<h5 class="fw-bold text-primary text-uppercase">Your Order Detail</h5>
+				<h1 class="mb-0">구매내역 상세정보</h1>
+			</div>
+			<br/>
+			<br/>
+			<br/>
+			<div class="text-center ">
+				<div class="offset-1" style="margin: 100px;">
+					<table class="table table-bordered" style="margin: 50px; width: 900px;">
+			   			<thead>
+			   				<tr class="table-primary" style="width: 1200px;">
+			   					<th>상품명</th>
+			   					<th>기간/횟수</th>
+			   					<th>상품가</th>
+			   				</tr>
+			   				<tr>
+			   					<th>
+			   						${dto.order.myMembership.membership.name }
+			   						<c:forEach var="myOption" items="${dto.myOptions }">
+										<br/><br/>${myOption.optionDetail.option.name }
+			   						</c:forEach>
+			   					</th>
+				   				<td>
+				   					<c:if test="${dto.order.myMembership.remainderCnt eq null }">
+					   					${dto.order.myMembership.period.duration }개월
+				   					</c:if>
+				   					<c:if test="${dto.order.myMembership.remainderCnt ne null }">
+				   						${dto.order.myMembership.period.property }회
+				   					</c:if>
+				   					<c:forEach var="myOption" items="${dto.myOptions }">
+										<br/><br/>${dto.order.myMembership.period.duration }개월
+			   						</c:forEach>
+				   				</td>
+				   				<td>
+				   					<fmt:formatNumber value="${dto.order.membershipPrice }" pattern="###,###"/>원
+				   					<c:forEach var="myOption" items="${dto.myOptions }">
+										<br/><br/><fmt:formatNumber value="${myOption.price }"/> 원
+			   						</c:forEach>
+				   				</td>
+			   				</tr>
+			   				<tr>
+			   					<th>
+			   						부가세
+			   						<c:if test="${dto.order.pointHistory != null }">
+			   							<br/><br/>할인된 포인트
+			   						</c:if>
+			   					</th>
+			   					<td></td>
+			   					<td>
+			   						<fmt:formatNumber value="${dto.order.surtax }" pattern="###,###"/>원
+			   						<c:if test="${dto.order.pointHistory != null }">
+				   						<br/><br/>${dto.order.pointHistory.usePoint }P
+			   						</c:if>
+			   					</td>
+			   				</tr>
+			   				<tr>
+			   					<th>
+			   						<strong>총 결제 금액</strong>
+			   					</th>
+			   					<td></td>
+			   					<td>
+			   						<strong style="font-size: 20px; color:red">
+			   							<span id="total-price-text">
+			   								<fmt:formatNumber value="${dto.order.totalPrice }" pattern="###,###"/>
+			   							</span>원
+			   						</strong>
+			   					</td>
+			   				</tr>
+			   			</thead>
+					</table>
+				</div>
 			</div>
 		</div>
-		
-		<c:if test="${empty list }">
-			<div class="d-grid gap-2 col-6 mx-auto align-items-center justify-content-center text-center">
-				<div>
-					<h4 style="color:gray"><strong>구매하신 이용권이 없습니다.</strong></h4>
-				</div>
-			</div>
-		</c:if>
-		
-		<c:forEach var="dto" items="${list }">
-			<div class="d-grid gap-2 col-6 mx-auto align-items-center justify-content-center text-center"
-				 data-bs-toggle="modal" data-bs-target="#detail-modal-${dto.myMembership.no }">
-				<button id="btn-my-membership-${dto.myMembership.no }" type="button" class="btn btn-outline-info d-inline-block" 
-						style="margin: 30px; height: 200px; width: 600px;">
-					<div class="service-item rounded d-flex flex-column align-items-center justify-content-center text-center "
-     					 style="height: 100px;">
-						<div class="service-icon">
-							<i class="bi bi-trophy-fill text-white"></i>
-						</div>
-					</div>
-					${dto.myMembership.membership.name }
-				</button>
-			</div>
-			<div class="modal fade" id="detail-modal-${dto.myMembership.no }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  		<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="exampleModalLabel">상세정보</h1>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<div class="card" >
-								<div class="card-header bg-primary" style="color: #ffffff">
-									<strong style="color:white">${dto.myMembership.membership.name }</strong>
-								</div>
-								<div class="card-body align-items-center justify-content-center text-center">
-									<table class="table">
-			                    		<tbody>
-			                        		<tr>
-			                            		<th>기간</th>
-			                            		<td>${dto.myMembership.startDate } ~ ${dto.myMembership.endDate }</td>
-			                        		</tr>
-			                       			<c:if test="${dto.myMembership.period.type eq '횟수' }">
-				                       			<tr>
-				                           			<th>횟수</th>
-				                           			<td>${dto.myMembership.remainderCnt }회</td>
-				                       			</tr>
-				                        	</c:if>
-				                          	<tr>
-				                            	<th class="${empty dto.myOptions ? 'border-bottom-0' : '' }" >상태</th>
-				                            	<td class="${empty dto.myOptions ? 'border-bottom-0' : '' }" >
-				                            		${dto.myMembership.state }
-				                            	</td>
-				                           	</tr>
-				                           	<c:if test="${not empty dto.myOptions }">
-				                     			<tr>
-				                            		<th class="align-middle border-bottom-0" >옵션</th>
-				                            		<td class="border-bottom-0" >
-				                            			<c:forEach var="myOption" items="${dto.myOptions }">
-					                            			<div>
-																${myOption.optionDetail.option.name }
-					                            			</div>
-														</c:forEach>
-				                            		</td>
-				                            	</tr>
-				                            </c:if>
-				                        </tbody>
-		                    		</table>
-		                    	</div>
-		                    </div>
-						</div>
-						<div class="align-items-end justify-content-end text-end" style="margin: 15px;">
-							<a href="refound?no=${dto.myMembership.no }" type="button" class="btn btn-danger" >환불하기</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</c:forEach>
 	</div>
 	
-    <jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
+	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
     
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -180,14 +171,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     
 
     <!-- Template Javascript -->
 	<script src="/resources/js/main.js"></script>
 </body>
-<script type="text/javascript">
-$(function() {
-
-})
-</script>
 </html>

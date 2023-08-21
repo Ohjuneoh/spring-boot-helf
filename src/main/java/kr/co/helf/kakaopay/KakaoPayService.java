@@ -31,16 +31,21 @@ public class KakaoPayService {
 		param.add("total_amount", String.valueOf(form.getTotalPrice()));
 		param.add("tax_free_amount", "0");
 		param.add("vat_amount", String.valueOf(form.getSurtax()));
-		param.add("approval_url", "http://localhost/membership/order"); // 성공 시 redirect url
-		param.add("cancel_url", "http://localhost/membership/list"); // 취소 시 redirect url
-		param.add("fail_url", "http://localhost/membership/order-fail"); // 실패 시 redirect url
+		param.add("approval_url", "http://localhost/order/kakaopay-progress"); // 성공 시 redirect url
+		param.add("cancel_url", "http://localhost/order/kakaopay-cancle"); // 취소 시 redirect url
+		param.add("fail_url", "http://localhost/order/kakaopay-fail"); // 실패 시 redirect url
 		
 		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(param, this.getHeaders());
+		// MultiValueMap<String, String> 타입을 저장할 수 있는 HttpEntity 객체를 생성해서 param을 본문에 담고 this.getHeaders()를 헤더에 담는다. 
 		
 		RestTemplate template = new RestTemplate();
+		// HTTP 통신을 간편하게 할 수 있는 클래스다.
+		
 		String url = "https://kapi.kakao.com/v1/payment/ready";
 		KakaoPayReadyResponse kakaoReadyResponse = template.postForObject(url, requestEntity, KakaoPayReadyResponse.class);
-		log.info("결재준비 응답객체: " + kakaoReadyResponse);
+		// 변수 url에 저장된 링크로 requestEntity를 보낸다. 그리고 응답을 KakaoPayReadyResponse에 저장해서 받는다.
+		
+		log.info("결제준비 응답객체: " + kakaoReadyResponse);
 		
 		return kakaoReadyResponse;
 	}

@@ -6,7 +6,9 @@ public enum OrderEnum {
 	TIME("횟수"),
 	POSSIBILITY("사용중"),
 	IMPOSSIBILITY("사용불가"),
-	WAITING("사용대기");
+	WAITING("사용대기"),
+	WAITREFOUND("환불대기"),
+	REFOUNDCOMPLETED("환불완료");
 
 	private final String orderEnum;
 	

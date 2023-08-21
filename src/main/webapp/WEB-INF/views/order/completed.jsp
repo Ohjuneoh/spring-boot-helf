@@ -43,11 +43,10 @@
     </div>
     <!-- Spinner End -->
 
-
     <!-- Topnavbar Start -->
    	<jsp:include page="../common/topnavbar.jsp" />
     <!-- Topnavbar End -->
-    
+
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0 h-10 ">
 		<jsp:include page="../common/navbar.jsp">
@@ -57,7 +56,8 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">MY MEMBERSHIP</h1>
+                    <h1 class="display-4 text-white animated zoomIn">ORDER</h1>
+                    <a href="" class="h5 text-white">이용권 구매</a>
                 </div>
             </div>
         </div>
@@ -80,96 +80,21 @@
 	<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
 		<div class="container py-5">
 			<div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-				<h5 class="fw-bold text-primary text-uppercase">Your Membership</h5>
-				<h1 class="mb-0">나의 이용권을 확인하세요</h1>
+				<h5 class="fw-bold text-primary text-uppercase">Your Order</h5>
+				<h1 class="mb-0">구매가 완료되었습니다</h1>
+			</div>
+			<div style="display: flex; justify-content: center; align-items: center;">
+				<a href="../membership/list" type="button" class="btn btn-primary btn-lg">내 이용권 보러가기</a>
 			</div>
 		</div>
-		
-		<c:if test="${empty list }">
-			<div class="d-grid gap-2 col-6 mx-auto align-items-center justify-content-center text-center">
-				<div>
-					<h4 style="color:gray"><strong>구매하신 이용권이 없습니다.</strong></h4>
-				</div>
-			</div>
-		</c:if>
-		
-		<c:forEach var="dto" items="${list }">
-			<div class="d-grid gap-2 col-6 mx-auto align-items-center justify-content-center text-center"
-				 data-bs-toggle="modal" data-bs-target="#detail-modal-${dto.myMembership.no }">
-				<button id="btn-my-membership-${dto.myMembership.no }" type="button" class="btn btn-outline-info d-inline-block" 
-						style="margin: 30px; height: 200px; width: 600px;">
-					<div class="service-item rounded d-flex flex-column align-items-center justify-content-center text-center "
-     					 style="height: 100px;">
-						<div class="service-icon">
-							<i class="bi bi-trophy-fill text-white"></i>
-						</div>
-					</div>
-					${dto.myMembership.membership.name }
-				</button>
-			</div>
-			<div class="modal fade" id="detail-modal-${dto.myMembership.no }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  		<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="exampleModalLabel">상세정보</h1>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<div class="card" >
-								<div class="card-header bg-primary" style="color: #ffffff">
-									<strong style="color:white">${dto.myMembership.membership.name }</strong>
-								</div>
-								<div class="card-body align-items-center justify-content-center text-center">
-									<table class="table">
-			                    		<tbody>
-			                        		<tr>
-			                            		<th>기간</th>
-			                            		<td>${dto.myMembership.startDate } ~ ${dto.myMembership.endDate }</td>
-			                        		</tr>
-			                       			<c:if test="${dto.myMembership.period.type eq '횟수' }">
-				                       			<tr>
-				                           			<th>횟수</th>
-				                           			<td>${dto.myMembership.remainderCnt }회</td>
-				                       			</tr>
-				                        	</c:if>
-				                          	<tr>
-				                            	<th class="${empty dto.myOptions ? 'border-bottom-0' : '' }" >상태</th>
-				                            	<td class="${empty dto.myOptions ? 'border-bottom-0' : '' }" >
-				                            		${dto.myMembership.state }
-				                            	</td>
-				                           	</tr>
-				                           	<c:if test="${not empty dto.myOptions }">
-				                     			<tr>
-				                            		<th class="align-middle border-bottom-0" >옵션</th>
-				                            		<td class="border-bottom-0" >
-				                            			<c:forEach var="myOption" items="${dto.myOptions }">
-					                            			<div>
-																${myOption.optionDetail.option.name }
-					                            			</div>
-														</c:forEach>
-				                            		</td>
-				                            	</tr>
-				                            </c:if>
-				                        </tbody>
-		                    		</table>
-		                    	</div>
-		                    </div>
-						</div>
-						<div class="align-items-end justify-content-end text-end" style="margin: 15px;">
-							<a href="refound?no=${dto.myMembership.no }" type="button" class="btn btn-danger" >환불하기</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</c:forEach>
 	</div>
-	
+    
     <jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
     
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
-
-	<!-- JavaScript Libraries -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>	
+	
+    <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="/resources/lib/wow/wow.min.js"></script>
@@ -178,16 +103,10 @@
     <script src="/resources/lib/counterup/counterup.min.js"></script>
     <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://momentjs.com/downloads/moment.min.js"></script>
-    <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
-    
 
     <!-- Template Javascript -->
 	<script src="/resources/js/main.js"></script>
 </body>
 <script type="text/javascript">
-$(function() {
-
-})
 </script>
 </html>

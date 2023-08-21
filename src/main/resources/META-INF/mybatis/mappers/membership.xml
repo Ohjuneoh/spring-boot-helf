@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.helf.mapper.MembershipMapper">
+
+	<select id="getMyMembershipById" parameterType="string" resultType="myMembership">
+		select my_membership_no					as no,
+			   my_membership_startdate			as startDate,
+			   my_membership_enddate			as endDate,
+			   my_membership_remainder_cnt		as remainderCnt,
+			   my_membership_state				as state,
+			   user_id							as "user.id",
+			   period_no						as "period.no",
+			   membership_no					as "membership.no"
+		from helf_my_membership
+		where user_id = #{value}
+		and my_membership_state not in '사용불가'
+		order by my_membership_no desc
+	</select>
+	
+	<select id="getUseMyMembershipByNo" parameterType="int" resultType="myMembership">
+		select my_membership_no					as no,
+			   my_membership_startdate			as startDate,
+			   my_membership_enddate			as endDate,
+			   my_membership_remainder_cnt		as remainderCnt,
+			   my_membership_state				as state,
+			   user_id							as "user.id",
+			   period_no						as "period.no",
+			   membership_no					as "membership.no"
+		from helf_my_membership
+		where my_membership_no = #{value}
+		and my_membership_state not in '사용불가'
+		order by my_membership_no desc
+	</select>
+	
+	<select id="getMyMembershipByNo" parameterType="int" resultType="myMembership">
+		select my_membership_no					as no,
+			   my_membership_startdate			as startDate,
+			   my_membership_enddate			as endDate,
+			   my_membership_remainder_cnt		as remainderCnt,
+			   my_membership_state				as state,
+			   user_id							as "user.id",
+			   period_no						as "period.no",
+			   membership_no					as "membership.no"
+		from helf_my_membership
+		where my_membership_no = #{value}
+		order by my_membership_no desc
+	</select>
+	
+	<select id="getMyOptions" parameterType="int" resultType="myOption">
+		select my_option_no			as no,
+			   detail_no			as "optionDetail.no",
+			   my_membership_no		as "myMembership.no",
+			   my_option_price		as price
+		from helf_membership_my_option
+		where my_membership_no = #{value}
+	</select>
+
+	<select id="getOptionByNo" parameterType="int" resultType="option">
+		select option_no	as no,
+			   option_name	as name
+		from helf_membership_option
+		where option_no = #{value}
+		order by option_no
+	</select>
+	
+	<select id="getOrderByMyMembershipNo" parameterType="int" resultType="order">
+		select orders_no				as no,
+			   orders_total_price		as totalPrice,
+			   orders_payment_date		as paymentDate,
+			   orders_payment_state		as state,
+			   user_id					as "user.id",
+			   orders_membership_price	as membershipPrice,
+			   my_membership_no			as "myMembership.no",
+			   point_history_no			as "pointHistory.no",
+			   orders_surtax			as surtax
+		from helf_orders
+		where my_membership_no = #{value}
+	</select>
+	
+	<update id="updateOrder" parameterType="order">
+		update helf_orders
+		<set>
+			orders_payment_state = #{state}
+		</set>
+		where orders_no = #{no}
+	</update>
+	
+	<update id="updateMyMembership" parameterType="myMembership">
+		update helf_my_membership
+		<set>
+			my_membership_remainder_cnt = #{remainderCnt},
+			my_membership_state = #{state}
+		</set>
+		where my_membership_no = #{no}
+	</update>
+	
+	<select id="getOrdersById" parameterType="string" resultType="order">
+		select orders_no				as no,
+			   orders_total_price		as totalPrice,
+			   orders_payment_date		as paymentDate,
+			   orders_payment_state		as state,
+			   user_id					as "user.id",
+			   orders_membership_price	as membershipPrice,
+			   my_membership_no			as "myMembership.no",
+			   point_history_no			as "pointHistory.no",
+			   orders_surtax			as surtax
+		from helf_orders
+		where user_id = #{value}
+		order by orders_no desc
+	</select>
+	
+	<select id="getPointHistoryByNo" parameterType="int" resultType="pointHistory">
+		select point_history_no		as no,
+			   point_history_use	as usePoint,
+			   point_history_date	as useDate,
+			   user_id				as "user.id",
+			   point_history_type	as type
+		from helf_point_history
+		where point_history_no = #{value}
+	</select>
+	
+	<select id="getOrderByNo" parameterType="int" resultType="order">
+		select orders_no				as no,
+			   orders_total_price		as totalPrice,
+			   orders_payment_date		as paymentDate,
+			   orders_payment_state		as state,
+			   user_id					as "user.id",
+			   orders_membership_price	as membershipPrice,
+			   my_membership_no			as "myMembership.no",
+			   point_history_no			as "pointHistory.no",
+			   orders_surtax			as surtax
+		from helf_orders
+		where orders_no = #{value}
+	</select>
+</mapper>

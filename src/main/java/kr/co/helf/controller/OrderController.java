@@ -15,27 +15,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
+import kr.co.helf.dto.MembershipJoinCategory;
+import kr.co.helf.dto.OptionJoinDetail;
 import kr.co.helf.form.AddOrderForm;
-import kr.co.helf.kakaopay.KakaoApproveResponse;
 import kr.co.helf.kakaopay.KakaoPayReadyResponse;
 import kr.co.helf.kakaopay.KakaoPayService;
 import kr.co.helf.service.OrderService;
 import kr.co.helf.vo.Membership;
-import kr.co.helf.vo.MembershipJoinCategory;
 import kr.co.helf.vo.Option;
-import kr.co.helf.vo.OptionJoinDetail;
 import kr.co.helf.vo.Period;
 import kr.co.helf.vo.Rank;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("/membership")
+@RequestMapping("/order")
 @RequiredArgsConstructor
 @SessionAttributes({"addOrderForm", "tid"})
-@Slf4j
 public class OrderController {
 	
 	private final OrderService orderService;
@@ -46,14 +44,18 @@ public class OrderController {
 		List<Membership> memberships = orderService.getAllMembership();
 		model.addAttribute("memberships", memberships);
 		
-		return "membership/list";
+		return "order/membership-list";
 	}
 	
 	@GetMapping("/condition")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String condition(@RequestParam("no") int no, @AuthenticationPrincipal User user, Model model) {
 
-		orderService.checkUseMyMembership(no, user.getId());
+		try {
+			orderService.checkUseMyMembership(no, user.getId());
+		} catch (RuntimeException ex) {
+			return "redirect:list?error=dup";
+		}
 		
 		MembershipJoinCategory membershipJoinCat = orderService.getMembershipJoinCatByNo(no);
 		model.addAttribute("membershipJoinCat", membershipJoinCat);
@@ -65,7 +67,7 @@ public class OrderController {
 
 		model.addAttribute("addOrderForm", form);
 		
-		return "membership/orderStep1";
+		return "order/step1";
 	}
 	
 	@GetMapping("/period")
@@ -82,7 +84,7 @@ public class OrderController {
 			model.addAttribute("user", user);
 			model.addAttribute("form", form);
 			
-			return "membership/orderStep3";
+			return "order/step3";
 		}
 		
 		List<Option> options = orderService.getOptions();
@@ -94,10 +96,10 @@ public class OrderController {
 		List<Period> periods = orderService.getAllPeriodByType(membershipJoinCat.getCatProperty());
 		model.addAttribute("periods", periods);
 		
-		return "membership/orderStep2";
+		return "order/step2";
 	}
 	
-	@PostMapping("/order-check")
+	@PostMapping("/check")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String orderCheck(@ModelAttribute("addOrderForm") AddOrderForm form, Model model, 
 							 @AuthenticationPrincipal User user) {
@@ -114,62 +116,64 @@ public class OrderController {
 		OptionJoinDetail wear = orderService.getOptionJoinDetailByNo(form.getWearNo());
 		
 		form.setLockerName(locker.getName());
-		form.setLockerPeriod(locker.getPeriod());
-		form.setLockerPrice(locker.getPrice());
+		form.setLockerPrice(locker.getPrice()*period.getDuration());
 		form.setWearName(wear.getName());
-		form.setWearPeriod(wear.getPeriod());
-		form.setWearPrice(wear.getPrice());
+		form.setWearPrice(wear.getPrice()*period.getDuration());
 		
-		form.surtax(locker.getPrice(), wear.getPrice());
-		int membershipOptionPrice = form.membershipOptionPrice(form.getLockerPrice(), form.getWearPrice());
-		form.totalPrice(form.getMembershipOptionPrice(), form.getSurtax());
+		form.membershipOptionPrice();
+		form.surtax();
+		form.totalPrice();
 		
 		Rank rank = orderService.getRankByNo(user.getRank().getNo());
-		System.out.println(membershipOptionPrice*rank.getPointRate());
-		
-		int savePoint = (int)(membershipOptionPrice*rank.getPointRate());
+		int savePoint = (int)(form.getMembershipOptionPrice()*rank.getPointRate());
 		form.setSavePoint(savePoint);
 		
 		model.addAttribute("form", form);
 		model.addAttribute("user", user);
 		
-		log.info("이용권 -> {}", form);
-		return "membership/orderStep3";
+		return "order/step3";
 	}
 	
 	@PostMapping("/kakaopay-ready")
 	@ResponseBody
 	public KakaoPayReadyResponse kakaoReady(@ModelAttribute AddOrderForm form, Model model) {
+		
 		KakaoPayReadyResponse ready = kakaoPayService.kakaoPayReadyResponse(form);
 		model.addAttribute("tid", ready.getTid());
+		// 카카오에서 받은 응답을 KakaoPayReadyResponse 클래스에 저장한다.
+		// 응답으로 받은 tid를  tid 라는 이름으로 세션에 저장한다.
 		
 		return ready;
+		// 성공할시 ready가 kakaopay-progress로 전달된다.
 	}
 	
-	@GetMapping("/order")
+	@GetMapping("/kakaopay-progress")
 	public String order(@ModelAttribute("addOrderForm")  AddOrderForm form, @AuthenticationPrincipal User user, 
-						@ModelAttribute("tid")  String tid, @RequestParam("pg_token") String pgToken) {
+						@ModelAttribute("tid")  String tid, @RequestParam("pg_token") String pgToken,
+						SessionStatus sessionStatus) {
 		
 		kakaoPayService.approveResponse(tid, pgToken);
 		orderService.updateUser(form, user);
 		orderService.insertOrder(form, user);
 		
-		return "redirect:/membership/order-completed";
+		sessionStatus.setComplete();
+		
+		return "redirect:/order/completed";
 	}
 	
-	@GetMapping("/order-completed")
+	@GetMapping("/completed")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String orderCompleted() {
-		return "membership/orderCompleted";
+		return "order/completed";
 	}
 	
-	@GetMapping("/order-fail")
-	public void orderFail() {
-		throw new RuntimeException("결제가 실패했습니다.");
+	@GetMapping("/kakaopay-fail")
+	public String orderFail() {
+		return "redirect:list?error=kakaopay-fail";
 	}
 
-	@GetMapping("/order-cancle")
-	public void orderCancle() {
-		throw new RuntimeException("결제가 최소되었습니다.");
+	@GetMapping("/kakaopay-cancle")
+	public String orderCancle() {
+		return "redirect:list?error=kakaopay-cancle";
 	}
 }
