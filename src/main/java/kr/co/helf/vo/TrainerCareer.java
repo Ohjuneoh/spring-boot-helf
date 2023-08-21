@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.ToString;
 
 @Data
-@ToString
 @Alias("TrainerCareer")
 
 public class TrainerCareer {
