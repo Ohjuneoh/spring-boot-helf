@@ -124,14 +124,15 @@
 				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<form method="post" action="/personal-lesson/reservation">
+					<form method="post" action="/personal-lesson/list">
 						<input id="modal-userId" type="hidden" name="userId"/>
 						<input id="modal-trainerNo" type="hidden" name="trainerNo"/>
 						<input id="modal-myMembershipNo" type="hidden" name="myMembershipNo"/>
+						<input id="modal-userName2" name="lessonName"/>
 		        		<div class="row g-1">
 								<div class="col-12">
 									<h3 class="mb-2 mt-2 text-primary" >수업 내용</h3>	
-									<textarea id="abnormalities" class="form-control bg-light border-0" name="abnormalities" style="height: 300px;"></textarea>
+									<textarea id="content" class="form-control bg-light border-0" name="content" style="height: 300px;"></textarea>
 								</div>
 								<div class="col-3">
 							    	<div class="input-group">
@@ -192,6 +193,7 @@ $(document).ready(function() {
         var trainerno = button.data('trainerno');
         var mymembershipno = button.data('mymembershipno')
         $('#modal-userName').text(username); 
+        $('#modal-userName2').val(username); 
         $('#modal-userId').val(userid); 
         $('#modal-trainerNo').val(trainerno); 
         $('#modal-myMembershipNo').val(mymembershipno);
