@@ -1,9 +1,12 @@
 package kr.co.helf.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.helf.dto.OrderJoin;
+import kr.co.helf.form.OrderSearchForm;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.MyOption;
 import kr.co.helf.vo.Option;
@@ -29,9 +32,11 @@ public interface MembershipMapper {
 
 	void updateMyMembership(MyMembership myMembership);
 
-	List<Order> getOrdersById(String id);
+	List<OrderJoin> getOrdersById(Map<String, Object> map);
 
 	PointHistory getPointHistoryByNo(int no);
 
 	Order getOrderByNo(int no);
+
+	int getTotalRows(OrderSearchForm form);
 }

@@ -94,19 +94,57 @@
 		where my_membership_no = #{no}
 	</update>
 	
-	<select id="getOrdersById" parameterType="string" resultType="order">
-		select orders_no				as no,
-			   orders_total_price		as totalPrice,
-			   orders_payment_date		as paymentDate,
-			   orders_payment_state		as state,
-			   user_id					as "user.id",
-			   orders_membership_price	as membershipPrice,
-			   my_membership_no			as "myMembership.no",
-			   point_history_no			as "pointHistory.no",
-			   orders_surtax			as surtax
-		from helf_orders
-		where user_id = #{value}
-		order by orders_no desc
+	<select id="getOrdersById" parameterType="map" resultType="orderJoin">
+		select A.orders_no						as no,
+			   A.orders_total_price				as totalPrice,
+			   A.orders_payment_date			as paymentDate,
+			   A.orders_payment_state			as orderState,
+			   A.user_id						as "user.id",
+			   B.my_membership_no				as membershipNo,
+			   C.membership_no					as membershipNo,
+			   C.membership_name				as name
+		from (select row_number() over (orders_no) as rownumber,
+					 orders_no,
+					 orders_total_price,
+					 orders_payment_date,
+					 orders_payment_state,
+					 my_membership_no,
+					 user_id
+			  from helf_orders) A, helf_my_membership B, helf_membership C
+		where A.my_membership_no = B.my_membership_no
+		and B.membership_no = C.membership_no
+		and A.user_id = #{user.id}
+		and A.rownumber between #{begin} and #{end}
+		<if test="form.state != null">
+			and A.orders_payment_state = #{form.state}
+		</if>
+		<if test="form.type != null">
+			<choose>
+				<when test="form.type == 'name'">
+					and C.membership_name like '%' || #{form.keyword} || '%'
+				</when>
+				<when test="form.type == 'no'">
+					and A.orders_no like '%' || #{form.keyword} || '%'
+				</when>
+			</choose>
+		</if>
+		order by A.orders_no desc
+	</select>
+	
+	<select id="getTotalRows" parameterType="searchForm" resultType="int">
+		select count(*)
+		from helf_orders A, helf_my_membership B, helf_membership C
+		where A.my_membership_no = B.my_membership_no
+		and B.membership_no = C.membership_no
+			<choose>
+				<when test="type == 'name'">
+					and C.membership_name like '%' || #{keyword} || '%'
+				</when>
+				<when test="type == 'no'">
+					and A.orders_no like '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		
 	</select>
 	
 	<select id="getPointHistoryByNo" parameterType="int" resultType="pointHistory">

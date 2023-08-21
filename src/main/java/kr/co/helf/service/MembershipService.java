@@ -2,10 +2,15 @@ package kr.co.helf.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import kr.co.helf.dto.MyMembershipListDto;
+import kr.co.helf.dto.OrderJoin;
+import kr.co.helf.dto.OrderListDto;
+import kr.co.helf.dto.Pagination;
+import kr.co.helf.form.OrderSearchForm;
 import kr.co.helf.mapper.MembershipMapper;
 import kr.co.helf.mapper.OrderMapper;
 import kr.co.helf.vo.Membership;
@@ -97,24 +102,29 @@ public class MembershipService {
 		membershipMapper.updateMyMembership(myMembership);
 	}
 
-	public List<Order> getOrdersById(String id) {
-		List<Order> orders = membershipMapper.getOrdersById(id);
-		if(!orders.isEmpty()) {
-			for(Order order : orders) {
-				MyMembership myMembership = membershipMapper.getMyMembershipByNo(order.getMyMembership().getNo());
-				if(myMembership != null) {
-					Membership membership = orderMapper.getMembershipByNo(myMembership.getMembership().getNo());
-					myMembership.setMembership(membership);
-					order.setMyMembership(myMembership);
-				}
-				
-				if(order.getPointHistory() != null) {
-					PointHistory pointHistory = membershipMapper.getPointHistoryByNo(order.getPointHistory().getNo());
-					order.setPointHistory(pointHistory);
-				}
-			}
-		}
-		return orders;
+	public OrderListDto getOrdersById(Map<String, Object> map) {
+		
+		OrderSearchForm form = (OrderSearchForm) map.get("form");
+		
+		int totalRows = membershipMapper.getTotalRows(form);
+		Pagination pagination = new Pagination(form.getPage(), totalRows);
+
+		map.put("begin", pagination.getBegin());
+		map.put("end", pagination.getEnd());
+		
+		System.out.println(map);
+		
+		List<OrderJoin> orders = membershipMapper.getOrdersById(map);
+		
+//		if(orders.isEmpty()) {
+//			throw new RuntimeException();
+//		}
+		
+		OrderListDto orderList = new OrderListDto();
+		orderList.setOrders(orders);
+		orderList.setPagination(pagination);
+		
+		return orderList;
 	}
 
 	public Order getOrderByNo(int no) {
