@@ -1,31 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="kr">
 <style>
-	.modal-font-size {
-    font-size: 20px;
+body {
+  position: relative;
 }
-
-#modal-table-users td, #modal-table-users th {
-    padding-bottom: 20px;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 1.5em;
-}
-	
-	
 </style>
 <head>
-    <title>HELF 입장하기</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <meta charset="utf-8">
+    <title>HELF</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="/resources/img/favicon.ico" rel="icon">
+    <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,11 +38,12 @@
     <!-- Template Stylesheet -->
     <link href="/resources/css/style.css" rel="stylesheet">
     
-    <!--jQuery library -->
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- 데이트피커 -->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 
 <body>
+
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner"></div>
@@ -58,30 +51,73 @@
     <!-- Spinner End -->
 
 
-    <!-- Topbar Start -->
-    <jsp:include page="../common/topnavbar.jsp"/>
-    <!-- Topbar End -->
+    <!-- Topnavbar Start -->
+   	<jsp:include page="/WEB-INF/views/common/topnavbar.jsp">
+		<jsp:param name="menu" value="홈"/>
+	</jsp:include>
+    <!-- Topnavbar End -->
 
 
     <!-- Navbar Start -->
-    <div class="container-fluid position-relative p-0">
-        <%@ include file="/WEB-INF/views/common/navbar.jsp" %>
-
-        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+    <div class="container-fluid position-relative p-0 h-10 ">
+		<jsp:include page="/WEB-INF/views/common/navbar.jsp">
+			<jsp:param name="menu" value="홈"/>
+		</jsp:include>
+    <!-- Navbar End -->
+        <div class="container-fluid bg-primary py-3 bg-header" style="margin-bottom: 90px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">HELF 입장하기</h1>
-                    <a href="/home" class="h5 text-white">Home</a>
-                    <i class="far fa-circle text-white px-2"></i>
-                    <a href="" class="h5 text-white">Concept</a>
+                    <h1 class="display-4 text-white animated zoomIn">REGISTER</h1>
+                    <a href="" class="h5 text-white">회원가입</a>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Navbar End -->
 
 
-    <!-- Full Screen Search Start -->
+
+	<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
+		<div class="container">
+			<form method="post" enctype="multipart/form-data" action="user/register/trainer2">
+				<div class="row" >
+					<div class="mb-4">
+						<h3>트레이너 회원가입</h3>
+					</div>
+					<h5>사진업로드</h5>
+					    <div class="col-sm-6">
+							<input type='file' name="photofile" />
+						</div>
+				</div>
+				
+				<div class="row mt-4" >
+					<h5>경력</h5>
+				    	<div class="col-sm-6 input-wrapper">
+				        	 <input type="text" class="form-control bg-light border-0" id="trainer-career" name="careerName" placeholder="경력 이름을 입력하세요." style="height: 55px; width: 620px;" />
+				    	</div>
+				    	<div class="col-sm-6">
+					    	<div class="d-flex">
+						         <input type="text" class="form-control bg-light border-0 mr-2" id="datepicker1" name="careerStartDate" placeholder="경력 시작일" style="height: 55px; width: 305px;" />
+						         <input type="text" class="form-control bg-light border-0" id="datepicker2" name="careerEndDate" placeholder="경력 종료일" style="height: 55px; width: 305px;" />
+				    		</div>
+				    	</div>
+				</div>
+				
+				<div class="row mt-4" >
+					<h5>자기소개</h5>
+					    <div class="col-sm-6 input-wrapper">
+					         <input type="text" class="form-control bg-light border-0" id=""  placeholder="자기소개를 입력하세요." style="height: 300px; width: 1280px;" />
+					    	 <div class="check_font" id="user-id_check"></div>
+					    </div>
+				</div>
+				
+			    <div class="col-13 mt-4" >
+			        <button id="user-button-register" class="btn btn-dark w-100 py-3" type="submit">가입하기</button>
+			    </div>
+			</form>   
+		</div>
+	</div>
+
+
     <div class="modal fade" id="searchModal" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
@@ -97,88 +133,13 @@
             </div>
         </div>
     </div>
-    <!-- Full Screen Search End -->
-
-    <!-- Concept -입장하기 form Start -->
-    <div class="container-fluid py-5 text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-12">
-                <div class="section-title position-relative pb-3 mb-5">
-                    <div class="align-items-center justify-content-center text-center h-100 bg-primary p-4">
-                        <a href="index.html" class="navbar-brand">
-                             <h1 class="m-0 text-white"><i class="fa fa-user-tie me-2"></i>입장하기</h1>
-                        </a>
-                        <p class="mt-3 mb-4">1. 회원번호 네 자리를 입력해주세요.<br> 
-                        					 2. 입장 버튼을 눌러주세요.<br>
-                        					 3. 1:1 수업 혹은 그룹 수업은 ‘수업’ 버튼을 눌러주세요. <br>
-                        					 4. 시설이용은 ‘시설이용’ 버튼을 눌러주세요. </p>
-                        <form id="checkinForm" method="get" action="customer-verification">
-                            <div class="input-group">
-                                <input type="text" class="form-control border-white p-3" placeholder="휴대폰 뒷번호 네 자리" id="fourDigits" name="fourDigits">
-                                <button type="button" class="btn btn-dark btn-lg"  id="btn-open-modal">입장</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Concept -입장하기 form End  -->
     
     
-    <!-- Modal 회원정보 Start -->
-   <div class="modal fade" id="userModal" data-bs-backdrop="static" role="dialog" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">>
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="staticBackdropLabel">회원 목록</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <p class="modal-font-size">본인 정보를 확인하시고 '선택' 버튼을 눌러주세요.</p>
-              
-                <table class="table" id="modal-table-users">
-                	<thead>
-                		<tr>
-                			<th>이름</th>
-                			<th>휴대폰 번호</th>
-                			<th></th>
-                		</tr>
-                	</thead>
-                	<tbody>
-                		
-                	</tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-   </div>
-	<!-- Modal 회원정보 End -->
+   
     
- <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container">
             <div class="row gx-5">
-                <div class="col-lg-4 col-md-6 footer-about">
-                    <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-primary p-4">
-                        <a href="index.html" class="navbar-brand">
-                            <h1 class="m-0 text-white"><i class="fa fa-user-tie me-2"></i>Startup</h1>
-                        </a>
-                        <p class="mt-3 mb-4">Lorem diam sit erat dolor elitr et, diam lorem justo amet clita stet eos sit. Elitr dolor duo lorem, elitr clita ipsum sea. Diam amet erat lorem stet eos. Diam amet et kasd eos duo.</p>
-                        <form action="">
-                            <div class="input-group">
-                                <input type="text" class="form-control border-white p-3" placeholder="Your Email">
-                                <button class="btn btn-dark">Sign Up</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
                 <div class="col-lg-8 col-md-6">
                     <div class="row gx-5">
                         <div class="col-lg-4 col-md-12 pt-5 mb-5">
@@ -251,12 +212,15 @@
     </div>
     <!-- Footer End -->
 
+
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
 
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/resources/lib/wow/wow.min.js"></script>
     <script src="/resources/lib/easing/easing.min.js"></script>
@@ -266,92 +230,39 @@
 
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
-
-<script type="text/javascript">
-	// 부트스트랩의 모달 객체 생성하기
-	const userModal = new bootstrap.Modal('#userModal', {
-		keyboard: false
-	});
+  
+   
+<script>
 	
-	
-	$("#btn-open-modal").click(function() {
-		$("#modal-table-users tbody").empty();
-        const fourDigits = $("#fourDigits").val();
-        if(!fourDigits){
-        	alert("휴대폰 뒷번호 네 자리를 입력하세요.");
-        	return;
-        }
-        if(!/^\d{4}$/.test(fourDigits)){
-        	alert("휴대폰 뒷번호 네 자리를 입력하세요.")
-        	return; 
-        }
-        $.ajax({
-            type: "GET",
-            url: "/checkin/customer-verification", // The URL to the server endpoint to fetch data
-            data: { fourDigits: fourDigits }, // Send the input data to the server
-            success: function (users) {
-            	
-            	$("#modal-table-users tbody").empty();
-            	if(!users || users.length == 0){
-            		let noUsersRow = `
-            						<tr>
-            							<td colspan="3">입력하신 회원 정보가 존재하지 않습니다.</td>
-            						</tr>
-            						`;
-            						$("#modal-table-users tbody").append(noUsersRow);
-            	} else {            	
-            	users.forEach(function(user, index) {
-            		let maskedTel = user.tel.replace(/(\d{3})-\d{4}-(\d{4})/, "$1-****-$2");
-            		let firstNameChar = user.name.charAt(0);
-                    let lastNameChar = user.name.charAt(user.name.length - 1);
-                    let maskedName = firstNameChar + '*'.repeat(user.name.length - 2) + lastNameChar;
-
-            		
-            		let tr = `
-            			<tr>
-            				<td>\${maskedName}</td>
-            				<td>\${maskedTel}</td>
-            				<td><a href="/checkin/check-in-choice?id=\${user.id}" class="btn btn-outline-primary">선택</a></td>
-            			</tr>
-            			<tr>
-            	        	<td>&nbsp;</td>
-            	        	<td>&nbsp;</td>
-            	        	<td></td>
-            	    	</tr>
-            	    	<tr>
-        	        		<td>&nbsp;</td>
-        	        		<td>&nbsp;</td>
-        	        		<td></td>
-        	    		</tr>
-        	    		<tr>
-    	        			<td>&nbsp;</td>
-    	        			<td>&nbsp;</td>
-    	        			<td></td>
-    	    			</tr>
-    	    			<tr>
-	        				<td>&nbsp;</td>
-	        				<td>&nbsp;</td>
-	        				<td></td>
-	    				</tr>
-            		`
-            		$("#modal-table-users tbody").append(tr);
-            	});
-            	}
-            	
-                // 모달 창 띄우기 
-                $("#userModal").modal("show");
-            },
-            error: function (xhr, status, error) {
-                // Handle errors if any
-                console.error("Error:", error);
-            }
-        });
-				
-	});
-	
-	
+	// 경력 데이트피커 (시작일)
+      $(function(){
+         $('#datepicker1').datepicker();
+      })
+      
+	// 경력 데이트피커 (종료일)
+      $(function(){
+          $('#datepicker2').datepicker();
+      })
+       
+   	// 데이트피커 한글적용
+    $(document).ready(function(){               
+	    $.datepicker.setDefaults({
+	    closeText: "닫기",
+	    currentText: "오늘",
+	    prevText: '이전 달',
+	    nextText: '다음 달',
+	    monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	    monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	    dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+	    dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+	    dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+	    weekHeader: "주",
+	    yearSuffix: '년'
+	    });    
+	 });
 	
 	
 </script>
+	
 </body>
 </html>

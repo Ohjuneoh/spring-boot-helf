@@ -20,9 +20,24 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp     
-
-
-        
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+# 이메일인증
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: oooorrrr0117@gmail.com
+    password: qbgwovlafhgjinli
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
+        debug: true
 # 카카오로그인
   security:
     oauth2:

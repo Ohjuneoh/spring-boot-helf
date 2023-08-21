@@ -9,12 +9,14 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class AddUserForm {
 
 	private String id;
@@ -22,6 +24,7 @@ public class AddUserForm {
 	private String password;
 	
 	private String email1;
+	
 	private String email2;
 	
 	private String name;
@@ -38,5 +41,9 @@ public class AddUserForm {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date updateDate;
 	
-	
+	// 트레이너 두번째 폼
+	private String photofile;
+	private String careerName;
+	private Date careerStartDate;
+	private Date careerEndDate;
 }

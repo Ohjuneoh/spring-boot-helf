@@ -152,12 +152,12 @@ body {
 						<h5>아이디</h5>
 						    <div class="col-sm-6 input-wrapper">
 						         <form:input type="text" class="form-control bg-light border-0" id="user-id" path="id" placeholder="4-12자, 영어소문자를 입력하세요." style="height: 55px; width: 620px;" />
-						    	 <div class="check_font" id="id_check"></div>
+						    	 <div class="check_font" id="user-id_check"></div>
 						    	<div class="id_input_re_1" style="color: green; display: none;">사용 가능한 아이디입니다.</div>
 						    	<div class="id_input_re_2" style="color: red; display: none;">아이디가 이미 존재합니다.</div>
 						    </div>
 						    <div class="col-sm-6 button-wrapper">
-						        <input id="check-duplicate" type="button" value="중복체크" class="btn btn-primary" style="height: 53px; width: 100px;" />
+						        <input id="user-check-duplicate" type="button" value="중복체크" class="btn btn-primary disabled" style="height: 53px; width: 100px;" />
 						    </div>
 					</div>
 					
@@ -170,7 +170,7 @@ body {
 				    <div class="col-12">
 				    	<h5>비밀번호</h5>
 				        <form:input type="password" class="form-control bg-light border-0" id="user-password" path="password" placeholder="4-12자, 영문+숫자+특수문자를 꼭 포함하여 입력하세요." style="height: 55px;" />
-				   		<div class="check_font" id="password_check"></div>
+				   		<div class="check_font" id="user-password_check"></div>
 				    </div>
 				    
 				    <div class="col-12">
@@ -199,7 +199,7 @@ body {
 				    	<div class="row">
 				    		<div class="col-md-6">
 					        	<form:input type="text" class="form-control bg-light border-0" id="user-name" path="name" placeholder="홍길동 (한글만 입력하세요.)" style="height: 55px;" />
-					    			<div class="check_font" id="name_check">
+					    			<div class="check_font" id="user-name_check">
 					    				<form:errors path="name" class="text-danger"></form:errors>
 					    			</div>
 				    		</div>
@@ -218,7 +218,7 @@ body {
 				    	<div class="row">
 				    		<div class="col-md-6">
 					        	<form:input type="text" class="form-control bg-light border-0" id="user-tel" path="tel" placeholder="010-1111-1234 (특수문자는 '-'만 입력가능합니다. )" style="height: 55px;" />
-				    			<div class="check_font" id="tel_check"></div>
+				    			<div class="check_font" id="user-tel_check"></div>
 				    		</div>
 						    <div class="col-md-6">
 							    <form:select class="form-select bg-light border-0" id="user-mobileCarrier" path="mobileCarrier" style="height: 55px; width: 100px;">
@@ -233,12 +233,12 @@ body {
 				    </div>
 				    
 					<p>
-					  <a class="form-select bg-light border-0" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+					  <a class="form-select bg-light border-0" data-bs-toggle="collapse" href="#user-collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
 					    <strong style="color: red;">[필수]</strong> 이용약관
 					  </a>
 					</p>
 					
-						<div class="collapse" id="collapseExample">
+						<div class="collapse" id="user-collapseExample">
 							<label>
 							    <input type="checkbox" id="user-agreeCheckbox-1" class="normal" name="agree1"/>
 							    <strong style="color: red;">[필수]</strong> HELF 홈페이지 이용약관에 동의합니다.
@@ -353,19 +353,19 @@ body {
 						<h5>아이디</h5>
 						    <div class="col-sm-6 input-wrapper">
 						         <form:input type="text" class="form-control bg-light border-0" id="trainer-id" path="id" placeholder="4-12자, 영어소문자를 입력하세요." style="height: 55px; width: 620px;" />
-						    	 <div class="check_font" id="id_check"></div>
+						    	 <div class="check_font" id="trainer-id_check"></div>
 						    	<div class="id_input_re_1" style="color: green; display: none;">사용 가능한 아이디입니다.</div>
 						    	<div class="id_input_re_2" style="color: red; display: none;">아이디가 이미 존재합니다.</div>
 						    </div>
 						    <div class="col-sm-6 button-wrapper">
-						        <input id="check-duplicate" type="button" value="중복체크" class="btn btn-primary" style="height: 53px; width: 100px;" />
+						        <input id="trainer-check-duplicate" type="button" value="중복체크" class="btn btn-primary" style="height: 53px; width: 100px;" />
 						    </div>
 					</div>
 				
 				    <div class="col-12">
 				    	<h5>비밀번호</h5>
 				        <form:input type="password" class="form-control bg-light border-0" id="trainer-password" path="password" placeholder="4-12자, 영문+숫자+특수문자를 꼭 포함하여 입력하세요." style="height: 55px;" />
-				   		<div class="check_font" id="password_check"></div>
+				   		<div class="check_font" id="trainer-password_check"></div>
 				    </div>
 				    
 				    <div class="col-12">
@@ -373,7 +373,7 @@ body {
 					    <div class="row">
 						    <div class="col-md-6">
 						        <form:input type="text" class="form-control bg-light border-0" id="trainer-email" path="email1" placeholder="특수문자를 제외하고 입력하세요." style="height: 55px;"/>
-						    	<div class="check_font" id="user-email-check"></div>
+						    	<div class="check_font" id="trainer-email-check"></div>
 							</div>
 							<div class="col-md-6">
 							    <form:select class="form-select bg-light border-0" id="trainer-email-2" path="email2" style="height: 55px; width: 200px;">
@@ -394,7 +394,7 @@ body {
 				    	<div class="row">
 				    		<div class="col-md-6">
 					        	<form:input type="text" class="form-control bg-light border-0" id="trainer-name" path="name" placeholder="홍길동 (한글만 입력하세요.)" style="height: 55px;" />
-					    			<div class="check_font" id="name_check">
+					    			<div class="check_font" id="trainer-name_check">
 					    				<form:errors path="name" class="text-danger"></form:errors>
 					    			</div>
 				    		</div>
@@ -413,7 +413,7 @@ body {
 				    	<div class="row">
 				    		<div class="col-md-6">
 					        	<form:input type="text" class="form-control bg-light border-0" id="trainer-tel" path="tel" placeholder="010-1111-1234 (특수문자는 '-'만 입력가능합니다. )" style="height: 55px;" />
-				    			<div class="check_font" id="tel_check"></div>
+				    			<div class="check_font" id="trainer-tel_check"></div>
 				    		</div>
 						    <div class="col-md-6">
 							    <form:select class="form-select bg-light border-0" id="trainer-mobileCarrier" path="mobileCarrier" style="height: 55px; width: 100px;">
@@ -428,12 +428,12 @@ body {
 				    </div>
 				    
 					<p>
-					  <a class="form-select bg-light border-0" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+					  <a class="form-select bg-light border-0" data-bs-toggle="collapse" href="#trainer-collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
 					    <strong style="color: red;">[필수]</strong> 이용약관
 					  </a>
 					</p>
 					
-						<div class="collapse" id="collapseExample">
+						<div class="collapse" id="trainer-collapseExample">
 							<label>
 							    <input type="checkbox" id="trainer-agreeCheckbox-1" class="normal" name="agree1"/>
 							    <strong style="color: red;">[필수]</strong> HELF 홈페이지 이용약관에 동의합니다.
@@ -528,8 +528,8 @@ body {
 		 					  <label for="check_all">전체 동의합니다.</label>
 						</div>
 										    
-				    <div class="col-12"  >
-				        <button id="trainer-button-register" class="btn btn-dark w-100 py-3" type="submit">가입하기</button>
+				    <div class="col-12" >
+				        <button id="trainer-button-register" class="btn btn-dark w-100 py-3" type="submit">다음으로</button>
 				    </div>
 				</div>
 		 	</form:form>
@@ -658,23 +658,21 @@ body {
 	    
 	    /* 유저 시작 */
 	    // 이용약관 체크박스
-	    	// 각각 체크했을 때, 전체동의에 체크&해제된다.
-		$("#collapseExample :checkbox.normal").change(function() {
+			// 전체동의&해제 
+		$("#user-check-all").change(function() {
+			$("#user-collapseExample :checkbox.normal").prop("checked", $(this).prop("checked"))
+		});
+	    	// 각각의 이용약관에 체크했을 때, 전체동의에 체크&해제된다.
+		$("#user-collapseExample :checkbox.normal").change(function() {
 			let allChecked = true;
 
-			$("#collapseExample :checkbox.normal").each(function(index, checkbox) { 
+			$("#user-collapseExample :checkbox.normal").each(function(index, checkbox) { 
 				allChecked = allChecked && $(checkbox).prop("checked");
 			});
 			
 			$("#user-check-all").prop("checked", allChecked);
 		});
-	    
-			// 전체동의&해제 
-		$("#user-check-all").change(function() {
-			$("#collapseExample :checkbox.normal").prop("checked", $(this).prop("checked"))
-		});
 
-			
 		// 이용약관 부트스트랩
 		var scrollSpy = new bootstrap.ScrollSpy(document.body, {
 			  target: '#list-example'
@@ -700,50 +698,47 @@ body {
 		
 		
 		let idValid = false;
+		let idDupChecked = false;
 		let passwordValid = false;
 		let emailValid = false;
 		let nameValid = false;
 		let telValid = false;
 		
-		
-		// 중복체크 두번째 시도했을때, 기존 중복체크 메세지 삭제시킨다.
-   		$("#user-id").keyup(function() {
-   			$('div.id_input_re_1').hide();
-   			idValid = false;
-   			
-   			$('div.id_input_re_2').hide();
-   			idValid = false;
-   		})
-   
 		// 아이디 유효성검사
-		$("#user-id").blur(function() {
+		$("#user-id").keyup(function() {
+			$('div.id_input_re_1').hide();
+   			$('div.id_input_re_2').hide();
+   			idDupChecked = false;
+   			
 			if (idJ.test($(this).val())) {
 					console.log(idJ.test($(this).val()));
-					$("#id_check").text('');
+					$("#user-id_check").text('');
 					idValid = true;
+					$("#user-check-duplicate").removeClass("disabled") // 중복체크버튼 활성화
 			} else {
-				$('#id_check').text('형식에 맞게 아이디를 입력해주세요.');
-				$('#id_check').css('color', 'red');
+				$('#user-id_check').text('형식에 맞게 아이디를 입력해주세요.');
+				$('#user-id_check').css('color', 'red');
 				idValid= false;
+				$("#user-check-duplicate").addClass("disabled")		// 중복체크버튼 비활성화
 			}
 			updateCheckButtonState(); // 버튼 상태 업데이트 호출
 		});
 		
 		// 비밀번호 유효성검사
-		$("#user-password").blur(function() {
+		$("#user-password").keyup(function() {
 			if (pwJ.test($(this).val())) {
 					console.log(pwJ.test($(this).val()));
-					$("#password_check").text('');
+					$("#user-password_check").text('');
 					passwordValid = true;
 			} else {
-				$('#password_check').text('형식에 맞게 비밀번호를 입력해주세요.');
-				$('#password_check').css('color', 'red');
+				$('#user-password_check').text('형식에 맞게 비밀번호를 입력해주세요.');
+				$('#user-password_check').css('color', 'red');
 				passwordValid = false;
 			}
 		});
 		
 		// 이메일 유효성검사
-		$("#user-email").blur(function() {
+		$("#user-email").keyup(function() {
 			let email = $(this).val() + $("#user-email-2").val();
 			
 			if (mailJ.test(email)) {
@@ -759,27 +754,27 @@ body {
 		
 
 		// 이름 유효성검사
-		$("#user-name").blur(function() {
+		$("#user-name").keyup(function() {
 			if (nameJ.test($(this).val())) {
 					console.log(nameJ.test($(this).val()));
-					$("#name_check").text('');
+					$("#user-name_check").text('');
 					nameValid = true;
 			} else {
-				$('#name_check').text('형식에 맞게 이름을 입력해주세요.');
-				$('#name_check').css('color', 'red');
+				$('#user-name_check').text('형식에 맞게 이름을 입력해주세요.');
+				$('#user-name_check').css('color', 'red');
 				nameValid = false;
 			}
 		});
 
 		// 전화번호 유효성검사
-		$("#user-tel").blur(function() {
+		$("#user-tel").keyup(function() {
 			if (phoneJ.test($(this).val())) {
 					console.log(phoneJ.test($(this).val()));
-					$("#tel_check").text('');
+					$("#user-tel_check").text('');
 					telValid = true;
 			} else {
-				$('#tel_check').text('형식에 맞게 전화번호를 입력해주세요.');
-				$('#tel_check').css('color', 'red');
+				$('#user-tel_check').text('형식에 맞게 전화번호를 입력해주세요.');
+				$('#user-tel_check').css('color', 'red');
 				telValid = false;
 			}
 		});
@@ -824,6 +819,12 @@ body {
 				event.preventDefault();
 				return false;
 			}
+			// 아이디 중복체크를 하지 않았을 때
+			if(!idDupChecked) {
+				alert("아이디 중복체크를 수행하세요.");
+				event.preventDefault();
+				return false;
+			}
 			
 			// 비밀번호 올바르게 입력하지 않았을 때
 			if(!passwordValid) {
@@ -848,14 +849,33 @@ body {
 			return true;
 		});
 		
-		// 중복체크버튼 활성화/비활성화 
-	    function updateCheckButtonState() {
-	        if (idValid) {
-	            $("#check-duplicate").prop("disabled", false); // 버튼 활성화
-	        } else {
-	            $("#check-duplicate").prop("disabled", true); // 버튼 비활성화
-	        }
-	    }
+		
+	 	// 아이디 중복검사 
+		$(document).ready(function() {
+			
+		    $("#user-check-duplicate").click(function() {
+		    	
+		        var userId = $("#user-id").val();
+		        var data = { userId: userId };
+		
+		        $.ajax({
+		            type: "post",
+		            url: "idChk",
+		            data: data,
+		            success: function(result) {
+		                if (result != 'fail') {
+		                    $('.id_input_re_1').css("display", "inline-block");
+		                    $('.id_input_re_2').css("display", "none");
+		                    idDupChecked = true;
+		                } else {
+		                    $('.id_input_re_2').css("display", "inline-block");
+		                    $('.id_input_re_1').css("display", "none");
+		                    idDupChecked = false;
+		                }
+		            }
+		        });
+		    });
+		});
 		/* 유저 끝 */
 		
 		
@@ -863,19 +883,19 @@ body {
 		/* 트레이너 시작 */
 	    // 이용약관 체크박스
 	    	// 각각 체크했을 때, 전체동의에 체크&해제된다.
-		$("#collapseExample :checkbox.normal").change(function() {
+		$("#trainer-collapseExample :checkbox.normal").change(function() {
 			let allChecked = true;
 
-			$("#collapseExample :checkbox.normal").each(function(index, checkbox) { 
+			$("#trainer-collapseExample :checkbox.normal").each(function(index, checkbox) { 
 				allChecked = allChecked && $(checkbox).prop("checked");
 			});
 			
 			$("#trainer-check-all").prop("checked", allChecked);
 		});
 	    
-			// 전체동의&해제 
+		// 전체동의&해제 
 		$("#trainer-check-all").change(function() {
-			$("#collapseExample :checkbox.normal").prop("checked", $(this).prop("checked"))
+			$("#trainer-collapseExample :checkbox.normal").prop("checked", $(this).prop("checked"))
 		});
 
 			
@@ -904,50 +924,47 @@ body {
 		
 		
 		let tIdValid = false;
+		let tIdDupChecked = false;
 		let tPasswordValid = false;
 		let tEmailValid = false;
 		let tNameValid = false;
 		let tTelValid = false;
 		
-		
-		// 중복체크 두번째 시도했을때, 기존 중복체크 메세지 삭제시킨다.
-   		$("#trainer-id").keyup(function() {
-   			$('div.id_input_re_1').hide();
-   			tIdValid = false;
-   			
-   			$('div.id_input_re_2').hide();
-   			tIdValid = false;
-   		})
-   
 		// 아이디 유효성검사
-		$("#trainer-id").blur(function() {
+		$("#trainer-id").keyup(function() {
+			$('div.id_input_re_1').hide();
+   			$('div.id_input_re_2').hide();
+   			idDupChecked = false;
+   			
 			if (idJ.test($(this).val())) {
 					console.log(idJ.test($(this).val()));
-					$("#id_check").text('');
+					$("#trainer-id_check").text('');
 					tIdValid = true;
+					$("#trainer-check-duplicate").removeClass("disabled")	// 중복체크버튼 활성화
 			} else {
-				$('#id_check').text('형식에 맞게 아이디를 입력해주세요.');
-				$('#id_check').css('color', 'red');
+				$('#trainer-id_check').text('형식에 맞게 아이디를 입력해주세요.');
+				$('#trainer-id_check').css('color', 'red');
 				tIdValid= false;
+				$("#trainer-check-duplicate").addClass("disabled")			// 중복체크버튼 비활성화
 			}
 			updateCheckButtonState(); // 버튼 상태 업데이트 호출
 		});
 		
 		// 비밀번호 유효성검사
-		$("#trainer-password").blur(function() {
+		$("#trainer-password").keyup(function() {
 			if (pwJ.test($(this).val())) {
 					console.log(pwJ.test($(this).val()));
-					$("#password_check").text('');
+					$("#trainer-password_check").text('');
 					tPasswordValid = true;
 			} else {
-				$('#password_check').text('형식에 맞게 비밀번호를 입력해주세요.');
-				$('#password_check').css('color', 'red');
+				$('#trainer-password_check').text('형식에 맞게 비밀번호를 입력해주세요.');
+				$('#trainer-password_check').css('color', 'red');
 				tPasswordValid = false;
 			}
 		});
 		
 		// 이메일 유효성검사
-		$("#trainer-email").blur(function() {
+		$("#trainer-email").keyup(function() {
 			let email = $(this).val() + $("#user-email-2").val();
 			
 			if (mailJ.test(email)) {
@@ -963,27 +980,27 @@ body {
 		
 
 		// 이름 유효성검사
-		$("#trainer-name").blur(function() {
+		$("#trainer-name").keyup(function() {
 			if (nameJ.test($(this).val())) {
 					console.log(nameJ.test($(this).val()));
-					$("#name_check").text('');
+					$("#trainer-name_check").text('');
 					tNameValid = true;
 			} else {
-				$('#name_check').text('형식에 맞게 이름을 입력해주세요.');
-				$('#name_check').css('color', 'red');
+				$('#trainer-name_check').text('형식에 맞게 이름을 입력해주세요.');
+				$('#trainer-name_check').css('color', 'red');
 				tNameValid = false;
 			}
 		});
 
 		// 전화번호 유효성검사
-		$("#trainer-tel").blur(function() {
+		$("#trainer-tel").keyup(function() {
 			if (phoneJ.test($(this).val())) {
 					console.log(phoneJ.test($(this).val()));
-					$("#tel_check").text('');
+					$("#trainer-tel_check").text('');
 					tTelValid = true;
 			} else {
-				$('#tel_check').text('형식에 맞게 전화번호를 입력해주세요.');
-				$('#tel_check').css('color', 'red');
+				$('#trainer-tel_check').text('형식에 맞게 전화번호를 입력해주세요.');
+				$('#trainer-tel_check').css('color', 'red');
 				tTelValid = false;
 			}
 		});
@@ -992,59 +1009,65 @@ body {
 		$("#registerform-trainer").submit(function(event) {
 			
 			// 성별 선택하지 않았을때
-			let genderVaild = $("#user-gender").val();
+			let tgenderVaild = $("#trainer-gender").val();
 			
-			if (!genderVaild) {
+			if (!tgenderVaild) {
 				alert("성별을 선택하세요.");
 				return false;
 			}
 			
 			// 통신사 선택하지 않았을때
-			let mobileCarrierVaild = $("#trainer-mobileCarrier").val();
+			let tmobileCarrierVaild = $("#trainer-mobileCarrier").val();
 			
-			if (!mobileCarrierVaild) {
+			if (!tmobileCarrierVaild) {
 				alert("통신사를 선택하세요.");
 				return false;
 			}
 			
 			// 이용약관 체크하지 않았을때
-			let userAgree1Valid = $("#trainer-agreeCheckbox-1").prop('checked');
+			let tuserAgree1Valid = $("#trainer-agreeCheckbox-1").prop('checked');
 			
-			if (!userAgree1Valid) {
+			if (!tuserAgree1Valid) {
 				alert("이용약관을 체크하세요.");
 				return false;
 			}
 			
-			let userAgree2Valid = $("#trainer-agreeCheckbox-2").prop('checked');
+			let tuserAgree2Valid = $("#trainer-agreeCheckbox-2").prop('checked');
 			
-			if (!userAgree2Valid) {
+			if (!tuserAgree2Valid) {
 				alert("이용약관을 체크하세요.");
 				return false;
 			}
 			
 			// 아이디를 올바르게 입력하지 않았을 때
-			if(!idValid) {
+			if(!tIdValid) {
 				alert("아이디를 올바르게 입력하세요.");
+				event.preventDefault();
+				return false;
+			}
+			// 아이디 중복체크를 하지 않았을 때
+			if(!tIdDupChecked) {
+				alert("아이디 중복체크를 수행하세요.");
 				event.preventDefault();
 				return false;
 			}
 			
 			// 비밀번호 올바르게 입력하지 않았을 때
-			if(!passwordValid) {
+			if(!tPasswordValid) {
 				alert("비밀번호를 올바르게 입력하세요.");
 				event.preventDefault();
 				return false;
 			}
 			
 			// 이름 올바르게 입력하지 않았을 때
-			if(!nameValid) {
+			if(!tNameValid) {
 				alert("이름을 올바르게 입력하세요.");
 				event.preventDefault();
 				return false;
 			}
 		
 			// 이메일 올바르게 입력하지 않았을 때
-			if(!emailValid) {
+			if(!tEmailValid) {
 				alert("이메일을 올바르게 입력하세요.");
 				event.preventDefault();
 				return false;
@@ -1052,24 +1075,13 @@ body {
 			return true;
 		});
 		
-		// 중복체크버튼 활성화/비활성화 
-	    function updateCheckButtonState() {
-	        if (idValid) {
-	            $("#check-duplicate").prop("disabled", false); // 버튼 활성화
-	        } else {
-	            $("#check-duplicate").prop("disabled", true); // 버튼 비활성화
-	        }
-	    }
-		/* 트레이너 끝 */
-	
+
 		
-		
-		
-		// 아이디 중복검사 
+	 // 아이디 중복검사 
 		$(document).ready(function() {
 			
-		    $("#check-duplicate").click(function() {
-		        var userId = $("input[name=id]").val();
+		    $("#trainer-check-duplicate").click(function() {
+		        var userId = $("#trainer-id").val();
 		        var data = { userId: userId };
 		
 		        $.ajax({
@@ -1080,18 +1092,19 @@ body {
 		                if (result != 'fail') {
 		                    $('.id_input_re_1').css("display", "inline-block");
 		                    $('.id_input_re_2').css("display", "none");
-		                    idValid = true;
+		                    tIdDupChecked = true;
 		                } else {
 		                    $('.id_input_re_2').css("display", "inline-block");
 		                    $('.id_input_re_1').css("display", "none");
-		                    idValid = false;
+		                    tIdDupChecked = false;
 		                }
 		            }
 		        });
 		    });
 		});
+		/* 트레이너 끝 */
+	
 		
-
 
 		</script>
 	

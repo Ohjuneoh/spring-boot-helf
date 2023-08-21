@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -33,6 +34,10 @@
     <link href="/resources/css/style.css" rel="stylesheet">
     <!-- Date Picker  -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Date Picker  -->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Datetime Picker -->
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 </head>
 
 <body>
@@ -57,8 +62,8 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">LESSONLIST</h1>
-                    <a href="" class="h5 text-white">수업 목록</a>
+                    <h1 class="display-4 text-white animated zoomIn">CONSULTATIONLIST</h1>
+                    <a href="" class="h5 text-white">상담내역</a>
                 </div>
             </div>
         </div>
@@ -87,144 +92,78 @@
                 <h5 class="mb-0">목록을 확인하세요</h5>
             </div>
             <div class="row g-0">
-                <div class="col-lg-4 wow slideInUp mb-3" data-wow-delay="0.3s">
-                    <div class="bg-white rounded shadow position-relative" style="z-index: 1;">
-                        <div class="border-bottom py-4 px-5 mb-4">
-                            <h5 class="text-primary mb-2">Bronze</h5>
-                            <h4 class="text-uppercase">오준오 회원님</h4>
-                        </div>
-                        <div class="p-5 pt-0">
-                            
-                            <div class="d-flex justify-content-between mb-3"><strong>상태 :</strong><span>대기중</span><i class="fa fa-bell text-primary pt-1 text-end"></i></div>
-                            <div class="d-flex justify-content-between mb-3"><strong>신청일 :</strong><span>2020-05-30</span><i class="fa fa-calendar text-secondary pt-1 text-end"></i></div>
-                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청일 :</strong><span>2020-06-03</span><i class="fa fa-calendar text-primary pt-1 text-end"></i></div>
-                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청시간 :</strong><span>17:00</span><i class="fa fa-clock text-primary pt-1 text-end"></i></div>
-                            <div class="d-flex justify-content-center">
-                            <a href="" class="btn btn-primary py-2 px-4 mt-5">상세보기</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+	            <c:forEach var="consultation" items="${consultations}">
+	                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+	                    <div class="bg-white rounded shadow position-relative m-2" style="z-index: 1;">
+	                        <div class="border-bottom py-4 px-5 mb-4">
+	                            <h5 class="text-primary mb-2"></h5>
+	                            <h4 class="text-uppercase">${consultation.user.name}</h4>
+	                        </div>
+	                        <div class="p-5 pt-0">
+	                            
+	                            <div class="d-flex justify-content-between mb-3"><strong>상태 :</strong><span>${consultation.consultations.consultationStatus}</span><i class="fa fa-bell text-primary pt-1 text-end"></i></div>
+	                            <div class="d-flex justify-content-between mb-3"><strong>신청일 :</strong><span><fmt:formatDate value="${consultation.consultations.applicationDate}" pattern="yyyy-MM-dd" /></span><i class="fa fa-calendar text-secondary pt-1 text-end"></i></div>
+	                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청일 :</strong><span><fmt:formatDate value="${consultation.consultations.requestDate}" pattern="yyyy-MM-dd" /></span><i class="fa fa-calendar text-primary pt-1 text-end"></i></div>
+	                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청시간 :</strong><span>${consultation.consultations.requestTime}</span><i class="fa fa-clock text-primary pt-1 text-end"></i></div>
+	                            <div class="d-flex justify-content-center">
+	                            <button type="button" class="btn btn-primary py-2 px-4 mt-5" data-bs-toggle="modal" data-bs-target="#myModal"  
+	                            		data-username="${consultation.user.name}" data-userid="${consultation.user.id}" data-trainerno="${consultation.consultations.trainer.trainerNo}" data-mymembershipno="${consultation.consultations.myMembership.no}">예약</button>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </c:forEach>    
             </div>
         </div>
     </div>
-    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px; display: none;">
-		<div class="container py-5">
-			<div class="row mb-3">
-				<div class="col-12">
-					<div class="card" >
-						<div class="card-header bg-dark" style="color: #ffffff">
-							수업목록
-							<span class="float-end">
-								<a href="/grouplesson/registration" class="btn btn-primary btn-sm ">신규 수업 등록</a>
-							</span>
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  		<div class="modal-dialog">
+    		<div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="exampleModalLabel"><span id="modal-userName"></span>님 개인수업</h5>
+				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form method="post" action="/personal-lesson/list">
+						<input id="modal-userId" type="hidden" name="userId"/>
+						<input id="modal-trainerNo" type="hidden" name="trainerNo"/>
+						<input id="modal-myMembershipNo" type="hidden" name="myMembershipNo"/>
+						<input id="modal-userName2" name="lessonName"/>
+		        		<div class="row g-1">
+								<div class="col-12">
+									<h3 class="mb-2 mt-2 text-primary" >수업 내용</h3>	
+									<textarea id="content" class="form-control bg-light border-0" name="content" style="height: 300px;"></textarea>
+								</div>
+								<div class="col-3">
+							    	<div class="input-group">
+							        	<span class="input-group-text bg-light border-0"><i class="bi bi-calendar-check-fill"></i></span>
+							        	<input type="text" class="form-control bg-light border-0" name="date" id="date" style="height: 55px;" placeholder="수업일">
+							    	</div>
+								</div>
+						    	<div class="col-3">
+							    	<div class="input-group">
+							        	<span class="input-group-text bg-light border-0"><i class="bi bi-alarm-fill"></i></span>
+							        	<input type="text" class="form-control bg-light border-0" name="time" id="time" style="height: 55px;" placeholder="시간">
+							    	</div>
+								</div>
+								<div class="col-6 text-end mt-2">
+								    <button type="button" id="consultation-back" class="btn btn-secondary">이전</button>
+								    <button type="button" id="next" class="btn btn-primary ">다음</button>
+								</div>    
 						</div>
-						<div class="card-body">
-			               <table class="table">
-			               		<thead>
-			                     	<tr>
-			                        	<th>수업번호</th>
-			                        	<th>수업명</th>
-			                        	<th>강사명</th>
-			                        	<th>모집총원</th>
-			                        	<th>모집여부</th>
-			                     	</tr>
-			                  	</thead>
-			                  	<tbody>
-		                  			<tr>
-				                        <td>1</td>
-				                        <td>1</td>
-				                        <td>1</td>
-				                        <td>1</td>
-				                        <td>1</td>
-		                    		 </tr>
-		                 			<tr>
-	                 					<td colspan="5" class="text-center">검색결과가 존재하지 않습니다.</td>
-		                 			</tr>
-			             		</tbody>
-			               </table>
-        				</div>
-    				</div>
-    			</div>
+					</form>		
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				  <button type="button" class="btn btn-primary">Save changes</button>
+				</div>
     		</div>
-        </div>
-    </div>
+	  	</div>
+	</div>
     <!-- Lesson Register Form End  -->
-	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
-	    <div class="container">
-	        <div class="row gx-5">
-	            <div class="col-lg-8 col-md-6">
-	                <div class="row gx-5">
-	                    <div class="col-lg-4 col-md-12 pt-5 mb-5">
-	                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
-	                            <h3 class="text-light mb-0">Get In Touch</h3>
-	                        </div>
-	                        <div class="d-flex mb-2">
-	                            <i class="bi bi-geo-alt text-primary me-2"></i>
-	                            <p class="mb-0">123 Street, New York, USA</p>
-	                        </div>
-	                        <div class="d-flex mb-2">
-	                            <i class="bi bi-envelope-open text-primary me-2"></i>
-	                            <p class="mb-0">info@example.com</p>
-	                        </div>
-	                        <div class="d-flex mb-2">
-	                            <i class="bi bi-telephone text-primary me-2"></i>
-	                            <p class="mb-0">+012 345 67890</p>
-	                        </div>
-	                        <div class="d-flex mt-4">
-	                            <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
-	                            <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
-	                            <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
-	                            <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram fw-normal"></i></a>
-	                        </div>
-	                    </div>
-	                    <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-	                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
-	                            <h3 class="text-light mb-0">Quick Links</h3>
-	                        </div>
-	                        <div class="link-animated d-flex flex-column justify-content-start">
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Meet The Team</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
-	                            <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
-	                        </div>
-	                    </div>
-	                    <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-	                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
-	                            <h3 class="text-light mb-0">Popular Links</h3>
-	                        </div>
-	                        <div class="link-animated d-flex flex-column justify-content-start">
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Meet The Team</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
-	                            <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</div>
-	<div class="container-fluid text-white" style="background: #061429;">
-	    <div class="container text-center">
-	        <div class="row justify-content-end">
-	            <div class="col-lg-8 col-md-6">
-	                <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
-	                    <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights Reserved. 
-			
-			<!--/*** This template is free as long as you keep the footer authorâs credit link/attribution link/backlink. If you'd like to use the template without the footer authorâs credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-			Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</div>
-    <!-- Footer End -->
 
+    <!-- Footer End -->
+	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -235,6 +174,7 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/resources/lib/wow/wow.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
     <script src="/resources/lib/easing/easing.min.js"></script>
     <script src="/resources/lib/waypoints/waypoints.min.js"></script>
     <script src="/resources/lib/counterup/counterup.min.js"></script>
@@ -245,8 +185,35 @@
     
 <script>
 
+$(document).ready(function() {
+    $('#myModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);  
+        var username = button.data('username');
+        var userid = button.data('userid');
+        var trainerno = button.data('trainerno');
+        var mymembershipno = button.data('mymembershipno')
+        $('#modal-userName').text(username); 
+        $('#modal-userName2').val(username); 
+        $('#modal-userId').val(userid); 
+        $('#modal-trainerNo').val(trainerno); 
+        $('#modal-myMembershipNo').val(mymembershipno);
+    });
+});
+
+$( function() {
+    $("#date").datepicker({
+   		dateFormat: 'yy/mm/dd'
+    });
+});
+
+$( function() {
+    $("#time").datetimepicker({
+    	  datepicker:false,
+    	  format:'H:i'
+	});
+});
 </script>
-    
+
     
 </body>
 

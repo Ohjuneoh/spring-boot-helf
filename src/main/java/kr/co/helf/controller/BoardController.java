@@ -1,9 +1,19 @@
 package kr.co.helf.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import kr.co.helf.form.AddBoardForm;
+import kr.co.helf.service.BoardService;
+import kr.co.helf.vo.Board;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -11,17 +21,49 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardController {
 
-	// 공지사항화면 요청처리
+	@Autowired
+	BoardService boardService;
+	
+	// 공지사항 전체조회(페이징처리 포함)
 	@GetMapping(value="/notice")
-	public String notice() {
-		return "board/notice";
+	public String noticeList(@RequestParam(name="page", required=false, defaultValue="1")int page, Model model) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("page",page);
+		
+		Map<String, Object> result = boardService.getAllNotice(param);
+		
+		model.addAttribute("result", result);
+		return "/board/notice";
 	}
 	
-	// 공지사항 폼화면 요청처리
+	
+	// 공지사항 등록폼 화면 요청처리
 	@GetMapping(value="/noticeform")
 	public String noticeform() {
+		
 		return "board/noticeform";
 	}
+	
+	// 공지사항 등록 요청처리
+	@PostMapping(value="/addNotice")
+	public String addNotice(AddBoardForm form) {
+
+		boardService.addNotice(form);
+		
+		return "redirect:/board/notice";
+	}
+	
+	// 공지사항 상세정보 요청처리
+	@GetMapping(value="/detail")
+	public String NoticeDetail(@RequestParam("no") int boardNo, Model model) {
+		
+		Board board = boardService.getBoardByNo(boardNo);
+		model.addAttribute("board", board);
+		
+		return "board/noticeDetail";
+	}
+	
+
 	
 	// faq화면 요청처리
 	@GetMapping(value="/faq")

@@ -107,12 +107,17 @@
 								</thead>
 							   <tbody>
 							   		<c:choose>
-										<c:when test="${empty result.lessons }">
-											<c:forEach var="lesson" items="${result.lessons }">
-							   					<tr>
-								   					<td colspan="5" class="text-center">이용권을 구매한 고객만 수업을 조회할 수 있습니다.</td>
-							   					</tr>
-											</c:forEach>
+										<c:when test="${empty result }">
+											<tr>
+												<td colspan="5" class="text-center">
+													이용권을 구매한 고객만 수업을 조회할 수 있습니다.
+												</td>
+											</tr>
+											<tr>
+												<td colspan="5" class="text-center">
+													<a href="/membership/list" class="btn btn-primary btn-sm">이용권 구매</a>
+												</td>
+											</tr>
 										</c:when>
 									</c:choose>
 							   		<c:forEach var="lesson" items="${result.lessons }">
@@ -134,6 +139,8 @@
     </div>
 	<div class="row mb-3" >
 		<div class="col-12">
+			<c:choose>
+				<c:when test="${not empty result }">
 			<nav>
 				<ul class="pagination justify-content-center">
 					<li class="page-item ${result.pagination.first ? 'disabled' : '' }">
@@ -149,6 +156,8 @@
 					</li>
 				</ul>
 			</nav>
+				</c:when>
+			</c:choose>
 		</div>
 	</div>
     <!-- Lesson Register Form End  -->
@@ -226,6 +235,7 @@
 	    </div>
 	</div>
     <!-- Footer End -->
+	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
 
 
     <!-- Back to Top -->

@@ -68,6 +68,38 @@
 		order by
 			trainer_no
 	</select>
+
+	
+	<!--입장 form - 오늘 수업 조회 written by 채경 -->
+	<select id="getMyTodayLessonsByUserId" resultType="kr.co.helf.vo.LessonApply">
+		select C.user_id						as "user.id", 
+				C.user_name						as "user.name", 
+				C.user_type						as "user.type",
+				D.user_id						as "lesson.user.id", 
+				D.user_name						as "lesson.user.name", 
+				D.user_type						as "lesson.user.type",
+				A.lesson_name					as "lesson.name", 
+				A.lesson_time					as "lesson.time", 
+				A.lesson_date					as "lesson.date",
+				B.my_membership_no				as "myMembership.no",
+                E.my_membership_remainder_cnt	as "myMembership.remainderCnt",
+                E.my_membership_endDate			as "myMembership.endDate",
+                F.category_no					as "myMembership.membership.category.no"
+		from 
+			helf_lesson A, helf_Lesson_Apply B, helf_users C, helf_users D, helf_my_membership E, helf_membership F
+		where 
+			C.user_id = #{value}
+			and A.lesson_no = B.lesson_no
+			and B.user_id = C.user_id
+			and A.user_id = D.user_id 
+			and A.lesson_date = trunc(sysdate)
+            and B.my_membership_no = E.my_membership_no
+            and E.membership_no = F.membership_no
+		order by
+			A.lesson_time
+	</select>
+	
+  
 	<insert id="insertConsultation" parameterType="Consultation">
 		insert into helf_lesson_consultation(lesson_consultation_no, 
 											 lesson_consultation_exercise_goal,
@@ -77,7 +109,7 @@
 											 user_id,
 											 trainer_no,
 											 my_membership_no)
-		values(helf_lesson_consultation_seq.nextval, #{goal}, #{abnormalities}, #{applicationDate}, #{requestTime}, #{user.id}, #{trainer.trainerNo}, #{myMembership.no})
+		values(helf_lesson_consultation_seq.nextval, #{goal}, #{abnormalities}, #{requestDate}, #{requestTime}, #{user.id}, #{trainer.trainerNo}, #{myMembership.no})
 	</insert>
 	<resultMap id="UserMyMembershipsMap" type="kr.co.helf.dto.UserMyMemberships">
 	    <!-- Membership 객체 매핑 -->
@@ -108,39 +140,67 @@
 		and 	b.user_id=#{userId}
 		ORDER BY b.my_membership_no asc
 	</select>
-	<!-- <resultMap type="kr.co.helf.vo.User" id="getAllUserWithConsultation" >
-    	<id column="user_id" property="id"/>
-    	<result column="user_name" property="name"/>
-    	<association property="rank" javaType="kr.co.helf.vo.Rank">
-    		<id column="rank_no" property="no"/>
-    		<result column="rank_name" property="name"/>
-    	</association>
-    	<collection property="consultation" ofType="kr.co.helf.vo.Consultation">
-        	<id column="lesson_consultation_no" property="consultationNo"/>
-        	<result column="lesson_consultation_status" property="consultationStatus"/>
-        	<result column="lesson_consultation_application_date" property="applicationDate"/>
-        	<result column="lesson_consultation_request_date" property="requestDate"/>
-        	<result column="lesson_consultation_request_time" property="requestTime"/>
-    	</collection>
+	<select id="getTrainerByUserId" parameterType="string" resultType="Trainer">
+		select trainer_no 		as trainerNo
+		from helf_trainers
+		where user_id = #{userId}
+	</select>
+	<select id="getUserByUserId" parameterType="string" resultType="User">
+		select user_id  as id,
+        		user_name as name,
+        		user_status as status,
+        		rank_no     as rankNo
+		from helf_users
+		where 	user_id=#{userId};
+	</select>
+	<resultMap id="UserConsultationMap" type="kr.co.helf.dto.UserConsultations">
+    <!-- User 객체 매핑 -->
+    <association property="user" javaType="kr.co.helf.vo.User">
+        <result column="user_id" property="id"/>
+        <result column="user_name" property="name"/>
+        <association property="rank" javaType="kr.co.helf.vo.Rank">
+        <result column="rank_no" property="no"/>
+        </association>
+    </association>
+    
+    <!-- Consultation 객체 매핑 -->
+    <association property="consultations" javaType="kr.co.helf.vo.Consultation">
+        <result column="lesson_consultation_no" property="consultationNo"/>
+        <result column="lesson_consultation_status" property="consultationStatus"/>
+        <result column="lesson_consultation_application_date" property="applicationDate"/>
+        <result column="lesson_consultation_exercise_goal" property="goal"/>
+        <result column="lesson_consultation_physical_abnormalities" property="abnormalities"/>
+        <result column="lesson_consultation_request_date" property="requestDate"/>
+        <result column="lesson_consultation_request_time" property="requestTime"/>
+        <association property="lesson" javaType="kr.co.helf.vo.Lesson">
+        <result column="lesson_no" property="no"/>
+        </association>
+         <association property="trainer" javaType="kr.co.helf.vo.Trainer">
+        <result column="trainer_no" property="trainerNo"/>
+        </association>
+        <association property="myMembership" javaType="kr.co.helf.vo.MyMembership">
+        <result column="my_membership_no" property="no"/>
+        </association>
+    </association>
 	</resultMap>
-	<select id="getAllUserWithConsultation" resultMap="getAllUserWithConsultation">
-		select
-			a.user_name,
-			a.user_rank,
-			b.lesson_consultation_no,
-			b.lesson_consultation_status,
-			b.lesson_consultation_application_date,
-			b.lesson_consultation_request_time,
-			b.lesson_consultation_request_date,
-			b.trainer_no,
-			b.user_id,
-			b.my_membership_no
-		from
-		    helf_users a, helf_lesson_consultation b
-		where
-			a.user_id = b.user_id
-		order by
-			b.lesson_consultation_no
-	</select>  -->
+	<select id="getAllConsultationByTrainerNo" parameterType="int" resultMap="UserConsultationMap">
+		select a.lesson_consultation_no,
+		        a.lesson_consultation_status,
+		        a.lesson_no,
+		        a.lesson_consultation_application_date,
+		        a.lesson_consultation_exercise_goal,
+		        a.lesson_consultation_physical_abnormalities,
+		        a.lesson_consultation_request_date,
+		        a.lesson_consultation_request_time,
+		        a.user_id,
+		        a.trainer_no,
+		        a.my_membership_no,
+		        b.user_name
+		from helf_lesson_consultation a, helf_users b
+		where trainer_no = #{trainerNo}
+		and a.user_id = b.user_id
+		order by a.lesson_consultation_request_date asc
+	</select>
+	
 	
 </mapper>

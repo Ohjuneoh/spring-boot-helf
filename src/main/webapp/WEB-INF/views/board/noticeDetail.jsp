@@ -1,7 +1,8 @@
+<%@ page import="kr.co.helf.vo.Lesson" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -11,6 +12,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -36,7 +38,7 @@
     <!-- Date Picker  -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
-
+<!-- 위에 모든 페이지까지 공통부분 건들 x -->
 <body>
 <!-- Spinner Start -->
 <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -50,6 +52,7 @@
 <!-- Topnavbar End -->
 
 
+
 <!-- Navbar Start -->
 <div class="container-fluid position-relative p-0 h-10 ">
     <jsp:include page="/WEB-INF/views/common/navbar.jsp">
@@ -59,64 +62,95 @@
     <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
         <div class="row py-5">
             <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                <h1 class="display-4 text-white animated zoomIn">LESSONLIST</h1>
-                <a href="" class="h5 text-white">수업 목록</a>
+                <h1 class="display-4 text-white animated zoomIn">REGISTER</h1>
+                <a href="" class="h5 text-white">공지 상세보기</a>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="searchModal" tabindex="-1">
-    <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
-            <div class="modal-header border-0">
-                <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body d-flex align-items-center justify-content-center">
-                <div class="input-group" style="max-width: 600px;">
-                    <input type="text" class="form-control bg-transparent border-primary p-3" placeholder="Type search keyword">
-                    <button class="btn btn-primary px-4"><i class="bi bi-search"></i></button>
-                </div>
-            </div>
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-12">
+            <h1 class="border bg-light fs-4 p-2">공지사항 상세 정보</h1>
         </div>
     </div>
+    <div class="row mb-3">
+        <div class="col-12">
+            <p>그룹레슨 상세정보를 확인할 수 있습니다.</p>
+            
+<!-- 공지사항 상세정보  -->
+	<div id="boardview" class="wrap_inner">
+		<div class="btn">
+			<span class="box_btn w135 h50 fs15 white7"><a href="/board/list.php?boardid=csnotice&amp;page=">목록으로</a></span>
+		</div>
+		<div class="tablelayer">
+			<table class="board_row">
+				<caption class="hidden">글읽기</caption>
+				<colgroup>
+					<col>
+					<col style="width:7%;">
+				</colgroup>
+				<tbody>
+					<tr>
+						<!-- <th scope="row">제목</th> -->
+						<th class="tal"> 매월 1일 무료배송 쿠폰 발급 방식이 변경 되었습니다.
+						</th><td class="tar date">2019.06.01</td>
+
+					</tr>
+				</tbody>
+			</table>
+			<div class="boxview">
+				안녕하세요 아뜨랑스 입니다<br>
+				<br>
+				"매월 1일 무료배송 쿠폰 "발급 방식이 변경 되었습니다.<br>
+				<br>
+				로그인 하신후 [마이페이지] [쿠폰] 에서 &lt;이달의  쿠폰&gt;을 클릭 직접 다운로드 하시면 됩니다<br>
+				<br>
+				등급별로 받으실 수 있도록 세팅 되어 있습니다 <br>
+				<br>
+				많은 이용 부탁드립니다 <br>
+				<br>
+				감사합니다			
+			</div>
+		</div>
+		<div class="tablelayer" style="padding-top:10px; padding-bottom:10px;">
+
+			<table class="board_row move">
+				<caption class="hidden">글이동</caption>
+				<colgroup>
+					<col style="width:15%;">
+					<col>
+					<col style="width:7%;">
+				</colgroup>
+				<tbody>
+						<tr class="prev">
+							<th scope="row">이전글</th>
+							<td>
+								<a href="/board/view.php?boardid=csnotice&amp;index_no=13504" title="이전글">상품 후기 적립금 안내</a>
+							</td>
+							<td class="tar date">2019.07.19</td>
+						</tr>
+						<tr class="next">
+							<th scope="row">다음글</th>
+							<td>
+								<a href="/board/view.php?boardid=csnotice&amp;index_no=10699" title="이전글">가격표기 오류안내</a>
+							</td>
+							<td class="tar date">2019.05.22</td>
+						</tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="tailLine"></div>
+	
+	</div>
+            
+            
+		</div>
+	</div>
 </div>
-<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
-    <div class="container py-5">
-        <div class="row mb-3">
-            <div class="col-12">
-                <div class="card" >
-                    <div class="card-header bg-dark" style="color: #ffffff">
-                        수업 목록
-                    </div>
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th style="width: 15%">레슨 번호</th>
-                                <th style="width: 20%">수업명</th>
-                                <th style="width: 20%">강사명</th>
-                                <th style="width: 20%">레슨시간</th>
-                                <th style="width: 25%">출석 상태</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach var="lessonApply" items="${applyList }">
-                                <tr>
-                                    <td>${lessonApply.lesson.no }</td>
-                                    <td><a href="/group-lesson/detail?no=${lessonApply.lesson.no }">${lessonApply.lesson.name }</a></td>
-                                    <td>${lessonApply.user.name }</td>
-                                    <td><fmt:formatDate value="${lessonApply.lesson.date }" pattern="yyyy년 M월 d일" /> ${lessonApply.lesson.time }시</td>
-                                    <td>${lessonApply.attendanceStatus }</td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
 
 <!-- Lesson Register Form End  -->
 <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
@@ -193,7 +227,6 @@
     </div>
 </div>
 <!-- Footer End -->
-<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
 
 
 <!-- Back to Top -->

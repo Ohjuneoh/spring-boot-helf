@@ -35,7 +35,6 @@
         order by a.lesson_no asc
 
     </select>
-
     <!-- 신청테이블에 레슨번호에 해당하는 수강생 전체 조회-->
     <select id="getAllUsersByNo" resultType="LessonApply" parameterType="int">
         select

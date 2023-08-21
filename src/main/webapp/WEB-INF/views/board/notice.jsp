@@ -89,37 +89,30 @@
 			               <table class="table">
 			               		<thead>
 									<tr>
-			                        	<th style="width: 15%; text-align: center;">글번호</th>
-			                        	<th style="width: 50%; text-align: center;">제목</th>
-			                        	<th style="width: 25%; text-align: center;">작성일</th>
-			                        	<th style="width: 40%; text-align: center;">조회수</th>
+			                        	<th style="width: 20%;">글번호</th>
+			                        	<th style="width: 30%;">제목</th>
+			                        	<th style="width: 40%;">작성일</th>
+			                        	<th style="width: 10%;">조회수</th>
 			                     	</tr>
 								</thead>
 							   <tbody>
-						            <tr class="notice">
-										<td style="text-align: center;"><i class="bi bi-megaphone-fill" style="color: blue; font-size: 20px;"></i></td>
-										<td class="tal" style="text-align: center;"><a href="/board/view.php?boardid=csnotice&amp;index_no=569">쇼핑몰 이용 가이드 (구매전필독해주세요♡)</a></td>
-										<td class="date" style="text-align: center;">2021.11.03</td>
-										<td class="date" style="text-align: center;">100</td>
-									</tr>		
-									<tr>
-			                        	<td style="text-align: center;">1</td>
-										<td style="text-align: center;"><a href="/board/view.php?boardid=csnotice&amp;index_no=569">공지사항 입니다.</a></td>
-			                        	<td style="text-align: center;">2022.01.01</td>
-										<td class="date" style="text-align: center;">100</td>
-	                    		 	</tr>
-									<tr>
-			                        	<td style="text-align: center;">1</td>
-										<td style="text-align: center;"><a href="/board/view.php?boardid=csnotice&amp;index_no=569">공지사항 입니다.</a></td>
-			                        	<td style="text-align: center;">2022.01.01</td>
-										<td class="date" style="text-align: center;">100</td>
-	                    		 	</tr>
-									<tr>
-			                        	<td style="text-align: center;">1</td>
-										<td style="text-align: center;"><a href="/board/view.php?boardid=csnotice&amp;index_no=569">공지사항 입니다.</a></td>
-			                        	<td style="text-align: center;">2022.01.01</td>
-										<td class="date" style="text-align: center;">100</td>
-	                    		 	</tr>
+							   <c:forEach var="board" items="${result.notices }">
+				                        <tr>
+				                        	<c:choose>
+												<c:when test="${board.main == 0 }">
+					                        		<td><i class="bi bi-megaphone-fill" style="color: blue; font-size: 20px;"></i></td>
+												</c:when>
+												<c:otherwise>
+									                <td>${board.main }</td>
+									            </c:otherwise>
+				                        	</c:choose>
+											<td><a href="/board/detail?no=${board.no }">${board.title }</a></td>
+				                        	<td><fmt:formatDate value="${board.createDate }" pattern="yyyy년 M월 d일" /></td>
+											<td>${board.readCount }</td>
+		                    		 	</tr>
+							   </c:forEach>
+						  	
+									
 							   </tbody>
 			               </table>
 			               <div class="ExpandMoreBtn_more_btn_box__5lBg8 d-flex justify-content-end align-items-center">
@@ -136,21 +129,25 @@
     
 	<div class="row mb-3" >
 		<div class="col-12" style="text-align: center;">
+			<c:choose>
+				<c:when test="${not empty result }">
 			<nav>
 				<ul class="pagination justify-content-center">
 					<li class="page-item ${result.pagination.first ? 'disabled' : '' }">
-						<a class="page-link"  href="list?page=${result.pagination.prePage }" >이전</a>
+						<a class="page-link"  href="notice?page=${result.pagination.prePage }" >이전</a>
 					</li>
 				<c:forEach var="num" begin="${result.pagination.beginPage }" end="${result.pagination.endPage }">
 					<li class="page-item ${result.pagination.page eq num ? 'active' : '' }">
-						<a class="page-link" href="list?page=${num }" >${num }</a>
+						<a class="page-link" href="notice?page=${num }" >${num }</a>
 					</li>
 				</c:forEach>
 					<li class="page-item ${result.pagination.last ? 'disabled' : '' }">
-						<a class="page-link" href="list?page=${result.pagination.nextPage }" >다음</a>
+						<a class="page-link" href="notice?page=${result.pagination.nextPage }" >다음</a>
 					</li>
 				</ul>
 			</nav>
+				</c:when>
+			</c:choose>
 		</div>
 	</div>
 	
