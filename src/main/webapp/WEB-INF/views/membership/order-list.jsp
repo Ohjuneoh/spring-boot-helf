@@ -58,7 +58,7 @@
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
                     <h1 class="display-4 text-white animated zoomIn">ORDERLIST</h1>
-                    <a href="" class="h5 text-white">구매 내역</a>
+                    <a class="h5 text-white">구매 내역</a>
                 </div>
             </div>
         </div>
@@ -83,31 +83,36 @@
 			<div class="row mb-3 d-flex align-items-center justify-content-center">
 				<div class="col-10">
 					<div class="card" style="margin-bottom: 20px;" >
-						<div class="card-body">
-							<div style="padding: 20px;">
-								<span>
-									구매 상태별 조회 
-									<select name="state" style="width:100px; height: 30px;">
-										<option selected="selected" disabled="disabled">전체보기</option>
-										<option value="payment">결제완료</option>
-										<option value="wait">환불대기</option>
-										<option value="completed">환불완료</option>
-									</select>
-								</span>
-								<span style="float: middle;">
-									구매검색 
-									<select name="type" style="width:100px; height: 30px;">
-										<option selected="selected" disabled="disabled">전체보기</option>
-										<option value="name">구매상품</option>
-										<option value="no">구매번호</option>	
-									</select>
-									<input id="keyword" type="text">
-								</span>
-								<span style="float: right;">
-									<button class="btn btn-success btn-lg">검색</button>
-								</span>
+						<form action="order-list" method="get">
+							<input type="hidden" name="page" value="${dto.pagination.page}"/>
+							<div class="card-body">							
+								<div class="row mb-3 pt-3">
+									<label class="col-1 offset-1 col-form-label text-end">상태</label>
+									<div class="col-2">
+										<select name="state" class="form-select">
+											<option selected="selected" disabled="disabled">전체보기</option>
+											<option value="결제완료" ${param.state eq '결제완료' ? 'selected' : '' }>결제완료</option>
+											<option value="환불대기" ${param.state eq '환불대기' ? 'selected' : '' }>환불대기</option>
+											<option value="환불완료" ${param.state eq '환불완료' ? 'selected' : '' }>환불완료</option>
+										</select>
+									</div>
+									<label class="col-1 col-form-label text-end">종류</label>
+									<div class="col-2">
+										<select name="type"  class="form-select">
+											<option selected="selected" disabled="disabled">전체보기</option>
+											<option value="name" ${param.type eq 'name' ? 'selected' : '' }>구매상품</option>
+											<option value="no" ${param.type eq 'no' ? 'selected' : '' }>구매번호</option>	
+										</select>
+									</div>
+									<div class="col-3">
+										<input type="text" name="keyword" class="form-control">
+									</div>
+									<div class="col-2">
+										<button type="submit" class="btn btn-success">검색</button>
+									</div>
+								</div>
 							</div>
-						</div>
+						</form>
 					</div>
 					<div class="card" >
 						<div class="card-body">
@@ -122,20 +127,20 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:if test="${empty orderList }">
+									<c:if test="${empty dto }">
 								   		<tr>
 									   		<td colspan="5" class="text-center">구매 내역이 없습니다.</td>
 								   		</tr>
 									</c:if>
-								   	<c:forEach var="order" items="${orderList }">
+								   	<c:forEach var="order" items="${dto.orders }">
 										<tr>
 					                        <td>${order.paymentDate }</td>
 											<td>${order.no }</td>
-											<td>${order.myMembership.membership.name }</td>
+											<td>${order.name }</td>
 											<td>
 												<a href="order-detail?no=${order.no }" type="button" class="btn btn-info btn-sm">상세정보</a>
 											</td>
-					                        <td>${order.state }</td>
+					                        <td>${order.orderState }</td>
 			                    		 </tr>
 									</c:forEach>
 								</tbody>
@@ -148,21 +153,30 @@
     </div>
 	<div class="row mb-3" >
 		<div class="col-12">
-			<nav>
-				<ul class="pagination justify-content-center">
-					<li class="page-item">
-						<a class="page-link"  href="" >이전</a>
-					</li>
-				<c:forEach var="num" begin="" end="">
-					<li class="page-item">
-						<a class="page-link" href="list?page=" ></a>
-					</li>
-				</c:forEach>
-					<li class="page-item">
-						<a class="page-link" href="list?page=" >다음</a>
-					</li>
-				</ul>
-			</nav>
+			<c:if test="${dto.pagination.totalRows gt 0 }">
+				<c:set var="currentPage" value="${dto.pagination.page }"></c:set>
+				<c:set var="first" value="${dto.pagination.first }"></c:set>
+				<c:set var="last" value="${dto.pagination.last }"></c:set>
+				<c:set var="prePage" value="${dto.pagination.prePage }"></c:set>
+				<c:set var="nextPage" value="${dto.pagination.nextPage }"></c:set>
+				<c:set var="beginPage" value="${dto.pagination.beginPage }"></c:set>
+				<c:set var="endPage" value="${dto.pagination.endPage }"></c:set>
+				<nav>
+					<ul class="pagination justify-content-center">
+						<li class="page-item ${first ? 'disabled' : '' }">
+							<a href="order-list?page=${prePage }" class="page-link" >이전</a>
+						</li>
+						<c:forEach var="num" begin="${beginPage }" end="${endPage }" >
+							<li class="page-item ${num eq currentPage ? 'active' : '' }">
+								<a class="page-link" href="order-list?page=${num }" >${num }</a>
+							</li>
+						</c:forEach>
+						<li class="page-item ${last ? 'disabled' : '' }">
+							<a href="order-list?page=${nextPage }" class="page-link" >다음</a>
+						</li>
+					</ul>
+				</nav>
+			</c:if>
 		</div>
 	</div>
 	
@@ -184,4 +198,9 @@
     <!-- Template Javascript -->
 	<script src="/resources/js/main.js"></script>
 </body>
+<script type="text/javascript">
+$(function() {
+	
+})
+</script>
 </html>
