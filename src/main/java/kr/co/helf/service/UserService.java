@@ -15,6 +15,8 @@ import kr.co.helf.form.AddUserForm;
 import kr.co.helf.mapper.UserMapper;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.Rank;
+import kr.co.helf.vo.Trainer;
+import kr.co.helf.vo.TrainerCareer;
 import kr.co.helf.vo.TrainerAttendance;
 import kr.co.helf.vo.User;
 
@@ -62,20 +64,31 @@ public class UserService {
 		String encryptedPassword = passwordEncoder.encode(form.getPassword());
 		user.setEncryptedPassword(encryptedPassword);
 		
-		// 타입,상태 담기
+		// (1단계)유저 객체 - 타입,상태 담기
 		user.setType("ROLE_TRAINER");
 		user.setStatus("R");
 		
-		userMapper.insertTrainer(user);
+		// (2단계)트레이너 객체에 사진파일 담기
+		Trainer trainer = new Trainer();
+		trainer.setTrainerFile(form.getPhotofile());
 		
+		//(2단계)트레이너 경력객체에 담기
+		TrainerCareer trainerCareer = new TrainerCareer();
+		trainerCareer.setName(form.getName());
+		trainerCareer.setStartDate(form.getCareerStartDate());
+		trainerCareer.setEndDate(form.getCareerEndDate());
+		
+		userMapper.insertTrainer(user);
+		userMapper.insertTrainer2(trainer);
+		userMapper.insertTrainerCareer(trainerCareer);
 	}
-
+	
 	public List<User> getUsersWithFourDigits(String fourDigits) {
 		return userMapper.getUsersByDigits(fourDigits);
 
 	}
 	
-	
+	// 아이디 중복검사
 	public int idCheck(String userId) throws Exception {
 		return userMapper.idCheck(userId);
 	}

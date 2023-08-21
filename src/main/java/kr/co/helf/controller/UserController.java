@@ -63,10 +63,10 @@ public class UserController {
 	@GetMapping(value="/welcome")
 	public String welcomePage() {
 		
-		return "welcome"; 	// "WEB-INF/views/" + welcome + ".jsp"
+		return "welcome"; 	
 	}
 	
-	// 첫번째 회원가입 요청(트레이너)
+	// 회원가입 요청1(트레이너)
 	@PostMapping(value="/register/trainer") 
 	public String registerTrainer(AddUserForm form) {
 		
@@ -74,7 +74,14 @@ public class UserController {
 	}
 
 	
-	// 두번째 트레이너 요청
+	// 회원가입 요청2(트레이너)
+	@PostMapping(value="/register/trainer2")
+	public String registerTrainer2(AddUserForm form) {
+		userService.createTrainer(form);
+		
+		return "/";
+		
+	}
 	
 	
 	// 회원가입 완료 요청(트레이너) 

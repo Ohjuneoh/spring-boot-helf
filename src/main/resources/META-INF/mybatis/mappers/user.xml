@@ -34,6 +34,7 @@
 		 #{gender}, #{type}, #{rank.no}, #{point}, #{mobileCarrier})
 	</insert>
 	
+	<!-- 트레이너 회원가입 1단계 (유저객체에 등록) -->
 	<insert id="insertTrainer" parameterType="User">
 		insert into helf_users
 		(user_id, user_email, user_name, user_tel, user_encrypted_password,
@@ -42,7 +43,20 @@
 		(#{id}, #{email}, #{name}, #{tel}, #{encryptedPassword}, 
 		 #{gender}, #{status}, #{type}, null, #{point}, #{mobileCarrier})
 	</insert>
+	
+	<!-- 트레이너 회원가입 2단계 (트레이너객체에 등록) -->
+	<insert id="insertTrainer2" parameterType="Trainer">
+		insert into helf_trainer
+		(trainer_no, trainer_file, user_id)
+		values
+		(helf_files_seq.nextval, #{trainerFile}, #{user.id})
+	</insert>
 
+	<!-- 트레이너 회원가입 2단계 (트레이너 경력객체에 등록) -->
+	<insert id="insertTrainerCareer" parameterType="TrainerCareer">
+	
+	</insert>
+	
 	<select id="getUsersByDigits" parameterType="string" resultType="kr.co.helf.vo.User">
 		select
 			user_id					as id,
