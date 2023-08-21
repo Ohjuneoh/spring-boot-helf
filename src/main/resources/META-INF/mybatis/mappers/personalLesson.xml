@@ -201,6 +201,41 @@
 		and a.user_id = b.user_id
 		order by a.lesson_consultation_request_date asc
 	</select>
-	
-	
+	<select id="getMyMembershipByNo" parameterType="int" resultType="myMembership">
+		select my_membership_no as no,
+        my_membership_startdate as startDate,
+        my_membership_enddate   as endDate,
+        my_membership_remainder_cnt as remainderCnt,
+        my_membership_state     as state
+		from    helf_my_membership
+		where my_membership_no = #{myMembershipNo}
+	</select>
+<update id="updateMyMembership" parameterType="myMembership">
+		update helf_my_membership
+		set	my_membership_remainder_cnt = #{remainderCnt}
+		where my_membership_no = #{no}
+	</update>
+	<update id="updatedConsultation" parameterType="Consultation">
+		update helf_lesson_consultation
+		set lesson_consultation_status = #{status} 
+		where lesson_consultation_no = #{consultationNo}
+	</update>
+	<select id="getConsultationByNo" parameterType="int" resultType="Consultation">
+		select lesson_consultation_no	as consultationNo,
+			   lesson_consultation_status	as consultationStatus
+		from	helf_lesson_consultation
+		where lesson_consultation_no = #{consultationNo}
+	</select>
+	<insert id="insertPersonalLesson" parameterType="PersonalLesson">
+		insert into helf_personal_lesson(personal_lesson_no, 
+											 personal_lesson_name,
+											 personal_lesson_date,
+											 personal_lesson_time,
+											 personal_lesson_content,
+											 my_membership_no,
+                                             trainer_no,
+                                             user_id)
+											 
+		values(helf_personal_lesson_seq.nextval, #{name}, #{date}, #{time}, #{content}, #{myMembership.no}, #{trainer.trainerNo}, #{user.id})
+	</insert>
 </mapper>

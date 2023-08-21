@@ -107,7 +107,8 @@
 	                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청시간 :</strong><span>${consultation.consultations.requestTime}</span><i class="fa fa-clock text-primary pt-1 text-end"></i></div>
 	                            <div class="d-flex justify-content-center">
 	                            <button type="button" class="btn btn-primary py-2 px-4 mt-5" data-bs-toggle="modal" data-bs-target="#myModal"  
-	                            		data-username="${consultation.user.name}" data-userid="${consultation.user.id}" data-trainerno="${consultation.consultations.trainer.trainerNo}" data-mymembershipno="${consultation.consultations.myMembership.no}">예약</button>
+	                            		data-username="${consultation.user.name}님 1:1수업" data-userid="${consultation.user.id}" data-trainerno="${consultation.consultations.trainer.trainerNo}" 
+	                            		data-mymembershipno="${consultation.consultations.myMembership.no}" data-consultationno="${consultation.consultations.consultationNo}">예약</button>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -119,8 +120,8 @@
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   		<div class="modal-dialog">
     		<div class="modal-content">
-				<div class="modal-header">
-				  <h5 class="modal-title" id="exampleModalLabel"><span id="modal-userName"></span>님 개인수업</h5>
+				<div class="modal-header bg-primary">
+				  <h5 class="modal-title text-light" id="exampleModalLabel"><span id="modal-userName"></span></h5>
 				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
@@ -128,34 +129,34 @@
 						<input id="modal-userId" type="hidden" name="userId"/>
 						<input id="modal-trainerNo" type="hidden" name="trainerNo"/>
 						<input id="modal-myMembershipNo" type="hidden" name="myMembershipNo"/>
-						<input id="modal-userName2" name="lessonName"/>
+						<input id="modal-consultationNo" type="hidden" name="consultationNo"/>
 		        		<div class="row g-1">
-								<div class="col-12">
-									<h3 class="mb-2 mt-2 text-primary" >수업 내용</h3>	
-									<textarea id="content" class="form-control bg-light border-0" name="content" style="height: 300px;"></textarea>
-								</div>
-								<div class="col-3">
-							    	<div class="input-group">
-							        	<span class="input-group-text bg-light border-0"><i class="bi bi-calendar-check-fill"></i></span>
-							        	<input type="text" class="form-control bg-light border-0" name="date" id="date" style="height: 55px;" placeholder="수업일">
-							    	</div>
-								</div>
-						    	<div class="col-3">
-							    	<div class="input-group">
-							        	<span class="input-group-text bg-light border-0"><i class="bi bi-alarm-fill"></i></span>
-							        	<input type="text" class="form-control bg-light border-0" name="time" id="time" style="height: 55px;" placeholder="시간">
-							    	</div>
-								</div>
-								<div class="col-6 text-end mt-2">
-								    <button type="button" id="consultation-back" class="btn btn-secondary">이전</button>
-								    <button type="button" id="next" class="btn btn-primary ">다음</button>
-								</div>    
+		        			<div class="col-12">
+								<h3 class="mb-2 mt-2 text-primary" >수업명</h3>	
+								<input id="lessonName" type="text" class="form-control bg-light border-0" name="lessonName"  style="height: 55px;">
+							</div>
+							<div class="col-12">
+								<h3 class="mb-2 mt-2 text-primary" >수업 내용</h3>	
+								<textarea id="content" class="form-control bg-light border-0" name="content" style="height: 300px;"></textarea>
+							</div>
+							<div class="col-6">
+						    	<div class="input-group">
+						        	<span class="input-group-text bg-light border-0"><i class="bi bi-calendar-check-fill"></i></span>
+						        	<input type="text" class="form-control bg-light border-0" name="date" id="date" style="height: 55px;" placeholder="수업일">
+						    	</div>
+							</div>
+					    	<div class="col-3">
+						    	<div class="input-group">
+						        	<span class="input-group-text bg-light border-0"><i class="bi bi-alarm-fill"></i></span>
+						        	<input type="text" class="form-control bg-light border-0" name="time" id="time" style="height: 55px;" placeholder="시간">
+						    	</div>
+							</div> 
+						</div>
+						<div class="modal-footer">
+						  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						  <button type="submit" class="btn btn-primary">개설</button>
 						</div>
 					</form>		
-				</div>
-				<div class="modal-footer">
-				  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				  <button type="button" class="btn btn-primary">Save changes</button>
 				</div>
     		</div>
 	  	</div>
@@ -192,11 +193,12 @@ $(document).ready(function() {
         var userid = button.data('userid');
         var trainerno = button.data('trainerno');
         var mymembershipno = button.data('mymembershipno')
+        var consultationno = button.data('consultationno')
         $('#modal-userName').text(username); 
-        $('#modal-userName2').val(username); 
         $('#modal-userId').val(userid); 
         $('#modal-trainerNo').val(trainerno); 
         $('#modal-myMembershipNo').val(mymembershipno);
+        $('#modal-consultationNo').val(consultationno);
     });
 });
 

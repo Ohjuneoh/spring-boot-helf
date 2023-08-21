@@ -218,6 +218,71 @@
         </div>
     </div>
     <!-- Testimonial End -->
+    <div class="container-fluid py-0 wow fadeInUp " data-wow-delay="0.1s" style="margin-top: 1px;">
+        <div class="container py-5 bg-light">
+	    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+        		<div class="container ">
+            		<div class="row g-1 d-flex align-items-start" >
+                   		<div class="section-title position-relative pb-3 mb-5 col-6" >
+                       		<h2 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">최근후기</h2>
+                       		<h3 class="mb-3" >생생한 후기를 확인하세요!</h3>
+		               	</div>
+		               	<div id="1" class="col-6 d-flex align-items-center">
+						    <div id="2" class="d-flex justify-content-end">
+						        <p class="m-1 text-primary" style="font-size: 80px;">5.0</p>
+						    </div>
+						    <div id="3" class="d-flex flex-column align-items-start m-1">
+						        <h6 class="m-1 text-primary" style="font-size: 20px;">★★★★★</h6>
+						        <strong class="m-1" style="font-size: 10px;">11개의 리뷰</strong>
+						    </div>
+							<button class="btn btn-primary m-3" style="height: 55px;">리뷰작성</button>
+						</div>
+			    	</div>
+			 	</div>
+			</div>
+			<hr style="height: 3px; color: skyblue;" ></hr>
+			<div class="testimonial-item bg-light my-4">
+	            <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+	                <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
+	                <div class="ps-4">
+	                    <h4 class="text-primary mb-1">작성자명</h4>
+	                    <small class="text-uppercase">작성일자</small>
+	                </div>
+	            </div>
+	            <div class="pt-4 pb-5 px-5">
+	                리뷰내용
+	            </div>
+	            <hr style="height: 1px; color: gray;" ></hr>
+        	</div>
+        	<div class="testimonial-item bg-light my-4">
+	            <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+	                <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
+	                <div class="ps-4">
+	                    <h4 class="text-primary mb-1">작성자명</h4>
+	                    <small class="text-uppercase">작성일자</small>
+	                </div>
+	            </div>
+	            <div class="pt-4 pb-5 px-5">
+	                리뷰내용
+	            </div>
+	            <hr style="height: 1px; color: gray;" ></hr>
+        	</div>
+        	<div class="testimonial-item bg-light my-4">
+	            <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+	                <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
+	                <div class="ps-4">
+	                    <h4 class="text-primary mb-1">작성자명</h4>
+	                    <small class="text-uppercase">작성일자</small>
+	                </div>
+	            </div>
+	            <div class="pt-4 pb-5 px-5">
+	                리뷰내용
+	            </div>
+	            <hr style="height: 1px; color: gray;" ></hr>
+        	</div>
+        	
+        </div>
+    </div>
 
 
     <!-- Footer Start -->
