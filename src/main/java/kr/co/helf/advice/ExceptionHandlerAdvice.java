@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @ControllerAdvice
 @Slf4j
 public class ExceptionHandlerAdvice {
-
+	
 	@ExceptionHandler(Exception.class)
 	public String handleException(Exception ex) {
 		log.error(ex.getMessage(), ex);
@@ -35,11 +35,4 @@ public class ExceptionHandlerAdvice {
 	public String handleAccessDeniedException(AccessDeniedException ex) {
 		throw ex;
 	}
-	@ExceptionHandler(PersonalLessonException.class)
-    public ModelAndView handlePersonalLessonException(PersonalLessonException ex) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("error/personalLesson");  // 에러 페이지 이름
-        modelAndView.addObject("message", ex.getMessage());     // 에러 메시지 전달
-        return modelAndView;
-    }
 }
