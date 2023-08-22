@@ -1,6 +1,8 @@
 package kr.co.helf.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static kr.co.helf.controller.OrderEnum.*;
 
@@ -15,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.helf.dto.MyMembershipListDto;
 import kr.co.helf.dto.MyOrderDetailDto;
-import kr.co.helf.dto.OrderSearchDto;
+import kr.co.helf.dto.OrderListDto;
+import kr.co.helf.form.OrderSearchForm;
 import kr.co.helf.service.MembershipService;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.MyOption;
@@ -65,15 +68,19 @@ public class MembershipController {
 	@GetMapping("/order-list")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String orderList(@AuthenticationPrincipal User user, Model model,
-							@ModelAttribute OrderSearchDto dto) {
+							@ModelAttribute OrderSearchForm form) {
 		
-		if(dto.getPage() == 0) {
-			dto.setPage(1);
+		if(form.getPage() == null) {
+			form.setPage(1);
 		}
 		
-		List<Order> orderList = membershipService.getOrdersById(user.getId());
-		model.addAttribute("orderList", orderList);
-		System.out.println(orderList);
+		Map<String, Object> map = new HashMap<>();
+		map.put("user", user);
+		map.put("form", form);
+		
+		OrderListDto orderList = membershipService.getOrdersById(map);
+		
+		model.addAttribute("dto", orderList);
 		
 		return "membership/order-list";
 	}
