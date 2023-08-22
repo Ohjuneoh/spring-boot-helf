@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 
 
 import kr.co.helf.vo.LessonApply;
+import kr.co.helf.vo.MyMembership;
+import kr.co.helf.vo.PersonalLesson;
 import kr.co.helf.dto.UserConsultations;
 import kr.co.helf.dto.UserMyMemberships;
 import kr.co.helf.vo.Consultation;
@@ -29,6 +31,16 @@ public interface PersonalLessonMapper {
 	List<UserConsultations> getAllConsultationByTrainerNo(int trainerNo);
 	//아이디로 트레이너 조회
 	Trainer getTrainerByUserId(String userId);
+	//개인수업 예약
+	void insertPersonalLesson(PersonalLesson personalLesson);
+	//나의 이용권 번호로 이용권 조회
+	MyMembership getMyMembershipByNo(int myMembershipNo);
+	//나의 이용권 수정
+	void updateMyMembership(MyMembership myMembership);
+	//상담번호로 상담찾기
+	Consultation getConsultationByNo(int consultationNo);
+	//상담상태 변경
+	void updatedConsultation(@Param("consultationNo") int consultationNo, @Param("status") String status);
 	
 
 }

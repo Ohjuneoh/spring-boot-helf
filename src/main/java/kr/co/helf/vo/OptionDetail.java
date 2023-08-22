@@ -2,16 +2,16 @@ package kr.co.helf.vo;
 
 import org.apache.ibatis.type.Alias;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-@Getter
+@Data
 @Alias("optionDetail")
 public class OptionDetail {
 	
 	private int no;
-	private int period;
+	private String type;
 	private int price;
 	private Option option;
 }

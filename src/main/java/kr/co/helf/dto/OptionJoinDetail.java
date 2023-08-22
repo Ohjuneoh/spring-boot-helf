@@ -1,7 +1,8 @@
-package kr.co.helf.vo;
+package kr.co.helf.dto;
 
 import org.apache.ibatis.type.Alias;
 
+import kr.co.helf.vo.Option;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +13,7 @@ public class OptionJoinDetail {
 
 	private int no;
 	private String name;
-	private int period;
+	private String type;
 	private int price;
 	private Option option;
 }

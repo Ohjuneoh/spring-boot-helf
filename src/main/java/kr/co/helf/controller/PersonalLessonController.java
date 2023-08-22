@@ -6,6 +6,7 @@ import kr.co.helf.service.PersonalLessonService;
 import kr.co.helf.vo.Consultation;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.MyMembership;
+import kr.co.helf.vo.PersonalLesson;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.User;
 
@@ -77,14 +78,48 @@ public class PersonalLessonController {
 		model.addAttribute("consultations",consultations);
 		return "personal-lesson/consultationlist";
 	}
-//	//트레이너 1대1 상담신청 조회 후 수업개설
-//	@PostMapping("/list")
-//	public String reservation(@RequestParam("userId"),
-//								@RequestParam("trainerNo"),
-//								@RequestParam("myMembershipNo"),
-//								@RequestParam("")) {
-//		
-//	}
+
+
+	//트레이너 1대1 상담신청 조회 후 수업개설
+	@PostMapping("/list")
+	public String reservation(@RequestParam("userId") String userId,
+								@RequestParam("trainerNo") int trainerNo,
+								@RequestParam("myMembershipNo") int membershipNo,
+								@RequestParam("lessonName") String lessonName,
+								@RequestParam("content") String content,
+								@RequestParam("date") Date date,
+								@RequestParam("time") String time,
+								@RequestParam("consultationNo") int consultationNo)  {
+		
+		PersonalLesson personalLesson = new PersonalLesson();
+		
+		personalLesson.setName(lessonName);
+		personalLesson.setContent(content);
+		personalLesson.setDate(date);
+		personalLesson.setTime(time);
+		
+		User user = new User();
+		user.setId(userId);
+		
+		Trainer trainer = new Trainer();
+		trainer.setTrainerNo(trainerNo);
+		
+		MyMembership myMembership = new MyMembership();
+		myMembership.setNo(membershipNo);
+		
+		personalLesson.setUser(user);
+		personalLesson.setMyMembership(myMembership);
+		personalLesson.setTrainer(trainer);
+		
+		Consultation consultation = new Consultation();
+		consultation.setConsultationNo(consultationNo);
+		
+		
+		personalLessonService.createPersonalLesson(personalLesson, consultation);
+		
+		
+		return "redirect:/personal-lesson/list";
+	}
 	
 	
 }

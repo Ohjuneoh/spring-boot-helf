@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-0">
             <a href="/" class="nav-item nav-link ${menu eq '홈' ? 'active' : '' }">홈</a>
-            <a href="/membership/list" class="nav-item nav-link">이용권</a>
+            <a href="/order/list" class="nav-item nav-link">이용권</a>
             <sec:authorize access="isAnonymous()">
             <a href="/concept" class="nav-item nav-link">Concept</a>
             <a href="/branch" class="nav-item nav-link">오시는길</a>
@@ -56,16 +56,12 @@
                     <sec:authorize access="hasRole('ROLE_USER')">
                     <a href="price" class="dropdown-item">내 정보 조회</a>
                     <a href="/lesson/user-my-lesson" class="dropdown-item">내 수업 조회</a>
-                    <a href="/my-membership/list" class="dropdown-item">내 이용권</a>
-                    <a href="team" class="dropdown-item">내 쿠폰</a>
-                    <a href="team" class="dropdown-item">구매내역</a>
+                    <a href="/membership/list" class="dropdown-item">내 이용권</a>
+                    <a href="/membership/order-list" class="dropdown-item">구매내역</a>
                     </sec:authorize>
                     <sec:authorize access="hasRole('ROLE_TRAINER')">
                         <a href="price" class="dropdown-item">내 정보 조회</a>
                         <a href="/lesson/trainer-my-lesson" class="dropdown-item">내 수업 조회</a>
-                        <a href="feature" class="dropdown-item">내 이용권</a>
-                        <a href="team" class="dropdown-item">내 쿠폰</a>
-                        <a href="team" class="dropdown-item">구매내역</a>
                         <a href="/checkin/attendance" class="dropdown-item">출퇴근 내역</a>
                     </sec:authorize>
                 </div>

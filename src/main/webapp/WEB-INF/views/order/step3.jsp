@@ -43,11 +43,9 @@
     </div>
     <!-- Spinner End -->
 
-
     <!-- Topnavbar Start -->
    	<jsp:include page="../common/topnavbar.jsp" />
     <!-- Topnavbar End -->
-
 
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0 h-10 ">
@@ -125,10 +123,10 @@
 			   					<tr>
 			   						<th>
 			   							${form.membershipName }
-				   						<c:if test="${form.lockerPeriod ne 0 }">
+				   						<c:if test="${form.lockerPrice ne 0 }">
 						   						<br/><br/>${form.lockerName }
 				   						</c:if>
-				   						<c:if test="${form.wearPeriod ne 0 }">
+				   						<c:if test="${form.wearPrice ne 0 }">
 					   						<br/><br/>${form.wearName }
 				   						</c:if>
 			   						</th>
@@ -140,22 +138,22 @@
 				   							${form.remainderCnt }회
 				   						</c:if>
 				   						<input type="hidden" name="membership-period" value="${form.periodDuration }">
-				   						<c:if test="${form.lockerPeriod ne 0 }">
+				   						<c:if test="${form.lockerPrice ne 0 }">
 						   					<br/><br/>
-						   					<span id="locker-period">${form.lockerPeriod }</span>개월
+						   					<span>${form.periodDuration }</span>개월
 				   						</c:if>
-				   						<c:if test="${form.wearPeriod ne 0 }">
+				   						<c:if test="${form.wearPrice ne 0 }">
 					   						<br/><br/>
-					   						<span id="wear-period">${form.wearPeriod }</span>개월
+					   						<span>${form.periodDuration }</span>개월
 				   						</c:if>
 				   					</td>
 				   					<td>
 				   						<fmt:formatNumber value="${form.membershipPrice }" pattern="###,###"/>원
-				   						<c:if test="${form.lockerPeriod ne 0 }">
+				   						<c:if test="${form.lockerPrice ne 0 }">
 						   					<br/><br/>
 						   					<fmt:formatNumber value="${form.lockerPrice }" pattern="###,###"/>원
 				   						</c:if>
-				   						<c:if test="${form.wearPeriod ne 0 }">
+				   						<c:if test="${form.wearPrice ne 0 }">
 						   					<br/><br/>
 						   					<fmt:formatNumber value="${form.wearPrice }" pattern="###,###"/>원
 				   						</c:if>
@@ -173,7 +171,7 @@
 			   							<br/><br/>
 			   							${form.savePoint }P
 			   							<br/><br/>
-			   							+ <fmt:formatNumber value="${form.surtax }" pattern="###,###"/>원
+			   							+ <fmt:formatNumber value="${form.surtax }" pattern="###,###"/>P
 			   						</td>
 			   					</tr>
 			   					<tr>
@@ -221,8 +219,6 @@
 							<span class="ps-3 pe-3">~</span>
 							<input name="endDateText" type="date" style="width: 300px; height: 35px; " disabled class="border-0"/>
 							<input type="hidden" type="date" name="endDate">
-							<input type="hidden" type="date" name="lockerEndDate">
-							<input type="hidden" type="date" name="wearEndDate">
 						</div>
 					</div>
 <!-- 				<div class="offset-10">
@@ -237,97 +233,7 @@
 		</div>
 	</div>
 	
-	<!-- Footer Start -->
-	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
-		<div class="container">
-			<div class="row gx-5">
-				<div class="col-lg-4 col-md-6 footer-about">
-					<div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-primary p-4">
-						<a href="home" class="navbar-brand">
-                            <h1 class="m-0 text-white"><i class="fa fa-user-tie me-2"></i>Startup</h1>
-                        </a>
-                        <p class="mt-3 mb-4">Lorem diam sit erat dolor elitr et, diam lorem justo amet clita stet eos sit. Elitr dolor duo lorem, elitr clita ipsum sea. Diam amet erat lorem stet eos. Diam amet et kasd eos duo.</p>
-                        <form action="">
-                            <div class="input-group">
-                                <input type="text" class="form-control border-white p-3" placeholder="Your Email">
-                                <button class="btn btn-dark">Sign Up</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-lg-8 col-md-6">
-                    <div class="row gx-5">
-                        <div class="col-lg-4 col-md-12 pt-5 mb-5">
-                            <div class="section-title section-title-sm position-relative pb-3 mb-4">
-                                <h3 class="text-light mb-0">Get In Touch</h3>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <i class="bi bi-geo-alt text-primary me-2"></i>
-                                <p class="mb-0">서울시 종로구 율곡로 10길 105</p>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <i class="bi bi-envelope-open text-primary me-2"></i>
-                                <p class="mb-0">health@helf.com</p>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <i class="bi bi-telephone text-primary me-2"></i>
-                                <p class="mb-0">+012 345 67890</p>
-                            </div>
-                            <div class="d-flex mt-4">
-                                <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
-                                <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
-                                <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
-                                <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram fw-normal"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-                            <div class="section-title section-title-sm position-relative pb-3 mb-4">
-                                <h3 class="text-light mb-0">Quick Links</h3>
-                            </div>
-                            <div class="link-animated d-flex flex-column justify-content-start">
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Meet The Team</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
-                                <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-                            <div class="section-title section-title-sm position-relative pb-3 mb-4">
-                                <h3 class="text-light mb-0">Popular Links</h3>
-                            </div>
-                            <div class="link-animated d-flex flex-column justify-content-start">
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Meet The Team</a>
-                                <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
-                                <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid text-white" style="background: #061429;">
-        <div class="container text-center">
-            <div class="row justify-content-end">
-                <div class="col-lg-8 col-md-6">
-                    <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
-                        <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights Reserved. 
-						
-						<!--/*** This template is free as long as you keep the footer authorâs credit link/attribution link/backlink. If you'd like to use the template without the footer authorâs credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-						Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
-                        <br>Distributed By: <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
-    
+	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />    
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
 
@@ -357,16 +263,12 @@ $(function() {
 		let totalPrice = $("input[name=totalPrice]").val();
 		let startDate = $("input[name=startDate]").val();
 		let endDate = $("input[name=endDate]").val();
-		let lockerEndDate = $("input[name=lockerEndDate]").val();
-		let wearEndDate = $("input[name=wearEndDate]").val();
 		
 		let data = {
 			usePoint:usePoint,
 			totalPrice:totalPrice,
 			startDate:startDate,
-			endDate:endDate,
-			lockerEndDate:lockerEndDate,
-			wearEndDate:wearEndDate
+			endDate:endDate
 		}
 		
 		$.post("kakaopay-ready", data, function(response) {
@@ -428,8 +330,6 @@ $(function() {
 		let today = moment().format("YYYY-MM-DD");
 				
 		let membershipPeriod = $("input[name=membership-period]").val();
-		let lockerPeriod = $("#locker-period").text();
-		let wearPeriod = $("#wear-period").text();
 		
 		if(startDate < today) {
 			alert("시작일은 " + today + "이후부터 가능합니다.");
@@ -438,13 +338,9 @@ $(function() {
 		}
 		
 		let endDate =  moment(startDate).add(membershipPeriod, 'M').format("YYYY-MM-DD");
-		let lockerEndDate = moment(startDate).add(lockerPeriod, 'M').format("YYYY-MM-DD");
-		let wearEndDate = moment(startDate).add(wearPeriod, 'M').format("YYYY-MM-DD");
 		
 		$("input[name=endDateText]").val(endDate);
 		$("input[name=endDate]").val(endDate);
-		$("input[name=lockerEndDate]").val(lockerEndDate);
-		$("input[name=wearEndDate]").val(wearEndDate);
 		
 		$("#btn-order").removeClass("disabled");
 	})
