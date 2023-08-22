@@ -1,7 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -36,7 +34,7 @@
     <!-- Date Picker  -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
-
+<!-- 위에 모든 페이지까지 공통부분 건들 x -->
 <body>
 <!-- Spinner Start -->
 <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -50,6 +48,7 @@
 <!-- Topnavbar End -->
 
 
+
 <!-- Navbar Start -->
 <div class="container-fluid position-relative p-0 h-10 ">
     <jsp:include page="/WEB-INF/views/common/navbar.jsp">
@@ -59,12 +58,14 @@
     <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
         <div class="row py-5">
             <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                <h1 class="display-4 text-white animated zoomIn">LESSONLIST</h1>
-                <a href="" class="h5 text-white">수업 목록</a>
+                <h1 class="display-4 text-white animated zoomIn">REGISTER</h1>
+                <a href="" class="h5 text-white">리뷰 등록</a>
             </div>
         </div>
     </div>
 </div>
+
+
 <div class="modal fade" id="searchModal" tabindex="-1">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
@@ -79,44 +80,62 @@
             </div>
         </div>
     </div>
+    <!-- Lesson Category Start  -->
 </div>
-<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
+<div class="container-fluid py-1 wow fadeInUp " data-wow-delay="0.1s">
     <div class="container py-5">
-        <div class="row mb-3">
-            <div class="col-12">
-                <div class="card" >
-                    <div class="card-header bg-dark" style="color: #ffffff">
-                        수업 목록
-                    </div>
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th style="width: 10%">레슨 번호</th>
-                                <th style="width: 20%">수업명</th>
-                                <th style="width: 20%">강사명</th>
-                                <th style="width: 20%">레슨시간</th>
-                                <th style="width: 20%">출석 상태</th>
-                                <th style="width: 10%">리뷰 작성</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach var="lessonApply" items="${applyList }">
-                                <tr>
-                                    <td>${lessonApply.lesson.no }</td>
-                                    <td><a href="/group-lesson/detail?no=${lessonApply.lesson.no }">${lessonApply.lesson.name }</a></td>
-                                    <td>${lessonApply.user.name }</td>
-                                    <td><fmt:formatDate value="${lessonApply.lesson.date }" pattern="yyyy년 M월 d일" /> ${lessonApply.lesson.time }시</td>
-                                    <td>${lessonApply.attendanceStatus }</td>
-                                    <td><a href="../trainer-review/registration" class="btn btn-primary btn-sm">리뷰작성</a></td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+            <div class="container ">
+                <div class="row g-1" >
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<!-- Lesson Category End -->
+<!-- Lesson Register Form Start  -->
+<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
+    <div class="container py-5">
+        <form class="" id="group-lesson-form" method="post" action="/group-lesson/registration">
+            <div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
+                <div class="container ">
+                    <div class="row g-1" >
+                        <div class="section-title position-relative pb-3 mb-5">
+                            <h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">리뷰 등록</h5>
+                            <h1 class="mb-0" style="font-size: 15px;" >내용을 입력해주세요</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-1">
+                <div class="col-6">
+                    <input type="text" class="form-control bg-light border-0" name="name" placeholder="수업명" style="height: 55px;">
+                </div>
+                <div class="col-6">
+                    <select  class="form-select bg-light border-0" name="time" style="height: 55px;">
+                        <option value="">별점</option>
+                        <option value="0" class="form-control bg-light border-0" >0</option>
+                        <option value="0.5" class="form-control bg-light border-0" >0.5</option>
+                        <option value="1" class="form-control bg-light border-0" >1</option>
+                        <option value="1.5" class="form-control bg-light border-0" >1.5</option>
+                        <option value="2" class="form-control bg-light border-0" >2</option>
+                        <option value="2.5" class="form-control bg-light border-0" >2.5</option>
+                        <option value="3" class="form-control bg-light border-0" >3</option>
+                        <option value="3.5" class="form-control bg-light border-0" >3.5</option>
+                        <option value="4" class="form-control bg-light border-0" >4</option>
+                        <option value="4.5" class="form-control bg-light border-0" >4.5</option>
+                        <option value="5" class="form-control bg-light border-0" >5</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <textarea class="form-control bg-light border-0" name="description" style="height: 300px;" placeholder="내용"></textarea>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="btn-cancel" class=" btn btn-danger mt-1 float-end" style="margin-left: 5px;">취소</button>
+                <button type="submit" class=" btn btn-primary mt-1 float-end">등록</button>
+            </div>
+        </form>
     </div>
 </div>
 <!-- Footer End -->
@@ -141,6 +160,9 @@
 <script src="/resources/js/main.js"></script>
 
 <script>
+
+
+
 
 </script>
 
