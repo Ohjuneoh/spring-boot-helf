@@ -275,6 +275,32 @@ $(document).ready(function() {
     //상담페이지 다음 버튼에 클릭 이벤트 리스너 추가
     $('#next').click(function(event) {
         event.preventDefault();
+        
+        //공백값에 대한 jquery cjfl
+        if (!$.trim($("#goal").val())) {
+            alert("PT 목표를 입력해주세요.");
+            $("#goal").focus();
+            return;
+        }
+
+        if (!$.trim($("#abnormalities").val())) {
+            alert("신체 이상유무를 입력해주세요.");
+            $("#abnormalities").focus();
+            return;
+        }
+
+        if (!$.trim($("#date").val())) {
+            alert("희망 상담일을 입력해주세요.");
+            $("#date").focus();
+            return;
+        }
+
+        if (!$.trim($("#time").val())) {
+            alert("희망 상담시간을 입력해주세요.");
+            $("#time").focus();
+            return;
+        }
+        
         $('#final-trainerNumber').val($('#trainerNumber').val());
         $('#final-goal').val($('#goal').val());
         $('#final-abnormalities').val($('#abnormalities').val());
