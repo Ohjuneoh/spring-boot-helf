@@ -42,7 +42,7 @@
 
 
     <!-- Topbar Start -->
-   	<jsp:include page="common/topnavbar.jsp">
+   	<jsp:include page="/WEB-INF/views/common/topnavbar.jsp">
 		<jsp:param name="menu" value="홈"/>
 	</jsp:include>
     <!-- Topbar End -->
@@ -50,7 +50,7 @@
 
     <!-- Navbar & Carousel Start -->
     <div class="container-fluid position-relative p-0">
-		<jsp:include page="common/navbar.jsp">
+		<jsp:include page="/WEB-INF/views/common/navbar.jsp">
 			<jsp:param name="menu" value="홈"/>
 		</jsp:include>
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
@@ -59,38 +59,59 @@
                     <img class="w-100" src="/resources/img/carousel-1.jpg" alt="Image">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
-                        	<form action="/user/login" method="post">
+                        
+                        	<form action="/user/find-pwd" method="post">
 	                            <div class="row g-3">
 	                            	<div class="col-xl-12">
-	                            		<a><strong style="font-size: 40px;">LOGIN</strong></a>
+	                            		<a><strong style="font-size: 40px;">비밀번호 찾기</strong></a>
 	                            	</div>
-	                                <div class="col-xl-12">
-	                                    <input type="text" class="form-control bg-light border-0" placeholder="ID" style="height: 55px;" name="id">
+	                            	
+	                            	<div class="border p-3 bg-light">
+		                              
+		                               <!-- 이메일 인증  -->
+		                               <div id="div_email" class="box_inn selected  text-start"> <!-- [D] 선택시 selected 클래스 추가 -->
+											<input type="radio" id="r_pn2" class="input_rd" name="certification" value="email" >
+											<label for="r_pn2" class="label_rd" style="font-size: 18px; font-weight: bold;">본인확인 이메일 인증</label>
+												<p class="dsc" style="padding-left: 20px;">본인확인 이메일 주소와 입력한 이메일 주소가 같아야, 인증번호를 받을 수 있습니다.</p>	
+											<div class="box-inn-sub-email d-none" >
+												<dl>
+												<dt><label for="emailNm" class="label_txt">이름</label></dt>
+												<dd><input type="text" id="emailNm" name="emailNm" maxlength="40" class="input_txt" style="width:217px"></dd>
+												<dt><label for="email" class="label_txt">이메일 주소</label></dt>
+												<dd>
+													<input type="text" id="email" name="email" maxlength="100" class="input_txt" style="width:217px">
+													<a href="#" id="btnEmailAuthNo" name="btnEmailAuthNo" onclick="sendAuthNoForEmailAuth();clickcr(this,'eml.code','','',event);" class="btn_ct"><span class="blind">인증번호 받기</span></a>
+												</dd>
+												<dt><label for="t_ct1" class="blind">인증번호 입력</label></dt>
+												<dd class="ct">
+													<span class="input_box2">
+														<span id="span_emailAuthNo" class="phold" style="display: block;">인증번호 6자리 숫자 입력</span>
+														<input type="text" id="emailAuthNo" name="emailAuthNo" maxlength="6" onkeydown="check_num('emailAuthNo', '1')" onclick="hiddenObj('span_emailAuthNo')" class="input_txt" style="width:217px" disabled="">
+													</span>
+													<div>인증번호가 오지 않나요? <a href="javascript:showHelp('emailHelpTxt');" onclick="clickcr(this,'eml.help','','',event);" class="ico_help2"><span class="blind">도움말</span></a>
+														<!-- [D]툴팁 활성화시 display:block , 비활성화시 display:none  -->
+														<div id="emailHelpTxt" class="help_tooltip2" style="display:none">
+															<p>네이버가 발송한 메일이 스팸 메일로 분류된 것은 아닌지 <br>확인해 주세요. 스팸 메일함에도 메일이 없다면,<br>다시 한 번 '인증번호 받기'를 눌러주세요.</p>
+															<span class="edge"></span>
+														</div>
+													</div>									
+												</dd>	
+												</dl>
+											</div>		
+										</div>
+		                               
+	                            	</div>
+	                            	
+	                               
+	                                <div class="col-12">
+	                                    <button class="btn btn-dark w-100 py-3" type="submit">찾기</button>
 	                                </div>
 	                                <div class="col-12">
-	                                    <input type="password" class="form-control bg-light border-0" placeholder="PASSWORD" style="height: 55px;" name="password">
-	                                </div>
-	                                <div class="col-12">
-	                                    <button class="btn btn-dark w-100 py-3" type="submit">로그인</button>
-	                                </div>
-	                                <div class="col-12 mb-3">
 	                                	<a href="/user/findId"  class="btn" >아이디 찾기</a>
-	                                	<span>│</span>
-	                                	<a href="/user/findPwd"  class="btn" >비밀번호 찾기</a>
-	                                	<span>│</span>
-	                                	<a href="/user/registerform"  class="btn" >회원가입</a>
 	                                </div>
 	                            </div>
-	                            <div class="row mb-3">
-									<div class="col-12">
-										<div class="d-grid gap-2">
-											<a href="/oauth2/authorization/kakao" onclick="kakao_login_call()">
-											    <img src="https://atimg.sonyunara.com/attrangs/banner/kakao-pc.jpg" style="width: 700px;">
-											</a>
-										</div>
-									</div>
-								</div>
                         	</form>
+                        	
                         </div>
                     </div>
                 </div>
@@ -115,6 +136,20 @@
 
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
+    <script type="text/javascript">
+    	$(function(){
+    		$(":radio[name=certification]").change(function() {
+    			let value=$(this).val();
+    			if(value =='tel'){
+    				$(".box-inn-sub-email").addClass('d-none')
+    				$(".box-inn-sub-tel").removeClass('d-none')
+    			} else if (value == 'email'){
+    				$(".box-inn-sub-tel").addClass('d-none')
+    				$(".box-inn-sub-email").removeClass('d-none')
+    			}
+    		});
+    	})
+    </script>
 </body>
 
 </html>
