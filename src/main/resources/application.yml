@@ -26,18 +26,22 @@ spring:
       max-request-size: 10MB
 # 이메일인증
   mail:
+    # Google smtp server 사용
     host: smtp.gmail.com
     port: 587
-    username: oooorrrr0117@gmail.com
-    password: qbgwovlafhgjinli
+    username: oooorrrr0117@gmail.com 
+    password: qbgwovlafhgjinli 
     properties:
       mail:
         smtp:
           auth: true
-          timeout: 5000
           starttls:
             enable: true
-        debug: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+    auth-code-expiration-millis: 1800000  # 30 * 60 * 1000 == 30분
 # 카카오로그인
   security:
     oauth2:
@@ -68,4 +72,4 @@ mybatis:
   configuration:
     jdbc-type-for-null: 'NULL'
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
-  type-aliases-package: kr.co.helf.vo
+  type-aliases-package: kr.co.helf.vo, kr.co.helf.dto

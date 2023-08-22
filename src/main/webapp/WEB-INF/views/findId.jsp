@@ -86,7 +86,7 @@
 										
 										
 		                               <!-- 이메일 인증  -->
-		                               <div id="div_email" class="box_inn selected  text-start"> <!-- [D] 선택시 selected 클래스 추가 -->
+		                               <div id="div_email" class="box_inn selected  text-start"> 
 											<input type="radio" id="r_pn2" class="input_rd" name="certification" value="email" >
 											<label for="r_pn2" class="label_rd " style="font-size: 18px; font-weight: bold;">본인확인 이메일 인증</label>
 												<p class="dsc" style="padding-left: 20px;">본인확인 이메일 주소와 입력한 이메일 주소가 같아야, 인증번호를 받을 수 있습니다.</p>	
@@ -97,7 +97,7 @@
 												<dt><label for="email" class="label_txt">이메일 주소</label></dt>
 												<dd>
 													<input type="text" id="email" name="email" maxlength="100" class="input_txt" style="width:217px">
-													<a href="#" id="btnEmailAuthNo" name="btnEmailAuthNo" onclick="sendAuthNoForEmailAuth();clickcr(this,'eml.code','','',event);" class="btn_ct">
+													<a href="#" id="btnEmailAuthNo" name="btnEmailAuthNo"  class="btn_ct">
 														<span class="blind">인증번호 받기</span>
 													</a>
 												</dd>
@@ -105,9 +105,9 @@
 												<dd class="ct">
 													<span class="input_box2">
 														<span id="span_emailAuthNo" class="phold" style="display: block;">인증번호 6자리 숫자 입력</span>
-														<input type="text" id="emailAuthNo" name="emailAuthNo" maxlength="6" onkeydown="check_num('emailAuthNo', '1')" onclick="hiddenObj('span_emailAuthNo')" class="input_txt" style="width:217px" disabled="">
+														<input type="text" id="emailAuthNo" name="emailAuthNo" maxlength="6"  class="input_txt" style="width:217px" disabled="">
 													</span>
-													<div>인증번호가 오지 않나요? <a href="javascript:showHelp('emailHelpTxt');" onclick="clickcr(this,'eml.help','','',event);" class="ico_help2">
+													<div>인증번호가 오지 않나요? <a href="javascript:showHelp('emailHelpTxt');"  class="ico_help2">
 													<span class="blind">도움말</span></a>
 														<!-- [D]툴팁 활성화시 display:block , 비활성화시 display:none  -->
 														<div id="emailHelpTxt" class="help_tooltip2" style="display:none">
@@ -121,8 +121,6 @@
 										</div>
 		                               
 	                            	</div>
-	                            	
-	                               
 	                                <div class="col-12">
 	                                    <button class="btn btn-dark w-100 py-3" type="submit">찾기</button>
 	                                </div>
@@ -131,7 +129,6 @@
 	                                </div>
 	                            </div>
                         	</form>
-                        	
                         </div>
                     </div>
                 </div>
