@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.helf.dto.BoardPrevNextDto;
 import kr.co.helf.dto.Pagination;
 import kr.co.helf.form.AddBoardForm;
 import kr.co.helf.mapper.BoardMapper;
@@ -60,5 +61,11 @@ public class BoardService {
 	public Board getBoardByNo(int boardNo) {
 		Board board = boardMapper.getBoardByNo(boardNo);
 		return board;
+	}
+	
+	// 상세정보 이전글/다음글
+	public BoardPrevNextDto getPrevNext(int boardNo) {
+		BoardPrevNextDto prevNext = boardMapper.getPrevNextBoardByNo(boardNo);
+		return prevNext;
 	}
 }
