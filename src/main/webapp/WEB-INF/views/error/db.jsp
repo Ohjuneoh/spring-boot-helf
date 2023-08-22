@@ -65,16 +65,20 @@
         </div>
     </div>
 	<div class="container">
-		<div class="row">
-			<div class="col-12">
-				<div class="bg-light border p-3 mb-5">
-					<h1 class="text-primary">데이터베이스 오류</h1>
-				<p>고객님</p>
-				<p>나가주세요</p>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="row">
+            <div class="col-12">
+                <div class="bg-light border p-3 mb-5">
+                    <h1 class="text-primary">서버 오류</h1>
+                    <p>고객님, 대단히 죄송합니다.</p>
+                    <p>요청을 처리하는 동안 문제가 발생했습니다.</p>
+                    <p>문제를 해결하려면 고객 지원 팀에 연락하십시오.</p>
+                    <p>Email: support@example.com</p>
+                    <p>Phone: +82-10-1234-5678</p>
+                    <a href="/">홈페이지로 돌아가기</a>
+                </div>
+            </div>
+        </div>
+    </div>
 	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>

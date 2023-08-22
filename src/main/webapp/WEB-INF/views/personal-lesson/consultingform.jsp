@@ -149,13 +149,13 @@
 						<div class="col-3">
 					    	<div class="input-group">
 					        	<span class="input-group-text bg-light border-0"><i class="bi bi-calendar-check-fill"></i></span>
-					        	<input type="text" class="form-control bg-light border-0" name="date" id="date" style="height: 55px;" placeholder="희망 상담일">
+					        	<input type="text" class="form-control bg-light border-0" name="requestDate" id="date" style="height: 55px;" placeholder="희망 상담일">
 					    	</div>
 						</div>
 				    	<div class="col-3">
 					    	<div class="input-group">
 					        	<span class="input-group-text bg-light border-0"><i class="bi bi-alarm-fill"></i></span>
-					        	<input type="text" class="form-control bg-light border-0" name="time" id="time" style="height: 55px;" placeholder="희망 상담시간">
+					        	<input type="text" class="form-control bg-light border-0" name="requestTime" id="time" style="height: 55px;" placeholder="희망 상담시간">
 					    	</div>
 						</div>
 						<div class="col-6 text-end mt-2">
@@ -176,8 +176,8 @@
 				<input type="hidden" name="trainerNumber" id="final-trainerNumber">
 			    <input type="hidden" name="goal" id="final-goal">
 			    <input type="hidden" name="abnormalities" id="final-abnormalities">
-			    <input type="hidden" name="date" id="final-date">
-			    <input type="hidden" name="time" id="final-time">
+			    <input type="hidden" name="requestDate" id="final-date">
+			    <input type="hidden" name="requestTime" id="final-time">
 	            <div class="row g-5">
 	           		<c:choose>
 	           			<c:when test="${not empty memberships}">
@@ -243,7 +243,7 @@
 //데이트피커
 $( function() {
     $("#date").datepicker({
-   		dateFormat: 'yy/mm/dd'
+   		dateFormat: 'yy-mm-dd'
     });
 });
 $( function() {
@@ -276,8 +276,8 @@ $(document).ready(function() {
     $('#next').click(function(event) {
         event.preventDefault();
         
-        //공백값에 대한 jquery cjfl
-        if (!$.trim($("#goal").val())) {
+        //공백값에 대한 jquery 처리
+       if (!$.trim($("#goal").val())) {
             alert("PT 목표를 입력해주세요.");
             $("#goal").focus();
             return;
@@ -299,7 +299,7 @@ $(document).ready(function() {
             alert("희망 상담시간을 입력해주세요.");
             $("#time").focus();
             return;
-        }
+        }  
         
         $('#final-trainerNumber').val($('#trainerNumber').val());
         $('#final-goal').val($('#goal').val());
