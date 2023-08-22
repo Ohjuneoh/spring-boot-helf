@@ -125,7 +125,7 @@
 				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<form method="post" action="/personal-lesson/list">
+					<form id="lessonSubmitForm" method="post" action="/personal-lesson/list">
 						<input id="modal-userId" type="hidden" name="userId"/>
 						<input id="modal-trainerNo" type="hidden" name="trainerNo"/>
 						<input id="modal-myMembershipNo" type="hidden" name="myMembershipNo"/>
@@ -213,6 +213,32 @@ $( function() {
     	  datepicker:false,
     	  format:'H:i'
 	});
+});
+
+$(document).ready(function() {
+    $('#lessonSubmitForm').on('submit', function(e) {
+        // 폼의 기본 제출 기능을 방지
+        e.preventDefault();
+
+        // 폼 데이터 수집
+        var formData = $(this).serialize();
+
+        // 데이터를 서버에 POST 방식으로 제출
+        $.ajax({
+            type: 'POST',
+            url: '/personal-lesson/list', // 폼의 action 속성 값
+            data: formData, // 수집한 폼 데이터
+            success: function(response) {
+                // 서버에서 성공적인 응답을 받았을 때
+                alert('개설이 완료되었습니다.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // 에러 발생 시 처리
+                console.error("Error:", errorThrown);
+                alert('개설 중 오류가 발생했습니다.');
+            }
+        });
+    });
 });
 </script>
 
