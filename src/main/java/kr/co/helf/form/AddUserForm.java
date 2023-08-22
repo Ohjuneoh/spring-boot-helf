@@ -2,11 +2,8 @@ package kr.co.helf.form;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,7 +39,7 @@ public class AddUserForm {
 	private Date updateDate;
 	
 	// 트레이너 두번째 폼
-	private String photofile;
+	private MultipartFile photofile;
 	private String careerName;
 	private Date careerStartDate;
 	private Date careerEndDate;

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.helf.dto.BoardPrevNextDto;
 import kr.co.helf.vo.Board;
 
 
@@ -22,4 +23,7 @@ public interface BoardMapper {
 	
 	// 상세정보 조회
 	Board getBoardByNo(int boardNo);
+	
+	// 공지사항 상세 - 이전글/다음글
+	BoardPrevNextDto getPrevNextBoardByNo(int boardNo);
 }
