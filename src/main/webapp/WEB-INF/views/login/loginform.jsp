@@ -42,7 +42,7 @@
 
 
     <!-- Topbar Start -->
-   	<jsp:include page="common/topnavbar.jsp">
+   	<jsp:include page="/WEB-INF/views/common/topnavbar.jsp">
 		<jsp:param name="menu" value="홈"/>
 	</jsp:include>
     <!-- Topbar End -->
@@ -50,7 +50,7 @@
 
     <!-- Navbar & Carousel Start -->
     <div class="container-fluid position-relative p-0">
-		<jsp:include page="common/navbar.jsp">
+		<jsp:include page="/WEB-INF/views/common/navbar.jsp">
 			<jsp:param name="menu" value="홈"/>
 		</jsp:include>
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
@@ -74,7 +74,7 @@
 	                                    <button class="btn btn-dark w-100 py-3" type="submit">로그인</button>
 	                                </div>
 	                                <div class="col-12 mb-3">
-	                                	<a href="/user/findId"  class="btn" >아이디 찾기</a>
+	                                	<a href="/user/findIdform"  class="btn" >아이디 찾기</a>
 	                                	<span>│</span>
 	                                	<a href="/user/findPwd"  class="btn" >비밀번호 찾기</a>
 	                                	<span>│</span>

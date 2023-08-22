@@ -29,16 +29,12 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/user")
 @SessionAttributes("addUserForm")
 @RequiredArgsConstructor
+
 public class UserController {
 	
 	@Autowired
 	UserService userService = new UserService();
 	
-	// 로그인화면 요청처리
-	@GetMapping(value="/loginform")
-	public String loginForm() {
-		return "/loginform";
-	}
 
 	// 회원가입 초기화면 
 	@GetMapping(value="/registerform")
@@ -110,19 +106,35 @@ public class UserController {
 	} 
 	
 	
-	
-	// 아이디찾기화면 요청처리
-	@GetMapping(value="/findId")
-	public String findId() {
-		
-		return "/findId";
+	// 로그인화면 
+	@GetMapping(value="/loginform")
+	public String loginForm() {
+		return "login/loginform";
+
 	}
 	
-	// 비밀번호찾기화면 요청처리
+	// 아이디찾기 화면
+	@GetMapping(value="/findIdform")
+	public String findIdform() {
+		
+		return "login/findId";
+	}
+	
+	// 아이디찾기 구현
+//	@PostMapping(value="/")
+//	public String findI(AddUserForm form, RedirectAttributes attributes) {
+//
+//		userService.createUser(form);
+//		attributes.addFlashAttribute("name", form.getName());
+//		
+//		return "redirect:/user/welcome";
+//	}
+	
+	// 비밀번호찾기 화면
 	@GetMapping(value="/findPwd")
 	public String findPassword() {
 		
-		return "/findPwd";
+		return "login/findPwd";
 	}
 
 }
