@@ -2,12 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.helf.mapper.TrainerReviewMapper">
 
+    <!-- 트레이너 리뷰 테이블에 저장 -->
     <insert id="insertReview" parameterType="kr.co.helf.form.AddReviewForm">
         insert into
             helf_trainer_review(trainer_review_no,trainer_review_title,trainer_review_content,lesson_apply_no, lesson_no, trainer_no,trainer_review_rating)
         values(helf_trainer_review_seq.nextval,#{title},#{content},#{apply.no}, #{lesson.no},#{trainer.trainerNo}, #{rating})
     </insert>
 
+    <!-- 트레이너 아이디로 트레이너 번호 찾기 -->
     <select id="getTrainerById" resultType="Trainer" parameterType="string">
         select
             a.trainer_no as trainerNo,
@@ -18,4 +20,47 @@
             a.user_id = #{userId}
         and a.user_id = b.user_id
     </select>
+    <!-- 한 트레이너에 대한 리뷰 목록 조회 -->
+    <select id="getReviewByTrainerNo" resultType="TrainerReview" parameterType="int">
+        select
+            a.trainer_no as "trainer.trainerNo",
+            a.trainer_review_title as title,
+            a.trainer_review_content as content,
+            a.trainer_review_create_date as createDate,
+            a.trainer_review_rating as rating,
+            a.trainer_review_status as status,
+            b.lesson_name as "lesson.name",
+            d.user_name as "user.name"
+        from
+            helf_trainer_review a, helf_lesson b, helf_lesson_apply c, helf_users d
+        where
+            a.lesson_no = b.lesson_no
+          and a.lesson_apply_no = c.lesson_apply_no
+          and c.user_id = d.user_id
+          and a.trainer_no = #{trainerNo}
+          and a.trainer_review_status = 'Y'
+    </select>
+
+    <!-- 등록된 리뷰 수정  -->
+    <update id="updateReview" parameterType="TrainerReview">
+        update
+            helf_trainer_review
+        set
+            trainer_review_title = #{title},
+            trainer_review_content = #{content},
+            trainer_review_rating = #{rating}
+        where
+            trainer_review_no = #{no}
+    </update>
+
+    <!-- 등록된 리뷰 삭제 -->
+    <update id="deleteReview" parameterType="TrainerReview">
+        update
+            helf_trainer_review
+        set
+            trainer_review_status = 'N'
+        where
+            trainer_review_no = #{no}
+    </update>
+
 </mapper>

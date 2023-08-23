@@ -19,6 +19,7 @@ public class TrainerReview {
     private String title;
     private String content;
     private Date createDate;
+    private String status;
     private LessonApply apply;
     private Lesson lesson;
     private Trainer trainer;

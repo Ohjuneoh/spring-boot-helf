@@ -331,7 +331,7 @@
 	      
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="button" class="btn btn-primary">강사후기 보러가기</button>
+<%--              <a href="/trainer-review/list?trainerNo=${}" class="btn btn-primary">강사후기 보러가기</a>--%>
 	      </div>
 	      
 	    </div>

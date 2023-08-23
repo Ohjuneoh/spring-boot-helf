@@ -35,8 +35,16 @@
   <link href="/resources/css/style.css" rel="stylesheet">
   <!-- Date Picker  -->
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+  <!-- 별점구현하기 위한 css -->
+  <style>
+    .inner-star::before{color: #FF9600;}
+    .outer-star {position: relative;display: inline-block;color: #CCCCCC;}
+    .inner-star {position: absolute;left: 0;top: 0;width: 0%;overflow: hidden;white-space: nowrap;}
+    .outer-star::before, .inner-star::before {content: '\f005 \f005 \f005 \f005 \f005';font-family: 'Font Awesome 5 free';font-weight: 900;}
+  </style>
 </head>
-
 <body>
 <!-- Spinner Start -->
 <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -103,46 +111,30 @@
       </div>
     </div>
     <hr style="height: 3px; color: skyblue;" ></hr>
-    <div class="testimonial-item bg-light my-4">
+    <c:forEach var="trainerReview" items="${reviews }">
+    <!-- 한 사람에 해당되는 전체 div-->
+    <div class="testimonial-item bg-light my-4 ">
+      <h5 class="m-1 text-primary float-end">★★★★★</h5>
+      <div class="d-flex align-items-center pt-3 pb-1 px-5">
+        <h5 class="text-primary">${trainerReview.lesson.name }</h5>
+      </div>
+      <!-- 리뷰 내용 위의 작성자명, 작성일자 div -->
       <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
         <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
         <div class="ps-4">
-          <h4 class="text-primary mb-1">작성자명</h4>
-          <small class="text-uppercase">작성일자</small>
+          <h4 class="text-primary mb-1">${trainerReview.lessonApply.user.id }</h4>
+          <small class="text-uppercase">${trainerReview.createDate }</small>
         </div>
       </div>
+      <!-- 작성일자 밑에 있는 리뷰내용 div -->
       <div class="pt-4 pb-5 px-5">
-        리뷰내용
+        <h6>${trainerReview.title }</h6>
+        <p>${trainerReview.content }</p>
       </div>
       <hr style="height: 1px; color: gray;" ></hr>
     </div>
-    <div class="testimonial-item bg-light my-4">
-      <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
-        <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
-        <div class="ps-4">
-          <h4 class="text-primary mb-1">작성자명</h4>
-          <small class="text-uppercase">작성일자</small>
-        </div>
-      </div>
-      <div class="pt-4 pb-5 px-5">
-        리뷰내용
-      </div>
-      <hr style="height: 1px; color: gray;" ></hr>
-    </div>
-    <div class="testimonial-item bg-light my-4">
-      <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
-        <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
-        <div class="ps-4">
-          <h4 class="text-primary mb-1">작성자명</h4>
-          <small class="text-uppercase">작성일자</small>
-        </div>
-      </div>
-      <div class="pt-4 pb-5 px-5">
-        리뷰내용
-      </div>
-      <hr style="height: 1px; color: gray;" ></hr>
-    </div>
-
+    </c:forEach>
+    <!-- 한 사람에 해당되는 전체 div 끝-->
   </div>
 </div>
 
@@ -169,7 +161,22 @@
 <script src="/resources/js/main.js"></script>
 
 <script>
-
+  // 별점출력 하기 위한 쿼리
+  <%--/*<![CDATA[*/ ratings = {RatingScore: 4.5}--%>
+  <%--  totalRating = 5;--%>
+  <%--table = document.querySelector('.RatingStar');--%>
+  <%--function rateIt() {--%>
+  <%--  for (rating in ratings) {--%>
+  <%--    ratingPercentage = ratings[rating] / totalRating * 100;--%>
+  <%--    ratingRounded = Math.round(ratingPercentage / 10) * 10 + '%';--%>
+  <%--    star = table.querySelector(`.${rating} .inner-star`);--%>
+  <%--    numberRating = table.querySelector(`.${rating} .numberRating`);--%>
+  <%--    star.style.width = ratingRounded;--%>
+  <%--    numberRating.innerText = ratings[rating];--%>
+  <%--  }--%>
+  <%--}--%>
+  <%--rateIt()--%>
+  <%--  /*]]>*/--%>
 </script>
 
 
