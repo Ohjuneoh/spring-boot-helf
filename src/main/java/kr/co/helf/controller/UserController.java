@@ -35,7 +35,8 @@ public class UserController {
 	@Autowired
 	UserService userService = new UserService();
 	
-
+	/* 회원가입 시작 */
+	
 	// 회원가입 초기화면 
 	@GetMapping(value="/registerform")
 	public String registerForm(Model model) {
@@ -56,7 +57,7 @@ public class UserController {
 		
 	}
 
-	// 요청 완료화면
+	// 회원가입 완료화면(유저)
 	@GetMapping(value="/welcome")
 	public String welcomePage() {
 		
@@ -71,7 +72,7 @@ public class UserController {
 	}
 
 	
-	// 회원가입 (트레이너)
+	// 회원가입 완료화면 (트레이너)
 	@PostMapping(value="/register/trainer2")
 	public String registerTrainer2(@ModelAttribute("addUserForm") AddUserForm form) {
 		System.out.println(form);
@@ -80,18 +81,8 @@ public class UserController {
 		return "register/trainerWelcome";
 	}
 	
-	
-//	// 회원가입 완료화면 (트레이너) 
-//	@PostMapping(value="/register/trainter2")
-//	public String registerTrainerForm(AddUserForm form, RedirectAttributes attributes) {
-//		userService.createTrainer(form);
-//		
-//		
-//		return "/";
-//	}
-	
-	
-	// 아이디 중복검사 요청
+
+	// 아이디 중복검사 요청(ajax)
 	@RequestMapping(value ="/idChk", method = RequestMethod.POST)
 	@ResponseBody
 	public String idCheck(String userId) throws Exception{
@@ -104,7 +95,12 @@ public class UserController {
 			return "success";	// 중복 아이디 x
 		}
 	} 
+	/* 회원가입 끝 */
 	
+	
+	
+	
+	/* 로그인 시작 */
 	
 	// 로그인화면 
 	@GetMapping(value="/loginform")
@@ -120,14 +116,35 @@ public class UserController {
 		return "login/findId";
 	}
 	
-	// 아이디찾기 구현
-//	@PostMapping(value="/")
-//	public String findI(AddUserForm form, RedirectAttributes attributes) {
-//
-//		userService.createUser(form);
-//		attributes.addFlashAttribute("name", form.getName());
+	
+	
+	//아이디 찾기 (ajax)
+	@GetMapping("/findId")
+	@ResponseBody
+	public String findId(@RequestParam("name") String name,@RequestParam("tel") String tel) throws Exception {
+		String result = userService.findId(name, tel);
+		
+		if(result == null) {
+			return "fail";	
+		} else {
+			return result;	
+		}
+	}
+	
+//	@PostMapping(value="/findIdByEmail")
+//	@ResponseBody
+//	public String findIdEmail(@RequestParam("name") String name, 
+//			@RequestParam(name = "email", required = false) String email) {
 //		
-//		return "redirect:/user/welcome";
+//		try {
+//			userService.getFindIdByTel(name, email);		
+//			return "success";
+//		} catch (RuntimeException ex) {
+//			return "fail";
+//		}
+		
+		
+		
 //	}
 	
 	// 비밀번호찾기 화면
@@ -136,5 +153,13 @@ public class UserController {
 		
 		return "login/findPwd";
 	}
+	
+	//인증되지 않은 사용자가 접근 했을 때 이동되는 페이지(by 준오)
+	@GetMapping(value="/denied")
+	public String unAuthenticatedUser() {
+		
+		return "error/user";
+	}
 
+	/* 로그인 끝 */
 }

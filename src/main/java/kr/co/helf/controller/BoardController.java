@@ -37,7 +37,6 @@ public class BoardController {
 		return "/board/notice";
 	}
 	
-	
 	// 공지사항 등록폼 화면 요청처리
 	@GetMapping(value="/noticeform")
 	public String noticeform() {
@@ -54,6 +53,11 @@ public class BoardController {
 		return "redirect:/board/notice";
 	}
 	
+//	// 공지사항 수정 화면
+//	@GetMapping("/modify")
+//	public String getNoticeModify(ModifyBoardForm form) {
+//		
+//	}
 
 	
 	// 공지사항 상세정보 & 이전글/다음글
