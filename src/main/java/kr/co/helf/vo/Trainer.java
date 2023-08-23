@@ -21,7 +21,4 @@ public class Trainer {
 	private Date hiredDate;
 	private List<Career> careers;
 
-	
-	
-
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.helf.dto.BoardPrevNextDto;
 import kr.co.helf.form.AddBoardForm;
 import kr.co.helf.service.BoardService;
 import kr.co.helf.vo.Board;
@@ -53,17 +54,19 @@ public class BoardController {
 		return "redirect:/board/notice";
 	}
 	
-	// 공지사항 상세정보 요청처리
+
+	
+	// 공지사항 상세정보 & 이전글/다음글
 	@GetMapping(value="/detail")
-	public String NoticeDetail(@RequestParam("no") int boardNo, Model model) {
+	public String detailPrevNext(@RequestParam("no") int no, Model model) {
+		Board board = boardService.getBoardByNo(no);
+		BoardPrevNextDto dto = boardService.getPrevNext(no);
 		
-		Board board = boardService.getBoardByNo(boardNo);
 		model.addAttribute("board", board);
+		model.addAttribute("dto", dto);
 		
 		return "board/noticeDetail";
 	}
-	
-
 	
 	// faq화면 요청처리
 	@GetMapping(value="/faq")

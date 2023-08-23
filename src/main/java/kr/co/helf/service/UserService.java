@@ -65,15 +65,18 @@ public class UserService {
 		user.setEncryptedPassword(encryptedPassword);
 		
 		// (1단계)유저 객체 - 타입,상태 담기
-		user.setType("ROLE_TRAINER");
+ 		user.setType("ROLE_TRAINER");
 		user.setStatus("R");
 		
 		// (2단계)트레이너 객체에 사진파일 담기
 		Trainer trainer = new Trainer();
-		trainer.setTrainerFile(form.getPhotofile());
+		
+		trainer.setTrainerFile("sample.png");
+		trainer.setUser(user);
 		
 		//(2단계)트레이너 경력객체에 담기
 		TrainerCareer trainerCareer = new TrainerCareer();
+		trainerCareer.setTrainer(trainer);
 		trainerCareer.setName(form.getName());
 		trainerCareer.setStartDate(form.getCareerStartDate());
 		trainerCareer.setEndDate(form.getCareerEndDate());

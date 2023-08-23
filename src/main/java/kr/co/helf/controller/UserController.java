@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,20 +27,16 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/user")
-@SessionAttributes("AddUserForm")
+@SessionAttributes("addUserForm")
 @RequiredArgsConstructor
+
 public class UserController {
 	
 	@Autowired
 	UserService userService = new UserService();
 	
-	// 로그인화면 요청처리
-	@GetMapping(value="/loginform")
-	public String loginForm() {
-		return "/loginform";
-	}
 
-	// 회원가입화면 요청처리
+	// 회원가입 초기화면 
 	@GetMapping(value="/registerform")
 	public String registerForm(Model model) {
 		
@@ -58,40 +55,40 @@ public class UserController {
 		return "redirect:/user/welcome";
 		
 	}
-	
-	// 요청 완료화면 요청 
+
+	// 요청 완료화면
 	@GetMapping(value="/welcome")
 	public String welcomePage() {
 		
 		return "welcome"; 	
 	}
 	
-	// 회원가입 요청1(트레이너)
+	// 회원가입 두번째 화면(트레이너)
 	@PostMapping(value="/register/trainer") 
-	public String registerTrainer(AddUserForm form) {
+	public String registerTrainer(@ModelAttribute("addUserForm") AddUserForm form) {
 		
 		return "register/trainerRegisterform2";
 	}
 
 	
-	// 회원가입 요청2(트레이너)
+	// 회원가입 (트레이너)
 	@PostMapping(value="/register/trainer2")
-	public String registerTrainer2(AddUserForm form) {
+	public String registerTrainer2(@ModelAttribute("addUserForm") AddUserForm form) {
+		System.out.println(form);
 		userService.createTrainer(form);
 		
-		return "/";
-		
+		return "register/trainerWelcome";
 	}
 	
 	
-	// 회원가입 완료 요청(트레이너) 
-	@PostMapping(value="/register/trainter2")
-	public String registerTrainerForm(AddUserForm form, RedirectAttributes attributes) {
-		userService.createTrainer(form);
-		
-		
-		return "redirect:/user/welcome";
-	}
+//	// 회원가입 완료화면 (트레이너) 
+//	@PostMapping(value="/register/trainter2")
+//	public String registerTrainerForm(AddUserForm form, RedirectAttributes attributes) {
+//		userService.createTrainer(form);
+//		
+//		
+//		return "/";
+//	}
 	
 	
 	// 아이디 중복검사 요청
@@ -109,21 +106,35 @@ public class UserController {
 	} 
 	
 	
-	
-	
-	
-	// 아이디찾기화면 요청처리
-	@GetMapping(value="/findId")
-	public String findId() {
-		
-		return "/findId";
+	// 로그인화면 
+	@GetMapping(value="/loginform")
+	public String loginForm() {
+		return "login/loginform";
+
 	}
 	
-	// 비밀번호찾기화면 요청처리
+	// 아이디찾기 화면
+	@GetMapping(value="/findIdform")
+	public String findIdform() {
+		
+		return "login/findId";
+	}
+	
+	// 아이디찾기 구현
+//	@PostMapping(value="/")
+//	public String findI(AddUserForm form, RedirectAttributes attributes) {
+//
+//		userService.createUser(form);
+//		attributes.addFlashAttribute("name", form.getName());
+//		
+//		return "redirect:/user/welcome";
+//	}
+	
+	// 비밀번호찾기 화면
 	@GetMapping(value="/findPwd")
 	public String findPassword() {
 		
-		return "/findPwd";
+		return "login/findPwd";
 	}
 
 }

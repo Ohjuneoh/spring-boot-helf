@@ -17,17 +17,19 @@
             <a href="/trainerIntro" class="nav-item nav-link">강사 소개</a>
             </sec:authorize>
             <sec:authorize access="isAuthenticated">
-            <sec:authorize access="hasRole('ROLE_USER') || hasRole('ROLE_TRAINER')">
+            <sec:authorize access="hasRole('ROLE_USER')">
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업(고객)</a>
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업</a>
                 <div class="dropdown-menu m-0">
                     <a href="/group-lesson/list" class="dropdown-item">그룹 수업</a>
                     <a href="/personal-lesson/consultation" class="dropdown-item">개인 PT 신청</a>
                     <a href="/trainer-review/list" class="dropdown-item">트레이너 리뷰</a>
                 </div>
             </div>
+            </sec:authorize>
+            <sec:authorize access="hasRole('ROLE_TRAINER')">
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업(트레이너)</a>
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업</a>
                 <div class="dropdown-menu m-0">
                     <a href="/group-lesson/list" class="dropdown-item">그룹 수업</a>
                     <a href="/personal-lesson/list" class="dropdown-item">개인 PT</a>

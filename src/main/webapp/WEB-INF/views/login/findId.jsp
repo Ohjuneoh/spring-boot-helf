@@ -42,7 +42,7 @@
 
 
     <!-- Topbar Start -->
-   	<jsp:include page="common/topnavbar.jsp">
+   	<jsp:include page="/WEB-INF/views/common/topnavbar.jsp">
 		<jsp:param name="menu" value="홈"/>
 	</jsp:include>
     <!-- Topbar End -->
@@ -50,7 +50,7 @@
 
     <!-- Navbar & Carousel Start -->
     <div class="container-fluid position-relative p-0">
-		<jsp:include page="common/navbar.jsp">
+		<jsp:include page="/WEB-INF/views/common/navbar.jsp">
 			<jsp:param name="menu" value="홈"/>
 		</jsp:include>
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
@@ -67,26 +67,25 @@
 	                            	</div>
 	                            	
 	                            	<div class="border p-3 bg-light">
+	                            	
 		                               <!-- 전화번호 인증  -->
-		                            	<div id="div_tel" class="box_inn selected  text-start mb-3 mt-2"> <!-- [D] 선택시 selected 클래스 추가 -->
+		                            	<div id="div_tel" class="box_inn selected  text-start mb-3 mt-2">
 											<input type="radio" id="r_pn1" class="input_rd" name="certification" value="tel">
 											<label for="r_pn2" class="label_rd" style="font-size: 18px; font-weight: bold;">휴대전화 인증(가입된 휴대전화)</label>
 												<p class="dsc" style="padding-left: 20px;">기존에 HELF 헬스장에 가입되어 있는 정보를 비교하여 아이디를 찾을 수 있습니다.</p>	
 											<div class="box-inn-sub-tel d-none">
 												<dl>
-												<dt><label for="telNm" class="label_txt">이름</label></dt>
-												<dd><input type="text" id="emailNm" name="emailNm" maxlength="40" class="input_txt" style="width:217px"></dd>
-												<dt><label for="tel" class="label_txt">전화번호</label></dt>
-												<dd>
-													<input type="text" id="email" name="email" maxlength="100" class="input_txt" style="width:217px">
-												</dd>
+													<dt><label for="telNm" class="label_txt">이름</label></dt>
+													<dd><input type="text" id="emailNm" name="phoneName" maxlength="40" class="input_txt" style="width:217px"></dd>
+													<dt><label for="tel" class="label_txt">전화번호</label></dt>
+													<dd><input type="text" id="email" name="phone" maxlength="100" class="input_txt" style="width:217px"></dd>
 												</dl>
 											</div>		
 										</div>
 										
 										
 		                               <!-- 이메일 인증  -->
-		                               <div id="div_email" class="box_inn selected  text-start"> <!-- [D] 선택시 selected 클래스 추가 -->
+		                               <div id="div_email" class="box_inn selected  text-start"> 
 											<input type="radio" id="r_pn2" class="input_rd" name="certification" value="email" >
 											<label for="r_pn2" class="label_rd " style="font-size: 18px; font-weight: bold;">본인확인 이메일 인증</label>
 												<p class="dsc" style="padding-left: 20px;">본인확인 이메일 주소와 입력한 이메일 주소가 같아야, 인증번호를 받을 수 있습니다.</p>	
@@ -97,17 +96,33 @@
 												<dt><label for="email" class="label_txt">이메일 주소</label></dt>
 												<dd>
 													<input type="text" id="email" name="email" maxlength="100" class="input_txt" style="width:217px">
-													<a href="#" id="btnEmailAuthNo" name="btnEmailAuthNo" onclick="sendAuthNoForEmailAuth();clickcr(this,'eml.code','','',event);" class="btn_ct">
+
+													<a href="#" id="btnEmailAuthNo" name="btnEmailAuthNo" class="btn_ct">
+
 														<span class="blind">인증번호 받기</span>
 													</a>
 												</dd>
 												<dt><label for="t_ct1" class="blind">인증번호 입력</label></dt>
+													<dd class="ct">
+														<span class="input_box2">
+															<span id="span_emailAuthNo" class="phold" style="display: block;">인증번호 6자리 숫자 입력</span>
+															<input type="text" id="emailAuthNo" name="emailAuthNo" maxlength="6" class="input_txt" style="width:217px" disabled="">
+														</span>
+														<div>인증번호가 오지 않나요? <a href="javascript:showHelp('emailHelpTxt');" class="ico_help2">
+														<span class="blind">도움말</span></a>
+															<!-- [D]툴팁 활성화시 display:block , 비활성화시 display:none  -->
+															<div id="emailHelpTxt" class="help_tooltip2" style="display:none">
+																<p>네이버가 발송한 메일이 스팸 메일로 분류된 것은 아닌지 <br>확인해 주세요. 스팸 메일함에도 메일이 없다면,<br>다시 한 번 '인증번호 받기'를 눌러주세요.</p>
+																	<span class="edge"></span>
+															</div>
+														</div>									
+													</dd>	
 												<dd class="ct">
 													<span class="input_box2">
 														<span id="span_emailAuthNo" class="phold" style="display: block;">인증번호 6자리 숫자 입력</span>
-														<input type="text" id="emailAuthNo" name="emailAuthNo" maxlength="6" onkeydown="check_num('emailAuthNo', '1')" onclick="hiddenObj('span_emailAuthNo')" class="input_txt" style="width:217px" disabled="">
+														<input type="text" id="emailAuthNo" name="emailAuthNo" maxlength="6"  class="input_txt" style="width:217px" disabled="">
 													</span>
-													<div>인증번호가 오지 않나요? <a href="javascript:showHelp('emailHelpTxt');" onclick="clickcr(this,'eml.help','','',event);" class="ico_help2">
+													<div>인증번호가 오지 않나요? <a href="javascript:showHelp('emailHelpTxt');"  class="ico_help2">
 													<span class="blind">도움말</span></a>
 														<!-- [D]툴팁 활성화시 display:block , 비활성화시 display:none  -->
 														<div id="emailHelpTxt" class="help_tooltip2" style="display:none">
@@ -121,8 +136,6 @@
 										</div>
 		                               
 	                            	</div>
-	                            	
-	                               
 	                                <div class="col-12">
 	                                    <button class="btn btn-dark w-100 py-3" type="submit">찾기</button>
 	                                </div>
@@ -131,7 +144,6 @@
 	                                </div>
 	                            </div>
                         	</form>
-                        	
                         </div>
                     </div>
                 </div>
