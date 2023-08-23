@@ -10,16 +10,21 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.helf.dto.MyMembershipListDto;
 import kr.co.helf.dto.MyOrderDetailDto;
+import kr.co.helf.dto.OrderJoin;
 import kr.co.helf.dto.OrderListDto;
+import kr.co.helf.form.AddMembershipForm;
 import kr.co.helf.form.OrderSearchForm;
 import kr.co.helf.service.MembershipService;
+import kr.co.helf.vo.Category;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.MyOption;
 import kr.co.helf.vo.Order;
@@ -75,10 +80,19 @@ public class MembershipController {
 		}
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("user", user);
-		map.put("form", form);
+		if (StringUtils.hasText(form.getState())) {
+			map.put("state", form.getState());
+		}
+		if (StringUtils.hasText(form.getType())) {
+			map.put("type", form.getType());
+		}
+		if (StringUtils.hasText(form.getKeyword())) {
+			map.put("keyword", form.getKeyword());
+		}
 		
-		OrderListDto orderList = membershipService.getOrdersById(map);
+		map.put("userId", user.getId());
+		
+		OrderListDto orderList = membershipService.getOrdersById(form.getPage(), map);
 		
 		model.addAttribute("dto", orderList);
 		
@@ -88,20 +102,51 @@ public class MembershipController {
 	@GetMapping("/order-detail")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String orderDetail(@RequestParam("no") int no, Model model, @AuthenticationPrincipal User user) {
-		Order order = membershipService.getOrderByNo(no);
+		OrderJoin orderJoin = membershipService.getOrderByNo(no);
 
-		if(!user.getId().equals(order.getUser().getId())) {
+		if(!user.getId().equals(orderJoin.getUser().getId())) {
 			return "redirect: loginform?error=wrong-user";
 		}
 		
 		MyOrderDetailDto dto = new MyOrderDetailDto();
-		dto.setOrder(order);
+		dto.setOrderJoin(orderJoin);
 		
-		List<MyOption> myOptions = membershipService.getMyOptions(order.getMyMembership().getNo());
+		List<MyOption> myOptions = membershipService.getMyOptions(orderJoin.getMyMembershipNo());
 		dto.setMyOptions(myOptions);
 		
 		model.addAttribute("dto", dto);
 		
 		return "membership/order-detail";
+	}
+	
+	@GetMapping("/create-form")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
+	public String createForm(Model model) {
+
+		List<Category> categorys = membershipService.getAllCategory();
+		model.addAttribute("categorys", categorys);
+		
+		return "membership/create-form";
+	}
+	
+	@PostMapping("/create")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
+	public String create(@ModelAttribute AddMembershipForm form) {
+		
+		membershipService.addMembership(form);
+		
+		return "redirect:list-manager";
+	}
+
+	@GetMapping("/list-manager")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
+	public String listManager() {
+		return "membership/list-manager";
+	}
+
+	@GetMapping("/refound-manager")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
+	public String refoundManager() {
+		return "membership/refound-manager";
 	}
 }

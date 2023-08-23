@@ -57,7 +57,6 @@
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
                     <h1 class="display-4 text-white animated zoomIn">ORDER</h1>
-                    <a href="" class="h5 text-white">이용권 구매</a>
                 </div>
             </div>
         </div>
@@ -114,7 +113,7 @@
 				<div class="offset-2" style="margin: 100px;">
 					<c:forEach var="period" items="${periods }">
 						<button	data-period-no="${period.no }" 
-							id="btn-period-${period.no }" type="button" class="btn btn-outline-primary btn-lg" 
+							id="btn-period-${period.no }" class="btn btn-outline-primary btn-lg" 
 								style="width: 200px; height: 200px; margin: 20px;">
 							${period.property }${period.type eq "기간" ? "개월" : "회"}
 							<br/>
@@ -180,6 +179,12 @@ $(function() {
 	let clickedPeriod = false;
 	let clickedLocker = false;
 	let clickedWear = false;
+	
+	function check() {
+		if (clickedPeriod && clickedLocker && clickedWear) {
+			$("#btn-next").removeClass('disabled');			
+		} 
+	}
 
 	$('[id^="btn-period"]').on('click', function() {
 		$(this).addClass('active');
@@ -189,10 +194,7 @@ $(function() {
 		$("#form-xxx :input[name=periodNo]").val(no);
 		
 		clickedPeriod = true;
-		
-		if (clickedPeriod && clickedLocker && clickedWear) {
-			$("#btn-next").removeClass('disabled');			
-		} 
+		check();
 	});
 	
 	$('[id^="btn-option"]').on('click', function() {
@@ -211,9 +213,7 @@ $(function() {
 			clickedWear = true;
 		}
 		
-		if (clickedPeriod && clickedLocker && clickedWear) {
-			$("#btn-next").removeClass('disabled');			
-		} 
+		check();
 	});
 })
 </script>

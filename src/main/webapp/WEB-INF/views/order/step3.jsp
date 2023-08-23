@@ -57,7 +57,6 @@
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
                     <h1 class="display-4 text-white animated zoomIn">ORDER</h1>
-                    <a href="" class="h5 text-white">이용권 구매</a>
                 </div>
             </div>
         </div>
@@ -108,106 +107,108 @@
 		  			</strong>
 		  		</span>
 		  		<form action="kakaopay-ready" method="post">
-					<div class="offset-1" style="margin: 100px;">
+					<div style="margin: 100px;">
 						<h4 class="text-start">
 							<strong style="color:gray">결제내역</strong>
 						</h4>
 						<hr style="border: 2px solid gray;"/>
-						<table class="table table-bordered" style="margin: 50px; width: 900px;">
-			   				<thead>
-			   					<tr class="table-primary" style="width: 1200px;">
-			   						<th>상품명</th>
-			   						<th>기간/횟수</th>
-			   						<th>상품가</th>
-			   					</tr>
-			   					<tr>
-			   						<th>
-			   							${form.membershipName }
-				   						<c:if test="${form.lockerPrice ne 0 }">
-						   						<br/><br/>${form.lockerName }
-				   						</c:if>
-				   						<c:if test="${form.wearPrice ne 0 }">
-					   						<br/><br/>${form.wearName }
-				   						</c:if>
-			   						</th>
-				   					<td>
-				   						<c:if test="${form.remainderCnt eq null }">
-					   						${form.periodDuration }개월
-				   						</c:if>
-				   						<c:if test="${form.remainderCnt ne null }">
-				   							${form.remainderCnt }회
-				   						</c:if>
-				   						<input type="hidden" name="membership-period" value="${form.periodDuration }">
-				   						<c:if test="${form.lockerPrice ne 0 }">
-						   					<br/><br/>
-						   					<span>${form.periodDuration }</span>개월
-				   						</c:if>
-				   						<c:if test="${form.wearPrice ne 0 }">
-					   						<br/><br/>
-					   						<span>${form.periodDuration }</span>개월
-				   						</c:if>
-				   					</td>
-				   					<td>
-				   						<fmt:formatNumber value="${form.membershipPrice }" pattern="###,###"/>원
-				   						<c:if test="${form.lockerPrice ne 0 }">
-						   					<br/><br/>
-						   					<fmt:formatNumber value="${form.lockerPrice }" pattern="###,###"/>원
-				   						</c:if>
-				   						<c:if test="${form.wearPrice ne 0 }">
-						   					<br/><br/>
-						   					<fmt:formatNumber value="${form.wearPrice }" pattern="###,###"/>원
-				   						</c:if>
-				   					</td>
-			   					</tr>
-			   					<tr>
-			   						<th>
-			   							상품 합계 금액<br/><br/>
-			   							적립 포인트<br/><br/>
-			   							부가세
-			   						</th>
-			   						<td></td>
-			   						<td>
-			   							<fmt:formatNumber value="${form.membershipOptionPrice }" pattern="###,###"/>원
-			   							<br/><br/>
-			   							${form.savePoint }P
-			   							<br/><br/>
-			   							+ <fmt:formatNumber value="${form.surtax }" pattern="###,###"/>P
-			   						</td>
-			   					</tr>
-			   					<tr>
-			   						<th>
-			   							포인트 할인
-			   							<br/><br/>
-			   						</th>
-									<td>
-			   							사용 가능 적립금<strong> <span id="user-point">${user.point }</span>P</strong>
-			   							<br/><br/>
-			   						</td>
-			   						<td>
-			   							<input name="usePoint" type="number" min="0" style="width: 100px;" value="0">
-			   							<a href="list" id="point-return" class="bi bi-arrow-clockwise"></a>
-			   							<div style="margin: 3px; margin-left: -15px;">
-				   							<button type="button" id="btn-all" class="btn btn-primary btn-sm" >전체</button>
-				   							<button type="button"  id="btn-apply" class="btn btn-success btn-sm" >적용</button>
-			   							</div>
-			   						</td>
-			   					</tr>
-			   					<tr>
-			   						<th>
-			   							<strong>총 결제 금액</strong>
-			   						</th>
-			   						<td></td>
-			   						<td>
-			   							<strong style="font-size: 20px; color:red">
-			   								<span id="total-price-text">
-			   									<fmt:formatNumber value="${form.totalPrice }" pattern="###,###"/>
-			   								</span>원
-			   							</strong>
-			   							<input type="hidden" name="totalPrice" value="${form.totalPrice }">
-			   						</td>
-			   					</tr>
-			   				</thead>
-						</table>
+						<div class="d-flex align-items-center justify-content-center">
+							<table class="table table-bordered" style="margin: 50px; width: 900px;">
+				   				<thead>
+				   					<tr class="table-primary" style="width: 1200px;">
+				   						<th>상품명</th>
+				   						<th>기간/횟수</th>
+				   						<th>상품가</th>
+				   					</tr>
+				   					<tr>
+				   						<th>
+				   							${form.membershipName }
+					   						<c:if test="${form.lockerPrice ne 0 }">
+							   						<br/><br/>${form.lockerName }
+					   						</c:if>
+					   						<c:if test="${form.wearPrice ne 0 }">
+						   						<br/><br/>${form.wearName }
+					   						</c:if>
+				   						</th>
+					   					<td>
+					   						<c:if test="${form.remainderCnt eq null }">
+						   						${form.periodDuration }개월
+					   						</c:if>
+					   						<c:if test="${form.remainderCnt ne null }">
+					   							${form.remainderCnt }회
+					   						</c:if>
+					   						<input type="hidden" name="membership-period" value="${form.periodDuration }">
+					   						<c:if test="${form.lockerPrice ne 0 }">
+							   					<br/><br/>
+							   					<span>${form.periodDuration }</span>개월
+					   						</c:if>
+					   						<c:if test="${form.wearPrice ne 0 }">
+						   						<br/><br/>
+						   						<span>${form.periodDuration }</span>개월
+					   						</c:if>
+					   					</td>
+					   					<td>
+					   						<fmt:formatNumber value="${form.membershipPrice }" pattern="###,###"/>원
+					   						<c:if test="${form.lockerPrice ne 0 }">
+							   					<br/><br/>
+							   					<fmt:formatNumber value="${form.lockerPrice }" pattern="###,###"/>원
+					   						</c:if>
+					   						<c:if test="${form.wearPrice ne 0 }">
+							   					<br/><br/>
+							   					<fmt:formatNumber value="${form.wearPrice }" pattern="###,###"/>원
+					   						</c:if>
+					   					</td>
+				   					</tr>
+				   					<tr>
+				   						<th>
+				   							상품 합계 금액<br/><br/>
+				   							적립 포인트<br/><br/>
+				   							부가세
+				   						</th>
+				   						<td></td>
+				   						<td>
+				   							<fmt:formatNumber value="${form.membershipOptionPrice }" pattern="###,###"/>원
+				   							<br/><br/>
+				   							${form.savePoint }P
+				   							<br/><br/>
+				   							+ <fmt:formatNumber value="${form.surtax }" pattern="###,###"/>P
+				   						</td>
+				   					</tr>
+				   					<tr>
+				   						<th>
+				   							포인트 할인
+				   							<br/><br/>
+				   						</th>
+										<td>
+				   							사용 가능 적립금<strong> <span id="user-point">${user.point }</span>P</strong>
+				   							<br/><br/>
+				   						</td>
+				   						<td>
+				   							<input name="usePoint" type="number" min="0" style="width: 100px;" value="0">
+				   							<a href="list" id="point-return" class="bi bi-arrow-clockwise"></a>
+				   							<div style="margin: 3px; margin-left: -15px;">
+					   							<button type="button" id="btn-all" class="btn btn-primary btn-sm" >전체</button>
+					   							<button type="button"  id="btn-apply" class="btn btn-success btn-sm" >적용</button>
+				   							</div>
+				   						</td>
+				   					</tr>
+				   					<tr>
+				   						<th>
+				   							<strong>총 결제 금액</strong>
+				   						</th>
+				   						<td></td>
+				   						<td>
+				   							<strong style="font-size: 20px; color:red">
+				   								<span id="total-price-text">
+				   									<fmt:formatNumber value="${form.totalPrice }" pattern="###,###"/>
+				   								</span>원
+				   							</strong>
+				   							<input type="hidden" name="totalPrice" value="${form.totalPrice }">
+				   						</td>
+				   					</tr>
+				   				</thead>
+							</table>
+						</div>
 					</div>
 					<div class="offset-1" style="margin: 100px;">
 						<h4 class="text-start">

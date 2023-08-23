@@ -4,15 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import kr.co.helf.dto.MyMembershipListDto;
 import kr.co.helf.dto.OrderJoin;
 import kr.co.helf.dto.OrderListDto;
 import kr.co.helf.dto.Pagination;
+import kr.co.helf.form.AddMembershipForm;
 import kr.co.helf.form.OrderSearchForm;
 import kr.co.helf.mapper.MembershipMapper;
 import kr.co.helf.mapper.OrderMapper;
+import kr.co.helf.vo.Category;
 import kr.co.helf.vo.Membership;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.MyOption;
@@ -102,23 +106,15 @@ public class MembershipService {
 		membershipMapper.updateMyMembership(myMembership);
 	}
 
-	public OrderListDto getOrdersById(Map<String, Object> map) {
+	public OrderListDto getOrdersById(int page, Map<String, Object> map) {
 		
-		OrderSearchForm form = (OrderSearchForm) map.get("form");
-		
-		int totalRows = membershipMapper.getTotalRows(form);
-		Pagination pagination = new Pagination(form.getPage(), totalRows);
+		int totalRows = membershipMapper.getTotalRows(map);
+		Pagination pagination = new Pagination(page, totalRows);
 
 		map.put("begin", pagination.getBegin());
 		map.put("end", pagination.getEnd());
 		
-		System.out.println(map);
-		
 		List<OrderJoin> orders = membershipMapper.getOrdersById(map);
-		
-//		if(orders.isEmpty()) {
-//			throw new RuntimeException();
-//		}
 		
 		OrderListDto orderList = new OrderListDto();
 		orderList.setOrders(orders);
@@ -127,31 +123,37 @@ public class MembershipService {
 		return orderList;
 	}
 
-	public Order getOrderByNo(int no) {
-		Order order = membershipMapper.getOrderByNo(no);
+	public OrderJoin getOrderByNo(int no) {
+		OrderJoin orderJoin = membershipMapper.getOrderByNo(no);
 		
-		if(order == null) {
+		if(orderJoin == null) {
 			throw new RuntimeException("구매내역이 없습니다.");
 		}
 		
-		MyMembership myMembership = membershipMapper.getMyMembershipByNo(order.getMyMembership().getNo());
-		
-		if(myMembership != null) {
-			Membership membership = orderMapper.getMembershipByNo(myMembership.getMembership().getNo());
-			myMembership.setMembership(membership);
+		Period period = orderMapper.getPeriodByNo(orderJoin.getPeriod().getNo());
+		orderJoin.setPeriod(period);
 			
-			Period period = orderMapper.getPeriodByNo(myMembership.getPeriod().getNo());
-			myMembership.setPeriod(period);
-			
-			order.setMyMembership(myMembership);
+		if(orderJoin.getPointHistory() != null) {
+			PointHistory pointHistory = membershipMapper.getPointHistoryByNo(orderJoin.getPointHistory().getNo());
+			orderJoin.setPointHistory(pointHistory);
 		}
 		
-		if(order.getPointHistory() != null) {
-			PointHistory pointHistory = membershipMapper.getPointHistoryByNo(order.getPointHistory().getNo());
-			order.setPointHistory(pointHistory);
-		}
+		return orderJoin;
+	}
+
+	public List<Category> getAllCategory() {
+		return membershipMapper.getCategorys();
+	}
+
+	public void addMembership(AddMembershipForm form) {
 		
-		return order;
+		Membership membership = new Membership();
+		Category cat = membershipMapper.getcategoryByNo(form.getNo());
+		
+		BeanUtils.copyProperties(form, membership);
+		membership.setCategory(cat);
+		
+		membershipMapper.insertMembership(membership);
 	}
 
 }

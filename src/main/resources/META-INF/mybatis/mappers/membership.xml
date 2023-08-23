@@ -113,29 +113,12 @@
 			  from helf_orders) A, helf_my_membership B, helf_membership C
 		where A.my_membership_no = B.my_membership_no
 		and B.membership_no = C.membership_no
-		and A.user_id = #{user.id}
+		and A.user_id = #{userId}
 		and A.rownumber between #{begin} and #{end}
-		<if test="form.state != null">
-			and A.orders_payment_state = #{form.state}
+		<if test="state != null">
+			and A.orders_payment_state = #{state}
 		</if>
-		<if test="form.type != null">
-			<choose>
-				<when test="form.type == 'name'">
-					and C.membership_name like '%' || #{form.keyword} || '%'
-				</when>
-				<when test="form.type == 'no'">
-					and A.orders_no like '%' || #{form.keyword} || '%'
-				</when>
-			</choose>
-		</if>
-		order by A.orders_no desc
-	</select>
-	
-	<select id="getTotalRows" parameterType="searchForm" resultType="int">
-		select count(*)
-		from helf_orders A, helf_my_membership B, helf_membership C
-		where A.my_membership_no = B.my_membership_no
-		and B.membership_no = C.membership_no
+		<if test="type != null">
 			<choose>
 				<when test="type == 'name'">
 					and C.membership_name like '%' || #{keyword} || '%'
@@ -144,6 +127,26 @@
 					and A.orders_no like '%' || #{keyword} || '%'
 				</when>
 			</choose>
+		</if>
+		order by A.orders_no desc
+	</select>
+	
+	<select id="getTotalRows" parameterType="map" resultType="int">
+		select count(*)
+		from helf_orders A, helf_my_membership B, helf_membership C
+		where A.my_membership_no = B.my_membership_no
+		and B.membership_no = C.membership_no
+		and A.user_id = #{userId}
+		<if test="type != null">
+			<choose>
+				<when test="type == 'name'">
+					and C.membership_name like '%' || #{keyword} || '%'
+				</when>
+				<when test="type == 'no'">
+					and A.orders_no like '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
 		
 	</select>
 	
@@ -157,17 +160,47 @@
 		where point_history_no = #{value}
 	</select>
 	
-	<select id="getOrderByNo" parameterType="int" resultType="order">
-		select orders_no				as no,
-			   orders_total_price		as totalPrice,
-			   orders_payment_date		as paymentDate,
-			   orders_payment_state		as state,
-			   user_id					as "user.id",
-			   orders_membership_price	as membershipPrice,
-			   my_membership_no			as "myMembership.no",
-			   point_history_no			as "pointHistory.no",
-			   orders_surtax			as surtax
-		from helf_orders
-		where orders_no = #{value}
+	<select id="getOrderByNo" parameterType="int" resultType="orderJoin">
+		select A.orders_no						as no,
+			   A.orders_total_price				as totalPrice,
+			   A.orders_payment_date			as paymentDate,
+			   A.orders_payment_state			as orderState,
+			   A.user_id						as "user.id",
+			   A.orders_surtax					as surtax,
+			   A.orders_membership_price		as membershipPrice,
+			   B.my_membership_no				as myMembershipNo,
+			   B.period_no						as "period.no",
+			   C.membership_no					as membershipNo,
+			   C.membership_name				as name,
+			   A.point_history_no				as "pointHistory.no"
+		from helf_orders A, helf_my_membership B, helf_membership C
+		where A.my_membership_no = B.my_membership_no
+		and B.membership_no = C.membership_no
+		and A.orders_no = #{value}
 	</select>
+	
+	<select id="getCategorys" resultType="cat">
+		select category_no				as no,
+			   category_name			as name,
+			   category_property		as property,
+			   category_use_option		as useOption
+		from helf_membership_category
+	</select>
+	
+	<select id="getcategoryByNo" parameterType="int" resultType="cat">
+		select category_no				as no,
+			   category_name			as name,
+			   category_property		as property,
+			   category_use_option		as useOption
+		from helf_membership_category
+		where category_no = #{value}
+	</select>
+	
+	<insert id="insertMembership" parameterType="membership">
+		insert into helf_membership
+			(membership_no, membership_name, membership_description,
+			 category_no, membership_price)
+		values
+			(helf_membership_seq.nextval, #{name}, #{description}, #{category.no}, #{price})
+	</insert>
 </mapper>

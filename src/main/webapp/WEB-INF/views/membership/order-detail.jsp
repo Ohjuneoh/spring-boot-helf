@@ -56,8 +56,7 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">ORDER DETAIL</h1>
-                    <a href="" class="h5 text-white">구매 내역</a>
+                    <h1 class="display-4 text-white animated zoomIn">MY ORDER</h1>
                 </div>
             </div>
         </div>
@@ -86,8 +85,8 @@
 			<br/>
 			<br/>
 			<br/>
-			<div class="text-center ">
-				<div class="offset-1" style="margin: 100px;">
+			<div class="text-center d-flex align-items-center justify-content-center">
+				<div>
 					<table class="table table-bordered" style="margin: 50px; width: 900px;">
 			   			<thead>
 			   				<tr class="table-primary" style="width: 1200px;">
@@ -97,24 +96,24 @@
 			   				</tr>
 			   				<tr>
 			   					<th>
-			   						${dto.order.myMembership.membership.name }
+			   						${dto.orderJoin.name }
 			   						<c:forEach var="myOption" items="${dto.myOptions }">
 										<br/><br/>${myOption.optionDetail.option.name }
 			   						</c:forEach>
 			   					</th>
 				   				<td>
-				   					<c:if test="${dto.order.myMembership.remainderCnt eq null }">
-					   					${dto.order.myMembership.period.duration }개월
+				   					<c:if test="${dto.orderJoin.remainderCnt eq null }">
+					   					${dto.orderJoin.period.duration }개월
 				   					</c:if>
-				   					<c:if test="${dto.order.myMembership.remainderCnt ne null }">
-				   						${dto.order.myMembership.period.property }회
+				   					<c:if test="${dto.orderJoin.remainderCnt ne null }">
+				   						${dto.orderJoin.period.property }회
 				   					</c:if>
 				   					<c:forEach var="myOption" items="${dto.myOptions }">
-										<br/><br/>${dto.order.myMembership.period.duration }개월
+										<br/><br/>${dto.orderJoin.period.duration }개월
 			   						</c:forEach>
 				   				</td>
 				   				<td>
-				   					<fmt:formatNumber value="${dto.order.membershipPrice }" pattern="###,###"/>원
+				   					<fmt:formatNumber value="${dto.orderJoin.membershipPrice }" pattern="###,###"/>원
 				   					<c:forEach var="myOption" items="${dto.myOptions }">
 										<br/><br/><fmt:formatNumber value="${myOption.price }"/> 원
 			   						</c:forEach>
@@ -123,15 +122,15 @@
 			   				<tr>
 			   					<th>
 			   						부가세
-			   						<c:if test="${dto.order.pointHistory != null }">
+			   						<c:if test="${dto.orderJoin.pointHistory != null }">
 			   							<br/><br/>할인된 포인트
 			   						</c:if>
 			   					</th>
 			   					<td></td>
 			   					<td>
-			   						<fmt:formatNumber value="${dto.order.surtax }" pattern="###,###"/>원
-			   						<c:if test="${dto.order.pointHistory != null }">
-				   						<br/><br/>${dto.order.pointHistory.usePoint }P
+			   						<fmt:formatNumber value="${dto.orderJoin.surtax }" pattern="###,###"/>원
+			   						<c:if test="${dto.orderJoin.pointHistory != null }">
+				   						<br/><br/>${dto.orderJoin.pointHistory.usePoint }P
 			   						</c:if>
 			   					</td>
 			   				</tr>
@@ -143,13 +142,16 @@
 			   					<td>
 			   						<strong style="font-size: 20px; color:red">
 			   							<span id="total-price-text">
-			   								<fmt:formatNumber value="${dto.order.totalPrice }" pattern="###,###"/>
+			   								<fmt:formatNumber value="${dto.orderJoin.totalPrice }" pattern="###,###"/>
 			   							</span>원
 			   						</strong>
 			   					</td>
 			   				</tr>
 			   			</thead>
 					</table>
+					<div style="margin: 100px;">
+						<a href="order-list?page=${param.page }&state=${param.state }&type=${param.type }&keyword=${param.keyword}" class="btn btn-primary">목록</a>
+					</div>
 				</div>
 			</div>
 		</div>

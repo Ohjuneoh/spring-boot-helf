@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.helf.dto.OrderJoin;
 import kr.co.helf.form.OrderSearchForm;
+import kr.co.helf.vo.Category;
+import kr.co.helf.vo.Membership;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.MyOption;
 import kr.co.helf.vo.Option;
@@ -36,7 +38,13 @@ public interface MembershipMapper {
 
 	PointHistory getPointHistoryByNo(int no);
 
-	Order getOrderByNo(int no);
+	OrderJoin getOrderByNo(int no);
 
-	int getTotalRows(OrderSearchForm form);
+	int getTotalRows(Map<String, Object> map);
+
+	List<Category> getCategorys();
+
+	void insertMembership(Membership membership);
+
+	Category getcategoryByNo(int no);
 }
