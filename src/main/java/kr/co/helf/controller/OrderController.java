@@ -38,7 +38,7 @@ public class OrderController {
 	
 	private final OrderService orderService;
 	private final KakaoPayService kakaoPayService;
-
+	
 	@GetMapping("/list")
 	public String list(Model model) {
 		List<Membership> memberships = orderService.getAllMembership();
@@ -75,6 +75,10 @@ public class OrderController {
 	public String period(@ModelAttribute("addOrderForm") AddOrderForm form, Model model,
 						 @AuthenticationPrincipal User user) {
 		
+		if(form == null) {
+			return "redirect:order/list?error=fail";
+		}
+		
 		MembershipJoinCategory membershipJoinCat = orderService.getMembershipJoinCatByNo(form.getMembershipNo());
 
 		if(membershipJoinCat.getCatName().equals(ONE_DAY.getOrderEnum())) {
@@ -103,6 +107,10 @@ public class OrderController {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String orderCheck(@ModelAttribute("addOrderForm") AddOrderForm form, Model model, 
 							 @AuthenticationPrincipal User user) {
+		
+		if(form == null) {
+			return "redirect:order/list?error=fail";
+		}
 		
 		Period period = orderService.getPeriodByNo(form.getPeriodNo());
 		form.setMembershipPrice(form.getMembershipDefaltPrice() + period.getAddPrice());

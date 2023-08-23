@@ -80,108 +80,16 @@
 	<div>
 		<div class="container py-5 ">
 			<div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-				<h5 class="fw-bold text-primary text-uppercase">Membership Managing</h5>
-				<h1 class="mb-0">이용권 관리하기</h1>
+				<h5 class="fw-bold text-primary text-uppercase">Membership Detail</h5>
+				<h1 class="mb-0">이용권 상세정보</h1>
 			</div>
 			<div class="row mb-3 d-flex align-items-center justify-content-center">
 				<div class="col-10">
-					<div class="card" style="margin-bottom: 20px;" >
-						<form action="order-list" method="get">
-							<input type="hidden" name="page" value="${dto.pagination.page}"/>
-							<div class="card-body">							
-								<div class="row mb-3 pt-3">
-									<label class="col-1 offset-1 col-form-label text-end">상태</label>
-									<div class="col-2">
-										<select name="state" class="form-select">
-											<option selected="selected" disabled="disabled">전체보기</option>
-											<option value="판매중" ${param.state eq '판매중' ? 'selected' : '' }>판매중</option>
-											<option value="판매중지" ${param.state eq '판매중지' ? 'selected' : '' }>판매중지</option>
-										</select>
-									</div>
-									<label class="col-1 col-form-label text-end">종류</label>
-									<div class="col-2">
-										<select name="type"  class="form-select">
-											<option selected="selected" disabled="disabled">전체보기</option>
-											<option value="name" ${param.type eq 'name' ? 'selected' : '' }>구매상품</option>
-											<option value="no" ${param.type eq 'no' ? 'selected' : '' }>구매번호</option>	
-										</select>
-									</div>
-									<div class="col-3">
-										<input type="text" name="keyword" class="form-control" value="${param.keyword }">
-									</div>
-									<div class="col-2">
-										<button type="submit" class="btn btn-success">검색</button>
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
-					<div class="card" >
-						<div class="card-body">
-							<table class="table text-center">
-				               	<thead>
-									<tr>
-				                        <th style="width: 25%;">생성일</th>
-				                        <th style="width: 20%">번호</th>
-				                        <th style="width: 25%">이름</th>
-				                        <th style="width: 20%">조회</th>
-				                    	<th style="width: 20%">비고</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:if test="">
-								   		<tr>
-									   		<td colspan="5" class="text-center">생성한 이용권이 없습니다.</td>
-								   		</tr>
-									</c:if>
-								   	<c:forEach var="order" items="">
-										<tr>
-					                        <td></td>
-											<td></td>
-											<td></td>
-											<td>
-												<a href="detail-manager?no=" 
-												   type="button" class="btn btn-info btn-sm">상세정보</a>
-											</td>
-					                        <td></td>
-			                    		 </tr>
-									</c:forEach>
-								</tbody>
-				        	</table>
-	        			</div>
-	    			</div>
+					
 	    		</div>
 	    	</div>
 	    </div>
     </div>
-	<div class="row mb-3" >
-		<div class="col-12">
-			<c:if test="">
-				<c:set var="currentPage" value="${dto.pagination.page }"></c:set>
-				<c:set var="first" value="${dto.pagination.first }"></c:set>
-				<c:set var="last" value="${dto.pagination.last }"></c:set>
-				<c:set var="prePage" value="${dto.pagination.prePage }"></c:set>
-				<c:set var="nextPage" value="${dto.pagination.nextPage }"></c:set>
-				<c:set var="beginPage" value="${dto.pagination.beginPage }"></c:set>
-				<c:set var="endPage" value="${dto.pagination.endPage }"></c:set>
-				<nav>
-					<ul class="pagination justify-content-center">
-						<li class="page-item ${first ? 'disabled' : '' }">
-							<a href="order-list?page=${prePage }" class="page-link" >이전</a>
-						</li>
-						<c:forEach var="num" begin="${beginPage }" end="${endPage }" >
-							<li class="page-item ${num eq currentPage ? 'active' : '' }">
-								<a class="page-link" href="order-list?page=${num }" >${num }</a>
-							</li>
-						</c:forEach>
-						<li class="page-item ${last ? 'disabled' : '' }">
-							<a href="order-list?page=${nextPage }" class="page-link" >다음</a>
-						</li>
-					</ul>
-				</nav>
-			</c:if>
-		</div>
-	</div>
 	
 	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
 

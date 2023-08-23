@@ -155,7 +155,7 @@
 			   rank_name		as name,
 			   rank_criteria	as criteria,
 			   rank_benefit		as benefit,
-			   rank_poin_rate	as pointRate
+			   rank_point_rate	as pointRate
 		from helf_ranks
 		where rank_no = #{value}
 	</select>
