@@ -97,11 +97,18 @@
 	                    <div class="bg-white rounded shadow position-relative m-2" style="z-index: 1;">
 	                        <div class="border-bottom py-4 px-5 mb-4">
 	                            <h5 class="text-primary mb-2"></h5>
-	                            <h4 class="text-uppercase">${consultation.user.name}</h4>
+	                            <h4 class="text-uppercase">${consultation.user.name} 회원님</h4>
 	                        </div>
 	                        <div class="p-5 pt-0">
 	                            
-	                            <div class="d-flex justify-content-between mb-3"><strong>상태 :</strong><span>${consultation.consultations.consultationStatus}</span><i class="fa fa-bell text-primary pt-1 text-end"></i></div>
+	                            <c:choose>
+								    <c:when test="${consultation.consultations.consultationStatus eq '상담완료'}">
+								        <div class="d-flex justify-content-between mb-3"><strong>상태 :</strong><span class="text-primary"><strong>${consultation.consultations.consultationStatus}</strong></span><i class="fa fa-bell text-primary pt-1 text-end"></i></div>
+								    </c:when>
+								    <c:otherwise>
+								        <div class="d-flex justify-content-between mb-3"><strong>상태 :</strong><span>${consultation.consultations.consultationStatus}</span><i class="fa fa-bell text-primary pt-1 text-end"></i></div>
+								    </c:otherwise>
+								</c:choose>
 	                            <div class="d-flex justify-content-between mb-3"><strong>신청일 :</strong><span><fmt:formatDate value="${consultation.consultations.applicationDate}" pattern="yyyy-MM-dd" /></span><i class="fa fa-calendar text-secondary pt-1 text-end"></i></div>
 	                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청일 :</strong><span><fmt:formatDate value="${consultation.consultations.requestDate}" pattern="yyyy-MM-dd" /></span><i class="fa fa-calendar text-primary pt-1 text-end"></i></div>
 	                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청시간 :</strong><span>${consultation.consultations.requestTime}</span><i class="fa fa-clock text-primary pt-1 text-end"></i></div>
@@ -231,6 +238,7 @@ $(document).ready(function() {
             success: function(response) {
                 // 서버에서 성공적인 응답을 받았을 때
                 alert('개설이 완료되었습니다.');
+                window.location.href = "/personal-lesson/list"; 
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 // 에러 발생 시 처리

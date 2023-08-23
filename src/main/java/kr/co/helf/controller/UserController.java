@@ -153,6 +153,13 @@ public class UserController {
 		
 		return "login/findPwd";
 	}
+	
+	//인증되지 않은 사용자가 접근 했을 때 이동되는 페이지(by 준오)
+	@GetMapping(value="/denied")
+	public String unAuthenticatedUser() {
+		
+		return "error/user";
+	}
 
 	/* 로그인 끝 */
 }
