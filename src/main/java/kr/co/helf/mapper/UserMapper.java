@@ -25,6 +25,11 @@ public interface UserMapper {
 	
 	void insertTrainerCareer(TrainerCareer trainerCarrer);
 	
+	User getFindByTel(String name, String tel);
+	
+	// 아이디 찾기(ajax)
+	String getIdByTel(String name, String tel);
+	
 	// 아이디 중복검사
 	int idCheck (String userId);
 		

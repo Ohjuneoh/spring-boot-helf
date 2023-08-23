@@ -83,10 +83,25 @@
 		where substr(user_tel, 10, 4) = #{value}
 	</select>
 	
+	<!-- 아이디찾기 -->
+	<select id="getIdByTel" resultType="string">
+		select
+			user_id
+		from
+			helf_users
+		where 
+			user_name = #{name}
+			and user_tel = #{tel}
+	</select>
+	
+	
 	<!-- 아이디중복검사  -->
 	<select id="idCheck" resultType="int" parameterType="string">
 		select count(*) from helf_users where user_id = #{value}
 	</select>
+	
+	
+	
 	
 	<!-- 유저의 이용가능한 이용권 조회  // 추후 이용권 부분으로 옮길 예정 -->
 	<select id="getMyMembership" resultType="kr.co.helf.vo.MyMembership" parameterType="string">
