@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @ToString
-public class ModifyForm {
+public class ModifyGroupLessonForm {
     private int no;
     private String name;
     private Date date;

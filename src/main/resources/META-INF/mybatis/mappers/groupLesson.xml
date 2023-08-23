@@ -134,7 +134,7 @@
         where
             a.user_id = #{userId}
             and a.user_id = c.user_id
-            and a.my_membership_state = 'Y'
+            and a.my_membership_state = '사용가능'
             and a.membership_no = b.membership_no
             and b.category_no = 3
             and c.user_type = 'ROLE_USER'
@@ -169,28 +169,30 @@
         update
             helf_my_membership
         set
-            my_membership_state = 'N'
+            my_membership_state = '사용불가'
         where
             my_membership_remainder_cnt = 0
         and my_membership_no = #{no}
     </update>
-    <select id="getAllLessonByNo" parameterType="int" resultType="Lesson">
-        select
-            lesson_no as no,
-            lesson_name as name,
-            lesson_time as time,
-            lesson_description as description,
-            lesson_disabled as disabled,
-            lesson_req_cnt as reqCnt,
-            lesson_quota as quota,
-            lesson_reservation as reservation,
-            lesson_type as type,
-            lesson_date as "date",
-            user_id as "user.id",
-            membership_no as "membership.no"
-        from
-            helf_lesson
-        where
-            lesson_no = #{no}
-    </select>
+
+    <!-- 레슨번호로 레슨테이블에 있는 값 조회 -->
+<!--    <select id="getAllLessonByNo" parameterType="int" resultType="Lesson">-->
+<!--        select-->
+<!--            lesson_no as no,-->
+<!--            lesson_name as name,-->
+<!--            lesson_time as time,-->
+<!--            lesson_description as description,-->
+<!--            lesson_disabled as disabled,-->
+<!--            lesson_req_cnt as reqCnt,-->
+<!--            lesson_quota as quota,-->
+<!--            lesson_reservation as reservation,-->
+<!--            lesson_type as type,-->
+<!--            lesson_date as "date",-->
+<!--            user_id as "user.id",-->
+<!--            membership_no as "membership.no"-->
+<!--        from-->
+<!--            helf_lesson-->
+<!--        where-->
+<!--            lesson_no = #{no}-->
+<!--    </select>-->
 </mapper>
