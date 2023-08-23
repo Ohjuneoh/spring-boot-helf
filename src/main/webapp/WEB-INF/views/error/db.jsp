@@ -69,8 +69,7 @@
 			<div class="col-12">
 				<div class="bg-light border p-3 mb-5">
 					<h1 class="text-primary">데이터베이스 오류</h1>
-				<p>고객님</p>
-				<p>나가주세요</p>
+				<p>데이터베이스 오류입니다.</p>
 				</div>
 			</div>
 		</div>
