@@ -64,7 +64,13 @@
 		    helf_users a, helf_trainers b, helf_trainer_career c
 		where
 			a.user_id = b.user_id
-			and c.trainer_no = b.trainer_no
+        and c.trainer_no = b.trainer_no
+        and c.trainer_no not in (
+    								select trainer_no
+									from helf_lesson_consultation
+									where user_id = 'juneasd'
+									or lesson_consultation_status = '수강중'
+									or lesson_consultation_status = '대기중')
 		order by
 			trainer_no
 	</select>
@@ -180,6 +186,7 @@
         </association>
         <association property="myMembership" javaType="kr.co.helf.vo.MyMembership">
         <result column="my_membership_no" property="no"/>
+        <result column="my_membership_remainder_cnt" property="remainderCnt"/>
         </association>
     </association>
 	</resultMap>
@@ -195,10 +202,13 @@
 		        a.user_id,
 		        a.trainer_no,
 		        a.my_membership_no,
-		        b.user_name
-		from helf_lesson_consultation a, helf_users b
+		        b.user_name,
+		        c.my_membership_remainder_cnt
+		from helf_lesson_consultation a, helf_users b, helf_my_membership c
 		where trainer_no = #{trainerNo}
 		and a.user_id = b.user_id
+		and b.user_id = c.user_id
+		and c.my_membership_remainder_cnt > 0
 		order by a.lesson_consultation_request_date asc
 	</select>
 	<select id="getMyMembershipByNo" parameterType="int" resultType="myMembership">
