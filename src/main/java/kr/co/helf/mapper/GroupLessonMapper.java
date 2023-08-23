@@ -1,6 +1,6 @@
 package kr.co.helf.mapper;
 
-import kr.co.helf.form.ModifyForm;
+import kr.co.helf.form.ModifyGroupLessonForm;
 import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.MyMembership;
@@ -21,11 +21,11 @@ public interface GroupLessonMapper {
     // 전체 게시글 목록 조회(페이징처리 포함)
     List<Lesson> getAllLessons(Map<String,Object> param);
     // 레슨번호에 해당하는 개설된 레슨 수정
-    void updateLesson(ModifyForm form);
+    void updateLesson(ModifyGroupLessonForm form);
     // 신청인원 증가
     void updateReqCount(Lesson lesson);
     // 신청인원 = 모집총원 변경(모집여부 변경)
-    void updateReservation(Lesson lesson);
+//    void updateReservation(Lesson lesson);
     // 레슨 삭제(lesson_disabled 상태 -> 'Y')로 변경
     void deleteLesson(Lesson lesson);
 
@@ -44,5 +44,5 @@ public interface GroupLessonMapper {
     // 멤버십 이용권이 모두 소진한 경우 멤버십 상태 변경
     void updateMembershipState(MyMembership membership);
     // 레슨번호로 레슨조회
-    Lesson getAllLessonByNo(int no);
+//    Lesson getAllLessonByNo(int no);
 }
