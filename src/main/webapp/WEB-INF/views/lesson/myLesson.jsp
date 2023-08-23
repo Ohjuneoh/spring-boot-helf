@@ -89,7 +89,7 @@
                         수업 목록
                     </div>
                     <div class="card-body">
-                        <table class="table">
+                        <table class="table"  id="x">
                             <thead>
                             <tr>
                                 <th style="width: 10%">레슨 번호</th>
@@ -108,7 +108,8 @@
                                     <td>${lessonApply.user.name }</td>
                                     <td><fmt:formatDate value="${lessonApply.lesson.date }" pattern="yyyy년 M월 d일" /> ${lessonApply.lesson.time }시</td>
                                     <td>${lessonApply.attendanceStatus }</td>
-                                    <td><a href="../trainer-review/registration" class="btn btn-primary btn-sm">리뷰작성</a></td>
+                                    <!-- 위의 <td>에서 attendanceStatus가 Y일때만 리뷰작성 버튼이 활성화 되게하는 코드 -->
+                                    <td><a href="/trainer-review/registration?applyNo=${lessonApply.no }" class="btn btn-primary btn-sm ${lessonApply.attendanceStatus eq 'Y' ? '' : 'disabled'}">리뷰작성</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>

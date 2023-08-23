@@ -23,7 +23,7 @@ import java.util.Map;
 public class GroupLessonController {
 
     private final GroupLessonService groupLessonService;
-    // 레슨 등록
+    // 레슨 등록 화면
     @GetMapping("/registration")
     public String lessonForm() {
         return "/group-lesson/form";

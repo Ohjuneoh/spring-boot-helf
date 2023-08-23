@@ -96,7 +96,7 @@
 <!-- Lesson Register Form Start  -->
 <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
     <div class="container py-5">
-        <form class="" id="group-lesson-form" method="post" action="/group-lesson/registration">
+        <form class="" method="post" action="/trainer-review/registration">
             <div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
                 <div class="container ">
                     <div class="row g-1" >
@@ -108,11 +108,13 @@
                 </div>
             </div>
             <div class="row g-1">
+                <!-- 리뷰작성 버튼에서 전달받은 lessonApply번호를 히든으로 넣어둠 -->
+                <input type="hidden"  name="lessonApplyNo" value="${param.applyNo }"/>
                 <div class="col-6">
-                    <input type="text" class="form-control bg-light border-0" name="name" placeholder="수업명" style="height: 55px;">
+                    <input type="text" class="form-control bg-light border-0" name="title" placeholder="제목" style="height: 55px;">
                 </div>
                 <div class="col-6">
-                    <select  class="form-select bg-light border-0" name="time" style="height: 55px;">
+                    <select  class="form-select bg-light border-0" name="rating" style="height: 55px;">
                         <option value="">별점</option>
                         <option value="0" class="form-control bg-light border-0" >0</option>
                         <option value="0.5" class="form-control bg-light border-0" >0.5</option>
@@ -128,12 +130,12 @@
                     </select>
                 </div>
                 <div class="col-12">
-                    <textarea class="form-control bg-light border-0" name="description" style="height: 300px;" placeholder="내용"></textarea>
+                    <textarea class="form-control bg-light border-0" name="content" style="height: 300px;" placeholder="내용"></textarea>
                 </div>
             </div>
             <div>
                 <button type="button" id="btn-cancel" class=" btn btn-danger mt-1 float-end" style="margin-left: 5px;">취소</button>
-                <button type="submit" class=" btn btn-primary mt-1 float-end">등록</button>
+                <button type="submit" class="btn btn-primary mt-1 float-end">등록</button>
             </div>
         </form>
     </div>
