@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.helf.mapper.TrainerReviewMapper">
+
+    <insert id="insertReview" parameterType="kr.co.helf.form.AddReviewForm">
+        insert into
+            helf_trainer_review(trainer_review_no,trainer_review_title,trainer_review_content,lesson_apply_no, lesson_no, trainer_no,trainer_review_rating)
+        values(helf_trainer_review_seq.nextval,#{title},#{content},#{apply.no}, #{lesson.no},#{trainer.trainerNo}, #{rating})
+    </insert>
+
+    <select id="getTrainerById" resultType="Trainer" parameterType="string">
+        select
+            a.trainer_no as trainerNo,
+            b.user_id as "user.id"
+        from
+            helf_trainers a, helf_users b
+        where
+            a.user_id = #{userId}
+        and a.user_id = b.user_id
+    </select>
+</mapper>

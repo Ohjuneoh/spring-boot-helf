@@ -1,7 +1,6 @@
 package kr.co.helf.service;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -12,6 +11,8 @@ import kr.co.helf.mapper.PersonalLessonMapper;
 import kr.co.helf.vo.Career;
 import kr.co.helf.vo.Consultation;
 import kr.co.helf.vo.LessonApply;
+import kr.co.helf.vo.MyMembership;
+import kr.co.helf.vo.PersonalLesson;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,7 @@ public class PersonalLessonService {
 	}
 	
 	
-	// 나의 오늘 수업 리스트 조회(개인+그룹) - 채경 작성
+	// 나의 오늘 수업 리스트 조회(개a인+그룹) - 채경 작성
 	public List<LessonApply> getMyTodayLessons(String userId){
 		return personalLessonMapper.getMyTodayLessonsByUserId(userId);
 	}
@@ -49,6 +50,21 @@ public class PersonalLessonService {
 		List<UserConsultations> userConsultationsList = personalLessonMapper.getAllConsultationByTrainerNo(trainer.getTrainerNo());
 		
 		return userConsultationsList;
+	}
+
+	public void createPersonalLesson(PersonalLesson personalLesson, Consultation consultation) {
+		
+		//나의 멤버십 번호로 멤버십 정보 조회
+		MyMembership myMembership = personalLessonMapper.getMyMembershipByNo(personalLesson.getMyMembership().getNo());
+		
+		//남은 회원권 회수를 1 차감
+		int updatedRemainderCnt = myMembership.getRemainderCnt() - 1;
+		myMembership.setRemainderCnt(updatedRemainderCnt);
+		
+		personalLessonMapper.updatedConsultation(consultation.getConsultationNo(), "상담완료");
+		
+		personalLessonMapper.updateMyMembership(myMembership);
+		personalLessonMapper.insertPersonalLesson(personalLesson);
 	}
 }
 

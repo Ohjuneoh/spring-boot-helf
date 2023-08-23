@@ -17,4 +17,7 @@ public interface LessonMapper {
     List<LessonApply> getAllUsersByNo(int lessonNo);
     // 수강생 출석체크
     void updateAttendance(@Param("no") int lessonNo, @Param("userId") String userId, @Param("status") String status);
+    // 신청테이블에 저장되어 있는 목록 조회하기
+    LessonApply getLessonApplyByNo(int no);
+
 }

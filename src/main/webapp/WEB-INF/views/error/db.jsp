@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -33,6 +34,10 @@
     <link href="/resources/css/style.css" rel="stylesheet">
     <!-- Date Picker  -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Date Picker  -->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Datetime Picker -->
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 </head>
 
 <body>
@@ -41,13 +46,9 @@
         <div class="spinner"></div>
     </div>
     <!-- Spinner End -->
-
-
     <!-- Topnavbar Start -->
    	<jsp:include page="/WEB-INF/views/common/topnavbar.jsp" />
     <!-- Topnavbar End -->
-
-
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0 h-10 ">
 		<jsp:include page="/WEB-INF/views/common/navbar.jsp">
@@ -57,90 +58,36 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">LESSONLIST</h1>
-                    <a href="" class="h5 text-white">수업 목록</a>
+                    <h1 class="display-4 text-white animated zoomIn">ERROR</h1>
+                    <a href="" class="h5 text-white">DB 에러</a>
                 </div>
             </div>
         </div>
     </div>
-
-
-    <div class="modal fade" id="searchModal" tabindex="-1">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
-                <div class="modal-header border-0">
-                    <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex align-items-center justify-content-center">
-                    <div class="input-group" style="max-width: 600px;">
-                        <input type="text" class="form-control bg-transparent border-primary p-3" placeholder="Type search keyword">
-                        <button class="btn btn-primary px-4"><i class="bi bi-search"></i></button>
-                    </div>
+	<div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="bg-light border p-3 mb-5">
+                    <h1 class="text-primary">서버 오류</h1>
+                    <p>고객님, 대단히 죄송합니다.</p>
+                    <p>요청을 처리하는 동안 문제가 발생했습니다.</p>
+                    <p>문제를 해결하려면 고객 지원 팀에 연락하십시오.</p>
+                    <p>Email: support@example.com</p>
+                    <p>Phone: +82-10-1234-5678</p>
+                    <a href="/">홈페이지로 돌아가기</a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
-		<div class="container py-5">
-			<div class="row mb-3">
-				<div class="col-12">
-					<div class="card" >
-						<div class="card-header bg-dark" style="color: #ffffff">
-							수업목록
-							<span class="float-end">
-								<a href="add" class="btn btn-primary btn-sm ">신규 수업 등록</a>
-							</span>
-						</div>
-						<div class="card-body">
-							<div class="d-flex justify-content-start mb-3">
-								<select class="form-select me-3" style="width:150px" name="sort" onchange="changeSort()">
-									<option >수업유형</option>
-									<option >개인수업</option>
-									<option >그룹수업</option>
-			            		</select>
-            				</div>
-			               <table class="table">
-			               		<thead>
-			                     	<tr>
-			                        	<th>수업번호</th>
-			                        	<th>수업명</th>
-			                        	<th>강사명</th>
-			                        	<th>모집총원</th>
-			                        	<th>모집여부</th>
-			                     	</tr>
-			                  	</thead>
-			                  	<tbody>
-		                  			<tr>
-				                        <td>1</td>
-				                        <td>1</td>
-				                        <td>1</td>
-				                        <td>1</td>
-				                        <td>1</td>
-		                    		 </tr>
-		                 			<tr>
-	                 					<td colspan="5" class="text-center">검색결과가 존재하지 않습니다.</td>
-		                 			</tr>
-			             		</tbody>
-			               </table>
-        				</div>
-    				</div>
-    			</div>
-    		</div>
-        </div>
-    </div>
-    <!-- Footer End -->
 	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
-
-
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
-
-
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/resources/lib/wow/wow.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
     <script src="/resources/lib/easing/easing.min.js"></script>
     <script src="/resources/lib/waypoints/waypoints.min.js"></script>
     <script src="/resources/lib/counterup/counterup.min.js"></script>
@@ -148,12 +95,5 @@
 
     <!-- Template Javascript -->
 	<script src="/resources/js/main.js"></script>
-    
-<script>
-
-</script>
-    
-    
 </body>
-
 </html>

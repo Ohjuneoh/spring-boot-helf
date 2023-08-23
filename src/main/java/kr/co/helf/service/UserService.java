@@ -65,15 +65,18 @@ public class UserService {
 		user.setEncryptedPassword(encryptedPassword);
 		
 		// (1단계)유저 객체 - 타입,상태 담기
-		user.setType("ROLE_TRAINER");
+ 		user.setType("ROLE_TRAINER");
 		user.setStatus("R");
 		
 		// (2단계)트레이너 객체에 사진파일 담기
 		Trainer trainer = new Trainer();
-		trainer.setTrainerFile(form.getPhotofile());
+		
+		trainer.setTrainerFile("sample.png");
+		trainer.setUser(user);
 		
 		//(2단계)트레이너 경력객체에 담기
 		TrainerCareer trainerCareer = new TrainerCareer();
+		trainerCareer.setTrainer(trainer);
 		trainerCareer.setName(form.getName());
 		trainerCareer.setStartDate(form.getCareerStartDate());
 		trainerCareer.setEndDate(form.getCareerEndDate());
@@ -83,12 +86,34 @@ public class UserService {
 		userMapper.insertTrainerCareer(trainerCareer);
 	}
 	
+	// 전화번호로 아이디찾기
+	public User getFindByTel(String name, String tel) {
+		return userMapper.getFindByTel(name, tel);
+	}
+	
+	// 아이디 찾기(ajax)
+	public String findId(String name, String tel) throws Exception {
+		return userMapper.getIdByTel(name, tel);
+	}
+	
+//	public void getFindIdByEmail(String name, String email) {
+//	// 사용자 정보 조회
+//	// 사용자 정보가 존재하면 
+//	//		인증번호를 생성하고, 데이터베이스에 저장
+//	// 		인증번호를 메일로 발송
+//	// 사용자 정보가 존재하지 않으면
+//	//		예외를 발생시킨다.
+//	
+//}
+	
+	
+	
 	public List<User> getUsersWithFourDigits(String fourDigits) {
 		return userMapper.getUsersByDigits(fourDigits);
 
 	}
 	
-	// 아이디 중복검사
+	// 아이디 중복검사(ajax)
 	public int idCheck(String userId) throws Exception {
 		return userMapper.idCheck(userId);
 	}
@@ -129,6 +154,9 @@ public class UserService {
 	public void createTrainerAttendance(Map<String, Object> param) {
 		userMapper.insertTrainerAttendances(param);
 	}
+
+
+
 }
 
 

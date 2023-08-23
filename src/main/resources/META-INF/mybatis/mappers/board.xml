@@ -57,5 +57,24 @@
     	where
     		board_no = #{no}
     </select>
-	
+    
+    <!-- 공지사항 상세 - 이전글/다음글 -->
+	<select id="getPrevNextBoardByNo" parameterType="int" resultType="BoardPrevNextDto">
+
+		select prev_board_no     		as prevBoardNo,
+		       prev_board_title      	as prevBoardTitle,
+		       next_board_no      		as nextBoardNo,
+		       next_board_title     	as nextBoardTitle
+		from(
+		    select board_no, board_title,
+		            lag(board_no) OVER (ORDER BY board_no) prev_board_no,
+		            lag(board_title) OVER (ORDER BY board_no) prev_board_title,
+		            lead(board_no) OVER (ORDER BY board_no) next_board_no,
+		            lead(board_title) OVER (ORDER BY board_no) next_board_title
+		    from    helf_boards
+		    order by board_no
+		    )
+		where board_no = #{value}
+
+	</select>
 </mapper>

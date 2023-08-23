@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.ToString;
 
 @Data
-@ToString
 @Alias("TrainerCareer")
 
 public class TrainerCareer {
@@ -16,6 +15,6 @@ public class TrainerCareer {
 	private String name;
 	private Date startDate;
 	private Date endDate;
-	private int trainerNo;
+	private Trainer trainer;
 	
 }

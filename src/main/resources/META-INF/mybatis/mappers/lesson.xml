@@ -4,6 +4,7 @@
     <!-- 내가 신청한 모든 수업 조회(유저) -->
     <select id="getAllMyLessons" resultType="LessonApply" parameterType="string">
         select
+            a.lesson_apply_no as no,
             a.lesson_apply_attendance_status as attendanceStatus,
             b.lesson_no as "lesson.no",
             b.lesson_name as "lesson.name",
@@ -60,4 +61,18 @@
             lesson_no =#{no}
             and user_id = #{userId}
     </update>
+    <!-- 신청테이블에 저장되어 있는 목록 조회하기 -->
+    <select id="getLessonApplyByNo" parameterType="int" resultType="LessonApply">
+        select
+            lesson_apply_no as no,
+            lesson_apply_attendance_status as attendanceStatus,
+            lesson_no as "lesson.no",
+            user_id as "user.id",
+            lesson_apply_date as applyDate,
+            my_membership_no as "myMembership.no"
+        from
+            helf_lesson_apply
+        where
+            lesson_apply_no =#{no}
+    </select>
 </mapper>

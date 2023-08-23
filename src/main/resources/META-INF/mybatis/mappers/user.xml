@@ -46,15 +46,21 @@
 	
 	<!-- 트레이너 회원가입 2단계 (트레이너객체에 등록) -->
 	<insert id="insertTrainer2" parameterType="Trainer">
-		insert into helf_trainer
+		<selectKey keyProperty="trainerNo" resultType="int" order="BEFORE">
+			select helf_files_seq.nextval from dual
+		</selectKey>
+		insert into helf_trainers
 		(trainer_no, trainer_file, user_id)
 		values
-		(helf_files_seq.nextval, #{trainerFile}, #{user.id})
+		(#{trainerNo}, #{trainerFile}, #{user.id})
 	</insert>
 
 	<!-- 트레이너 회원가입 2단계 (트레이너 경력객체에 등록) -->
 	<insert id="insertTrainerCareer" parameterType="TrainerCareer">
-	
+		insert into helf_trainer_career
+		(career_no, career_name, career_start_date, career_end_date, trainer_no)
+		values
+		(helf_trainer_career_seq.nextval, #{name}, #{startDate}, #{endDate}, #{trainer.trainerNo})
 	</insert>
 	
 	<select id="getUsersByDigits" parameterType="string" resultType="kr.co.helf.vo.User">
@@ -72,16 +78,30 @@
 			user_point				as point,
 			rank_no					as "rank.no",
 			user_type				as type
-			
 		from
 			helf_users
 		where substr(user_tel, 10, 4) = #{value}
 	</select>
 	
+	<!-- 아이디찾기 -->
+	<select id="getIdByTel" resultType="string">
+		select
+			user_id
+		from
+			helf_users
+		where 
+			user_name = #{name}
+			and user_tel = #{tel}
+	</select>
+	
+	
 	<!-- 아이디중복검사  -->
 	<select id="idCheck" resultType="int" parameterType="string">
 		select count(*) from helf_users where user_id = #{value}
 	</select>
+	
+	
+	
 	
 	<!-- 유저의 이용가능한 이용권 조회  // 추후 이용권 부분으로 옮길 예정 -->
 	<select id="getMyMembership" resultType="kr.co.helf.vo.MyMembership" parameterType="string">

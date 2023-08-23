@@ -1,13 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="kr">
-<style>
-body {
-  position: relative;
-}
-</style>
+
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <meta charset="utf-8">
@@ -37,13 +34,9 @@ body {
 
     <!-- Template Stylesheet -->
     <link href="/resources/css/style.css" rel="stylesheet">
-    
-    <!-- 데이트피커 -->
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 
 <body>
-
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner"></div>
@@ -64,60 +57,99 @@ body {
 			<jsp:param name="menu" value="홈"/>
 		</jsp:include>
     <!-- Navbar End -->
-        <div class="container-fluid bg-primary py-3 bg-header" style="margin-bottom: 90px;">
+        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">REGISTER</h1>
-                    <a href="" class="h5 text-white">회원가입</a>
+                    <h1 class="display-4 text-white animated zoomIn">REGISTER COMPLETE</h1>
+                    <a href="" class="h5 text-white">회원가입 완료</a>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-	<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
-		<div class="container">
-			<form method="post" enctype="multipart/form-data" action="trainer2">
-				<div class="row" >
-					<div class="mb-4">
-						<h3>트레이너 회원가입</h3>
-					</div>
-					<h5>사진업로드</h5>
-					    <div class="col-sm-6">
-							<input type='file' name="photofile" />
+    
+    	<div class="row justify-content-center" style="text-align:center">
+		
+		 <div class="col-lg-5">
+		 	  <h2>HELF 헬스장에 가입해주셔서 감사합니다.</h2>
+		 	  
+		 	  <div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"  style="display: flex; justify-content: center;">
+		 	  	<div doz_type="widget" id="w20190820145dcc26dd4ed">
+		 	  		<div class="_widget_data " data-widget-name="가로선" data-widget-type="hr" data-widget-anim="none" data-widget-anim-duration="" data-widget-anim-delay="" data-widget-parent-is-mobile="N">
+		 	  			<div class="widget line type01 _hide" id="hr_w20190820145dcc26dd4ed">
+							<div class="line_box holder" style="width:100px; ">
+								<hr style="border-top-width:1px; border-color:rgba(35, 38, 40, 0.65);">	
+							</div>
 						</div>
+					</div>
 				</div>
-				
-				<div class="row mt-4" >
-					<h5>경력</h5>
-				    	<div class="col-sm-6 input-wrapper">
-				        	 <input type="text" class="form-control bg-light border-0" id="trainer-career" name="careerName" placeholder="경력 이름을 입력하세요." style="height: 55px; width: 620px;" />
-				    	</div>
-				    	<div class="col-sm-6">
-					    	<div class="d-flex">
-						         <input type="text" class="form-control bg-light border-0 mr-2" id="datepicker1" name="careerStartDate" placeholder="경력 시작일" style="height: 55px; width: 305px;" />
-						         <input type="text" class="form-control bg-light border-0" id="datepicker2" name="careerEndDate" placeholder="경력 종료일" style="height: 55px; width: 305px;" />
-				    		</div>
-				    	</div>
+			</div>
+
+		<div doz_type="grid" doz_grid="4" class="col-dz col-dz-4">
+		
+			<div doz_type="row" doz_grid="4" class="doz_row">
+				<div doz_type="grid" doz_grid="4" class="col-dz col-dz-4">
+					<div doz_type="widget" id="w2019081545754e13d8cd3">
+						<div class="_widget_data  animated wg_animated fadeInUp" data-widget-name="텍스트" data-widget-type="text" data-widget-anim="fadeInUp" data-widget-anim-duration="0.7" data-widget-anim-delay="0" data-widget-parent-is-mobile="N" style="opacity: 1; animation-duration: 0.7s; animation-delay: 0s; visibility: visible;">
+							<div doz_type="text" class="widget _text_wrap widget_text_wrap fr-view  default_padding " id="text_w2019081545754e13d8cd3">
+								<div class="text-table mt-2">
+									<div>
+										<i class="bi bi-emoji-laughing-fill" style="font-size: 48px;"></i>
+										<p><span style="color: rgb(35, 38, 40); font-size: 22px;">관리자의 승인 후 이용하실 수 있어요.<br>조금만 기다려주세요!</span></p>
+										<p><span style="color: rgb(35, 38, 40); font-size: 17px;"></span></p>
+									</div>
+								</div>		
+							</div>
+						</div>
+					</div>
 				</div>
-				
-				<div class="row mt-4" >
-					<h5>자기소개</h5>
-					    <div class="col-sm-6 input-wrapper">
-					         <input type="text" class="form-control bg-light border-0" id=""  placeholder="자기소개를 입력하세요." style="height: 300px; width: 1280px;" />
-					    	 <div class="check_font" id="user-id_check"></div>
-					    </div>
+			</div>
+			<div doz_type="row" doz_grid="4" class="doz_row">
+				<div doz_type="grid" doz_grid="4" class="col-dz col-dz-4">
+					<div doz_type="widget" id="w20190820e84e7943d2c5e">
+						<div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N">
+							<div class="widget padding" data-height="14" style="margin-top:px; margin-bottom:px;">
+								<div id="padding_w20190820e84e7943d2c5e" style="width:100%; min-height:1px; height:14px; "></div>
+							</div>
+						</div>
+					</div>
 				</div>
-				
-			    <div class="col-13 mt-4" >
-			        <button id="user-button-register" class="btn btn-dark w-100 py-3" type="submit">가입하기</button>
-			    </div>
-			</form>   
+			</div>
+			<div doz_type="row" doz_grid="4" class="doz_row">
+				<div doz_type="grid" doz_grid="4" class="col-dz col-dz-4">
+					<div doz_type="widget" id="w20190820d73d6bdbeb75d">
+						<div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N">
+							<div class="widget padding" data-height="14" style="margin-top:px; margin-bottom:px;">
+								<div id="padding_w20190820d73d6bdbeb75d" style="width:100%; min-height:1px; height:14px; "></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div doz_type="row" doz_grid="4" class="doz_row">
+				<div doz_type="grid" doz_grid="4" class="col-dz col-dz-4">
+					<div doz_type="widget" id="w201908176065896b508a7">
+						<div class="_widget_data  animated wg_animated fadeInUp" data-widget-name="텍스트" data-widget-type="text" data-widget-anim="fadeInUp" data-widget-anim-duration="0.7" data-widget-anim-delay="0.4" data-widget-parent-is-mobile="N" style="opacity: 1; animation-duration: 0.7s; animation-delay: 0.4s; visibility: visible;">
+							<div doz_type="text" class="widget _text_wrap widget_text_wrap fr-view  default_padding " id="text_w201908176065896b508a7">
+										<div class="text-table ">
+											<div>
+												<p>모두가 즐겨 찾는 서비스로 HELF를 시작해보세요.<br>
+													<a href="/" class="btn btn-primary py-2 px-4 ms-3">홈으로가기</a>
+												</p>
+											</div>
+										</div>		
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
+		
+	    </div>
+     </div>
 
 
+
+    <!-- Footer start -->
     <div class="modal fade" id="searchModal" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
@@ -134,6 +166,8 @@ body {
         </div>
     </div>
     
+    
+       
     
    
     
@@ -218,8 +252,8 @@ body {
 
 
     <!-- JavaScript Libraries -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/resources/lib/wow/wow.min.js"></script>
@@ -230,39 +264,12 @@ body {
 
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
-  
    
-<script>
-	
-	// 경력 데이트피커 (시작일)
-      $(function(){
-         $('#datepicker1').datepicker();
-      })
-      
-	// 경력 데이트피커 (종료일)
-      $(function(){
-          $('#datepicker2').datepicker();
-      })
-       
-   	// 데이트피커 한글적용
-    $(document).ready(function(){               
-	    $.datepicker.setDefaults({
-	    closeText: "닫기",
-	    currentText: "오늘",
-	    prevText: '이전 달',
-	    nextText: '다음 달',
-	    monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	    monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	    dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-	    dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-	    dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-	    weekHeader: "주",
-	    yearSuffix: '년'
-	    });    
-	 });
-	
-	
-</script>
-	
+   <script type="text/javascript"></script>
+   
+   <script>
+		
+		
+	</script>
 </body>
 </html>
