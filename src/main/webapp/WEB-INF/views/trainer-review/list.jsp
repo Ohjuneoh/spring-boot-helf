@@ -104,7 +104,7 @@
     </div>
     <hr style="height: 3px; color: skyblue;" ></hr>
     <div class="testimonial-item bg-light my-4">
-      <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+      <div class="d-flex align-items-center borer-bottom pt-5 pb-4 px-5">
         <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
         <div class="ps-4">
           <h4 class="text-primary mb-1">작성자명</h4>
