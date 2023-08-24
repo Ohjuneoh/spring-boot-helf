@@ -10,8 +10,16 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class ModifyReviewForm {
+
+    private int no;
     private String title;
     private Double rating;
     private String content;
+    private int trainerNo;
+
+    private String title;
+    private Double rating;
+    private String content;
+
 
 }

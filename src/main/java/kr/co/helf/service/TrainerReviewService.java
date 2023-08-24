@@ -1,12 +1,15 @@
 package kr.co.helf.service;
 
+import kr.co.helf.dto.TrainerReviewDto;
 import kr.co.helf.form.AddReviewForm;
+import kr.co.helf.form.ModifyReviewForm;
 import kr.co.helf.mapper.GroupLessonMapper;
 import kr.co.helf.mapper.LessonMapper;
 import kr.co.helf.mapper.TrainerReviewMapper;
 import kr.co.helf.vo.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,15 +44,54 @@ public class TrainerReviewService {
 
         //위에 있는 레슨번호 레슨신청번호 트레이너 번호 및 제목 내용 별점담기
         review.setLesson(lesson);
-        review.setApply(lessonApply);
+        review.setLessonApply(lessonApply);
         review.setTrainer(trainer);
 
         trainerReviewMapper.insertReview(review);
     }
 
+
+    // 트레이너 번호에 해당하는 리뷰 조회
+    public TrainerReviewDto getReviewByTrainerNo(int trainerNo){
+        List<TrainerReview> reviews = trainerReviewMapper.getReviewByTrainerNo(trainerNo);
+        Double avgRating = trainerReviewMapper.getAvgRating(trainerNo);
+
+        TrainerReviewDto dto = new TrainerReviewDto();
+        dto.setTrainerReviews(reviews);
+        dto.setAvgRating(avgRating);
+
+        return dto;
+    }
+
+    // 트레이너 번호로 모든 트레이너 정보 조회
+    public List<Trainer> getAllTrainers(){
+        return trainerReviewMapper.getAllTrainers();
+    }
+
+    // 트레이너 리뷰 번호에 해당하는 리뷰 수정
+    public void updateReview(ModifyReviewForm form){
+        TrainerReview trainerReview = trainerReviewMapper.getTrainerReviewByNo(form.getNo());
+        BeanUtils.copyProperties(form,trainerReview);
+        trainerReviewMapper.updateReview(form);
+    }
+
+    // 트레이너 리뷰번호로 트레이너 리뷰 조회
+    public TrainerReview getReviewByNo(int reviewNo){
+        TrainerReview review = trainerReviewMapper.getTrainerReviewByNo(reviewNo);
+        return review;
+    }
+
+    // 트레이너 리뷰 번호에 해당하는 리뷰 삭제
+    public void deleteReview(int reviewNo){
+        TrainerReview trainerReview = trainerReviewMapper.getTrainerReviewByNo(reviewNo);
+        trainerReview.setStatus("N");
+        trainerReviewMapper.deleteReview(trainerReview);
+
+
     // 트레이너 번호에 해당하는 리뷰 조회
     public List<TrainerReview> getReviewByTrainerNo(int trainerNo){
         List<TrainerReview> review = trainerReviewMapper.getReviewByTrainerNo(trainerNo);
         return review;
+
     }
 }

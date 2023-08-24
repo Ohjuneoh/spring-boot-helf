@@ -90,68 +90,20 @@
                 <h1 class="mb-0">HELF 헬스장의<br> 트레이너를 소개합니다.</h1>
             </div>
             <div class="row g-5" id="box-trainer">
+            <c:forEach var="trainer" items="${trainers }">
                 <div class="col-lg-3 wow slideInUp" data-wow-delay="0.3s">
                     <div class="team-item bg-light rounded overflow-hidden">
                         <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="/resources/img/team-1.jpg" alt="" >
+                            <img class="img-fluid w-100" src="/resources/img/team-1.jpg" alt="" data-trainer-no="${trainer.trainerNo}" >
                         </div>
                         <div class="text-center py-4">
-                            <h4 class="text-primary">이민혁</h4>
-                            <p class="text-uppercase m-0">점장</p>
+                            <h4 class="text-primary">${trainer.user.name }</h4>
+                            <p class="text-uppercase m-0">${trainer.title }</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 wow slideInUp" data-wow-delay="0.6s">
-                    <div class="team-item bg-light rounded overflow-hidden">
-                        <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="/resources/img/team-2.jpg" alt="">
-                            <div class="team-social">
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center py-4">
-                            <h4 class="text-primary">김채원</h4>
-                            <p class="text-uppercase m-0">부점장</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 wow slideInUp" data-wow-delay="0.9s">
-                    <div class="team-item bg-light rounded overflow-hidden">
-                        <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="/resources/img/team-3.jpg" alt="">
-                            <div class="team-social">
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center py-4">
-                            <h4 class="text-primary">유기현</h4>
-                            <p class="text-uppercase m-0">트레이너</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 wow slideInUp" data-wow-delay="0.6s">
-                    <div class="team-item bg-light rounded overflow-hidden">
-                        <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="/resources/img/team-2.jpg" alt="">
-                            <div class="team-social">
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center py-4">
-                            <h4 class="text-primary">강해린</h4>
-                            <p class="text-uppercase m-0">트레이너</p>
-                        </div>
-                    </div>
-                </div>
+            </c:forEach>
+            </div>
             </div>
         </div>
     </div>
@@ -331,7 +283,11 @@
 	      
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-<%--              <a href="/trainer-review/list?trainerNo=${}" class="btn btn-primary">강사후기 보러가기</a>--%>
+
+              <a href="" class="btn btn-primary">강사후기 보러가기</a>
+
+           <a href="/trainer-review/list?trainerNo=${}" class="btn btn-primary">강사후기 보러가기</a>
+
 	      </div>
 	      
 	    </div>
@@ -359,8 +315,12 @@
     <script type="text/javascript">
     let teacherModal = new bootstrap.Modal("#modal-teacher");
 
+    // 이미지 클릭시 실행하게 되는 코드
     $("#box-trainer img").click(function() {
-
+        // 클릭시 속성값이 "data-trainer-no"인 것을 찾아서 trainerNo에 저장
+        let trainerNo = $(this).attr("data-trainer-no");
+        // id가 modalteacher 안 a 태그에 속성이 "href"인 것에 Url을  대입
+        $("#modal-teacher a").attr("href", "/trainer-review/list?trainerNo=" + trainerNo);
        teacherModal.show();
     });
 
