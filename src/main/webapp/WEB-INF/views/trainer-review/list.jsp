@@ -120,6 +120,7 @@
       </div>
     </div>
     <hr style="height: 3px; color: skyblue;" ></hr>
+
     <c:forEach var="trainerReview" items="${dto.trainerReviews }">
       <!-- 한 사람에 해당되는 전체 div-->
       <div class="testimonial-item bg-light my-4 ">
@@ -152,9 +153,33 @@
         <div class="pt-4 pb-5 px-5">
           <h6>${trainerReview.title }</h6>
           <p>${trainerReview.content }</p>
+
+    <c:forEach var="trainerReview" items="${reviews }">
+    <!-- 한 사람에 해당되는 전체 div-->
+    <div class="testimonial-item bg-light my-4 ">
+      <h5 class="m-1 text-primary float-end">★★★★★</h5>
+      <div class="d-flex align-items-center pt-3 pb-1 px-5">
+        <h5 class="text-primary">${trainerReview.lesson.name }</h5>
+      </div>
+      <!-- 리뷰 내용 위의 작성자명, 작성일자 div -->
+      <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+        <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
+        <div class="ps-4">
+          <h4 class="text-primary mb-1">${trainerReview.lessonApply.user.id }</h4>
+          <small class="text-uppercase">${trainerReview.createDate }</small>
+
         </div>
         <hr style="height: 1px; color: gray;" ></hr>
       </div>
+
+      <!-- 작성일자 밑에 있는 리뷰내용 div -->
+      <div class="pt-4 pb-5 px-5">
+        <h6>${trainerReview.title }</h6>
+        <p>${trainerReview.content }</p>
+      </div>
+      <hr style="height: 1px; color: gray;" ></hr>
+    </div>
+
     </c:forEach>
     <!-- 한 사람에 해당되는 전체 div 끝-->
   </div>

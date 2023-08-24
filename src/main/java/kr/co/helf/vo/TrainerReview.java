@@ -20,7 +20,11 @@ public class TrainerReview {
     private String content;
     private Date createDate;
     private String status;
+
     private LessonApply lessonApply;
+
+    private LessonApply apply;
+
     private Lesson lesson;
     private Trainer trainer;
     private Double rating;

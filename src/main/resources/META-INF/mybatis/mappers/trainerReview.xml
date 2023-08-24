@@ -23,7 +23,10 @@
     <!-- 한 트레이너에 대한 리뷰 목록 조회 -->
     <select id="getReviewByTrainerNo" resultType="TrainerReview" parameterType="int">
         select
+
             a.trainer_review_no as no,
+
+
             a.trainer_no as "trainer.trainerNo",
             a.trainer_review_title as title,
             a.trainer_review_content as content,
@@ -31,8 +34,12 @@
             a.trainer_review_rating as rating,
             a.trainer_review_status as status,
             b.lesson_name as "lesson.name",
+
             c.user_id as "user.id",
             d.user_name as "lessonApply.user.name"
+
+            d.user_name as "user.name"
+
         from
             helf_trainer_review a, helf_lesson b, helf_lesson_apply c, helf_users d
         where

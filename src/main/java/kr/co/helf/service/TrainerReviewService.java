@@ -50,6 +50,7 @@ public class TrainerReviewService {
         trainerReviewMapper.insertReview(review);
     }
 
+
     // 트레이너 번호에 해당하는 리뷰 조회
     public TrainerReviewDto getReviewByTrainerNo(int trainerNo){
         List<TrainerReview> reviews = trainerReviewMapper.getReviewByTrainerNo(trainerNo);
@@ -85,5 +86,12 @@ public class TrainerReviewService {
         TrainerReview trainerReview = trainerReviewMapper.getTrainerReviewByNo(reviewNo);
         trainerReview.setStatus("N");
         trainerReviewMapper.deleteReview(trainerReview);
+
+
+    // 트레이너 번호에 해당하는 리뷰 조회
+    public List<TrainerReview> getReviewByTrainerNo(int trainerNo){
+        List<TrainerReview> review = trainerReviewMapper.getReviewByTrainerNo(trainerNo);
+        return review;
+
     }
 }

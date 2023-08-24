@@ -33,4 +33,11 @@ public interface TrainerReviewMapper {
 
     // 트레이너 리뷰 평점 평균 조회
     Double getAvgRating(int trainerNo);
+
+    // 등록된 리뷰 수정
+    void updateReview(TrainerReview trainerReview);
+
+    // 등록된 리뷰 삭제
+    void deleteReview(TrainerReview trainerReview);
+
 }
