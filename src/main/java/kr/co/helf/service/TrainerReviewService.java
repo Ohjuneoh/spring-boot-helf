@@ -24,7 +24,7 @@ public class TrainerReviewService {
     private final GroupLessonMapper groupLessonMapper;
 
     // 리뷰 등록하는 로직
-    public void createReview(AddReviewForm form){
+    public void createReview(AddReviewForm form) {
         // 트레이너 리뷰 객체에 DTO에 필요한 객체 담기
         TrainerReview review = new TrainerReview();
         review.setTitle(form.getTitle());
@@ -52,7 +52,7 @@ public class TrainerReviewService {
 
 
     // 트레이너 번호에 해당하는 리뷰 조회
-    public TrainerReviewDto getReviewByTrainerNo(int trainerNo){
+    public TrainerReviewDto getReviewByTrainerNo(int trainerNo) {
         List<TrainerReview> reviews = trainerReviewMapper.getReviewByTrainerNo(trainerNo);
         Double avgRating = trainerReviewMapper.getAvgRating(trainerNo);
 
@@ -64,34 +64,27 @@ public class TrainerReviewService {
     }
 
     // 트레이너 번호로 모든 트레이너 정보 조회
-    public List<Trainer> getAllTrainers(){
+    public List<Trainer> getAllTrainers() {
         return trainerReviewMapper.getAllTrainers();
     }
 
     // 트레이너 리뷰 번호에 해당하는 리뷰 수정
-    public void updateReview(ModifyReviewForm form){
+    public void updateReview(ModifyReviewForm form) {
         TrainerReview trainerReview = trainerReviewMapper.getTrainerReviewByNo(form.getNo());
-        BeanUtils.copyProperties(form,trainerReview);
+        BeanUtils.copyProperties(form, trainerReview);
         trainerReviewMapper.updateReview(form);
     }
 
     // 트레이너 리뷰번호로 트레이너 리뷰 조회
-    public TrainerReview getReviewByNo(int reviewNo){
+    public TrainerReview getReviewByNo(int reviewNo) {
         TrainerReview review = trainerReviewMapper.getTrainerReviewByNo(reviewNo);
         return review;
     }
 
     // 트레이너 리뷰 번호에 해당하는 리뷰 삭제
-    public void deleteReview(int reviewNo){
+    public void deleteReview(int reviewNo) {
         TrainerReview trainerReview = trainerReviewMapper.getTrainerReviewByNo(reviewNo);
         trainerReview.setStatus("N");
         trainerReviewMapper.deleteReview(trainerReview);
-
-
-    // 트레이너 번호에 해당하는 리뷰 조회
-    public List<TrainerReview> getReviewByTrainerNo(int trainerNo){
-        List<TrainerReview> review = trainerReviewMapper.getReviewByTrainerNo(trainerNo);
-        return review;
-
     }
 }

@@ -16,10 +16,4 @@ public class ModifyReviewForm {
     private Double rating;
     private String content;
     private int trainerNo;
-
-    private String title;
-    private Double rating;
-    private String content;
-
-
 }

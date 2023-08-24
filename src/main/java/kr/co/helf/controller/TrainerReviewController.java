@@ -25,7 +25,8 @@ public class TrainerReviewController {
     // 트레이너 리뷰 리스트 화면 출력 - 후에 강사소개 페이지에서 값 전달 되면 트레이너 번호 받아서 출력해야 함.
     @GetMapping("/list")
     public String reviewList(@RequestParam("trainerNo") int trainerNo, Model model){
-
+        TrainerReviewDto dto = trainerReviewService.getReviewByTrainerNo(trainerNo);
+        model.addAttribute("dto",dto);
         return "/trainer-review/list";
     }
     // 트레이너 리뷰 등록 화면

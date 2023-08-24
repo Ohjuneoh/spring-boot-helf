@@ -286,8 +286,6 @@
 
               <a href="" class="btn btn-primary">강사후기 보러가기</a>
 
-           <a href="/trainer-review/list?trainerNo=${}" class="btn btn-primary">강사후기 보러가기</a>
-
 	      </div>
 	      
 	    </div>
