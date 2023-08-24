@@ -23,6 +23,7 @@
     <!-- 한 트레이너에 대한 리뷰 목록 조회 -->
     <select id="getReviewByTrainerNo" resultType="TrainerReview" parameterType="int">
         select
+            a.trainer_review_no as no,
             a.trainer_no as "trainer.trainerNo",
             a.trainer_review_title as title,
             a.trainer_review_content as content,
@@ -30,7 +31,8 @@
             a.trainer_review_rating as rating,
             a.trainer_review_status as status,
             b.lesson_name as "lesson.name",
-            d.user_name as "user.name"
+            c.user_id as "user.id",
+            d.user_name as "lessonApply.user.name"
         from
             helf_trainer_review a, helf_lesson b, helf_lesson_apply c, helf_users d
         where
@@ -62,5 +64,45 @@
         where
             trainer_review_no = #{no}
     </update>
+
+    <!-- 트레이너 소개 페이지 모든 트레이너 정보 가져오기 -->
+    <select id="getAllTrainers" resultType="Trainer">
+        select
+            a.trainer_no as trainerNo,
+            a.trainer_title as title,
+            b.user_id as "user.id",
+            b.user_name as "user.name",
+            b.user_type as "user.type"
+        from
+            helf_trainers a, helf_users b
+        where
+            a.user_id = b.user_id
+    </select>
+
+    <!-- 트레이너 리뷰 번호에 해당하는 리뷰 번호 조회 -->
+    <select id="getTrainerReviewByNo" parameterType="int" resultType="TrainerReview">
+        select
+            trainer_review_no as no,
+            trainer_review_title as title,
+            trainer_review_content as content,
+            trainer_review_create_date as createDate,
+            lesson_apply_no as "apply.no",
+            lesson_no as "lesson.no",
+            trainer_no as "trainer.trainerNo",
+            trainer_review_rating as rating,
+            trainer_review_status as status
+        from
+            helf_trainer_review
+        where
+            trainer_review_no = #{no}
+    </select>
+
+    <!-- 트레이너 리뷰 평점 평균 조회 -->
+    <select id="getAvgRating" resultType="double" parameterType="int">
+        SELECT AVG(trainer_review_rating) AS avgRating
+        FROM helf_trainer_review
+        WHERE trainer_no = #{value}
+          and trainer_review_status = 'Y'
+    </select>
 
 </mapper>
