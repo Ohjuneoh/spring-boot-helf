@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.helf.dto.MembershipJoinCategory;
 import kr.co.helf.dto.OrderJoin;
 import kr.co.helf.vo.Category;
 import kr.co.helf.vo.Membership;
@@ -13,11 +14,12 @@ import kr.co.helf.vo.MyOption;
 import kr.co.helf.vo.Option;
 import kr.co.helf.vo.Order;
 import kr.co.helf.vo.PointHistory;
+import kr.co.helf.vo.Refund;
 
 @Mapper
 public interface MembershipMapper {
 
-	List<MyMembership> getMyMembershipById(String id);
+	List<MyMembership> getMyMembershipsById(String id);
 
 	List<MyOption> getMyOptions(int no);
 
@@ -27,7 +29,7 @@ public interface MembershipMapper {
 
 	void updateOrder(Order order);
 
-	MyMembership getUseMyMembershipByNo(int no);
+	//MyMembership getUseMyMembershipByNo(int no);
 	
 	MyMembership getMyMembershipByNo(int no);
 
@@ -37,13 +39,31 @@ public interface MembershipMapper {
 
 	PointHistory getPointHistoryByNo(int no);
 
-	OrderJoin getOrderByNo(int no);
+	OrderJoin getOrderJoinByNo(int no);
 
-	int getTotalRows(Map<String, Object> map);
+	int getOrderByIdTotalRow(Map<String, Object> map);
 
 	List<Category> getCategorys();
 
 	void insertMembership(Membership membership);
 
 	Category getcategoryByNo(int no);
+
+	List<MembershipJoinCategory> getMemberships(Map<String, Object> param);
+
+	int getMembershipTotalRow(Map<String, Object> param);
+
+	void updateMembership(Membership updateMembership);
+
+	List<OrderJoin> getOrders(String keyword);
+
+	int getOrderTotalRow(Map<String, Object> param);
+
+	List<OrderJoin> getOrders(Map<String, Object> param);
+
+	void insertRefundByNo(Refund refund);
+
+	Order getOrderByNo(int no);
+
+	void deleteRefund(int no);
 }

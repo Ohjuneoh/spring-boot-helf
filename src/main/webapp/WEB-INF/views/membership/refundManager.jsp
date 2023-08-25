@@ -91,7 +91,6 @@
 									<div class="col-2">
 										<select name="state" class="form-select">
 											<option selected="selected" disabled="disabled">전체보기</option>
-											<option value="결제완료" ${param.state eq '결제완료' ? 'selected' : '' }>결제완료</option>
 											<option value="환불대기" ${param.state eq '환불대기' ? 'selected' : '' }>환불대기</option>
 											<option value="환불완료" ${param.state eq '환불완료' ? 'selected' : '' }>환불완료</option>
 										</select>
@@ -102,6 +101,7 @@
 											<option selected="selected" disabled="disabled">전체보기</option>
 											<option value="name" ${param.type eq 'name' ? 'selected' : '' }>구매상품</option>
 											<option value="no" ${param.type eq 'no' ? 'selected' : '' }>구매번호</option>	
+											<option value="id" ${param.type eq 'id' ? 'selected' : '' }>회원 아이디</option>	
 										</select>
 									</div>
 									<div class="col-3">
@@ -114,14 +114,22 @@
 							</div>
 						</form>
 					</div>
+					<div style="margin-bottom: 20px;" >
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+							<label>전체선택</label>
+							<button class="btn btn-danger btn-sm" style="margin-left: 10px;">환불승인</button>
+						</div>
+					</div>
 					<div class="card" >
 						<div class="card-body">
 							<table class="table text-center">
 				               	<thead>
 									<tr>
-				                        <th style="width: 25%;">구매일</th>
+				                        <th style="width: 5%;">선택</th>
+				                        <th style="width: 25%;">환불날짜</th>
 				                        <th style="width: 20%">구매번호</th>
-				                        <th style="width: 25%">구매상품</th>
+				                        <th style="width: 20%">회원 아이디</th>
 				                        <th style="width: 20%">조회</th>
 				                    	<th style="width: 20%">비고</th>
 									</tr>
@@ -129,10 +137,13 @@
 								<tbody>
 									<c:if test="${empty dto.orders }">
 								   		<tr>
-									   		<td colspan="5" class="text-center">구매 내역이 없습니다.</td>
+									   		<td colspan="5" class="text-center">환불 내역이 없습니다.</td>
 								   		</tr>
 									</c:if>
 								   	<c:forEach var="order" items="${dto.orders }">
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+										</div>
 										<tr>
 					                        <td>${order.paymentDate }</td>
 											<td>${order.no }</td>

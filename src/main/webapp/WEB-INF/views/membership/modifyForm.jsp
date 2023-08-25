@@ -81,51 +81,62 @@
 	<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
 		<div class="container py-5">
 			<div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-				<h5 class="fw-bold text-primary text-uppercase">Create</h5>
-				<h1 class="mb-0">이용권 새로 만들기</h1>
+				<h5 class="fw-bold text-primary text-uppercase">Modify Form</h5>
+				<h1 class="mb-0">이용권 수정</h1>
 			</div>
 			<div class="offset-1" style="margin: 50px;">
 				
-				<form action="create" method="post">
+				<form action="modify?state=${param.state }&keyword=${param.keyword }&type=${param.type }&page=${param.page}" method="post">
 					<div class="offset-1" style="margin-top: 100px;">
 						<h5>이용권 이름</h5>
-						<input name="name" type="text" class="bg-light border-0" style="height: 50px; width: 1000px; font-size: 20px;" >
+						<input name="name" type="text" class="bg-light border-0"  value="${membership.name }"
+							   style="height: 50px; width: 1000px; font-size: 20px;" >
 						<p id="title-error-msg" style="color:red; display: none;" >3-20자의 형식만 가능합니다.</p>
 					</div>
 					<div class="offset-1" style="margin-top: 100px;">
+						<h5>판매 여부</h5>
+						<select name="deleted" class="bg-light border-0" style="height: 50px; width: 1000px; font-size: 20px;">
+							<option value="N" ${membership.deleted eq 'N' ? 'selected' : '' }>판매중</option>
+							<option value="Y" ${membership.deleted eq 'Y' ? 'selected' : '' }>판매중지</option>
+						</select>
+					</div>
+					<div class="offset-1" style="margin-top: 100px;">
 						<h5>이용권 가격</h5>
-						<input name="price" type="number" class="bg-light border-0" style="height: 50px; width: 1000px; font-size: 20px;"" value="0">
+						<input name="price" type="number" class="bg-light border-0" value="${membership.price }"
+							   style="height: 50px; width: 1000px; font-size: 20px;" >
+						<p id="price-error-msg" style="color:red; display: none;">가격은 비워둘 수 없습니다.</p>
 					</div>
 					<div id="cat-div" class="offset-1" style="margin-top: 100px;">
 						<h5>이용권 종류</h5>
 						<c:forEach var="cat" items="${categorys }">
 							<button	id="btn-category-${cat.no }" type="button"
 									data-cat-no="${cat.no }" data-cat-property="${cat.property }" data-cat-option="${cat.useOption }"
-									class="btn btn-outline-primary btn-lg" style="width: 200px; height: 100px; margin: 20px;">
+									class="btn btn-outline-primary btn-lg ${membership.catNo eq cat.no ? 'active' : '' }" 
+									style="width: 200px; height: 100px; margin: 20px;">
 								${cat.name }
 							</button>
 						</c:forEach>
 					</div>
 					<div class="offset-1" style="margin-top: 100px;">
 						<h5>이용권 속성</h5>
-						<input id="property" type="text" class="bg-light border-0"
+						<input id="property" type="text" class="bg-light border-0" value="${membership.catProperty }"
 							   style="height: 50px; width: 1000px; font-size: 20px; font-weight: bold;" disabled="disabled">
 					</div>
 					<div class="offset-1" style="margin-top: 100px;">
 						<h5>옵션 여부</h5>
-						<input id="useOption" type="text" class="bg-light border-0" 
+						<input id="useOption" type="text" class="bg-light border-0" value="${membership.useOption }"
 							   style="height: 50px; width: 1000px; font-size: 20px; font-weight: bold;" disabled="disabled">
 					</div>
 					<div class="offset-1" style="margin-top: 100px;">
 						<h5>설명</h5>
-						<input name="description" type="text" class="bg-light border-0 text-start" 
+						<input name="description" type="text" class="bg-light border-0 text-start" value="${membership.description }"
 							   style="height: 300px; width: 1000px; font-size: 20px;" >
 						<p id="description-error-msg" style="color:red; display: none;">10-200자의 형식만 가능합니다.</p>
 					</div>
 					<div class="offset-10" style="margin-top: 150px;">
-						<a href="/" class="btn btn-danger btn-lg">취소</a>
-						<button id="btn-submit" type="submit" class="btn btn-primary btn-lg disabled" >완료</button>
-						<input name="no" type="hidden">
+						<a href="deleted?no=${membership.no }&state=${param.state }&keyword=${param.keyword }&type=${param.type }&page=${param.page }" class="btn btn-danger btn-lg">취소</a>
+						<button id="btn-submit" type="submit" class="btn btn-primary btn-lg" >완료</button>
+						<input name="no" type="hidden" value="${membership.no }">
 					</div>
 				</form>
 			</div>
@@ -156,10 +167,10 @@ $(function() {
 	const titleRegexp = /^[a-zA-Z가-힣0-9\s!@#$%^&*()\-_=+[\]{}|;:'",.<>/?\\]{3,20}$/;
 	const descriptionRegexp = /^[a-zA-Z가-힣0-9\s!@#$%^&*()\-_=+[\]{}|;:'",.<>/?\\]{10,200}$/;
 	
-	let nameValid = false;
-	let priceValid = false;
-	let catValid = false;
-	let descriptionValid = false;
+	let nameValid = true;
+	let priceValid = true;
+	let catValid = true;
+	let descriptionValid = true;
 	
 	function check() {
 		if(nameValid && priceValid && catValid && descriptionValid) {
@@ -181,8 +192,6 @@ $(function() {
 		$("#property").val(property);
 		$("#useOption").val(useOption);
 		
-		catValid = true;
-		check();
 	})
 	
 	$("input[name=name]").blur(function () {
@@ -190,6 +199,7 @@ $(function() {
 		if(!titleRegexp.test(nameText)) {
 			$("#title-error-msg").show();
 			nameValid = false;
+			check();
 			
 			return;
 		}
@@ -204,6 +214,7 @@ $(function() {
 		if(!descriptionRegexp.test(descriptionText)) {
 			$("#description-error-msg").show();
 			descriptionValid = false;
+			check();
 			
 			return;
 		}
@@ -215,13 +226,17 @@ $(function() {
 	
 	$("input[name=price]").blur(function () {
 		let priceText = $(this).val();
-		let priceNumber = parseInt(priceText);
 		
-		if(priceNumber === 0 || priceText === null) {
+		if(!priceText) {
+			$("#price-error-msg").show();
+			
 			priceValid = false;
+			check();
+			
 			return;
 		}
 		
+		$("#price-error-msg").hide();
 		priceValid = true;
 		check();
 	});

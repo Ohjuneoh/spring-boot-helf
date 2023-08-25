@@ -2,7 +2,7 @@ package kr.co.helf.controller;
 
 import java.util.List;
 
-import static kr.co.helf.controller.OrderEnum.*;
+import static kr.co.helf.controller.MembershipEnum.*;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -44,7 +44,7 @@ public class OrderController {
 		List<Membership> memberships = orderService.getAllMembership();
 		model.addAttribute("memberships", memberships);
 		
-		return "order/membership-list";
+		return "order/membershipList";
 	}
 	
 	@GetMapping("/condition")
@@ -81,7 +81,7 @@ public class OrderController {
 		
 		MembershipJoinCategory membershipJoinCat = orderService.getMembershipJoinCatByNo(form.getMembershipNo());
 
-		if(membershipJoinCat.getCatName().equals(ONE_DAY.getOrderEnum())) {
+		if(membershipJoinCat.getCatName().equals(ONE_DAY.getMembershiEnum())) {
 			orderService.setOneDay(membershipJoinCat, form, user);
 			
 			model.addAttribute("membershipJoinCat", membershipJoinCat);
@@ -116,7 +116,7 @@ public class OrderController {
 		form.setMembershipPrice(form.getMembershipDefaltPrice() + period.getAddPrice());
 		form.setPeriodDuration(period.getDuration());
 		
-		if(period.getType().equals(TIME.getOrderEnum())) {
+		if(period.getType().equals(TIME.getMembershiEnum())) {
 			form.setRemainderCnt(period.getProperty());
 		}
 

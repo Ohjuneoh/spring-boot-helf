@@ -12,7 +12,7 @@ public class Membership {
 	private int no;
 	private String name;
 	private String description;
-	private String state;
+	private String deleted;
 	private Category category;
 	private int price;
 	private LocalDate createDate;

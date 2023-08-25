@@ -6,7 +6,7 @@ import kr.co.helf.vo.MyOption;
 import lombok.Data;
 
 @Data
-public class MyOrderDetailDto {
+public class OrderDetailDto {
 
 	private OrderJoin orderJoin;
 	List<MyOption> myOptions; 

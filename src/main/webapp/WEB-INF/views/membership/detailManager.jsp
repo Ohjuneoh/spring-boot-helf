@@ -84,12 +84,81 @@
 				<h1 class="mb-0">이용권 상세정보</h1>
 			</div>
 			<div class="row mb-3 d-flex align-items-center justify-content-center">
-				<div class="col-10">
+				<div class="col-10 ">
+					<div class="col-12 d-flex align-items-center justify-content-center">
+						<div>		
+							<table class="table text-center border border-black" style="width: 800px;">
+								<thead style="background: #191970; ">
+									<tr>
+										<th colspan="4" class="text-start bg-primary" style="color:white;">${membership.name }</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th class="bg-primary" style="color:white; width: 15%;">
+											가격
+										</th>
+										<td style="width: 30%;"><fmt:formatNumber value="${membership.price }" pattern="###,###"/>원</td>
+										<th class="bg-primary" style="color:white; width: 15%;">
+											판매여부
+										</th>
+										<td style="width: 30%;">${membership.deleted eq 'N' ? '판매중' : '판매중지'}</td>
+									</tr>
+									<tr>
+										<th class="bg-primary" style="color:white;">생성일</th>
+										<td>${membership.createDate }</td>
+										<th class="bg-primary" style="color:white;">삭제일</th>
+										<td>${membership.deleteDate eq null ? '미지정' : membership.deleteDate }</td>
+									</tr>
+									<tr>
+										<th class="bg-primary" style="color:white;">종류</th>
+										<td>${membership.catName }</td>
+										<th class="bg-primary" style="color:white;">옵션</th>
+										<td>${membership.useOption }</td>
+									</tr>
+									<tr>
+										<th class="bg-primary" style="color:white; height: 150px; vertical-align: middle;">설명</th>
+										<td colspan="3" style="vertical-align: middle;">${membership.description }</td>
+									</tr>
+								</tbody>
+							</table>
+							<div style="display: flex; justify-content: space-between; margin-top: 40px;">
+								<div>
+									<c:if test="${membership.deleted eq 'N'}">
+							    		<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletedModal">삭제</button>
+									</c:if>
+							        <a href="modify-form?no=${membership.no }&state=${param.state }&keyword=${param.keyword }&type=${param.type }&page=${param.page }" 
+							           class="btn btn-warning">수정</a>
+							    </div>
+							    <div>
+							        <a href="list-manager?state=${param.state }&type=${param.type }&keyword=${param.keyword }&page=${param.page }" class="btn btn-primary">목록</a>
+							    </div>
+							</div>
+						</div>
+        			</div>
 					
 	    		</div>
 	    	</div>
 	    </div>
     </div>
+	<div class="modal fade" id="deletedModal" tabindex="-1" aria-labelledby="#deletedModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5>삭제확인</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<strong>해당 이용권을 정말 삭제하시겠습니까?</strong>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+					<a href="deleted?no=${membership.no }&state=${param.state }&keyword=${param.keyword }&type=${param.type }&page=${param.page }" 
+					   class="btn btn-danger" onclick="deleted()">확인</a>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
 
@@ -109,4 +178,9 @@
     <!-- Template Javascript -->
 	<script src="/resources/js/main.js"></script>
 </body>
+<script type="text/javascript">
+function deleted() {
+	alert("삭제되었습니다.");
+}
+</script>
 </html>

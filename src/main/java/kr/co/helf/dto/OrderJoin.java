@@ -37,6 +37,10 @@ public class OrderJoin {
 	private LocalDate createDate;
 	private LocalDate deleteDate;
 	
+	private int refundNo;
+	private String refundState;
+	private LocalDate refundDate;
+	
 	private User user;					
 	private PointHistory pointHistory;
 }

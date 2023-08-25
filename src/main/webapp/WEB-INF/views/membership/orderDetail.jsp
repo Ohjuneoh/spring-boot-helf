@@ -87,12 +87,13 @@
 			<br/>
 			<div class="text-center d-flex align-items-center justify-content-center">
 				<div>
-					<table class="table table-bordered" style="margin: 50px; width: 900px;">
+					<table class="table table-bordered" style="margin: 50px; width: 700px;">
 			   			<thead>
-			   				<tr class="table-primary" style="width: 1200px;">
-			   					<th>상품명</th>
-			   					<th>기간/횟수</th>
-			   					<th>상품가</th>
+			   				<tr>
+			   					<th class="bg-primary" style="color:white;">상품명</th>
+			   					<th class="bg-primary" style="color:white;">기간/횟수</th>
+			   					<th class="bg-primary" style="color:white;">상품가</th>
+			   					<th class="bg-primary" style="color:white;">비고</th>
 			   				</tr>
 			   				<tr>
 			   					<th>
@@ -118,12 +119,20 @@
 										<br/><br/><fmt:formatNumber value="${myOption.price }"/> 원
 			   						</c:forEach>
 				   				</td>
+				   				<td rowspan="3" style="vertical-align: middle;">
+				   					${dto.orderJoin.orderState }
+				   					<c:if test="${dto.orderJoin.orderState eq '환불대기' }">
+										<br/>
+										<a href="cancle-refund?no=${dto.orderJoin.no }&page=${param.page }&state=${param.state }&type=${param.type }&keyword=${param.keyword}" 
+										   class="btn btn-warning btn-sm" style="margin-top: 5px;">취소</a>
+									</c:if>
+				   				</td>
 			   				</tr>
 			   				<tr>
 			   					<th>
 			   						부가세
 			   						<c:if test="${dto.orderJoin.pointHistory != null }">
-			   							<br/><br/>할인된 포인트
+			   							<br/><br/>사용 포인트
 			   						</c:if>
 			   					</th>
 			   					<td></td>
@@ -140,7 +149,7 @@
 			   					</th>
 			   					<td></td>
 			   					<td>
-			   						<strong style="font-size: 20px; color:red">
+			   						<strong>
 			   							<span id="total-price-text">
 			   								<fmt:formatNumber value="${dto.orderJoin.totalPrice }" pattern="###,###"/>
 			   							</span>원
@@ -150,7 +159,8 @@
 			   			</thead>
 					</table>
 					<div style="margin: 100px;">
-						<a href="order-list?page=${param.page }&state=${param.state }&type=${param.type }&keyword=${param.keyword}" class="btn btn-primary">목록</a>
+						<a href="order-list?page=${param.page }&state=${param.state }&type=${param.type }&keyword=${param.keyword}" 
+						   class="btn btn-primary btn-lg">목록</a>
 					</div>
 				</div>
 			</div>

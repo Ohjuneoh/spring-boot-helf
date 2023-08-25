@@ -19,7 +19,7 @@
 		            <div class="dropdown-menu m-0">
 		            	<a href="/membership/create-form" class="dropdown-item">이용권 생성</a>
 		                <a href="/membership/list-manager" class="dropdown-item">이용권 관리</a>
-		                <a href="/membership/refound-manager" class="dropdown-item">환불 관리</a>
+		                <a href="/membership/refund-manager" class="dropdown-item">환불 관리</a>
 					</div>
 				</div>
             </sec:authorize>

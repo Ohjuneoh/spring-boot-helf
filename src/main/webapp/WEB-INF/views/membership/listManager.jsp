@@ -57,7 +57,7 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">MY ORDER</h1>
+                    <h1 class="display-4 text-white animated zoomIn">MEMBERSHIP</h1>
                 </div>
             </div>
         </div>
@@ -77,16 +77,16 @@
             </div>
         </div>
     </div>
-	<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">	
+	<div>
 		<div class="container py-5 ">
 			<div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-				<h5 class="fw-bold text-primary text-uppercase">Your Order List</h5>
-				<h1 class="mb-0">나의 구매내역</h1>
+				<h5 class="fw-bold text-primary text-uppercase">Membership Managing</h5>
+				<h1 class="mb-0">이용권 관리하기</h1>
 			</div>
 			<div class="row mb-3 d-flex align-items-center justify-content-center">
 				<div class="col-10">
 					<div class="card" style="margin-bottom: 20px;" >
-						<form action="order-list" method="get">
+						<form action="list-manager" method="get">
 							<input type="hidden" name="page" value="${dto.pagination.page}"/>
 							<div class="card-body">							
 								<div class="row mb-3 pt-3">
@@ -94,9 +94,8 @@
 									<div class="col-2">
 										<select name="state" class="form-select">
 											<option selected="selected" disabled="disabled">전체보기</option>
-											<option value="결제완료" ${param.state eq '결제완료' ? 'selected' : '' }>결제완료</option>
-											<option value="환불대기" ${param.state eq '환불대기' ? 'selected' : '' }>환불대기</option>
-											<option value="환불완료" ${param.state eq '환불완료' ? 'selected' : '' }>환불완료</option>
+											<option value="N" ${param.state eq 'N' ? 'selected' : '' }>판매중</option>
+											<option value="Y" ${param.state eq 'Y' ? 'selected' : '' }>판매중지</option>
 										</select>
 									</div>
 									<label class="col-1 col-form-label text-end">종류</label>
@@ -122,29 +121,29 @@
 							<table class="table text-center">
 				               	<thead>
 									<tr>
-				                        <th style="width: 25%;">구매일</th>
-				                        <th style="width: 20%">구매번호</th>
-				                        <th style="width: 25%">구매상품</th>
+				                        <th style="width: 25%;">생성일</th>
+				                        <th style="width: 20%">번호</th>
+				                        <th style="width: 25%">이름</th>
 				                        <th style="width: 20%">조회</th>
 				                    	<th style="width: 20%">비고</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:if test="${empty dto.orders }">
+									<c:if test="${dto.membershipList eq null }">
 								   		<tr>
-									   		<td colspan="5" class="text-center">구매 내역이 없습니다.</td>
+									   		<td colspan="5" class="text-center">생성한 이용권이 없습니다.</td>
 								   		</tr>
 									</c:if>
-								   	<c:forEach var="order" items="${dto.orders }">
+								   	<c:forEach var="membership" items="${dto.membershipList }">
 										<tr>
-					                        <td>${order.paymentDate }</td>
-											<td>${order.no }</td>
-											<td>${order.name }</td>
+					                        <td>${membership.createDate }</td>
+											<td>${membership.no }</td>
+											<td>${membership.name }</td>
 											<td>
-												<a href="order-detail?no=${order.no }&page=${dto.pagination.page}&state=${param.state }&type=${param.type }&keyword=${param.keyword}" 
+												<a href="detail-manager?no=${membership.no }&state=${param.state }&keyword=${param.keyword }&type=${param.type }&page=${dto.pagination.page }" 
 												   type="button" class="btn btn-info btn-sm">상세정보</a>
 											</td>
-					                        <td>${order.orderState }</td>
+					                        <td>${membership.deleted eq 'N' ? '판매중' : '판매중지' }</td>
 			                    		 </tr>
 									</c:forEach>
 								</tbody>
@@ -157,7 +156,7 @@
     </div>
 	<div class="row mb-3" >
 		<div class="col-12">
-			<c:if test="${dto.pagination.totalRows gt 0 }">
+			<c:if test="${dto.pagination.totalRows ne 0 }">
 				<c:set var="currentPage" value="${dto.pagination.page }"></c:set>
 				<c:set var="first" value="${dto.pagination.first }"></c:set>
 				<c:set var="last" value="${dto.pagination.last }"></c:set>
