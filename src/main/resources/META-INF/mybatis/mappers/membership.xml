@@ -290,8 +290,11 @@
 					 orders_total_price,
 					 orders_payment_date,
 					 orders_payment_state,
+					 user_id,
+					 orders_membership_price,
 					 my_membership_no,
-					 user_id
+					 point_history_no,
+					 orders_surtax
 			  from helf_orders) A, helf_my_membership B, helf_membership C
 		where A.my_membership_no = B.my_membership_no
 		and B.membership_no = C.membership_no

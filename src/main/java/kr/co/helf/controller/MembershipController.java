@@ -266,6 +266,8 @@ public class MembershipController {
 		
 		Map<String, Object> param = new HashMap<>();
 		
+		param.put("page", page);
+		
 		if(StringUtils.hasText(state)) {
 			param.put("state", state);
 		}
