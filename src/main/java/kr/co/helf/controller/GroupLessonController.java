@@ -94,6 +94,7 @@ public class GroupLessonController {
 
         return "group-lesson/modifyForm";
     }
+    
     // 개설된 수업 수정
     @PostMapping("/modify")
     public String modifyLesson(@RequestParam("no") int no,
@@ -117,7 +118,7 @@ public class GroupLessonController {
     }
     // 개설된 레슨 삭제
     @GetMapping("/delete")
-    public String deleteLesson(@RequestParam("no") int lessonNo, @AuthenticationPrincipal User user){
+    public String deleteLesson(@RequestParam("no") int lessonNo, @AuthenticationPrincipal User user) {
         groupLessonService.deleteLesson(lessonNo,user);
 
         return "redirect:/group-lesson/list";
