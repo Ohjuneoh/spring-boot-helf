@@ -106,9 +106,9 @@
 	<!-- 유저의 이용가능한 이용권 조회  // 추후 이용권 부분으로 옮길 예정 -->
 	<select id="getMyMembership" resultType="kr.co.helf.vo.MyMembership" parameterType="string">
 		select
-			A.my_membership_no		as no,
-			A.my_membership_startdate	as startDate,
-			A.my_membership_enddate	as endDate,
+			A.my_membership_no				as no,
+			A.my_membership_startdate		as startDate,
+			A.my_membership_enddate			as endDate,
 			A.my_membership_remainder_cnt	as remainderCnt,
 			A.my_membership_state			as state,
 			A.user_id						as "user.id",
