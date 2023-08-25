@@ -11,6 +11,7 @@ import lombok.ToString;
 @Data
 @Alias("UserMyMemberships")
 public class UserMyMemberships {
+	
 	private MyMembership myMembership;
 	private Membership membership;
 }

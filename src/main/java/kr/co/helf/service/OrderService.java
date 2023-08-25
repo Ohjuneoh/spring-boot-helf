@@ -1,6 +1,6 @@
 package kr.co.helf.service;
 
-import static kr.co.helf.controller.OrderEnum.*;
+import static kr.co.helf.controller.MembershipEnum.*;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -119,10 +119,10 @@ public class OrderService {
 		myMembership.setPeriod(period);
 		Membership membership = orderMapper.getMembershipByNo(form.getMembershipNo());
 		myMembership.setMembership(membership);
-		myMembership.setState(WAITING.getOrderEnum());
+		myMembership.setState(WAITING.getMembershiEnum());
 		
 		if(form.getStartDate().isEqual(LocalDate.now())) {
-			myMembership.setState(POSSIBILITY.getOrderEnum());
+			myMembership.setState(POSSIBILITY.getMembershiEnum());
 		}
 		orderMapper.insertMyMembership(myMembership);
 		
@@ -188,7 +188,7 @@ public class OrderService {
 		List<MyMembership> todayStartMyMemberships = orderMapper.getMyMembershipStartToday();
 		
 		for(MyMembership todayStartMyMembership : todayStartMyMemberships) {
-			todayStartMyMembership.setState(POSSIBILITY.getOrderEnum());
+			todayStartMyMembership.setState(POSSIBILITY.getMembershiEnum());
 			orderMapper.updateMyMembership(todayStartMyMembership);
 		}
 	}
@@ -197,7 +197,7 @@ public class OrderService {
 		List<MyMembership> todayEndMyMemberships = orderMapper.getMyMembershipEndToday();
 		
 		for(MyMembership todayEndMyMembership : todayEndMyMemberships) {
-			todayEndMyMembership.setState(IMPOSSIBILITY.getOrderEnum());
+			todayEndMyMembership.setState(IMPOSSIBILITY.getMembershiEnum());
 			orderMapper.updateMyMembership(todayEndMyMembership);
 		}
 	}
