@@ -60,7 +60,7 @@ public class MembershipService {
 				dto.setMyOptions(myOptions);
 				
 				list.add(dto);
-			}
+			}  
 		}
 		return list;
 	}
