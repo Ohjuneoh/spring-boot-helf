@@ -147,7 +147,7 @@
 		where point_history_no = #{value}
 	</select>
 	
-	<select id="getOrderByNo" parameterType="int" resultType="orderJoin">
+	<select id="getOrderJoinByNo" parameterType="int" resultType="orderJoin">
 		select A.orders_no						as no,
 			   A.orders_total_price				as totalPrice,
 			   A.orders_payment_date			as paymentDate,
