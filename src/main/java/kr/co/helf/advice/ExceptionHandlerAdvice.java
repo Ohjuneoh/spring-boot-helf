@@ -16,7 +16,7 @@ public class ExceptionHandlerAdvice {
 		log.error(ex.getMessage(), ex);
 		return "error/unknown";
 	}
-	
+
 	@ExceptionHandler(RuntimeException.class)
 	public String handleRuntimeException(RuntimeException ex) {
 		log.error(ex.getMessage(), ex);
@@ -28,7 +28,7 @@ public class ExceptionHandlerAdvice {
 		log.error(ex.getMessage(), ex);
 		return "error/db";
 	}
-	
+
 	@ExceptionHandler(AccessDeniedException.class)
 	public String handleAccessDeniedException(AccessDeniedException ex) {
 		throw ex;

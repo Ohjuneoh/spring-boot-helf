@@ -1,13 +1,22 @@
 package kr.co.helf.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import javax.mail.Multipart;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.helf.dto.AttendanceList;
 import kr.co.helf.dto.Pagination;
@@ -53,7 +62,10 @@ public class UserService {
 	}
 
 	
-	public void createTrainer(AddUserForm form) {
+	String directory = "C:\\Users\\drk25\\git\\spring-boot-helf\\src\\main\\webapp\\resources\\img\\photo";
+	
+	public void createTrainer(AddUserForm form) throws IOException {
+		
 		User user = new User();
 		
 		BeanUtils.copyProperties(form, user);
@@ -71,7 +83,15 @@ public class UserService {
 		// (2단계)트레이너 객체에 사진파일 담기
 		Trainer trainer = new Trainer();
 		
-		trainer.setTrainerFile("sample.png");
+		MultipartFile photofile = form.getPhotofile();
+		if (!photofile.isEmpty()) {
+			String filename = photofile.getOriginalFilename();
+			trainer.setTrainerFile(filename);
+		
+			OutputStream out = new FileOutputStream(new File(directory, filename));
+			InputStream in = photofile.getInputStream();
+			FileCopyUtils.copy(in, out);
+		}
 		trainer.setUser(user);
 		
 		//(2단계)트레이너 경력객체에 담기
