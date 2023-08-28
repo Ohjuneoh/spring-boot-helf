@@ -35,6 +35,7 @@ public class User implements UserDetails, OAuth2User {
 	private Rank rank;
 	private int point;
 	private String mobileCarrier;
+	private String authenticationNo;
 	
 	
 	private Map<String, Object> attributes;

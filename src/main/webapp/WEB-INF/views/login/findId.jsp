@@ -79,7 +79,7 @@
 													<dt><label for="tel" class="label_txt">전화번호</label></dt>
 													<dd><input type="text" id="tel" name="tel" class = "btn-phone" placeholder = "'-'포함하여 입력"></dd>
 													<dd><label type="text" id="result-id-1" name="result-id-1"  class="input-txt-1" style="color: green; display: none;">고객님의 아이디는 <span id="find-user-id"></span>입니다.</label></dd>
-													<dd><label type="text" id="result-id-2" name="result-id-2"  class="input-txt-2" style="color: green; display: none;">정보가 존재하지 않습니다.</label></dd>
+													<dd><label type="text" id="result-id-2" name="result-id-2"  class="input-txt-2" style="color: red; display: none;">정보가 존재하지 않습니다.</label></dd>
 												</dl>
 											</div>		
 										</div>

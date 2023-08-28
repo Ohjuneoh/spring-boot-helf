@@ -60,51 +60,37 @@
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
                         
-                        	<form action="/user/find-pwd" method="post">
+                        	<form action="/user/findPwd" method="post">
 	                            <div class="row g-3">
 	                            	<div class="col-xl-12">
 	                            		<a><strong style="font-size: 40px;">비밀번호 찾기</strong></a>
 	                            	</div>
-	                            	
 	                            	<div class="border p-3 bg-light">
-		                              
 		                               <!-- 이메일 인증  -->
-		                               <div id="div_email" class="box_inn selected  text-start"> <!-- [D] 선택시 selected 클래스 추가 -->
+		                               <div id="div_email" class="box_inn selected  text-start" > <!-- [D] 선택시 selected 클래스 추가 -->
 											<input type="radio" id="r_pn2" class="input_rd" name="certification" value="email" >
 											<label for="r_pn2" class="label_rd" style="font-size: 18px; font-weight: bold;">본인확인 이메일 인증</label>
-												<p class="dsc" style="padding-left: 20px;">본인확인 이메일 주소와 입력한 이메일 주소가 같아야, 인증번호를 받을 수 있습니다.</p>	
+												<p class="dsc" style="padding-left: 20px;">기존 HELF헬스장에 가입한 이메일 주소로 인증번호가 발송됩니다.</p>	
 											<div class="box-inn-sub-email d-none" >
 												<dl>
-												<dt><label for="emailNm" class="label_txt">이름</label></dt>
-												<dd><input type="text" id="emailNm" name="emailNm" maxlength="40" class="input_txt" style="width:217px"></dd>
-												<dt><label for="email" class="label_txt">이메일 주소</label></dt>
-												<dd>
-													<input type="text" id="email" name="email" maxlength="100" class="input_txt" style="width:217px">
-													<a href="#" id="btnEmailAuthNo" name="btnEmailAuthNo" onclick="sendAuthNoForEmailAuth();clickcr(this,'eml.code','','',event);" class="btn_ct"><span class="blind">인증번호 받기</span></a>
-												</dd>
-												<dt><label for="t_ct1" class="blind">인증번호 입력</label></dt>
-												<dd class="ct">
-													<span class="input_box2">
-														<span id="span_emailAuthNo" class="phold" style="display: block;">인증번호 6자리 숫자 입력</span>
-														<input type="text" id="emailAuthNo" name="emailAuthNo" maxlength="6" onkeydown="check_num('emailAuthNo', '1')" onclick="hiddenObj('span_emailAuthNo')" class="input_txt" style="width:217px" disabled="">
-													</span>
-													<div>인증번호가 오지 않나요? <a href="javascript:showHelp('emailHelpTxt');" onclick="clickcr(this,'eml.help','','',event);" class="ico_help2"><span class="blind">도움말</span></a>
-														<!-- [D]툴팁 활성화시 display:block , 비활성화시 display:none  -->
-														<div id="emailHelpTxt" class="help_tooltip2" style="display:none">
-															<p>네이버가 발송한 메일이 스팸 메일로 분류된 것은 아닌지 <br>확인해 주세요. 스팸 메일함에도 메일이 없다면,<br>다시 한 번 '인증번호 받기'를 눌러주세요.</p>
-															<span class="edge"></span>
-														</div>
-													</div>									
-												</dd>	
+													<dt><label for="emailNm" class="label_txt">아이디</label></dt>
+													<dd><input type="text" id="findPwd-id" name="findPwd-id" maxlength="40" class="input_txt" style="width:217px"></dd>
+														<dt class="col-sm-6 button-wrapper">
+						        							<input id="findPwd-id-check-duplicate" type="button" value="확인" class="btn btn-primary " style="width:80px" />
+						    							</dt>
+							    							<dd><label type="text" id="result-pwd-id-1" name="result-pwd-id-1"  class="input-txt-1" style="color: green; display: none;">인증번호가 전송되었습니다.</label></dd>
+															<dd><label type="text" id="result-pwd-id-2" name="result-pwd-id-2"  class="input-txt-2" style="color: red; display: none;">인증번호 전송에 실패하였습니다.(아이디를 다시 입력해주세요.)</label></dd>
+													<dt><label for="emailNm" class="label_txt">인증번호 (6자리)</label></dt>
+													<dd><input type="text" id="findPwd-auth" name="findPwd-auth" maxlength="40" class="input_txt" style="width:217px"></dd>
+														<dt class="col-sm-6 button-wrapper">
+						        							<input id="findPwd-auth-check-duplicate" type="button" value="확인" class="btn btn-primary " style="width:80px" />
+						    							</dt>
 												</dl>
 											</div>		
 										</div>
-		                               
 	                            	</div>
-	                            	
-	                               
 	                                <div class="col-12">
-	                                    <button class="btn btn-dark w-100 py-3" type="submit">찾기</button>
+	                                    <button class="btn btn-dark w-100 py-3" type="submit">비밀번호 변경</button>
 	                                </div>
 	                                <div class="col-12">
 	                                	<a href="/user/findId"  class="btn" >아이디 찾기</a>
@@ -148,6 +134,47 @@
     				$(".box-inn-sub-email").removeClass('d-none')
     			}
     		});
+    	
+    		/* 비밀번호 찾기 - 인증번호 전송 ajax */
+    		$("#findPwd-id-check-duplicate").click(function() {
+	    		$.ajax({
+					type : "get",
+					url : "findPwdAuth",
+					data : {id:$("input[name=findPwd-id]").val() },
+					success : function(result) {
+						console.log("result------------------> ", result)
+						if (result != 'fail') {
+							$("#result-pwd-id-1").css("display", "inline-block");
+							$("#result-pwd-id-2").css("display", "none");
+						} else {
+							 $('#result-pwd-id-2').css("display", "inline-block");
+			                 $('#result-pwd-id-1').css("display", "none");
+						}
+					}
+	    		
+				});
+    		})
+    		
+    		/* 비밀번호 찾기 - 인증번호 인증 ajax */
+    		$("#findPwd-auth-check-duplicate").click(function() {
+	    		$.ajax({
+					type : "get",
+					url : "findPwd",
+					data : {id:$("input[name=findPwd-id]").val() },
+					success : function(result) {
+						console.log("result------------------> ", result)
+						if (result != 'fail') {
+							$("#result-pwd-id-1").css("display", "inline-block");
+							$("#result-pwd-id-2").css("display", "none");
+						} else {
+							 $('#result-pwd-id-2').css("display", "inline-block");
+			                 $('#result-pwd-id-1').css("display", "none");
+						}
+					}
+	    		
+				});
+    		})
+    	
     	})
     </script>
 </body>
