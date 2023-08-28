@@ -81,9 +81,9 @@
             </div>
         </div>
     </div>
-   
+
         <div class="container-fluid py-4 wow fadeInUp" data-wow-delay="0.1s">
-   
+
 	        <div class="container py-3">
 			   	<div>
 			   		<h3>1:1문의 작성하기</h3>
@@ -117,7 +117,7 @@
 	        </div>
     	</div>
 
-	
+
     <!-- Lesson Register Form End  -->
 	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
 	    <div class="container">
@@ -184,7 +184,7 @@
 	            <div class="col-lg-8 col-md-6">
 	                <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
 	                    <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights Reserved. 
-			
+
 			<!--/*** This template is free as long as you keep the footer authorâs credit link/attribution link/backlink. If you'd like to use the template without the footer authorâs credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 			Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
 	                </div>
@@ -214,7 +214,6 @@
 <script src="/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 
 <script type="text/javascript">
-
 // 썸머노트 
 $(document).ready(function() {
     $('#summernote').summernote({

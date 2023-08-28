@@ -2,6 +2,7 @@ package kr.co.helf.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -121,25 +122,20 @@ public class UserController {
 	// 아이디 찾기 (ajax)
 	@GetMapping("/findId")
 	@ResponseBody
-	public String findId(@RequestParam("name") String name,@RequestParam("tel") String tel) throws Exception {
-		String result = userService.findId(name, tel);
-		
-		if(result == null) {
-			return "fail";	
-		} else {
-			return result;	
-		}
+	public List<String> findId(@RequestParam("name") String name,@RequestParam("tel") String tel) throws Exception {
+		List<String> result = userService.findId(name, tel);
+		return result;
 	}
-	
 	
 	// 비밀번호 찾기 (ajax) - 인증번호 전송
 	@GetMapping("/findPwdAuth")
 	@ResponseBody
 	public String findPwd(@RequestParam("id") String userId) throws Exception {
+		
 		try {
 			userService.findPwdAuth(userId);
 			return "success";	
-			
+
 		} catch (RuntimeException ex) {
 			ex.printStackTrace();
 			return "fail";	
@@ -147,37 +143,12 @@ public class UserController {
 	}
 	
 	// 비밀번호 찾기 (ajax) - 인증번호 인증
-	
-	
-	
-	
-//	@PostMapping("/findPwd")
-//	public String findPassword(String userId) {
-//		userService.initPassword(userId);
-//		return "/login/findPwdFinish";
-//	}
-	
-	
-	
-	
-	
-	
-	
-//	@PostMapping(value="/findIdByEmail")
-//	@ResponseBody
-//	public String findIdEmail(@RequestParam("name") String name, 
-//			@RequestParam(name = "email", required = false) String email) {
-//		
-//		try {
-//			userService.getFindIdByTel(name, email);		
-//			return "success";
-//		} catch (RuntimeException ex) {
-//			return "fail";
+
+//		@PostMapping("/findPwd")
+//		public String findPassword(String userId) {
+//			userService.initPassword(userId);
+//			return "/login/findPwdFinish";
 //		}
-		
-		
-		
-//	}
 	
 	// 비밀번호찾기 화면
 	@GetMapping(value="/findPwd")

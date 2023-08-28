@@ -65,35 +65,39 @@
 	                            	<div class="col-xl-12">
 	                            		<a><strong style="font-size: 40px;">비밀번호 찾기</strong></a>
 	                            	</div>
+	                            	
 	                            	<div class="border p-3 bg-light">
+		                              
 		                               <!-- 이메일 인증  -->
-		                               <div id="div_email" class="box_inn selected  text-start" > <!-- [D] 선택시 selected 클래스 추가 -->
+		                               <div id="div_email" class="box_inn selected  text-start"> 
 											<input type="radio" id="r_pn2" class="input_rd" name="certification" value="email" >
 											<label for="r_pn2" class="label_rd" style="font-size: 18px; font-weight: bold;">본인확인 이메일 인증</label>
 												<p class="dsc" style="padding-left: 20px;">기존 HELF헬스장에 가입한 이메일 주소로 인증번호가 발송됩니다.</p>	
 											<div class="box-inn-sub-email d-none" >
 												<dl>
 													<dt><label for="emailNm" class="label_txt">아이디</label></dt>
-													<dd><input type="text" id="findPwd-id" name="findPwd-id" maxlength="40" class="input_txt" style="width:217px"></dd>
-														<dt class="col-sm-6 button-wrapper">
-						        							<input id="findPwd-id-check-duplicate" type="button" value="확인" class="btn btn-primary " style="width:80px" />
-						    							</dt>
-							    							<dd><label type="text" id="result-pwd-id-1" name="result-pwd-id-1"  class="input-txt-1" style="color: green; display: none;">인증번호가 전송되었습니다.</label></dd>
-															<dd><label type="text" id="result-pwd-id-2" name="result-pwd-id-2"  class="input-txt-2" style="color: red; display: none;">인증번호 전송에 실패하였습니다.(아이디를 다시 입력해주세요.)</label></dd>
-													<dt><label for="emailNm" class="label_txt">인증번호 (6자리)</label></dt>
-													<dd><input type="text" id="findPwd-auth" name="findPwd-auth" maxlength="40" class="input_txt" style="width:217px"></dd>
-														<dt class="col-sm-6 button-wrapper">
-						        							<input id="findPwd-auth-check-duplicate" type="button" value="확인" class="btn btn-primary " style="width:80px" />
-						    							</dt>
+														<dd><input type="text" id="findPwd-id" name="findPwd-id" maxlength="40" class="input_txt" style="width:217px"></dd>
+															<dt class="col-sm-6 button-wrapper">
+							        							<input id="findPwd-id-check-duplicate" type="button" value="확인" class="btn btn-primary " style="width:80px" />
+							    							</dt>
+								    							<dd><label type="text" id="result-pwd-id-1" name="result-pwd-id-1"  class="input-txt-1" style="color: green; display: none;">인증번호가 전송되었습니다.</label></dd>
+																<dd><label type="text" id="result-pwd-id-2" name="result-pwd-id-2"  class="input-txt-2" style="color: red; display: none;">인증번호 전송에 실패하였습니다.(아이디를 다시 입력해주세요.)</label></dd>
+														<dt><label for="emailNm" class="label_txt">인증번호 (6자리)</label></dt>
+														<dd><input type="text" id="findPwd-auth" name="findPwd-auth" maxlength="40" class="input_txt" style="width:217px"></dd>
+															<dt class="col-sm-6 button-wrapper">
+							        							<input id="findPwd-auth-check-duplicate" type="button" value="확인" class="btn btn-primary " style="width:80px" />
+							    					</dt>
 												</dl>
 											</div>		
 										</div>
+		                               
 	                            	</div>
+	                            	
 	                                <div class="col-12">
 	                                    <button class="btn btn-dark w-100 py-3" type="submit">비밀번호 변경</button>
 	                                </div>
 	                                <div class="col-12">
-	                                	<a href="/user/findId"  class="btn" >아이디 찾기</a>
+	                                	<a href="/user/findIdform" class="btn" >아이디 찾기</a>
 	                                </div>
 	                            </div>
                         	</form>
@@ -134,7 +138,7 @@
     				$(".box-inn-sub-email").removeClass('d-none')
     			}
     		});
-    	
+    		
     		/* 비밀번호 찾기 - 인증번호 전송 ajax */
     		$("#findPwd-id-check-duplicate").click(function() {
 	    		$.ajax({
@@ -174,7 +178,7 @@
 	    		
 				});
     		})
-    	
+    		
     	})
     </script>
 </body>

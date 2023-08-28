@@ -60,7 +60,7 @@
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
                     <h1 class="display-4 text-white animated zoomIn">INQUIRY</h1>
-                    <a href="" class="h5 text-white">1:1문의</a>
+                    <a href="" class="h5 text-white">1:1 문의</a>
                 </div>
             </div>
         </div>
@@ -81,8 +81,8 @@
         </div>
     </div>
     
-
     
+ 
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
 		<div class="container py-5">
 			<div class="row mb-3">
@@ -123,8 +123,8 @@
 											<td>${board.readCount }</td>
 		                    		 	</tr>
 							   </c:forEach>
-						  	
-									
+
+
 							   </tbody>
 			               </table>
 			               <div class="ExpandMoreBtn_more_btn_box__5lBg8 d-flex justify-content-end align-items-center">
@@ -138,6 +138,7 @@
     		</div>
         </div>
     </div>
+    
     
 	<div class="row mb-3" >
 		<div class="col-12" style="text-align: center;">
@@ -258,7 +259,6 @@
 	<script src="/resources/js/main.js"></script>
 
 <script>
-
 
 </script>
 
