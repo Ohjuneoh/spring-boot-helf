@@ -6,10 +6,11 @@
 		select membership_no			as no,
 			   membership_name			as name,
 			   membership_description	as description,
-			   Membership_delete		as state,
+			   Membership_delete		as deleted,
 			   category_no				as "category.no",
 			   membership_price			as price
 		from helf_membership
+		where Membership_delete not in 'N'
 		order by membership_no desc
 	</select>
 
@@ -17,7 +18,7 @@
 		select membership_no			as no,
 			   membership_name			as name,
 			   membership_description	as description,
-			   Membership_delete		as state,
+			   Membership_delete		as deleted,
 			   category_no				as "category.no",
 			   membership_price			as price
 		from helf_membership
@@ -25,13 +26,17 @@
 	</select>
 
 	<select id="getMembershipJoinCatByNo" resultType="membershipJoinCat" parameterType="int">
-		select A.membership_no			as no,
-			   A.membership_name		as name,
-			   A.membership_price		as price,
-			   A.category_no			as catNo,
-			   B.category_name			as catName,
-			   B.category_property		as catProperty,
-			   B.category_use_option	as useOption
+		select A.membership_no				as no,
+			   A.membership_name			as name,
+			   A.membership_description		as description,
+			   A.membership_delete			as deleted,
+			   A.membership_price			as price,
+			   A.membership_create_date		as createDate,
+			   A.membership_delete_date		as deleteDate,
+			   B.category_no				as catNo,
+			   B.category_name				as catName,
+			   B.category_property			as catProperty,
+			   B.category_use_option		as useOption
 		from helf_membership A, helf_membership_category B
 		where A.category_no = B.category_no
 		and A.membership_no = #{value}
@@ -155,7 +160,7 @@
 			   rank_name		as name,
 			   rank_criteria	as criteria,
 			   rank_benefit		as benefit,
-			   rank_poin_rate	as pointRate
+			   rank_point_rate	as pointRate
 		from helf_ranks
 		where rank_no = #{value}
 	</select>

@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
+import javax.mail.Multipart;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -67,8 +69,9 @@ public class UserService {
 
 	String directory = "C:\\Users\\drk25\\git\\spring-boot-helf\\src\\main\\webapp\\resources\\img\\photo";
 	
+
 	public void createTrainer(AddUserForm form) throws IOException  {
-		
+
 		User user = new User();
 		
 		BeanUtils.copyProperties(form, user);

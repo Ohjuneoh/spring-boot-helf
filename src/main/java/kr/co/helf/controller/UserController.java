@@ -37,7 +37,6 @@ public class UserController {
 	UserService userService = new UserService();
 	
 	/* 회원가입 시작 */
-	
 	// 회원가입 초기화면 
 	@GetMapping(value="/registerform")
 	public String registerForm(Model model) {

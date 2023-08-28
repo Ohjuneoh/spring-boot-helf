@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.helf.dto.BoardPrevNextDto;
+import kr.co.helf.form.BoardModifyForm;
 import kr.co.helf.vo.Board;
 
 
@@ -29,6 +30,7 @@ public interface BoardMapper {
 
 	// 공지사항 삭제
 	void deleteBoard(Board board);
+
 
 	// 공지사항 상세 - 이전글/다음글
 	BoardPrevNextDto getPrevNextBoardByNo(int boardNo);
