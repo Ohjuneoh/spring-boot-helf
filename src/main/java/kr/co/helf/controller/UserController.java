@@ -1,5 +1,6 @@
 package kr.co.helf.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,7 +75,7 @@ public class UserController {
 	
 	// 회원가입 완료화면 (트레이너)
 	@PostMapping(value="/register/trainer2")
-	public String registerTrainer2(@ModelAttribute("addUserForm") AddUserForm form) {
+	public String registerTrainer2(@ModelAttribute("addUserForm") AddUserForm form) throws IOException {
 		System.out.println(form);
 		userService.createTrainer(form);
 		

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.helf.dto.BoardPrevNextDto;
 import kr.co.helf.form.AddBoardForm;
+import kr.co.helf.form.BoardModifyForm;
 import kr.co.helf.service.BoardService;
 import kr.co.helf.vo.Board;
 import lombok.RequiredArgsConstructor;
@@ -79,6 +80,42 @@ public class BoardController {
 	}
 	
 
+	// 공지사항 수정폼화면 (모달)
+		@GetMapping("/modifyform")
+		public String noticeModifyform(@RequestParam("no") int boardNo, Model model) {
+			Board board = boardService.getBoardByNo(boardNo);
+			model.addAttribute("board",board);
+			
+			return "board/modifyForm";
+		}
+		
+		// 공지사항 수정
+		@PostMapping("/modify")
+		public String noticeModify(@RequestParam("no") int no,
+								   @RequestParam("title") String title,
+								   @RequestParam("content") String content,
+								   @RequestParam("main") int main) {
+			
+			BoardModifyForm form = new BoardModifyForm();
+			form.setNo(no);
+			form.setTitle(title);
+			form.setContent(content);
+			form.setMain(main);
+			
+			boardService.updateBoard(form);
+			
+			return "redirect:/board/notice";
+		}
+		
+		// 공지사항 삭제 
+		@GetMapping("/delete")
+		public String deleteBoard(@RequestParam("no") int boardNo) {
+			boardService.deleteBoard(boardNo);
+			
+			return "redirect:/board/notice";
+		}
+		
+	
 	// 1:1문의 화면 
 	@GetMapping(value="/inquiries")
 	public String inquiriesform() {
