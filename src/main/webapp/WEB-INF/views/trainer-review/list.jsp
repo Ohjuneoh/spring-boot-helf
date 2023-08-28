@@ -37,13 +37,6 @@
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
-  <!-- 별점구현하기 위한 css -->
-  <style>
-    .inner-star::before{color: #FF9600;}
-    .outer-star {position: relative;display: inline-block;color: #CCCCCC;}
-    .inner-star {position: absolute;left: 0;top: 0;width: 0%;overflow: hidden;white-space: nowrap;}
-    .outer-star::before, .inner-star::before {content: '\f005 \f005 \f005 \f005 \f005';font-family: 'Font Awesome 5 free';font-weight: 900;}
-  </style>
 </head>
 <body>
 <!-- Spinner Start -->
@@ -100,7 +93,7 @@
           </div>
           <div id="1" class="col-6 d-flex align-items-center">
             <div id="2" class="d-flex justify-content-end">
-              <p class="m-1 text-primary" style="font-size: 80px;">5.0</p>
+              <p class="m-1 text-primary" style="font-size: 80px;"><fmt:formatNumber value="${dto.avgRating }" pattern="#.#" /> </p>
             </div>
             <div id="3" class="d-flex flex-column align-items-start m-1">
               <h6 class="m-1 text-primary" style="font-size: 20px;">
@@ -114,7 +107,7 @@
                   <i class="bi bi-star"></i>
                 </c:forEach>
               </h6>
-              <strong class="m-1" style="font-size: 10px;">11개의 리뷰</strong>
+              <strong class="m-1 text-primary" style="font-size: 20px;">${dto.cntReviews }개의 리뷰</strong>
             </div>
           </div>
         </div>
@@ -122,9 +115,12 @@
     </div>
     <hr style="height: 3px; color: skyblue;" ></hr>
 
+    <div id="review-box">
     <c:forEach var="trainerReview" items="${dto.trainerReviews }">
-      <!-- 한 사람에 해당되는 전체 div-->
-      <div class="testimonial-item bg-light my-4 ">
+      <!-- 한 사람에 해당되는 전체 div-->                                                                                                                    
+      <div class="testimonial-item bg-light mt-1 mb-3 border-bottom ">
+        <!-- 파라미터로 전달받은 트레이너번호 -->
+        <input type="hidden" name="trainerNo" value="${param.trainerNo }">
         <h5 class="m-1 text-primary float-end">
           <c:forEach begin="1" end="${trainerReview.fillCount}">
             <i class="bi bi-star-fill"></i>
@@ -136,27 +132,36 @@
             <i class="bi bi-star"></i>
           </c:forEach>
         </h5>
-        <div class="d-flex align-items-center pt-3 pb-1 px-5">
+        <div class="d-flex align-items-center pt-1 pb-1 px-5">
           <h5 class="text-primary">${trainerReview.lesson.name }</h5>
         </div>
 
         <!-- 리뷰 내용 위의 작성자명, 작성일자 div -->
-        <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+        <div class="d-flex align-items-center pt-1 pb-3 px-5 border-bottom mb-3">
           <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
           <div class="ps-4">
             <h4 class="text-primary mb-1">${trainerReview.lessonApply.user.name }</h4>
             <small class="text-uppercase"><fmt:formatDate value="${trainerReview.createDate }" pattern="yyyy년 M월 d일" /></small>
           </div>
         </div>
-        <a href="/trainer-review/delete?reviewNo=${trainerReview.no }" class="btn btn-danger btn-sm float-end" style="margin-left: 5px;">삭제</a>
-        <a href="/trainer-review/modify?reviewNo=${trainerReview.no }" class="btn btn-warning btn-sm float-end">수정</a>
-        <!-- 작성일자 밑에 있는 리뷰내용 div -->
-        <div class="pt-4 pb-5 px-5">
-          <h6>${trainerReview.title }</h6>
-          <p>${trainerReview.content }</p>
+        <div class="row">
+          <div class="col-9 ps-5">
+            <h6>${trainerReview.title }</h6>
+            <p>${trainerReview.content }</p>
+          </div>
+          <div class="col-3 text-end">
+            <a href="/trainer-review/delete?reviewNo=${trainerReview.no }" class="btn btn-danger btn-sm float-end" style="margin-left: 5px;">삭제</a>
+            <a href="/trainer-review/modify?reviewNo=${trainerReview.no }" class="btn btn-warning btn-sm float-end">수정</a>
+          </div>
         </div>
+        <!-- 작성일자 밑에 있는 리뷰내용 div -->
+
       </div>
     </c:forEach>
+    </div>
+    <div style="text-align: center;">
+      <button class="btn btn-primary px-4" id="btn-more">더 보기</button>
+    </div>
   </div>
 </div>
 <!-- Footer End -->
@@ -181,22 +186,80 @@
 <script src="/resources/js/main.js"></script>
 
 <script>
-  // 별점출력 하기 위한 쿼리
-  <%--/*<![CDATA[*/ ratings = {RatingScore: 4.5}--%>
-  <%--  totalRating = 5;--%>
-  <%--table = document.querySelector('.RatingStar');--%>
-  <%--function rateIt() {--%>
-  <%--  for (rating in ratings) {--%>
-  <%--    ratingPercentage = ratings[rating] / totalRating * 100;--%>
-  <%--    ratingRounded = Math.round(ratingPercentage / 10) * 10 + '%';--%>
-  <%--    star = table.querySelector(`.${rating} .inner-star`);--%>
-  <%--    numberRating = table.querySelector(`.${rating} .numberRating`);--%>
-  <%--    star.style.width = ratingRounded;--%>
-  <%--    numberRating.innerText = ratings[rating];--%>
-  <%--  }--%>
-  <%--}--%>
-  <%--rateIt()--%>
-  <%--  /*]]>*/--%>
+      let currentPage = 1;
+      let more = true;
+      $("#btn-more").click(function() {
+        let trainerNo = $("input[name=trainerNo]").val()
+        if(!more){
+          alert("마지막 페이지 입니다.");
+        }
+        currentPage++;
+        $.getJSON("/trainer-review/reviews", {trainerNo:trainerNo, page:currentPage}, function(reviews) {
+          if (reviews.length < 3) {
+            more = false;
+          }
+
+          // reviews = [{no:x, title:x, }, {}, {}]
+          reviews.forEach(function(r, index) {
+
+            let content = `
+                <div class="testimonial-item bg-light mt-1 mb-3 border-bottom ">
+                  <h5 class="m-1 text-primary float-end">
+                    \${ getFillStar(r.fillCount) }
+                    \${ getHalfStar(r.halfCount) }
+                    \${ getEmptyStar(r.emptyCount) }
+                  </h5>
+                <div class="d-flex align-items-center pt-1 pb-1 px-5">
+                  <h5 class="text-primary">\${r.lesson.name }</h5>
+                </div>
+              <div class="d-flex align-items-center pt-1 pb-3 px-5 border-bottom mb-3">
+                <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
+              <div class="ps-4">
+                <h4 class="text-primary mb-1">\${r.lessonApply.user.name }</h4>
+                  <small class="text-uppercase">\${r.createDate }</small>
+              </div>
+             </div>
+             <div class="row">
+             <div class="col-9 ps-5">
+               <h6>\${r.title }</h6>
+               <p>\${r.content }</p>
+             </div>
+             <div class="col-3 text-end">
+               <a href="/trainer-review/delete?reviewNo=\${r.no }" class="btn btn-danger btn-sm float-end" style="margin-left: 5px;">삭제</a>
+               <a href="/trainer-review/modify?reviewNo=\${r.no }" class="btn btn-warning btn-sm float-end">수정</a>
+             </div>
+          </div>
+            `;
+
+            $("#review-box").append(content);
+          });
+        });
+      });
+
+      function getFillStar(count) {
+        let content = "";
+        for (let i=1; i<=count; i++) {
+          content += '<i class="bi bi-star-fill"></i> '
+        }
+        return content;
+      }
+
+      function getHalfStar(count) {
+        let content = "";
+        for (let i=1; i<=count; i++) {
+          content += '<i class="bi bi-star-half"></i> '
+        }
+        return content;
+      }
+
+      function getEmptyStar(count) {
+        let content = "";
+        for (let i=1; i<=count; i++) {
+          content += '<i class="bi bi-star"></i> '
+        }
+        return content;
+      }
+
 </script>
 </body>
 </html>
