@@ -45,7 +45,7 @@
 
 
     <!-- Topnavbar Start -->
-   	<jsp:include page="common/topnavbar.jsp">
+   	<jsp:include page="/WEB-INF/views/common/topnavbar.jsp">
 		<jsp:param name="menu" value="홈"/>
 	</jsp:include>
     <!-- Topnavbar End -->
@@ -53,7 +53,7 @@
 
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0 h-10 ">
-		<jsp:include page="common/navbar.jsp">
+		<jsp:include page="/WEB-INF/views/common/navbar.jsp">
 			<jsp:param name="menu" value="홈"/>
 		</jsp:include>
     <!-- Navbar End -->
@@ -66,12 +66,12 @@
             </div>
         </div>
     </div>
-    
+
     	<div class="row justify-content-center" style="text-align:center">
-		
+
 		 <div class="col-lg-5">
 		 	  <h2>HELF 헬스장에 가입해주셔서 감사합니다.</h2>
-		 	  
+
 		 	  <div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"  style="display: flex; justify-content: center;">
 		 	  	<div doz_type="widget" id="w20190820145dcc26dd4ed">
 		 	  		<div class="_widget_data " data-widget-name="가로선" data-widget-type="hr" data-widget-anim="none" data-widget-anim-duration="" data-widget-anim-delay="" data-widget-parent-is-mobile="N">
@@ -85,7 +85,7 @@
 			</div>
 
 		<div doz_type="grid" doz_grid="4" class="col-dz col-dz-4">
-		
+
 			<div doz_type="row" doz_grid="4" class="doz_row">
 				<div doz_type="grid" doz_grid="4" class="col-dz col-dz-4">
 					<div doz_type="widget" id="w2019081545754e13d8cd3">
@@ -95,7 +95,7 @@
 									<div>
 										<i class="bi bi-emoji-laughing-fill" style="font-size: 48px;"></i>
 										<p><span style="color: rgb(35, 38, 40); font-size: 24px;"><strong style="color: blue">${name}</strong>님, 만나서 반가워요!</span></p>
-									
+
 									</div>
 								</div>		
 							</div>
@@ -144,7 +144,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 	    </div>
      </div>
 
@@ -166,12 +166,12 @@
             </div>
         </div>
     </div>
-    
-    
-       
-    
-   
-    
+
+
+
+
+
+
     <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container">
             <div class="row gx-5">
@@ -237,7 +237,7 @@
                 <div class="col-lg-8 col-md-6">
                     <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
                         <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights Reserved. 
-						
+
 						<!--/*** This template is free as long as you keep the footer authorâs credit link/attribution link/backlink. If you'd like to use the template without the footer authorâs credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 						Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
                     </div>
@@ -265,9 +265,9 @@
 
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
-   
+
    <script type="text/javascript"></script>
-   
+
    <script>
 		
 		

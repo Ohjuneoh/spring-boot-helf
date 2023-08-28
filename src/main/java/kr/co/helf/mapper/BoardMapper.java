@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.helf.dto.BoardPrevNextDto;
-import kr.co.helf.form.BoardModifyForm;
 import kr.co.helf.vo.Board;
 
 

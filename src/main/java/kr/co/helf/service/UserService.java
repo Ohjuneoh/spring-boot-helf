@@ -8,11 +8,12 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import javax.mail.Multipart;
+import java.util.Random;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -31,6 +32,9 @@ import kr.co.helf.vo.User;
 
 @Service
 public class UserService {
+	
+	@Autowired
+	private JavaMailSender javaMailSender;
 	
 	@Autowired
 	private UserMapper userMapper;
@@ -112,21 +116,58 @@ public class UserService {
 	}
 	
 	// 아이디 찾기(ajax)
-	public String findId(String name, String tel) throws Exception {
+	public List<String> findId(String name, String tel) throws Exception {
 		return userMapper.getIdByTel(name, tel);
 	}
 	
-//	public void getFindIdByEmail(String name, String email) {
-//	// 사용자 정보 조회
-//	// 사용자 정보가 존재하면 
-//	//		인증번호를 생성하고, 데이터베이스에 저장
-//	// 		인증번호를 메일로 발송
-//	// 사용자 정보가 존재하지 않으면
-//	//		예외를 발생시킨다.
-//	
-//}
-	
-	
+	// 비밀번호 찾기 (ajax)
+		public void findPwdAuth(String userId) throws Exception {
+			User user = userMapper.getUserById(userId);
+			if (user == null) {
+				throw new RuntimeException("아이디가 존재하지 않음");
+			}
+
+			String auth = generateAuth();
+			user.setAuthenticationNo(auth);
+
+			userMapper.updateUser(user);
+
+			sendEmail(user.getEmail(), auth);
+
+		}
+
+		private String generateAuth() {
+			String text = "1234567890qwertyuiopasdfghjklzxcbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+			Random random = new Random();
+			StringBuilder sb = new StringBuilder();
+			for (int i = 1; i <= 6; i++) {
+				sb.append(text.charAt(random.nextInt(text.length())));
+			}
+			return sb.toString();
+		}
+
+		private void sendEmail(String email, String auth) {
+			SimpleMailMessage message = new SimpleMailMessage();
+
+			message.setTo(email);
+			message.setSubject("HELF 헬스장에서 이메일 인증번호를 보냅니다.");
+			message.setText("인증번호: " + auth);
+
+			javaMailSender.send(message);
+		}
+
+//		public void initPassword(String userId) {
+//			User user = userMapper.getUserById(userId);
+//			
+//			String pwd = generatePassword();
+//			String encPassword = passwordEncoder.encode(pwd);
+//			user.setEncryptedPassword(encPassword);
+//			
+//			userMapper.updateUser(user);
+//			
+//			sendEmail(user.getEmail(), pwd);
+//		}
+
 	
 	public List<User> getUsersWithFourDigits(String fourDigits) {
 		return userMapper.getUsersByDigits(fourDigits);

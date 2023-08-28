@@ -24,6 +24,25 @@
 			user_id = #{value}
 	</select>
 	
+	<!-- 유저정보 업데이트(수정)  -->
+	<update id="updateUser" parameterType="User">
+		update 
+			helf_users
+		set 
+			user_email  = 	#{email},			
+			user_name   = 	#{name},			
+			user_tel    = 	#{tel},	
+			user_encrypted_password = #{encryptedPassword},
+			user_gender	=	#{gender},		
+			user_status	=	#{status},	
+			user_update_date = sysdate,
+			user_type	= #{type},
+			user_point 	= #{point},
+			user_mobile_carrier = #{mobileCarrier},
+			user_authentication_no = #{authenticationNo}
+		where 
+			user_id = #{id}
+	</update>
 
 	<insert id="insertUser" parameterType="User">
 		insert into helf_users

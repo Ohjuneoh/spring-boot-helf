@@ -14,7 +14,6 @@ import kr.co.helf.form.AddBoardForm;
 import kr.co.helf.form.BoardModifyForm;
 import kr.co.helf.mapper.BoardMapper;
 import kr.co.helf.vo.Board;
-import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.User;
 
 @Service

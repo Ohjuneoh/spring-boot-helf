@@ -74,15 +74,7 @@
                 <h1 class="mb-0">HELF 고객님들이 자주묻는 질문들을 참고하세요.</h1>
             </div>
             
-            <!-- 검색 -->
-            <div class="d-flex justify-content-center mb-4">
-	            <div class="Search_search_box__2RnqG" >
-		            <input type="text" name="query" placeholder="궁금한 점을 검색해 보세요." autocomplete="off" class="Search_search_input__15WyK" value="" title="검색" style="width: 300px;">
-			            <button type="button" class="Search_btn_search__s1gr6 search-layer" id="search-button">
-			            	<span class="blind"> <i class="bi bi-search"></i></span>
-			            </button>
-	            </div>
-            </div>
+           
             
             <!-- 도움말 -->
 			<div class="container mt-3">
