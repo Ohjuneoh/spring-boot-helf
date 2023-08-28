@@ -70,7 +70,7 @@ public class BoardService {
 		return prevNext;
 	}
 	
-	// 공지사항 수정
+  // 공지사항 수정
 	public void updateBoard(BoardModifyForm form) {
 		 Board board = boardMapper.getBoardByNo(form.getNo());
 		 BeanUtils.copyProperties(form, board);

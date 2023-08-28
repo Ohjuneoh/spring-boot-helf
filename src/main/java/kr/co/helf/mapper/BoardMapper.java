@@ -26,10 +26,11 @@ public interface BoardMapper {
 	
 	// 공지사항 수정
 	void updateBoard(Board board);
-	
+
 	// 공지사항 삭제
 	void deleteBoard(Board board);
-	
+
+
 	// 공지사항 상세 - 이전글/다음글
 	BoardPrevNextDto getPrevNextBoardByNo(int boardNo);
 }

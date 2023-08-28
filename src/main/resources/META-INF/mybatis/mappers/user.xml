@@ -119,7 +119,25 @@
 		select count(*) from helf_users where user_id = #{value}
 	</select>
 	
-	
+	<!-- 유저정보 업데이트(수정)  -->
+	<update id="updateUser" parameterType="User">
+		update 
+			helf_users
+		set 
+			user_email  = 	#{email},			
+			user_name   = 	#{name},			
+			user_tel    = 	#{tel},	
+			user_encrypted_password = #{encryptedPassword},
+			user_gender	=	#{gender},		
+			user_status	=	#{status},	
+			user_update_date = sysdate,
+			user_type	= #{type},
+			user_point 	= #{point},
+			user_mobile_carrier = #{mobileCarrier},
+			user_authentication_no = #{authenticationNo}
+		where 
+			user_id = #{id}
+	</update>
 	
 	
 	<!-- 유저의 이용가능한 이용권 조회  // 추후 이용권 부분으로 옮길 예정 -->
