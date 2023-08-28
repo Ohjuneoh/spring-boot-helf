@@ -1,5 +1,6 @@
 package kr.co.helf.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,13 +19,10 @@ public class TrainerReview {
     private int no;
     private String title;
     private String content;
+    @JsonFormat(pattern = "yyyy년 M월 d일")
     private Date createDate;
     private String status;
-
     private LessonApply lessonApply;
-
-    private LessonApply apply;
-
     private Lesson lesson;
     private Trainer trainer;
     private Double rating;
