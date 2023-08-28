@@ -118,7 +118,7 @@ public class UserController {
 	
 	
 	
-	//아이디 찾기 (ajax)
+	// 아이디 찾기 (ajax)
 	@GetMapping("/findId")
 	@ResponseBody
 	public String findId(@RequestParam("name") String name,@RequestParam("tel") String tel) throws Exception {
@@ -130,6 +130,38 @@ public class UserController {
 			return result;	
 		}
 	}
+	
+	
+	// 비밀번호 찾기 (ajax) - 인증번호 전송
+	@GetMapping("/findPwdAuth")
+	@ResponseBody
+	public String findPwd(@RequestParam("id") String userId) throws Exception {
+		try {
+			userService.findPwdAuth(userId);
+			return "success";	
+			
+		} catch (RuntimeException ex) {
+			ex.printStackTrace();
+			return "fail";	
+		}
+	}
+	
+	// 비밀번호 찾기 (ajax) - 인증번호 인증
+	
+	
+	
+	
+//	@PostMapping("/findPwd")
+//	public String findPassword(String userId) {
+//		userService.initPassword(userId);
+//		return "/login/findPwdFinish";
+//	}
+	
+	
+	
+	
+	
+	
 	
 //	@PostMapping(value="/findIdByEmail")
 //	@ResponseBody

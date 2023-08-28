@@ -3,9 +3,12 @@ package kr.co.helf.service;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,9 @@ import kr.co.helf.vo.User;
 
 @Service
 public class UserService {
+	
+	@Autowired
+	private JavaMailSender javaMailSender;
 	
 	@Autowired
 	private UserMapper userMapper;
@@ -86,15 +92,60 @@ public class UserService {
 		userMapper.insertTrainerCareer(trainerCareer);
 	}
 	
-	// 전화번호로 아이디찾기
-	public User getFindByTel(String name, String tel) {
-		return userMapper.getFindByTel(name, tel);
-	}
 	
-	// 아이디 찾기(ajax)
+	// 아이디 찾기 (ajax)
 	public String findId(String name, String tel) throws Exception {
 		return userMapper.getIdByTel(name, tel);
 	}
+	
+	// 비밀번호 찾기 (ajax)
+	public void findPwdAuth(String userId) throws Exception {
+		User user = userMapper.getUserById(userId);
+		if (user == null) {
+			throw new RuntimeException("아이디가 존재하지 않음");
+		}
+		
+		String auth = generateAuth();
+		user.setAuthenticationNo(auth);
+		
+		userMapper.updateUser(user);
+		
+		sendEmail(user.getEmail(), auth);
+		
+	}
+	
+	private String generateAuth() {
+		String text = "1234567890qwertyuiopasdfghjklzxcbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+		Random random = new Random();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 1; i <= 6; i++) {
+			sb.append(text.charAt(random.nextInt(text.length())));
+		}
+		return sb.toString();
+	}
+	
+	private void sendEmail(String email, String auth) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		
+		message.setTo(email);
+		message.setSubject("HELF 헬스장에서 이메일 인증번호를 보냅니다.");
+		message.setText("인증번호: " + auth);
+		
+		javaMailSender.send(message);
+	}
+
+//	public void initPassword(String userId) {
+//		User user = userMapper.getUserById(userId);
+//		
+//		String pwd = generatePassword();
+//		String encPassword = passwordEncoder.encode(pwd);
+//		user.setEncryptedPassword(encPassword);
+//		
+//		userMapper.updateUser(user);
+//		
+//		sendEmail(user.getEmail(), pwd);
+//	}
+	
 	
 //	public void getFindIdByEmail(String name, String email) {
 //	// 사용자 정보 조회
