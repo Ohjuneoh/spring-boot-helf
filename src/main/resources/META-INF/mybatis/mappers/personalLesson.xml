@@ -68,9 +68,8 @@
         and c.trainer_no not in (
     								select trainer_no
 									from helf_lesson_consultation
-									where user_id = 'juneasd'
-									or lesson_consultation_status = '수강중'
-									or lesson_consultation_status = '대기중')
+									where user_id = #{userId}
+									and lesson_consultation_status = '수강중')
 		order by
 			trainer_no
 	</select>
@@ -143,7 +142,9 @@
 	       		b.my_membership_state
 		from 	helf_membership a, helf_my_membership b
 		where 	a.membership_no = b.membership_no
-		and 	b.user_id=#{userId}
+		and 	b.user_id = #{userId}
+		and 	a.category_no = 4
+        and     b.my_membership_state = '사용가능'
 		ORDER BY b.my_membership_no asc
 	</select>
 	<select id="getTrainerByUserId" parameterType="string" resultType="Trainer">
@@ -187,6 +188,7 @@
         <association property="myMembership" javaType="kr.co.helf.vo.MyMembership">
         <result column="my_membership_no" property="no"/>
         <result column="my_membership_remainder_cnt" property="remainderCnt"/>
+        <result column="my_membership_state" property="state"/>
         </association>
     </association>
 	</resultMap>
@@ -203,12 +205,16 @@
 		        a.trainer_no,
 		        a.my_membership_no,
 		        b.user_name,
-		        c.my_membership_remainder_cnt
-		from helf_lesson_consultation a, helf_users b, helf_my_membership c
-		where trainer_no = #{trainerNo}
+		        c.my_membership_remainder_cnt,
+		        c.my_membership_state
+		from helf_lesson_consultation a, helf_users b, helf_my_membership c, helf_membership d
+		where a.trainer_no = #{trainerNo}
 		and a.user_id = b.user_id
-		and b.user_id = c.user_id
+		and a.user_id = c.user_id
+        and c.membership_no = d.membership_no
 		and c.my_membership_remainder_cnt > 0
+		and c.my_membership_state = '사용가능'
+        and d.category_no = 4
 		order by a.lesson_consultation_request_date asc
 	</select>
 	<select id="getMyMembershipByNo" parameterType="int" resultType="myMembership">
@@ -219,10 +225,12 @@
         my_membership_state     as state
 		from    helf_my_membership
 		where my_membership_no = #{myMembershipNo}
+		and my_membership_state = '사용가능'
 	</select>
-<update id="updateMyMembership" parameterType="myMembership">
+	<update id="updateMyMembership" parameterType="myMembership">
 		update helf_my_membership
-		set	my_membership_remainder_cnt = #{remainderCnt}
+		set	my_membership_remainder_cnt = #{remainderCnt},
+			my_membership_state = #{state}
 		where my_membership_no = #{no}
 	</update>
 	<update id="updatedConsultation" parameterType="Consultation">
@@ -248,4 +256,12 @@
 											 
 		values(helf_personal_lesson_seq.nextval, #{name}, #{date}, #{time}, #{content}, #{myMembership.no}, #{trainer.trainerNo}, #{user.id})
 	</insert>
+	<!-- 상담 만료 업데이트  -->
+	<update id="updateExpiredConsultation"  parameterType="Consultation">
+		update helf_lesson_consultation
+		set lesson_consultation_status = '상담만료' 
+		where my_membership_no = #{no}
+		and user_id = #{id}
+		and lesson_consultation_status = '대기중'
+	</update>
 </mapper>

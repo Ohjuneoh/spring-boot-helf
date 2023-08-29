@@ -84,10 +84,15 @@
     <div class="container py-5">
         <div class="row mb-3">
             <div class="col-12">
+            	<div>
+				    <button class="btn btn-outline-primary mb-1" type="button" >개인수업</button>
+				    <button class="btn btn-outline-primary mb-1" type="button">그룹수업</button>
+				</div>
                 <div class="card" >
                     <div class="card-header bg-dark" style="color: #ffffff">
                         수업 목록
                     </div>
+                    <!-- GroupLesson start -->
                     <div class="card-body">
                         <table class="table" id="table-lessons">
                             <thead>
@@ -143,6 +148,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- GroupLesson end -->
                 </div>
             </div>
         </div>

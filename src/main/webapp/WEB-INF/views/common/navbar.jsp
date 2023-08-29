@@ -66,7 +66,7 @@
             </div>
             </sec:authorize>
             <sec:authorize access="isAuthenticated">
-	            <sec:authorize access="hasRole('ROLE_USER') || hasRole('ROLE_TRAINER')">
+	            <sec:authorize access="hasRole('ROLE_USER')">
 	            <div class="nav-item dropdown">
 	                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업(고객)</a>
 	                <div class="dropdown-menu m-0">
@@ -74,6 +74,8 @@
 	                    <a href="/personal-lesson/consultation" class="dropdown-item">개인 PT 신청</a>
 	                </div>
 	            </div>
+	            </sec:authorize>
+	            <sec:authorize access="hasRole('ROLE_TRAINER')">
 	            <div class="nav-item dropdown">
 	                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업(트레이너)</a>
 	                <div class="dropdown-menu m-0">
@@ -85,6 +87,10 @@
 	            <sec:authorize access="hasRole('ROLE_MANAGER')">
 	            	<div class="nav-item dropdown">
 	               		<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업</a>
+	                	<div class="dropdown-menu m-0">
+	                    	<a href="/group-lesson/list" class="dropdown-item">그룹 수업 조회</a>
+	                    	<a href="" class="dropdown-item">개인 수업 조회</a>
+	                	</div>
 	                	<div class="dropdown-menu m-0">
 	                    	<a href="/group-lesson/list" class="dropdown-item">그룹 수업 조회</a>
 	                    	<a href="" class="dropdown-item">개인 수업 조회</a>

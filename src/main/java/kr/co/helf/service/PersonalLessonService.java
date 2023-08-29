@@ -8,13 +8,11 @@ import org.springframework.stereotype.Service;
 import kr.co.helf.dto.UserConsultations;
 import kr.co.helf.dto.UserMyMemberships;
 import kr.co.helf.mapper.PersonalLessonMapper;
-import kr.co.helf.vo.Career;
 import kr.co.helf.vo.Consultation;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.PersonalLesson;
 import kr.co.helf.vo.Trainer;
-import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,8 +22,8 @@ public class PersonalLessonService {
 	private final PersonalLessonMapper personalLessonMapper;
 
 	//전체 트레이너 조회
-	public List<Trainer> getTrainers(){
-		return personalLessonMapper.getAllTrainersWithCareer();
+	public List<Trainer> getTrainers(String userId){
+		return personalLessonMapper.getAllTrainersWithCareer(userId);
 	}
 	
 	//1대1 PT 예약 추가
@@ -60,11 +58,19 @@ public class PersonalLessonService {
 		//남은 회원권 회수를 1 차감
 		int updatedRemainderCnt = myMembership.getRemainderCnt() - 1;
 		myMembership.setRemainderCnt(updatedRemainderCnt);
-		
-		personalLessonMapper.updatedConsultation(consultation.getConsultationNo(), "상담완료");
-		
+	    // 남은 회원권 회수에 따라 상태 업데이트
+	    if (updatedRemainderCnt <= 0) {
+	        myMembership.setState("사용불가");
+	        personalLessonMapper.updatedConsultation(consultation.getConsultationNo(), "수강완료");
+	    } else {
+	        myMembership.setState("사용중");
+	        personalLessonMapper.updatedConsultation(consultation.getConsultationNo(), "수강중");
+	    }
 		personalLessonMapper.updateMyMembership(myMembership);
 		personalLessonMapper.insertPersonalLesson(personalLesson);
+		
+		personalLessonMapper.updateExpiredConsultation(personalLesson.getUser().getId(), personalLesson.getMyMembership().getNo(), "상담만료");
+		
 	}
 }
 
