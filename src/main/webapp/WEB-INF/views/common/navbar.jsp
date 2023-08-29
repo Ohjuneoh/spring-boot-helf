@@ -39,7 +39,6 @@
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_USER') || hasRole('ROLE_TRAINER')">
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">마이페이지</a>
                 <div class="dropdown-menu m-0">
                     <sec:authorize access="hasRole('ROLE_USER')">
                     <a href="price" class="dropdown-item">내 정보 조회</a>
