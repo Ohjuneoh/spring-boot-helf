@@ -152,7 +152,7 @@
                     <!-- 글 작성자와 로그인 한 아이디가 다르면 수정,삭제 화면출력 x-->
                     <sec:authentication property="principal.id" var="trainerId" />
                     <c:if test="${lesson.user.id eq trainerId}">
-                        <a href="/group-lesson/modify?no=${lesson.no }" css class="btn btn-warning btn-sm">수정</a>
+                        <a href="/group-lesson/modify?no=${lesson.no }" class="btn btn-warning btn-sm">수정</a>
                         <a href="/group-lesson/delete?no=${lesson.no }" class="btn btn-danger btn-sm">삭제</a>
                     </c:if>
                     <a href="/group-lesson/list" class="btn btn-primary btn-sm">목록</a>

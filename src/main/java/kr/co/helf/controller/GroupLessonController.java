@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -53,10 +54,11 @@ public class GroupLessonController {
 
     // 전체 게시글 조회(페이징 처리 포함)
     @GetMapping(value = "/list")
-    public String lessonList(@AuthenticationPrincipal User user, @RequestParam(name ="page", required = false,defaultValue ="1")int page, Model model) {
+    public String lessonList(@AuthenticationPrincipal User user,
+                             @RequestParam(name ="page", required = false,defaultValue ="1")int page,
+                             Model model) {
         Map<String,Object> param = new HashMap<String,Object>();
         param.put("page", page);
-
         Map<String,Object> result = groupLessonService.getAllLessons(user.getId(),user.getType(),param);
 
         model.addAttribute("result", result);
