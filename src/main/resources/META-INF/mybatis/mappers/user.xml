@@ -121,6 +121,9 @@
 	
 	
 	<!-- 유저의 이용가능한 이용권 조회  // 추후 이용권 부분으로 옮길 예정 -->
+
+	<!-- 유저의 이용가능한 이용권 조회  -->
+
 	<select id="getMyMembership" resultType="kr.co.helf.vo.MyMembership" parameterType="string">
 		select
 			A.my_membership_no				as no,
@@ -148,15 +151,15 @@
         and C.category_no IN (1, 2)
 	</select>
 	
-	<insert id="insertAttendance" parameterType="string">
+	<insert id="insertAttendance" parameterType="map">
 		insert into helf_customer_attendance
-    				(customer_attendance_no, user_id)
+    				(customer_attendance_no, user_id, my_membership_no)
 		values 
-    				(helf_customer_attendance_seq.nextval, #{value})
+    				(helf_customer_attendance_seq.nextval, #{userId}, #{myMembershipNo})
 	</insert>
 	
 	<!-- 직원 출퇴근 내역 총 행의 갯수  -->
-	<select id="getTotalRows" parameterType="map" resultType="int">
+	<select id="getTrainerTotalRows" parameterType="map" resultType="int">
 	select count(*)
 	from helf_trainer_attendance
 	where
@@ -193,4 +196,141 @@
 		insert into helf_trainer_attendance(trainer_attendance_no, user_id, trainer_attendance_state, trainer_attendance_cause)
 		values(helf_trainer_attendance_seq.nextval, #{userId}, #{state}, #{cause})	
 	</insert>
+	
+	<select id="getCustomerTotalRows" resultType="int">
+		select count(*)
+		from helf_users
+		where user_type = 'ROLE_USER'	
+	</select>
+	
+	<!-- 고객 정보 조회 내역 - 채경 -->
+	<select id="getCustomers" parameterType="map" resultType="kr.co.helf.dto.CustomerListDto" >
+		WITH LatestOrder AS (
+		    SELECT
+		       o.user_id,
+		        m.membership_name,
+		        o.orders_payment_date,
+		        mm.my_membership_remainder_cnt,
+		        mm.my_membership_enddate,
+		        mm.my_membership_state,
+		        ROW_NUMBER() OVER (PARTITION BY o.user_id ORDER BY o.orders_payment_date DESC) AS latest_rn
+		    FROM HELF_ORDERS o
+		    LEFT JOIN helf_my_membership mm ON o.my_membership_no = mm.my_membership_no
+		    LEFT JOIN helf_membership m ON mm.membership_no = m.membership_no
+		),
+		
+			FirstOrder AS (
+		    	SELECT
+			        o.user_id,
+			        o.orders_payment_date,
+			        ROW_NUMBER() OVER (PARTITION BY o.user_id ORDER BY o.orders_payment_date ASC) AS first_rn
+			    FROM HELF_ORDERS o
+			)
+		
+		, AllData AS (
+		    SELECT 
+		        u.user_id       as userId,
+		        u.user_name     as userName,
+		        u.user_gender   as userGender,
+		        u.user_tel      as userTel,
+		        u.user_status   as userStatus,
+		        f.orders_payment_date AS firstOrderDate,
+		        l.orders_payment_date AS latestOrderDate,
+		        l.membership_name AS MembershipName,
+		        l.my_membership_remainder_cnt AS myMembershipRemainderCnt,
+		        l.my_membership_enddate AS myMembershipEndDate,
+		        l.my_membership_state   AS myMembershipState,
+		        ROW_NUMBER() OVER (ORDER BY u.user_name) AS row_number
+		    FROM HELF_USERS u
+		    LEFT JOIN FirstOrder f ON u.user_id = f.user_id AND f.first_rn = 1
+		    LEFT JOIN LatestOrder l ON u.user_id = l.user_id AND l.latest_rn = 1
+		    WHERE u.user_type = 'ROLE_USER'
+		    <choose>
+		        <when test="opt == 'name'">
+		            AND u.user_name = INITCAP(#{keyword})
+		        </when>
+		        <when test="opt == 'tel'">
+		            AND u.user_tel = #{keyword}
+		        </when>
+		        <when test="userStatus == '유효회원'">
+		            AND u.user_status = 'Y'
+		        </when>
+		        <when test="userStatus == '탈퇴회원'">
+		            AND u.user_status = 'N' 
+		        </when>
+		        <when test="membershipState == '유효'">
+		            AND l.my_membership_state = 'Y'
+		        </when>
+		        <when test="membershipState == '만료'">
+		            AND l.my_membership_state = 'N'
+		        </when>
+		        <when test="remainderCnt != null">
+		            AND l.my_membership_remainder_cnt = #{remainderCnt}
+		        </when>
+		        <when test="remainingDays1 != null and remainingDays2 != null">
+		            AND l.my_membership_enddate BETWEEN #{remainingDays1} AND #{remainingDays2}
+		        </when>
+		    </choose>
+		)
+		SELECT * 
+		FROM AllData
+		WHERE row_number BETWEEN #{begin} AND #{end}
+		ORDER BY row_number
+	</select>
+	
+	<select id="getCustomerInfoDetails" parameterType="String" resultType="kr.co.helf.dto.CustomerDetailDto">
+	select 
+		u.user_id					as "user.id", 
+		u.user_email				as "user.email", 
+		u.user_name					as "user.name", 
+		u.user_tel					as "user.tel", 
+		u.user_gender				as "user.gender", 
+		u.user_status				as "user.status", 
+		u.user_create_date			as "user.createDate", 
+		u.user_point				as "user.point", 
+		r.rank_name					as "user.rank.name", 
+		rv.recent_visit				as recentVisitDate, 
+		ac.accumulated_orders		as accumulatedOrderTotalPrice
+	from helf_users u, helf_ranks r, (select max(customer_attendance_Date) recent_visit
+									  from helf_customer_attendance
+									  where user_id = #{value}) rv,
+																		(select sum(orders_total_price) as accumulated_orders
+																		from helf_orders
+																		where user_id = #{value}) ac
+	where u.user_id = #{value}
+	and u.rank_no = r.rank_no
+	</select>
+	
+	<select id="getCustomerLessons" parameterType="String" resultType="kr.co.helf.vo.LessonApply">
+	select 
+			l.lesson_date			as "lesson.date", 
+			l.lesson_time			as "lesson.time", 
+			l.lesson_name			as "lesson.name", 
+			u.user_name				as "lesson.user.name", 
+			la.lesson_apply_status	as attendanceStatus,
+			m.membership_name		as "myMembership.membership.name"
+	from helf_lesson_apply la, helf_lesson l, helf_users u, helf_my_membership mm, helf_membership m
+	where la.lesson_no = l.lesson_no
+	and l.user_id = u.user_id
+	and la.my_membership_no = mm.my_membership_no 
+	and mm.membership_no = m.membership_no 
+	and la.user_id = #{value}
+	</select>
+
+	<select id="getCustomerAttendance" parameterType="String" resultType="kr.co.helf.vo.CustomerAttendance">
+	select distinct 
+				ca.customer_attendance_no		as no, 
+				ca.customer_attendance_date		as "date", 
+				mc.category_name				as "myMembership.membership.category.name", 
+				m.membership_name				as "myMembership.membership.name", 
+				l.lesson_name					as lessonName
+	from helf_customer_attendance ca, helf_my_membership mm, helf_membership m, helf_membership_category mc, helf_lesson_apply la, helf_lesson l
+	where ca.my_membership_no = mm.my_membership_no 
+	and mm.membership_no = m.membership_no
+	and m.category_no = mc.category_no 
+	and la.my_membership_no(+) = mm.my_membership_no
+	and la.lesson_no = l.lesson_no(+)
+	and ca.user_id = #{value}
+	order by ca.customer_attendance_date desc 	</select>
+
 </mapper>

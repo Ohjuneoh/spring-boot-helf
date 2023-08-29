@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.helf.dto.MembershipJoinCategory;
 import kr.co.helf.dto.OptionJoinDetail;
+import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.Membership;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.MyOption;
@@ -62,4 +63,10 @@ public interface OrderMapper {
 	List<MyMembership> getMyMembershipEndToday();
 
 	List<MyOption> getMyOptionEndToday(int no);
+	
+	// 고객별 상세 조회 (3)주문내역 - 채경
+	List<Order> getCustomerOrders(String id);
+	
+	// 고객별 상세 조회 (4)나의 이용권 내역 - 채경
+	List<MyMembership> getCustomerMyMemberships(String id);
 }

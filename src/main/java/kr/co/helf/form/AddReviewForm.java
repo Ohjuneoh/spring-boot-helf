@@ -11,6 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class AddReviewForm {
     private int lessonApplyNo;
+    private int lessonNo;
     private String title;
     private String content;
     private double rating;

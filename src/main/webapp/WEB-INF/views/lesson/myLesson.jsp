@@ -109,7 +109,7 @@
                                     <td><fmt:formatDate value="${lessonApply.lesson.date }" pattern="yyyy년 M월 d일" /> ${lessonApply.lesson.time }시</td>
                                     <td>${lessonApply.attendanceStatus }</td>
                                     <!-- 위의 <td>에서 attendanceStatus가 Y일때만 리뷰작성 버튼이 활성화 되게하는 코드 -->
-                                    <td><a href="/trainer-review/registration?applyNo=${lessonApply.no }" class="btn btn-primary btn-sm ${lessonApply.attendanceStatus eq 'Y' ? '' : 'disabled'}">리뷰작성</a></td>
+                                    <td><a href="/trainer-review/registration?applyNo=${lessonApply.no}&lessonNo=${lessonApply.lesson.no}" class="btn btn-primary btn-sm ${lessonApply.attendanceStatus eq 'Y' ? '' : 'disabled'}">리뷰작성</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
