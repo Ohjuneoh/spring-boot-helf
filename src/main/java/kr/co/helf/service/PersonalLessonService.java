@@ -24,8 +24,8 @@ public class PersonalLessonService {
 	private final PersonalLessonMapper personalLessonMapper;
 
 	//전체 트레이너 조회
-	public List<Trainer> getTrainers(){
-		return personalLessonMapper.getAllTrainersWithCareer();
+	public List<Trainer> getTrainers(String userId){
+		return personalLessonMapper.getAllTrainersWithCareer(userId);
 	}
 	
 	//1대1 PT 예약 추가
@@ -60,8 +60,15 @@ public class PersonalLessonService {
 		//남은 회원권 회수를 1 차감
 		int updatedRemainderCnt = myMembership.getRemainderCnt() - 1;
 		myMembership.setRemainderCnt(updatedRemainderCnt);
+	    // 남은 회원권 회수에 따라 상태 업데이트
+	    if (updatedRemainderCnt <= 0) {
+	        myMembership.setState("사용불가");
+	        personalLessonMapper.updatedConsultation(consultation.getConsultationNo(), "수강완료");
+	    } else {
+	        myMembership.setState("사용중");
+	        personalLessonMapper.updatedConsultation(consultation.getConsultationNo(), "수강중");
+	    }
 		
-		personalLessonMapper.updatedConsultation(consultation.getConsultationNo(), "상담완료");
 		
 		personalLessonMapper.updateMyMembership(myMembership);
 		personalLessonMapper.insertPersonalLesson(personalLesson);
