@@ -1,16 +1,18 @@
 package kr.co.helf.vo;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import java.time.LocalDate;
 
-@Getter
-@Setter
-@ToString
+import org.apache.ibatis.type.Alias;
+
+import lombok.Data;
+
+@Data
+@Alias("refund")
 public class Refund {
 
 	private int no;
 	private String state;
-	private int amount;
+	private Integer amount;
 	private Order order;
+	private LocalDate refundDate;
 }

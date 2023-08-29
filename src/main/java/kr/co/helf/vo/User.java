@@ -13,14 +13,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Data
 @Alias("User")
 public class User implements UserDetails, OAuth2User {
 
+	@NotBlank(message = "id를 입력해주세요.")
 	private String id;
 	private String email;
 	private String name;
 	private String tel;
+	@NotBlank
 	private String encryptedPassword;
 	private String gender;
 	private String status;
@@ -30,7 +35,8 @@ public class User implements UserDetails, OAuth2User {
 	private Rank rank;
 	private int point;
 	private String mobileCarrier;
-	
+	private String authenticationNo;
+
 	
 	private Map<String, Object> attributes;
 

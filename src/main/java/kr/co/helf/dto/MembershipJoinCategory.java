@@ -1,5 +1,7 @@
 package kr.co.helf.dto;
 
+import java.time.LocalDate;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
@@ -13,6 +15,10 @@ public class MembershipJoinCategory {
 	private int no;
 	private String name;
 	private int price;
+	private String description;
+	private String deleted;
+	private LocalDate createDate;
+	private LocalDate deleteDate;
 	private int catNo;
 	private String catName;
 	private String catProperty;

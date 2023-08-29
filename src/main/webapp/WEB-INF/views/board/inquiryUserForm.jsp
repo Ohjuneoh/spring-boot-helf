@@ -1,9 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
-
 <head>
     <meta charset="utf-8">
     <title>HELF</title>
@@ -34,9 +34,10 @@
     <link href="/resources/css/style.css" rel="stylesheet">
     <!-- Date Picker  -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+    <!-- 썸머노트  -->
+    <link rel="stylesheet" href="/resources/css/summernote/summernote-lite.css">
 </head>
-<!-- 위에 모든 페이지까지 공통부분 건들 x -->
+
 <body>
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -50,7 +51,6 @@
     <!-- Topnavbar End -->
 
 
-
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0 h-10 ">
 		<jsp:include page="/WEB-INF/views/common/navbar.jsp">
@@ -60,14 +60,12 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">REGISTER</h1>
-                    <a href="" class="h5 text-white">수업 수정</a>
+                    <h1 class="display-4 text-white animated zoomIn">INQUIRY FORM</h1>
+                    <a href="" class="h5 text-white">1:1문의 작성</a>
                 </div>
             </div>
         </div>
     </div>
-
-
     <div class="modal fade" id="searchModal" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
@@ -82,87 +80,44 @@
                 </div>
             </div>
         </div>
-    <!-- Lesson Category Start  -->
     </div>
-    <div class="container-fluid py-1 wow fadeInUp " data-wow-delay="0.1s">
-        <div class="container py-5">
-        	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
-	        	<div class="container ">
-	            	<div class="row g-1" >
-					</div>
-				</div>
-			</div>
-        </div>
-    </div>
-    <!-- Lesson Category End -->
-    <!-- Lesson Register Form Start  -->
-    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
-        <div class="container py-5">
-		 	<form class="" id="group-lesson-form" method="post" action="/group-lesson/modify?no=${lesson.no }">
-		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
-	        		<div class="container ">
-	            		<div class="row g-1" >
-                    		<div class="section-title position-relative pb-3 mb-5">
-                        		<h5 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">수업수정</h5>
-                        		<h1 class="mb-0" style="font-size: 15px;" >내용을 입력해주세요</h1>
-			               	</div>
-				    	</div>
-				 	</div>
-				</div>
-				<div class="row g-1">
-				    <div class="col-6">
-				        <input type="text" class="form-control bg-light border-0" name="name" value="${lesson.name }" placeholder="수업명" style="height: 55px;">
-				    </div>
-					<div class="col-6">
-						<input type="text" class="form-control bg-light border-0" name="quota" value="${lesson.quota }" placeholder="총 인원" style="height: 55px;">
-					</div>
-				    <div class="col-6">
-				    	<input type="text" class="form-control bg-light border-0"  id="date" name="date" value="<fmt:formatDate value="${lesson.date }" pattern="yyyy/MM/dd" />" style="height: 55px;" placeholder="수업날짜">
-				    </div>
-					<div class="col-6">
-					    <select  class="form-select bg-light border-0" name="time" value="${lesson.time }" style="height: 55px;">
-					      <option value=""  >시간</option>
-					      <option value="10~12" class="form-control bg-light border-0" >10:00 ~ 12:00</option>
-					      <option value="13~15" class="form-control bg-light border-0" >13:00 ~ 15:00</option>
-					      <option value="15~17" class="form-control bg-light border-0" >15:00 ~ 17:00</option>
-					      <option value="17~19" class="form-control bg-light border-0" >17:00 ~ 19:00</option>
-					      <option value="20~22" class="form-control bg-light border-0" >20:00 ~ 22:00</option>
-					    </select>
-					</div>
-					<div class="col-12">
-					  <textarea class="form-control bg-light border-0" name="description" value="${lesson.description }"style="height: 300px;" placeholder="내용"></textarea>
-					</div>
-				</div>
-				<!-- 그룹수업 수정 폼에서 모달창 -->
-				<div class="modal fade" id="insert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
 
-							<div class="modal-header">
-								<h1 class="modal-title fs-5" id="exampleModalLabel">작성 취소</h1>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							</div>
+        <div class="container-fluid py-4 wow fadeInUp" data-wow-delay="0.1s">
 
-							<div class="modal-body">
-								<br />
-								<p>그룹수업 수정을 취소하시겠습니까?</p>
-							</div>
+	        <div class="container py-3">
+			   	<div>
+			   		<h3>1:1문의 작성하기</h3>
+			   	</div>
+	            <div class="row g-5">
+	                <div class="col-lg-13">
+	                    <div class=" rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s">
+	                        <form method="post" action="/board/addNotice">
+	                            <div class="row g-3">
+	                                <div class="col-12" >
+	                                    <select class="form-select bg-light border-0" name="main" style="height: 55px;">
+	                                        <option value="Y">주요 공지사항</option>
+	                                        <option value="N">일반 공지사항</option>
+	                                    </select>
+	                                </div>
+	                                <div class="col-xl-12">
+	                                    <input type="text" class="form-control bg-light border-0" name="title" placeholder="제목" style="height: 55px;">
+	                                </div>
+	                                <div>
+	                                <label class="attr-value-option"><input type="checkbox" name="secret" value="true" onchange="kboard_toggle_password_field(this)"> 비밀글</label>
+	                                </div>
+	                        		<textarea id="summernote" name="content" ></textarea>
+	                                <div class="col-12">
+	                                    <button class="btn btn-dark w-100 py-3" type="submit">문의하기</button>
+	                                </div>
+	                            </div>
+	                        </form>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+    	</div>
 
-							<div class="modal-footer">
-								<button type="button" class="btn btn-primary btn-sm" id="btn-cancel">예</button>
-								<button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">아니오</button>
-							</div>
-						</div>
-					</div>
-				</div>
 
-				<div>
-					<button type="reset" class="btn btn-danger mt-1 float-end" data-bs-toggle="modal" data-bs-target="#insert" style="margin-left: 5px;">취소</button>
-					<button type="submit" class=" btn btn-primary mt-1 float-end">등록</button>
-				</div>
-		 	</form>
-        </div>
-    </div>
     <!-- Lesson Register Form End  -->
 	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
 	    <div class="container">
@@ -229,7 +184,7 @@
 	            <div class="col-lg-8 col-md-6">
 	                <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
 	                    <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights Reserved. 
-			
+
 			<!--/*** This template is free as long as you keep the footer authorâs credit link/attribution link/backlink. If you'd like to use the template without the footer authorâs credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
 			Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
 	                </div>
@@ -238,7 +193,6 @@
 	    </div>
 	</div>
     <!-- Footer End -->
-	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
 
 
     <!-- Back to Top -->
@@ -246,40 +200,29 @@
 
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/resources/lib/wow/wow.min.js"></script>
-    <script src="/resources/lib/easing/easing.min.js"></script>
-    <script src="/resources/lib/waypoints/waypoints.min.js"></script>
-    <script src="/resources/lib/counterup/counterup.min.js"></script>
-    <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/resources/lib/wow/wow.min.js"></script>
+<script src="/resources/lib/easing/easing.min.js"></script>
+<script src="/resources/lib/waypoints/waypoints.min.js"></script>
+<script src="/resources/lib/counterup/counterup.min.js"></script>
+<script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="/resources/js/main.js"></script>
 
-    <!-- Template Javascript -->
-	<script src="/resources/js/main.js"></script>
-    
-<script>
-	$(function() {
+<script src="/resources/js/summernote/summernote-lite.js"></script>
+<script src="/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 
-		$("#date").datepicker({
-			dateFormat: 'yy/mm/dd'
-		});
-		$("#btn-cancel").click(function(event){
-			location.href = "/group-lesson/list";
-		});
-	});
-
-
-
-
-
-// <button type="button" class="btn btn-primary btn-sm" id="cancel">예</button>
-
-	
-
+<script type="text/javascript">
+// 썸머노트 
+$(document).ready(function() {
+    $('#summernote').summernote({
+        height: 300,
+        lang: "ko-KR"
+    });
+});
 </script>
-    
-    
+
 </body>
 
 </html>

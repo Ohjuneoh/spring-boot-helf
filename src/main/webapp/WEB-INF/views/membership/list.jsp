@@ -80,11 +80,15 @@
 	<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
 		<div class="container py-5">
 			<div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-				<h5 class="fw-bold text-primary text-uppercase">Your Membership</h5>
+				<h5 class="fw-bold text-primary text-uppercase">Your Membership List</h5>
 				<h1 class="mb-0">나의 이용권을 확인하세요</h1>
 			</div>
 		</div>
-		
+		<c:if test="${param.error eq 'no-authority' }">
+			<div class="alert alert-danger" style="height: 50px; width: 800px;">
+				<strong>[잘못된 접근]</strong> 권한이 없습니다.
+			</div>
+		</c:if>
 		<c:if test="${empty list }">
 			<div class="d-grid gap-2 col-6 mx-auto align-items-center justify-content-center text-center">
 				<div>
@@ -156,7 +160,7 @@
 		                    </div>
 						</div>
 						<div class="align-items-end justify-content-end text-end" style="margin: 15px;">
-							<a href="refound?no=${dto.myMembership.no }" type="button" class="btn btn-danger" >환불하기</a>
+							<a href="refund?no=${dto.myMembership.no }" type="button" class="btn btn-danger" >환불하기</a>
 						</div>
 					</div>
 				</div>

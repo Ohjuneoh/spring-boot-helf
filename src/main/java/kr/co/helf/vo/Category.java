@@ -10,7 +10,7 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @Data
-@Alias("category")
+@Alias("cat")
 public class Category {
 
 	private int no;

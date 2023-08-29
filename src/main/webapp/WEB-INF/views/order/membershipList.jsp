@@ -57,7 +57,6 @@
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
                     <h1 class="display-4 text-white animated zoomIn">MEMBERSHIP</h1>
-                    <a href="" class="h5 text-white">이용권 목록</a>
                 </div>
             </div>
         </div>
@@ -80,7 +79,7 @@
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
 		<div class="container py-5">
 			<div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-				<h5 class="fw-bold text-primary text-uppercase">Our Products</h5>
+				<h5 class="fw-bold text-primary text-uppercase">Membership List</h5>
 				<h1 class="mb-0">이용권을 선택하세요</h1>
 			</div>
 			<div class="offset-2 col-lg-8 col-md-6 wow zoomIn row g-5 align-items-center justify-content-center text-center">

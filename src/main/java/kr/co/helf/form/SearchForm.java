@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Alias("searchForm")
-public class OrderSearchForm {
+public class SearchForm {
 
 	private String state;
 	private String type;

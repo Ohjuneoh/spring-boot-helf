@@ -6,10 +6,11 @@
 		select membership_no			as no,
 			   membership_name			as name,
 			   membership_description	as description,
-			   Membership_delete		as state,
+			   Membership_delete		as deleted,
 			   category_no				as "category.no",
 			   membership_price			as price
 		from helf_membership
+		where Membership_delete not in 'N'
 		order by membership_no desc
 	</select>
 
@@ -17,7 +18,7 @@
 		select membership_no			as no,
 			   membership_name			as name,
 			   membership_description	as description,
-			   Membership_delete		as state,
+			   Membership_delete		as deleted,
 			   category_no				as "category.no",
 			   membership_price			as price
 		from helf_membership
@@ -25,13 +26,17 @@
 	</select>
 
 	<select id="getMembershipJoinCatByNo" resultType="membershipJoinCat" parameterType="int">
-		select A.membership_no			as no,
-			   A.membership_name		as name,
-			   A.membership_price		as price,
-			   A.category_no			as catNo,
-			   B.category_name			as catName,
-			   B.category_property		as catProperty,
-			   B.category_use_option	as useOption
+		select A.membership_no				as no,
+			   A.membership_name			as name,
+			   A.membership_description		as description,
+			   A.membership_delete			as deleted,
+			   A.membership_price			as price,
+			   A.membership_create_date		as createDate,
+			   A.membership_delete_date		as deleteDate,
+			   B.category_no				as catNo,
+			   B.category_name				as catName,
+			   B.category_property			as catProperty,
+			   B.category_use_option		as useOption
 		from helf_membership A, helf_membership_category B
 		where A.category_no = B.category_no
 		and A.membership_no = #{value}
@@ -155,7 +160,7 @@
 			   rank_name		as name,
 			   rank_criteria	as criteria,
 			   rank_benefit		as benefit,
-			   rank_poin_rate	as pointRate
+			   rank_point_rate	as pointRate
 		from helf_ranks
 		where rank_no = #{value}
 	</select>
@@ -226,5 +231,39 @@
 			   my_option_price			as price
 		from helf_membership_my_option
 		where my_membership_no = #{value}
+	</select>
+	
+	<select id="getCustomerOrders" parameterType="String" resultType="kr.co.helf.vo.Order">
+	select 
+		o.orders_payment_date		as paymentDate, 
+		mm.membership_no			as "myMembership.no", 
+		m.membership_name			as "myMembership.membership.name", 
+		o.orders_total_price		as totalPrice, 
+		o.orders_membership_price	as membershipPrice, 
+		o.orders_payment_state		as state, 
+		mo.option_name				as "myMembership.myOption.optionDetail.option.name"
+	from helf_orders o, helf_my_membership mm, helf_membership m, helf_membership_my_option mmo, 
+		 helf_membership_option mo, helf_membership_option_detail mod
+	where o.my_membership_no = mm.my_membership_no 
+	and mm.membership_no = m.membership_no 
+	and mm.my_membership_no = mmo.my_membership_no (+)
+	and mmo.detail_no = mod.detail_no(+)
+	and mod.option_no = mo.option_no(+) 
+	and o.user_id = #{value}
+	</select>
+	
+	<select id="getCustomerMyMemberships" parameterType="String" resultType="kr.co.helf.vo.MyMembership">
+	select 
+    	mc.category_name				as "membership.category.name", 
+    	mc.category_property			as "membership.category.property", 
+    	m.membership_name				as "membership.name", 
+    	mm.my_membership_state			as state, 
+    	mm.my_membership_startdate		as startDate, 
+    	mm.my_membership_enddate		as endDate, 
+    	mm.my_membership_remainder_cnt	as remainderCnt
+	from helf_my_membership mm, helf_membership m, helf_membership_category mc
+	where mm.membership_no = m.membership_no
+	and m.category_no = mc.category_no
+	and mm.user_id = #{value}
 	</select>
 </mapper>

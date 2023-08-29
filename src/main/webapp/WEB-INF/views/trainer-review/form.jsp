@@ -110,6 +110,7 @@
             <div class="row g-1">
                 <!-- 리뷰작성 버튼에서 전달받은 lessonApply번호를 히든으로 넣어둠 -->
                 <input type="hidden"  name="lessonApplyNo" value="${param.applyNo }"/>
+                <input type="hidden" name="lessonNo" value="${param.lessonNo }" />
                 <div class="col-6">
                     <input type="text" class="form-control bg-light border-0" name="title" placeholder="제목" style="height: 55px;">
                 </div>

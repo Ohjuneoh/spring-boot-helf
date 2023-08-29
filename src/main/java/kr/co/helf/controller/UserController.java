@@ -1,6 +1,8 @@
 package kr.co.helf.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -36,7 +38,6 @@ public class UserController {
 	UserService userService = new UserService();
 	
 	/* 회원가입 시작 */
-	
 	// 회원가입 초기화면 
 	@GetMapping(value="/registerform")
 	public String registerForm(Model model) {
@@ -74,7 +75,7 @@ public class UserController {
 	
 	// 회원가입 완료화면 (트레이너)
 	@PostMapping(value="/register/trainer2")
-	public String registerTrainer2(@ModelAttribute("addUserForm") AddUserForm form) {
+	public String registerTrainer2(@ModelAttribute("addUserForm") AddUserForm form) throws IOException {
 		System.out.println(form);
 		userService.createTrainer(form);
 		
@@ -118,34 +119,36 @@ public class UserController {
 	
 	
 	
-	//아이디 찾기 (ajax)
+	// 아이디 찾기 (ajax)
 	@GetMapping("/findId")
 	@ResponseBody
-	public String findId(@RequestParam("name") String name,@RequestParam("tel") String tel) throws Exception {
-		String result = userService.findId(name, tel);
+	public List<String> findId(@RequestParam("name") String name,@RequestParam("tel") String tel) throws Exception {
+		List<String> result = userService.findId(name, tel);
+		return result;
+	}
+	
+	// 비밀번호 찾기 (ajax) - 인증번호 전송
+	@GetMapping("/findPwdAuth")
+	@ResponseBody
+	public String findPwd(@RequestParam("id") String userId) throws Exception {
 		
-		if(result == null) {
+		try {
+			userService.findPwdAuth(userId);
+			return "success";	
+
+		} catch (RuntimeException ex) {
+			ex.printStackTrace();
 			return "fail";	
-		} else {
-			return result;	
 		}
 	}
 	
-//	@PostMapping(value="/findIdByEmail")
-//	@ResponseBody
-//	public String findIdEmail(@RequestParam("name") String name, 
-//			@RequestParam(name = "email", required = false) String email) {
-//		
-//		try {
-//			userService.getFindIdByTel(name, email);		
-//			return "success";
-//		} catch (RuntimeException ex) {
-//			return "fail";
+	// 비밀번호 찾기 (ajax) - 인증번호 인증
+
+//		@PostMapping("/findPwd")
+//		public String findPassword(String userId) {
+//			userService.initPassword(userId);
+//			return "/login/findPwdFinish";
 //		}
-		
-		
-		
-//	}
 	
 	// 비밀번호찾기 화면
 	@GetMapping(value="/findPwd")

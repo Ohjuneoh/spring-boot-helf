@@ -1,19 +1,36 @@
 package kr.co.helf.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.helf.dto.AttendanceList;
+import kr.co.helf.dto.CustomerDetailDto;
+import kr.co.helf.dto.CustomerListDto;
 import kr.co.helf.dto.Pagination;
 import kr.co.helf.form.AddUserForm;
+import kr.co.helf.mapper.OrderMapper;
 import kr.co.helf.mapper.UserMapper;
+import kr.co.helf.vo.CustomerAttendance;
+import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.MyMembership;
+import kr.co.helf.vo.Order;
 import kr.co.helf.vo.Rank;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.TrainerCareer;
@@ -24,7 +41,13 @@ import kr.co.helf.vo.User;
 public class UserService {
 	
 	@Autowired
+	private JavaMailSender javaMailSender;
+	
+	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private OrderMapper orderMapper;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -53,7 +76,10 @@ public class UserService {
 	}
 
 	
-	public void createTrainer(AddUserForm form) {
+	String directory = "C:\\Users\\drk25\\git\\spring-boot-helf\\src\\main\\webapp\\resources\\img\\photo";
+	
+	public void createTrainer(AddUserForm form) throws IOException {
+		
 		User user = new User();
 		
 		BeanUtils.copyProperties(form, user);
@@ -71,7 +97,15 @@ public class UserService {
 		// (2단계)트레이너 객체에 사진파일 담기
 		Trainer trainer = new Trainer();
 		
-		trainer.setTrainerFile("sample.png");
+		MultipartFile photofile = form.getPhotofile();
+		if (!photofile.isEmpty()) {
+			String filename = photofile.getOriginalFilename();
+			trainer.setTrainerFile(filename);
+		
+			OutputStream out = new FileOutputStream(new File(directory, filename));
+			InputStream in = photofile.getInputStream();
+			FileCopyUtils.copy(in, out);
+		}
 		trainer.setUser(user);
 		
 		//(2단계)트레이너 경력객체에 담기
@@ -92,21 +126,58 @@ public class UserService {
 	}
 	
 	// 아이디 찾기(ajax)
-	public String findId(String name, String tel) throws Exception {
+	public List<String> findId(String name, String tel) throws Exception {
 		return userMapper.getIdByTel(name, tel);
 	}
 	
-//	public void getFindIdByEmail(String name, String email) {
-//	// 사용자 정보 조회
-//	// 사용자 정보가 존재하면 
-//	//		인증번호를 생성하고, 데이터베이스에 저장
-//	// 		인증번호를 메일로 발송
-//	// 사용자 정보가 존재하지 않으면
-//	//		예외를 발생시킨다.
-//	
-//}
-	
-	
+	// 비밀번호 찾기 (ajax)
+		public void findPwdAuth(String userId) throws Exception {
+			User user = userMapper.getUserById(userId);
+			if (user == null) {
+				throw new RuntimeException("아이디가 존재하지 않음");
+			}
+
+			String auth = generateAuth();
+			user.setAuthenticationNo(auth);
+
+			userMapper.updateUser(user);
+
+			sendEmail(user.getEmail(), auth);
+
+		}
+
+		private String generateAuth() {
+			String text = "1234567890qwertyuiopasdfghjklzxcbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+			Random random = new Random();
+			StringBuilder sb = new StringBuilder();
+			for (int i = 1; i <= 6; i++) {
+				sb.append(text.charAt(random.nextInt(text.length())));
+			}
+			return sb.toString();
+		}
+
+		private void sendEmail(String email, String auth) {
+			SimpleMailMessage message = new SimpleMailMessage();
+
+			message.setTo(email);
+			message.setSubject("HELF 헬스장에서 이메일 인증번호를 보냅니다.");
+			message.setText("인증번호: " + auth);
+
+			javaMailSender.send(message);
+		}
+
+//		public void initPassword(String userId) {
+//			User user = userMapper.getUserById(userId);
+//			
+//			String pwd = generatePassword();
+//			String encPassword = passwordEncoder.encode(pwd);
+//			user.setEncryptedPassword(encPassword);
+//			
+//			userMapper.updateUser(user);
+//			
+//			sendEmail(user.getEmail(), pwd);
+//		}
+
 	
 	public List<User> getUsersWithFourDigits(String fourDigits) {
 		return userMapper.getUsersByDigits(fourDigits);
@@ -123,15 +194,15 @@ public class UserService {
 		return userMapper.getMyMembership(userId);
 	}
 	
-	public void createAttendance(String userId) {
-		userMapper.insertAttendance(userId);
+	public void createAttendance(Map<String, Object> param){
+		userMapper.insertAttendance(param);
 	}
 	
 	
 	//직원 출석 목록 조회 - 채경 
 	public AttendanceList getTrainerAttendances(Map<String, Object> param) {
 		
-		int totalRows = userMapper.getTotalRows(param);
+		int totalRows = userMapper.getTrainerTotalRows(param);
 		
 		int page = (int) param.get("page");
 		Pagination pagination = new Pagination(page, totalRows);
@@ -155,8 +226,55 @@ public class UserService {
 		userMapper.insertTrainerAttendances(param);
 	}
 
-
-
+	// 고객 조회 - 채경
+	public Map<String, Object> getAllCustomerInfo(Map<String, Object> param){
+		// 총 행의 개수 
+		int totalRows = userMapper.getCustomerTotalRows();
+		
+		// 파라미터 값을 뽑아내서 페이지네이션에 넣는다.
+		int page = (int) param.get("page");
+		int rows = (int) param.get("rows");
+		Pagination pagination = new Pagination(rows, page, totalRows);
+		
+		// 페이지네이션의 시작 부분, 끝 부분을 얻어내서 파라미터에 담는다.
+		int begin = pagination.getBegin();
+		int end = pagination.getEnd();
+		param.put("begin", begin);
+		param.put("end", end);
+		
+		
+		List<CustomerListDto> customerList =userMapper.getCustomers(param);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("customerList", customerList);
+		result.put("pagination", pagination);
+		result.put("totalRows", totalRows);
+		
+		return result;
+		
+	}
+	
+	// 관리자 - 고객 상세 조회 
+	public CustomerDetailDto getCustomerDetails(String id) {
+		CustomerDetailDto result =	userMapper.getCustomerInfoDetails(id); // 여기에다가 계속 업데이트 해야 함 
+		// 수업 내역 조회
+		List<LessonApply> lessonApply = userMapper.getCustomerLessons(id);
+		result.setLessonApply(lessonApply);
+		
+		// 결제 내역 조회 
+		List<Order> orderList = orderMapper.getCustomerOrders(id);
+		result.setOrder(orderList);
+		
+		// 이용권 목록 조회 
+		List<MyMembership> myMembershipList = orderMapper.getCustomerMyMemberships(id);
+		result.setMyMembership(myMembershipList);
+		
+		// 최근 방문 내역 
+		List<CustomerAttendance> customerAttendance = userMapper.getCustomerAttendance(id);
+		result.setCustomerAttendance(customerAttendance);
+	
+		return result; 
+	}
 }
 
 

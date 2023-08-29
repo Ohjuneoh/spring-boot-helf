@@ -130,14 +130,14 @@
 					<div doz_type="widget" id="w201908176065896b508a7">
 						<div class="_widget_data  animated wg_animated fadeInUp" data-widget-name="텍스트" data-widget-type="text" data-widget-anim="fadeInUp" data-widget-anim-duration="0.7" data-widget-anim-delay="0.4" data-widget-parent-is-mobile="N" style="opacity: 1; animation-duration: 0.7s; animation-delay: 0.4s; visibility: visible;">
 							<div doz_type="text" class="widget _text_wrap widget_text_wrap fr-view  default_padding " id="text_w201908176065896b508a7">
-										<div class="text-table ">
-											<div>
-												<p>모두가 즐겨 찾는 서비스로 HELF를 시작해보세요.<br>
-													<a href="/user/loginform" class="btn btn-primary py-2 px-4 ms-3">로그인하기</a>
-													<a href="/" class="btn btn-primary py-2 px-4 ms-3">홈으로가기</a>
-												</p>
-											</div>
-										</div>		
+								<div class="text-table ">
+									<div>
+										<p>모두가 즐겨 찾는 서비스로 HELF를 시작해보세요.<br>
+											<a href="/user/loginform" class="btn btn-primary py-2 px-4 ms-3">로그인하기</a>
+											<a href="/" class="btn btn-primary py-2 px-4 ms-3">홈으로가기</a>
+										</p>
+									</div>
+								</div>		
 							</div>
 						</div>
 					</div>

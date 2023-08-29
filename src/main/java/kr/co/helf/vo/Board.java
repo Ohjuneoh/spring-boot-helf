@@ -10,7 +10,7 @@ import lombok.Data;
 @Alias("Board")  
 public class Board {
 
-	private String no;
+	private int no;
 	private String title;
 	private String content;
 	private Date createDate;
@@ -20,5 +20,5 @@ public class Board {
 	private String type;
 	private User user;
 	private Date deleteDate;
-	private String main;
+	private int main;
 }

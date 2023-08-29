@@ -59,7 +59,7 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">INQUIRIES</h1>
+                    <h1 class="display-4 text-white animated zoomIn">INQUIRY</h1>
                     <a href="" class="h5 text-white">1:1 문의</a>
                 </div>
             </div>
@@ -82,110 +82,85 @@
     </div>
     
     
-    <!-- 도움말 -->
-	<div class="container mt-5">
-	<h4>문의 목록</h4><br>
-	  <!-- 1:1 문의 navbar -->
-	  <ul class="nav nav-pills" role="tablist">
-	    <li class="nav-item">
-	      <a class="nav-link active" data-bs-toggle="pill" href="#all">전체</a>
-	    </li>
-	    <li class="nav-item">
-	      <a class="nav-link" data-bs-toggle="pill" href="#menu1">답변완료</a>
-	    </li>
-	    <li class="nav-item">
-	      <a class="nav-link" data-bs-toggle="pill" href="#menu2">답변대기</a>
-	    </li>
-	  </ul>
-		
-		<!-- 도움말 내용 -->
-		<div class="tab-content">
-		  <div id="all" class="container tab-pane active"><br>
-			<div class="row g-5">
-				<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
-					<div class="container py-5">
-						<div class="row mb-3">
-							<div class="col-12" >
-								<div id="boardlist" class="wrap_inner" style="width: 1100px;">
-									<div class="card-body">
-						               <table class="table">
-						               		<thead>
-												<tr>
-						                        	<th style="width: 20%; text-align: center;">문의구분</th>
-						                        	<th style="width: 30%; text-align: center;">제목</th>
-						                        	<th style="width: 20%; text-align: center;">답변여부</th>
-						                        	<th style="width: 30%; text-align: center;">작성일</th>
-						                     	</tr>
-											</thead>
-										   <tbody>
-												<tr>
-						                        	<td style="text-align: center;">1</td>
-													<td style="text-align: center;"><a href="/board/view.php?boardid=csnotice&amp;index_no=569">문의1</a></td>
-						                        	<td style="text-align: center;">답변완료</td>
-						                        	<td style="text-align: center;">2022.01.01</td>
-				                    		 	</tr>
-												<tr>
-						                        	<td style="text-align: center;">1</td>
-													<td style="text-align: center;"><a href="/board/view.php?boardid=csnotice&amp;index_no=569">문의2</a></td>
-						                        	<td style="text-align: center;">답변대기</td>
-						                        	<td style="text-align: center;">2022.01.01</td>
-				                    		 	</tr>
-												<tr>
-						                        	<td style="text-align: center;">1</td>
-													<td style="text-align: center;"><a href="/board/view.php?boardid=csnotice&amp;index_no=569">문의3</a></td>
-						                        	<td style="text-align: center;">답변완료</td>
-						                        	<td style="text-align: center;">2022.01.01</td>
-				                    		 	</tr>
-										   </tbody>
-						               </table>
-										<div class="ExpandMoreBtn_more_btn_box__5lBg8 d-flex justify-content-end align-items-center">
-											<button type="button" class="ExpandMoreBtn_more_btn__3XXD0">
-												글쓰기
-											</button>
-										</div>
-			        				</div>
-			    				</div>
-			    			</div>
-			    		</div>
-			        </div>
-	  			</div> 
-			</div>
-		</div>
-				    
-				    <div id="menu1" class="container tab-pane fade"><br>
-				      <h3>Menu 1</h3>
-				      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-				    </div>
-				    
-				    
-				    <div id="menu2" class="container tab-pane fade"><br>
-				      <h3>Menu 2</h3>
-				      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-				    </div>
-				  </div>
-			</div>
-    
-    
-    
+ 
+    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
+		<div class="container py-5">
+			<div class="row mb-3">
+				<div class="col-12 d-flex justify-content-center" >
+					<div id="boardlist" class="wrap_inner" style="width: 1200px;">
+						<div class="card-body">
+							<!-- 검색 -->
+						    <div class="d-flex justify-content-center mb-4">
+								<div class="Search_search_box__2RnqG" >
+							      <input type="text" name="query" placeholder="궁금한 점을 검색해 보세요." autocomplete="off" class="Search_search_input__15WyK" value="" title="검색" style="width: 300px;">
+							       <button type="button" class="Search_btn_search__s1gr6 search-layer" id="search-button">
+							       	<span class="blind"> <i class="bi bi-search"></i></span>
+							       </button>
+							     </div>
+						    </div>
+			               <table class="table">
+			               		<thead>
+									<tr>
+			                        	<th style="width: 20%;">글번호</th>
+			                        	<th style="width: 30%;">제목</th>
+			                        	<th style="width: 40%;">작성일</th>
+			                        	<th style="width: 10%;">답변여부</th>
+			                     	</tr>
+								</thead>
+							   <tbody>
+							   <c:forEach var="board" items="${result.notices }">
+				                        <tr>
+				                        	<c:choose>
+												<c:when test="${board.main == 0 }">
+					                        		<td><i class="bi bi-megaphone-fill" style="color: blue; font-size: 20px;"></i></td>
+												</c:when>
+												<c:otherwise>
+									                <td>${board.main }</td>
+									            </c:otherwise>
+				                        	</c:choose>
+											<td><a href="/board/detail?no=${board.no }">${board.title }</a></td>
+				                        	<td><fmt:formatDate value="${board.createDate }" pattern="yyyy년 M월 d일" /></td>
+											<td>${board.readCount }</td>
+		                    		 	</tr>
+							   </c:forEach>
 
+
+							   </tbody>
+			               </table>
+			               <div class="ExpandMoreBtn_more_btn_box__5lBg8 d-flex justify-content-end align-items-center">
+								<a href="inquiryUserForm" class="btn btn-primary btn-sm" >
+									문의하기
+								</a>
+							</div>
+        				</div>
+    				</div>
+    			</div>
+    		</div>
+        </div>
+    </div>
+    
     
 	<div class="row mb-3" >
 		<div class="col-12" style="text-align: center;">
+			<c:choose>
+				<c:when test="${not empty result }">
 			<nav>
 				<ul class="pagination justify-content-center">
 					<li class="page-item ${result.pagination.first ? 'disabled' : '' }">
-						<a class="page-link"  href="list?page=${result.pagination.prePage }" >이전</a>
+						<a class="page-link"  href="notice?page=${result.pagination.prePage }" >이전</a>
 					</li>
 				<c:forEach var="num" begin="${result.pagination.beginPage }" end="${result.pagination.endPage }">
 					<li class="page-item ${result.pagination.page eq num ? 'active' : '' }">
-						<a class="page-link" href="list?page=${num }" >${num }</a>
+						<a class="page-link" href="notice?page=${num }" >${num }</a>
 					</li>
 				</c:forEach>
 					<li class="page-item ${result.pagination.last ? 'disabled' : '' }">
-						<a class="page-link" href="list?page=${result.pagination.nextPage }" >다음</a>
+						<a class="page-link" href="notice?page=${result.pagination.nextPage }" >다음</a>
 					</li>
 				</ul>
 			</nav>
+				</c:when>
+			</c:choose>
 		</div>
 	</div>
 	

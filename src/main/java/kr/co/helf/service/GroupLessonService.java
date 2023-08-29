@@ -1,7 +1,7 @@
 package kr.co.helf.service;
 
 import kr.co.helf.dto.Pagination;
-import kr.co.helf.form.ModifyForm;
+import kr.co.helf.form.ModifyGroupLessonForm;
 import kr.co.helf.mapper.GroupLessonMapper;
 import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.LessonApply;
@@ -78,7 +78,7 @@ public class GroupLessonService {
         groupLessonMapper.updateReqCount(lesson);
     }
     // 레슨 번호로 레슨 수정
-    public void updateLesson(ModifyForm form, User user) {
+    public void updateLesson(ModifyGroupLessonForm form, User user) {
         Lesson lesson = groupLessonMapper.getLessonByNo(form.getNo());
         BeanUtils.copyProperties(form,lesson);
         groupLessonMapper.updateLesson(form);

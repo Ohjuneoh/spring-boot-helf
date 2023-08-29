@@ -31,17 +31,22 @@
                 user_id						as "user.id",
                 board_delete_date			as deleteDate,
                 board_main					as main,
-                 row_number() over (order by board_main asc, board_no asc) rownumber
+                row_number() over (order by board_main asc, board_no asc) rownumber
              from
                 helf_boards
+
+              where
+              	board_deleted = 'N'
             )
         where
             rownumber between #{begin} and #{end}
+        
     </select>
     
     <!-- 게시판 번호로 상세정보 조회  -->
     <select id="getBoardByNo" resultType="Board" parameterType="int">
     	select 
+    		board_no			as no,
     		board_title 		as title,
     		board_content		as content,
     		board_create_date	as createDate,
@@ -75,6 +80,33 @@
 		    order by board_no
 		    )
 		where board_no = #{value}
-
 	</select>
+	
+	<!-- 공지사항 수정 -->
+		<update id="updateBoard" parameterType="Board">
+			update 
+				helf_boards
+			set
+				board_title = #{title},
+				board_content = #{content},
+				board_main = #{main}, 
+				board_type = #{type},
+				board_update_date = sysdate
+			where
+				board_no = #{no}
+		</update>
+
+	<!-- 공지사항 삭제 -->
+		<update id="deleteBoard" parameterType="Board">
+			update 
+				helf_boards
+			set
+				board_deleted = 'Y',
+				board_delete_date = sysdate
+			where
+				board_no = #{no}
+		</update>
+
+  
+  
 </mapper>
