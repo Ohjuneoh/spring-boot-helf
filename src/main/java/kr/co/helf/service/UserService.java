@@ -1,10 +1,14 @@
 package kr.co.helf.service;
 
+<<<<<<< Updated upstream
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+=======
+import java.util.HashMap;
+>>>>>>> Stashed changes
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -20,10 +24,16 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.helf.dto.AttendanceList;
+import kr.co.helf.dto.CustomerDetailDto;
+import kr.co.helf.dto.CustomerListDto;
 import kr.co.helf.dto.Pagination;
 import kr.co.helf.form.AddUserForm;
+import kr.co.helf.mapper.OrderMapper;
 import kr.co.helf.mapper.UserMapper;
+import kr.co.helf.vo.CustomerAttendance;
+import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.MyMembership;
+import kr.co.helf.vo.Order;
 import kr.co.helf.vo.Rank;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.TrainerCareer;
@@ -38,6 +48,9 @@ public class UserService {
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private OrderMapper orderMapper;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -184,15 +197,15 @@ public class UserService {
 		return userMapper.getMyMembership(userId);
 	}
 	
-	public void createAttendance(String userId) {
-		userMapper.insertAttendance(userId);
+	public void createAttendance(Map<String, Object> param){
+		userMapper.insertAttendance(param);
 	}
 	
 	
 	//직원 출석 목록 조회 - 채경 
 	public AttendanceList getTrainerAttendances(Map<String, Object> param) {
 		
-		int totalRows = userMapper.getTotalRows(param);
+		int totalRows = userMapper.getTrainerTotalRows(param);
 		
 		int page = (int) param.get("page");
 		Pagination pagination = new Pagination(page, totalRows);
@@ -215,9 +228,62 @@ public class UserService {
 	public void createTrainerAttendance(Map<String, Object> param) {
 		userMapper.insertTrainerAttendances(param);
 	}
+<<<<<<< Updated upstream
 
 
 
+=======
+	
+	// 고객 조회 - 채경
+	public Map<String, Object> getAllCustomerInfo(Map<String, Object> param){
+		// 총 행의 개수 
+		int totalRows = userMapper.getCustomerTotalRows();
+		
+		// 파라미터 값을 뽑아내서 페이지네이션에 넣는다.
+		int page = (int) param.get("page");
+		int rows = (int) param.get("rows");
+		Pagination pagination = new Pagination(rows, page, totalRows);
+		
+		// 페이지네이션의 시작 부분, 끝 부분을 얻어내서 파라미터에 담는다.
+		int begin = pagination.getBegin();
+		int end = pagination.getEnd();
+		param.put("begin", begin);
+		param.put("end", end);
+		
+		
+		List<CustomerListDto> customerList =userMapper.getCustomers(param);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("customerList", customerList);
+		result.put("pagination", pagination);
+		result.put("totalRows", totalRows);
+		
+		return result;
+		
+	}
+	
+	// 관리자 - 고객 상세 조회 
+	public CustomerDetailDto getCustomerDetails(String id) {
+		CustomerDetailDto result =	userMapper.getCustomerInfoDetails(id); // 여기에다가 계속 업데이트 해야 함 
+		// 수업 내역 조회
+		List<LessonApply> lessonApply = userMapper.getCustomerLessons(id);
+		result.setLessonApply(lessonApply);
+		
+		// 결제 내역 조회 
+		List<Order> orderList = orderMapper.getCustomerOrders(id);
+		result.setOrder(orderList);
+		
+		// 이용권 목록 조회 
+		List<MyMembership> myMembershipList = orderMapper.getCustomerMyMemberships(id);
+		result.setMyMembership(myMembershipList);
+		
+		// 최근 방문 내역 
+		List<CustomerAttendance> customerAttendance = userMapper.getCustomerAttendance(id);
+		result.setCustomerAttendance(customerAttendance);
+	
+		return result; 
+	}
+>>>>>>> Stashed changes
 }
 
 

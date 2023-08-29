@@ -232,4 +232,38 @@
 		from helf_membership_my_option
 		where my_membership_no = #{value}
 	</select>
+	
+	<select id="getCustomerOrders" parameterType="String" resultType="kr.co.helf.vo.Order">
+	select 
+		o.orders_payment_date		as paymentDate, 
+		mm.membership_no			as "myMembership.no", 
+		m.membership_name			as "myMembership.membership.name", 
+		o.orders_total_price		as totalPrice, 
+		o.orders_membership_price	as membershipPrice, 
+		o.orders_payment_state		as state, 
+		mo.option_name				as "myMembership.myOption.optionDetail.option.name"
+	from helf_orders o, helf_my_membership mm, helf_membership m, helf_membership_my_option mmo, 
+		 helf_membership_option mo, helf_membership_option_detail mod
+	where o.my_membership_no = mm.my_membership_no 
+	and mm.membership_no = m.membership_no 
+	and mm.my_membership_no = mmo.my_membership_no (+)
+	and mmo.detail_no = mod.detail_no(+)
+	and mod.option_no = mo.option_no(+) 
+	and o.user_id = #{value}
+	</select>
+	
+	<select id="getCustomerMyMemberships" parameterType="String" resultType="kr.co.helf.vo.MyMembership">
+	select 
+    	mc.category_name				as "membership.category.name", 
+    	mc.category_property			as "membership.category.property", 
+    	m.membership_name				as "membership.name", 
+    	mm.my_membership_state			as state, 
+    	mm.my_membership_startdate		as startDate, 
+    	mm.my_membership_enddate		as endDate, 
+    	mm.my_membership_remainder_cnt	as remainderCnt
+	from helf_my_membership mm, helf_membership m, helf_membership_category mc
+	where mm.membership_no = m.membership_no
+	and m.category_no = mc.category_no
+	and mm.user_id = #{value}
+	</select>
 </mapper>
