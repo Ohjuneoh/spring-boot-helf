@@ -86,7 +86,8 @@
 	            	<div class="nav-item dropdown">
 	               		<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업</a>
 	                	<div class="dropdown-menu m-0">
-	                    	<a href="" class="dropdown-item">전체 수업 조회</a>
+	                    	<a href="/group-lesson/list" class="dropdown-item">그룹 수업 조회</a>
+	                    	<a href="" class="dropdown-item">개인 수업 조회</a>
 	                	</div>
 	            	</div>
 	            </sec:authorize>

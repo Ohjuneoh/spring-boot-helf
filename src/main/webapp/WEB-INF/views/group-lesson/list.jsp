@@ -182,7 +182,6 @@
 	<script src="/resources/js/main.js"></script>
 
 <script>
-
 </script>
 
     
