@@ -8,13 +8,11 @@ import org.springframework.stereotype.Service;
 import kr.co.helf.dto.UserConsultations;
 import kr.co.helf.dto.UserMyMemberships;
 import kr.co.helf.mapper.PersonalLessonMapper;
-import kr.co.helf.vo.Career;
 import kr.co.helf.vo.Consultation;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.PersonalLesson;
 import kr.co.helf.vo.Trainer;
-import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -68,10 +66,11 @@ public class PersonalLessonService {
 	        myMembership.setState("사용중");
 	        personalLessonMapper.updatedConsultation(consultation.getConsultationNo(), "수강중");
 	    }
-		
-		
 		personalLessonMapper.updateMyMembership(myMembership);
 		personalLessonMapper.insertPersonalLesson(personalLesson);
+		
+		personalLessonMapper.updateExpiredConsultation(personalLesson.getUser().getId(), personalLesson.getMyMembership().getNo(), "상담만료");
+		
 	}
 }
 

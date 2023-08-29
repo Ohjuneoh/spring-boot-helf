@@ -3,6 +3,7 @@ package kr.co.helf.controller;
 import kr.co.helf.service.LessonService;
 import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.LessonApply;
+import kr.co.helf.vo.PersonalLesson;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,6 +34,7 @@ public class LessonController {
     @GetMapping("/trainer-my-lesson")
     public String trainerList(@AuthenticationPrincipal User user, Model model){
         List<Lesson> createList = lessonService.getAllCreateLessons(user.getId());
+        List<PersonalLesson> personalLessonList = lessonService.getAllPersonalLessons(user.getId());
         model.addAttribute("createList",createList);
         return "lesson/trainerLesson";
     }
