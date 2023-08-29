@@ -19,7 +19,7 @@ import kr.co.helf.vo.User;
 public interface PersonalLessonMapper {
 	
 	//경력을 가진 트레이너 조회
-	List<Trainer> getAllTrainersWithCareer();
+	List<Trainer> getAllTrainersWithCareer(String userId);
 	//1대1 PT 예약
 	void insertConsultation(Consultation consultation);
 

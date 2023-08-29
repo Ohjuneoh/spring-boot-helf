@@ -98,25 +98,34 @@
                         		<h6 class="mb-0" >해당 강사에게 무료 PT 상담 요청이 진행되며, 회원님의 담당강사로 배정되어 1:1 상담 및 관리를 해드립니다.</h6>
 								<h6 class="mb-0">센터의 사정에 의해 다른 담당강사가 배정될 수 있습니다. 배정된 담당강사가 확인 후 회원님께 연락을 드립니다</h6>
 			               	</div>
-			               	<c:forEach var="trainer" items="${trainers}">
-			               	<div class="col-6" >
-	            				<img src="/resources/img/${trainer.trainerFile}"  class="img-fluid"/>
-	            			</div>
-		           			<div class="col-3"> 
-		            			<h1 class="mb-5">${trainer.user.name}<strong style="margin-left: 10px; color: gray;">강사</strong></h1>
-		            			<h4 class="mb-3">주요 약력</h4>
-		            			<c:forEach var="career" items="${trainer.careers}">
-								    <h6 class="text-muted mb-3">
-								        <fmt:formatDate value="${career.careerStartDate}" pattern="yyyy-MM" /> ~ <fmt:formatDate value="${career.careerEndDate}" pattern="yyyy-MM" />
-								        <span><strong>${career.careerName}</strong></span>
-								    </h6>
-								</c:forEach>
-		            		</div>
-		            		<div class="col-3"> 
-		            			<button class="btn btn-primary btn-lg" data-trainer-no="${trainer.trainerNo}">선택하기</button>
-		            		</div>
-		            		<hr width="90%" color="gray"></hr>
-		            		</c:forEach>
+			               	<c:choose>
+	           					<c:when test="${not empty trainers}">
+					               	<c:forEach var="trainer" items="${trainers}">
+					               	<div class="col-6" >
+			            				<img src="/resources/img/${trainer.trainerFile}"  class="img-fluid"/>
+			            			</div>
+				           			<div class="col-3"> 
+				            			<h1 class="mb-5">${trainer.user.name}<strong style="margin-left: 10px; color: gray;">강사</strong></h1>
+				            			<h4 class="mb-3">주요 약력</h4>
+				            			<c:forEach var="career" items="${trainer.careers}">
+										    <h6 class="text-muted mb-3">
+										        <fmt:formatDate value="${career.careerStartDate}" pattern="yyyy-MM" /> ~ <fmt:formatDate value="${career.careerEndDate}" pattern="yyyy-MM" />
+										        <span><strong>${career.careerName}</strong></span>
+										    </h6>
+										</c:forEach>
+				            		</div>
+				            		<div class="col-3"> 
+				            			<button class="btn btn-primary btn-lg" data-trainer-no="${trainer.trainerNo}">선택하기</button>
+				            		</div>
+				            		<hr width="90%" color="gray"></hr>
+				            		</c:forEach>
+		            			</c:when>
+			            		<c:otherwise>
+			                        <div class="col-12">
+			                            <p class="text-primary"><strong>신청 가능한 강사가 없습니다.</strong></p>
+			                        </div>
+	                    		</c:otherwise>   
+		            		</c:choose>
 				    	</div>
 				 	</div>
 				</div>
@@ -209,7 +218,7 @@
 			        	</c:when>
 			        	<c:otherwise>
 	                        <div class="col-12">
-	                            <strong>보유중인 회원권이 없습니다.</strong>
+	                            <p class="text-primary"><strong>보유중인 회원권이 없습니다.</strong></p>
 	                        </div>
                     	</c:otherwise>     
 		        	</c:choose>        
