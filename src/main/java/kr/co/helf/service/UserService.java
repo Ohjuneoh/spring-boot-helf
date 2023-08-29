@@ -1,14 +1,11 @@
 package kr.co.helf.service;
 
-<<<<<<< Updated upstream
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-=======
 import java.util.HashMap;
->>>>>>> Stashed changes
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -228,12 +225,7 @@ public class UserService {
 	public void createTrainerAttendance(Map<String, Object> param) {
 		userMapper.insertTrainerAttendances(param);
 	}
-<<<<<<< Updated upstream
 
-
-
-=======
-	
 	// 고객 조회 - 채경
 	public Map<String, Object> getAllCustomerInfo(Map<String, Object> param){
 		// 총 행의 개수 
@@ -283,7 +275,6 @@ public class UserService {
 	
 		return result; 
 	}
->>>>>>> Stashed changes
 }
 
 
