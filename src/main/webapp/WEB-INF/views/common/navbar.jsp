@@ -23,12 +23,11 @@
 					</div>
 				</div>
             </sec:authorize>
-<<<<<<< Updated upstream
+
             <sec:authorize access="isAnonymous()">
             	<a href="/concept" class="nav-item nav-link">Concept</a>
             	<a href="/branch" class="nav-item nav-link">오시는길</a>
             	<a href="/trainerIntro" class="nav-item nav-link">강사 소개</a>
-=======
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">문의</a>
                 <div class="dropdown-menu m-0">
@@ -37,6 +36,7 @@
                     <a href="/board/inquiries" class="dropdown-item">1대1 문의</a>
                 </div>
             </div>
+            </sec:authorize>
             <sec:authorize access="hasRole('ROLE_USER') || hasRole('ROLE_TRAINER')">
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">마이페이지</a>
@@ -64,7 +64,6 @@
                     <a href="/checkin/check-in" class="dropdown-item">입장 화면</a>
                 </div>
             </div>
->>>>>>> Stashed changes
             </sec:authorize>
             <sec:authorize access="isAuthenticated">
 	            <sec:authorize access="hasRole('ROLE_USER') || hasRole('ROLE_TRAINER')">
