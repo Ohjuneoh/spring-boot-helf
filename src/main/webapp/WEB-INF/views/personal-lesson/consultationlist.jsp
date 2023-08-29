@@ -92,44 +92,35 @@
                 <h5 class="mb-0">목록을 확인하세요</h5>
             </div>
             <div class="row g-0">
-            <c:choose>
-            	<c:when test="${not empty consultation}">
-			            <c:forEach var="consultation" items="${consultations}">
-			                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
-			                    <div class="bg-white rounded shadow position-relative m-2" style="z-index: 1;">
-			                        <div class="border-bottom py-4 px-5 mb-4">
-			                            <h5 class="text-primary mb-2"></h5>
-			                            <h4 class="text-uppercase">${consultation.user.name} 회원님</h4>
-			                        </div>
-			                        <div class="p-5 pt-0">
-			                            
-			                            <c:choose>
-										    <c:when test="${consultation.consultations.consultationStatus eq '상담완료'}">
-										        <div class="d-flex justify-content-between mb-3"><strong>상태 :</strong><span class="text-primary"><strong>${consultation.consultations.consultationStatus}</strong></span><i class="fa fa-bell text-primary pt-1 text-end"></i></div>
-										    </c:when>
-										    <c:otherwise>
-										        <div class="d-flex justify-content-between mb-3"><strong>상태 :</strong><span>${consultation.consultations.consultationStatus}</span><i class="fa fa-bell text-primary pt-1 text-end"></i></div>
-										    </c:otherwise>
-										</c:choose>
-			                            <div class="d-flex justify-content-between mb-3"><strong>신청일 :</strong><span><fmt:formatDate value="${consultation.consultations.applicationDate}" pattern="yyyy-MM-dd" /></span><i class="fa fa-calendar text-secondary pt-1 text-end"></i></div>
-			                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청일 :</strong><span><fmt:formatDate value="${consultation.consultations.requestDate}" pattern="yyyy-MM-dd" /></span><i class="fa fa-calendar text-primary pt-1 text-end"></i></div>
-			                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청시간 :</strong><span>${consultation.consultations.requestTime}</span><i class="fa fa-clock text-primary pt-1 text-end"></i></div>
-			                            <div class="d-flex justify-content-center">
-			                            <button type="button" class="btn btn-primary py-2 px-4 mt-5" data-bs-toggle="modal" data-bs-target="#myModal"  
-			                            		data-username="${consultation.user.name}님 1:1수업" data-userid="${consultation.user.id}" data-trainerno="${consultation.consultations.trainer.trainerNo}" 
-			                            		data-mymembershipno="${consultation.consultations.myMembership.no}" data-consultationno="${consultation.consultations.consultationNo}">예약</button>
-			                            </div>
-			                        </div>
-			                    </div>
-			                </div>
-			            </c:forEach>
-		            </c:when>
-		            <c:otherwise>
-	                        <div class="col-12">
-	                            <p class="text-primary"><strong>신청한 회원이 없습니다.</strong></p>
+	            <c:forEach var="consultation" items="${consultations}">
+	                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+	                    <div class="bg-white rounded shadow position-relative m-2" style="z-index: 1;">
+	                        <div class="border-bottom py-4 px-5 mb-4">
+	                            <h5 class="text-primary mb-2"></h5>
+	                            <h4 class="text-uppercase">${consultation.user.name} 회원님</h4>
 	                        </div>
-                    </c:otherwise> 
-		    	</c:choose>
+	                        <div class="p-5 pt-0">
+	                            
+	                            <c:choose>
+								    <c:when test="${consultation.consultations.consultationStatus eq '상담완료'}">
+								        <div class="d-flex justify-content-between mb-3"><strong>상태 :</strong><span class="text-primary"><strong>${consultation.consultations.consultationStatus}</strong></span><i class="fa fa-bell text-primary pt-1 text-end"></i></div>
+								    </c:when>
+								    <c:otherwise>
+								        <div class="d-flex justify-content-between mb-3"><strong>상태 :</strong><span>${consultation.consultations.consultationStatus}</span><i class="fa fa-bell text-primary pt-1 text-end"></i></div>
+								    </c:otherwise>
+								</c:choose>
+	                            <div class="d-flex justify-content-between mb-3"><strong>신청일 :</strong><span><fmt:formatDate value="${consultation.consultations.applicationDate}" pattern="yyyy-MM-dd" /></span><i class="fa fa-calendar text-secondary pt-1 text-end"></i></div>
+	                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청일 :</strong><span><fmt:formatDate value="${consultation.consultations.requestDate}" pattern="yyyy-MM-dd" /></span><i class="fa fa-calendar text-primary pt-1 text-end"></i></div>
+	                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청시간 :</strong><span>${consultation.consultations.requestTime}</span><i class="fa fa-clock text-primary pt-1 text-end"></i></div>
+	                            <div class="d-flex justify-content-center">
+	                            <button type="button" class="btn btn-primary py-2 px-4 mt-5" data-bs-toggle="modal" data-bs-target="#myModal"  
+	                            		data-username="${consultation.user.name}님 1:1수업" data-userid="${consultation.user.id}" data-trainerno="${consultation.consultations.trainer.trainerNo}" 
+	                            		data-mymembershipno="${consultation.consultations.myMembership.no}" data-consultationno="${consultation.consultations.consultationNo}">예약</button>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </c:forEach>
             </div>
         </div>
     </div>

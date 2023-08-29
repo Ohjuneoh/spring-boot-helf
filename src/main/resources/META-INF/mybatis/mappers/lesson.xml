@@ -18,6 +18,24 @@
           and b.user_id = c.user_id
           and a.user_id = #{value}
     </select>
+    <!-- 내가 개설한 모든 개인수업 조회(트레이너) by 준오   -->
+    <select id="getAllPersonalLesson" parameterType="string" resultType="PersonalLesson">
+    	select 
+                a.personal_lesson_no,
+                a.personal_lesson_name,
+                a.personal_lesson_date,
+                a.personal_lesson_time,
+                a.personal_lesson_content,
+                a.personal_lesson_status,
+                a.my_membership_no,
+                a.trainer_no,
+                a.user_id,
+                b.user_name
+        from helf_personal_lesson a,  helf_users b
+        where 	a.user_id = b.user_id
+        and 	a.user_id = #{value}
+        order by	a.personal_lesson_no asc
+    </select>
     <!-- 내가 개설한 모든 수업 조회(트레이너) -->
     <select id="getAllCreateLessons" resultType="Lesson" parameterType="string">
         select

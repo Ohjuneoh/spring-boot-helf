@@ -256,4 +256,12 @@
 											 
 		values(helf_personal_lesson_seq.nextval, #{name}, #{date}, #{time}, #{content}, #{myMembership.no}, #{trainer.trainerNo}, #{user.id})
 	</insert>
+	<!-- 상담 만료 업데이트  -->
+	<update id="updateExpiredConsultation"  parameterType="Consultation">
+		update helf_lesson_consultation
+		set lesson_consultation_status = '상담만료' 
+		where my_membership_no = #{no}
+		and user_id = #{id}
+		and lesson_consultation_status = '대기중'
+	</update>
 </mapper>
