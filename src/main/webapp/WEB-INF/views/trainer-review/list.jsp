@@ -150,8 +150,13 @@
             <p>${trainerReview.content }</p>
           </div>
           <div class="col-3 text-end">
-            <a href="/trainer-review/delete?reviewNo=${trainerReview.no }" class="btn btn-danger btn-sm float-end" style="margin-left: 5px;">삭제</a>
-            <a href="/trainer-review/modify?reviewNo=${trainerReview.no }" class="btn btn-warning btn-sm float-end">수정</a>
+            <sec:authorize access="isAuthenticated()">
+              <sec:authentication property="principal.id" var="loginUserId" />
+              <c:if test="${trainerReview.lessonApply.user.id eq loginUserId}">
+                <a href="/trainer-review/delete?reviewNo=${trainerReview.no }" class="btn btn-danger btn-sm float-end" style="margin-left: 5px;">삭제</a>
+                <a href="/trainer-review/modify?reviewNo=${trainerReview.no }" class="btn btn-warning btn-sm float-end">수정</a>
+              </c:if>
+            </sec:authorize>
           </div>
         </div>
         <!-- 작성일자 밑에 있는 리뷰내용 div -->

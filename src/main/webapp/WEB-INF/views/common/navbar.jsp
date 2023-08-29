@@ -72,6 +72,7 @@
 	                <div class="dropdown-menu m-0">
 	                    <a href="/group-lesson/list" class="dropdown-item">그룹 수업</a>
 	                    <a href="/personal-lesson/consultation" class="dropdown-item">개인 PT 신청</a>
+	                    <a href="/trainerIntro" class="dropdown-item">강사 리뷰 보기</a>
 	                </div>
 	            </div>
 	            </sec:authorize>

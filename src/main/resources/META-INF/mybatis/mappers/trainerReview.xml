@@ -127,7 +127,7 @@
                  a.trainer_review_rating as rating,
                  a.trainer_review_status as status,
                  b.lesson_name as "lesson.name",
-                 c.user_id as "user.id",
+                 c.user_id as "lessonApply.user.id",
                  d.user_name as "lessonApply.user.name",
                  row_number() over(order by trainer_review_no asc) rownumber
              from
