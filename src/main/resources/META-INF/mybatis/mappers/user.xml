@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.helf.mapper.UserMapper">
 	
+	
 	<select id="getUserById" parameterType="string" resultType="User">
 		select
 			user_id					as id,
@@ -16,7 +17,8 @@
 			user_update_date		as updateDate,
 			user_point				as point,
 			rank_no					as "rank.no",
-			user_type				as type
+			user_type				as type,
+			user_authentication_no	as authenticationNo
 			
 		from
 			helf_users
@@ -119,6 +121,16 @@
 		select count(*) from helf_users where user_id = #{value}
 	</select>
 	
+	
+	<!-- 비밀번호 찾기 - 인증번호 확인하기(ajax)  -->
+	<select id="getUserAuthById" resultType="string" >
+		select
+			user_authentication_no
+		from
+			helf_users
+		where 
+			user_id = #{id}
+	</select>
 	
 	<!-- 유저의 이용가능한 이용권 조회  // 추후 이용권 부분으로 옮길 예정 -->
 
