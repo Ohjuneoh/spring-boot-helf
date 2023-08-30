@@ -38,6 +38,7 @@ public class OrderJoin {
 	private LocalDate deleteDate;
 	
 	private int refundNo;
+	private int refundAmount;
 	private String refundState;
 	private LocalDate refundDate;
 	

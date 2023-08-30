@@ -119,7 +119,7 @@
 										<br/><br/><fmt:formatNumber value="${myOption.price }"/> 원
 			   						</c:forEach>
 				   				</td>
-				   				<td rowspan="3" style="vertical-align: middle;">
+				   				<td rowspan="2" style="vertical-align: middle;">
 				   					${dto.orderJoin.orderState }
 				   					<c:if test="${dto.orderJoin.orderState eq '환불대기' }">
 										<br/>
@@ -147,8 +147,7 @@
 			   					<th>
 			   						<strong>총 결제 금액</strong>
 			   					</th>
-			   					<td></td>
-			   					<td>
+			   					<td colspan="3" >
 			   						<strong>
 			   							<span id="total-price-text">
 			   								<fmt:formatNumber value="${dto.orderJoin.totalPrice }" pattern="###,###"/>
@@ -156,6 +155,20 @@
 			   						</strong>
 			   					</td>
 			   				</tr>
+		   					<c:if test="${dto.orderJoin.orderState ne '결제완료' }">
+				   				<tr>
+				   					<th>
+				   						<strong>환불금액</strong>
+				   					</th>
+				   					<td colspan="3" >
+				   						<strong>
+				   							<span>
+				   								<fmt:formatNumber value="${dto.refund.amount }" pattern="###,###"/>
+				   							</span>원
+				   						</strong>
+				   					</td>
+				   				</tr>
+		   					</c:if>
 			   			</thead>
 					</table>
 					<div style="margin: 100px;">

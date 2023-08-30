@@ -150,17 +150,20 @@
 	<select id="getOrderJoinByNo" parameterType="int" resultType="orderJoin">
 		select A.orders_no						as no,
 			   A.orders_total_price				as totalPrice,
-			   A.orders_payment_date			as paymentDate,
 			   A.orders_payment_state			as orderState,
 			   A.user_id						as "user.id",
-			   A.orders_surtax					as surtax,
 			   A.orders_membership_price		as membershipPrice,
+			   A.point_history_no				as "pointHistory.no",
+			   A.orders_surtax					as surtax,
 			   B.my_membership_no				as myMembershipNo,
+			   B.my_membership_startdate		as startDate,
+			   B.my_membership_enddate			as endDate,
+			   B.my_membership_remainder_cnt	as remainderCnt,
+			   B.my_membership_state			as myMembershipState,
 			   B.period_no						as "period.no",
 			   C.membership_no					as membershipNo,
-			   C.membership_name				as name,
-			   A.point_history_no				as "pointHistory.no"
-		from helf_orders A, helf_my_membership B, helf_membership C
+			   C.membership_name				as name
+		from helf_orders A, helf_my_membership B,helf_membership C
 		where A.my_membership_no = B.my_membership_no
 		and B.membership_no = C.membership_no
 		and A.orders_no = #{value}
@@ -252,39 +255,23 @@
 	
 	<update id="updateMembership" parameterType="membership">
 		update helf_membership
-		set
+		<set>
 			membership_name	= #{name},
 			membership_description = #{description},
 			membership_delete = #{deleted},
 			category_no = #{category.no},
 			membership_price = #{price},
 			membership_delete_date = #{deleteDate}
+		</set>
 		where membership_no = #{no}
 	</update>
 	
 	<select id="getOrders" parameterType="map" resultType="orderJoin">
 		select A.orders_no						as no,
-			   A.orders_total_price				as totalPrice,
-			   A.orders_payment_date			as paymentDate,
 			   A.orders_payment_state			as orderState,
 			   A.user_id						as "user.id",
-			   A.orders_membership_price		as membershipPrice,
-			   A.point_history_no				as "pointHistory.no",
-			   A.orders_surtax					as surtax,
-			   B.my_membership_no				as myMembershipNo,
-			   B.my_membership_startdate		as startDate,
-			   B.my_membership_enddate			as endDate,
-			   B.my_membership_remainder_cnt	as remainderCnt,
-			   B.my_membership_state			as myMembershipState,
-			   B.period_no						as "period.no",
-			   C.membership_no					as membershipNo,
-			   C.membership_name				as name,
-			   C.membership_description			as description,
-			   C.membership_delete				as state,
-			   C.category_no					as "category.no",
-			   C.membership_price				as price,
-			   C.membership_create_date			as createDate,
-			   C.membership_delete_date			as deleteDate
+			   C.refund_no						as refundNo,
+			   D.membership_name				as name
 		from (select row_number() over (orders_no) as rownumber,
 					 orders_no,
 					 orders_total_price,
@@ -295,9 +282,10 @@
 					 my_membership_no,
 					 point_history_no,
 					 orders_surtax
-			  from helf_orders) A, helf_my_membership B, helf_membership C
+			  from helf_orders) A, helf_my_membership B, helf_membership_refund C, helf_membership D
 		where A.my_membership_no = B.my_membership_no
-		and B.membership_no = C.membership_no
+		and A.orders_no = C.orders_no
+		and B.membership_no = D.membership_no
 		and A.rownumber between #{begin} and #{end}
 		<if test="state != null">
 			and A.orders_payment_state = #{state}
@@ -307,11 +295,11 @@
 		</if>
 		<if test="type != null">
 			<choose>
-				<when test="type == 'name'">
-					and C.membership_name like '%' || #{keyword} || '%'
+				<when test="type == 'refundNo'">
+					and C.refund_no = #{keyword}
 				</when>
-				<when test="type == 'no'">
-					and A.orders_no like '%' || #{keyword} || '%'
+				<when test="type == 'name'">
+					and D.membership_name like '%' || #{keyword} || '%'
 				</when>
 			</choose>
 		</if>
@@ -320,16 +308,17 @@
 	
 	<select id="getOrderTotalRow" parameterType="map" resultType="int">
 		select count(*)
-		from helf_orders A, helf_my_membership B, helf_membership C
+		from helf_orders A, helf_my_membership B, helf_membership_refund C, helf_membership D
 		where A.my_membership_no = B.my_membership_no
-		and B.membership_no = C.membership_no
+		and A.orders_no = C.orders_no
+		and B.membership_no = D.membership_no
 		<if test="type != null">
 			<choose>
-				<when test="type == 'name'">
-					and C.membership_name like '%' || #{keyword} || '%'
+				<when test="type == 'refundNo'">
+					and C.refund_no = #{keyword}
 				</when>
-				<when test="type == 'no'">
-					and A.orders_no like '%' || #{keyword} || '%'
+				<when test="type == 'name'">
+					and D.membership_name like '%' || #{keyword} || '%'
 				</when>
 			</choose>
 		</if>
@@ -340,9 +329,9 @@
 	
 	<insert id="insertRefundByNo" parameterType="refund">
 		insert into helf_membership_refund
-			(refund_no, orders_no)
+			(refund_no, orders_no, refund_amount)
 		values
-			(helf_membership_refund_seq.nextval, #{order.no})
+			(helf_membership_refund_seq.nextval, #{order.no}, #{amount})
 	</insert>
 	
 	<select id="getOrderByNo" parameterType="int" resultType="order">
@@ -363,4 +352,61 @@
 		delete from helf_membership_refund
 		where orders_no = #{value}
 	</delete>
+	
+	<select id="getRefundDetailByNo" parameterType="int" resultType="orderJoin">
+		select A.orders_no						as no,
+			   A.orders_total_price				as totalPrice,
+			   A.orders_payment_date			as paymentDate,
+			   A.orders_payment_state			as orderState,
+			   A.user_id						as "user.id",
+			   A.orders_membership_price		as membershipPrice,
+			   A.point_history_no				as "pointHistory.no",
+			   A.orders_surtax					as surtax,
+			   B.my_membership_no				as myMembershipNo,
+			   B.my_membership_startdate		as startDate,
+			   B.my_membership_enddate			as endDate,
+			   B.my_membership_remainder_cnt	as remainderCnt,
+			   B.my_membership_state			as myMembershipState,
+			   B.period_no						as "period.no",
+			   C.refund_no						as refundNo,
+			   C.refund_state					as refundState,
+			   C.refund_amount					as refundAmount,
+			   C.refund_date					as refundDate,
+			   D.membership_no					as membershipNo,
+			   D.membership_name				as name
+		from helf_orders A, helf_my_membership B, helf_membership_refund C, helf_membership D
+		where A.my_membership_no = B.my_membership_no
+		and A.orders_no = C.orders_no
+		and B.membership_no = D.membership_no
+		and A.orders_no = #{value}
+	</select>
+	
+	<select id="getRefundByNo" parameterType="int" resultType="refund">
+		select refund_no		as no,
+			   refund_state		as state,
+			   refund_amount	as amount,
+			   orders_no		as "order.no",
+			   refund_date		as refundDate
+		from helf_membership_refund
+		where refund_no = #{value}
+	</select>
+
+	<select id="getRefundByOrderNo" parameterType="int" resultType="refund">
+		select refund_no		as no,
+			   refund_state		as state,
+			   refund_amount	as amount,
+			   orders_no		as "order.no",
+			   refund_date		as refundDate
+		from helf_membership_refund
+		where orders_no = #{value}
+	</select>
+	
+	<update id="updateRefund" parameterType="refund">
+		update helf_membership_refund
+		<set>
+			refund_state = #{state},
+			refund_amount = #{amount}
+		</set>
+		where refund_no = #{no}
+	</update>
 </mapper>

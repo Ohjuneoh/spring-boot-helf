@@ -162,6 +162,7 @@ public class OrderService {
 			
 			BeanUtils.copyProperties(form, pointHistory);
 			pointHistory.setUser(user);
+			pointHistory.setType(PAYMENT.getMembershiEnum());
 			orderMapper.insertHistory(pointHistory);
 			order.setPointHistory(pointHistory);
 		}
@@ -180,7 +181,7 @@ public class OrderService {
 		List<MyMembership> useMyMembership = orderMapper.getUseMyMembershipByNoById(map);
 		
 		if(!useMyMembership.isEmpty()) {
-			throw new RuntimeException("이미 구매하신 이용권입니다.");
+			throw new RuntimeException();
 		}
 	}
 

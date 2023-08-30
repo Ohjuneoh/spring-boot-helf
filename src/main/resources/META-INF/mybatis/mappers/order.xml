@@ -10,7 +10,7 @@
 			   category_no				as "category.no",
 			   membership_price			as price
 		from helf_membership
-		where Membership_delete not in 'N'
+		where Membership_delete = 'N'
 		order by membership_no desc
 	</select>
 
@@ -150,9 +150,9 @@
 			select helf_point_history_seq.nextval from dual
 		</selectKey>
 		insert into helf_point_history
-			(point_history_no, point_history_use, user_id)
+			(point_history_no, point_history_use, user_id, point_history_type)
 		values
-			(#{no}, #{usePoint}, #{user.id})
+			(#{no}, #{usePoint}, #{user.id}, #{type})
 	</insert>
 	
 	<select id="getRankByNo" parameterType="int" resultType="Rank">
