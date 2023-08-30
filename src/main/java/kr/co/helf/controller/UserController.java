@@ -37,7 +37,7 @@ public class UserController {
 	@Autowired
 	UserService userService = new UserService();
 	
-	/* 회원가입 시작 */
+/* 회원가입 시작 */
 	// 회원가입 초기화면 
 	@GetMapping(value="/registerform")
 	public String registerForm(Model model) {
@@ -96,13 +96,12 @@ public class UserController {
 			return "success";	// 중복 아이디 x
 		}
 	} 
-	/* 회원가입 끝 */
+/* 회원가입 끝 */
 	
 	
 	
 	
-	/* 로그인 시작 */
-	
+/* 로그인 시작 */
 	// 로그인화면 
 	@GetMapping(value="/loginform")
 	public String loginForm() {
@@ -186,6 +185,23 @@ public class UserController {
 		
 		return "error/user";
 	}
-
-	/* 로그인 끝 */
+/* 로그인 끝 */
+	
+	
+/* 마이페이지 시작 */
+	// 유저 마이페이지 화면
+	@GetMapping("/userMypage")
+	public String userMypage() {
+		
+		return "/mypage/userInfo";
+	}
+	
+	// 유저 마이페이지 수정화면
+	@GetMapping("/userModify")
+	public String userModifypage() {
+		
+		return "/mypage/userModifyInfo";
+	}
+/* 마이페이지 끝 */
+	
 }
