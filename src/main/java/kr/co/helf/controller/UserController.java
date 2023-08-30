@@ -117,8 +117,6 @@ public class UserController {
 		return "login/findId";
 	}
 	
-	
-	
 	// 아이디 찾기 (ajax)
 	@GetMapping("/findId")
 	@ResponseBody
@@ -127,8 +125,15 @@ public class UserController {
 		return result;
 	}
 	
+	// 비밀번호찾기 화면
+		@GetMapping(value="/findPwd")
+		public String findPassword() {
+			
+			return "login/findPwd";
+	}
+		
 	// 비밀번호 찾기 (ajax) - 인증번호 전송
-	@GetMapping("/findPwdAuth")
+	@GetMapping("/findPwdByAuth")
 	@ResponseBody
 	public String findPwd(@RequestParam("id") String userId) throws Exception {
 		
@@ -142,20 +147,38 @@ public class UserController {
 		}
 	}
 	
-	// 비밀번호 찾기 (ajax) - 인증번호 인증
-
-//		@PostMapping("/findPwd")
-//		public String findPassword(String userId) {
-//			userService.initPassword(userId);
-//			return "/login/findPwdFinish";
-//		}
-	
-	// 비밀번호찾기 화면
-	@GetMapping(value="/findPwd")
-	public String findPassword() {
+	// 비밀번호 찾기 (ajax) - 인증번호 인증(확인)
+	@GetMapping("/findPwdAuthChk")
+	@ResponseBody
+	public String checkAuth(@RequestParam("auth") String auth, @RequestParam("id") String userId) throws Exception {
 		
-		return "login/findPwd";
+		
+		try {
+			userService.checkPwdAuth(auth, userId);
+			return "success";	
+
+		} catch (RuntimeException ex) {
+			ex.printStackTrace();
+			return "fail";	
+		}
 	}
+	
+	// 비밀번호 변경 화면
+	@GetMapping("/changePwdForm")
+	public String changePwdform() {
+		
+		return "/login/changePwdForm";
+	}
+	
+	// 비밀번호 변경 
+	@PostMapping("/changePwd")
+	public String changePwd(@RequestParam("id") String userId, @RequestParam("newPwd") String newPwd) {
+		
+		userService.updateUserPwd(userId, newPwd);
+		
+		return "/login/changePwdFinish";
+	}
+	
 	
 	//인증되지 않은 사용자가 접근 했을 때 이동되는 페이지(by 준오)
 	@GetMapping(value="/denied")

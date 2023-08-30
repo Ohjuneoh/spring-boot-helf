@@ -30,6 +30,7 @@
 
     <!-- Template Stylesheet -->
     <link href="/resources/css/style.css" rel="stylesheet">
+    
 </head>
 
 <body>
@@ -85,22 +86,22 @@
 														<dt><label for="emailNm" class="label_txt">인증번호 (6자리)</label></dt>
 														<dd><input type="text" id="findPwd-auth" name="findPwd-auth" maxlength="40" class="input_txt" style="width:217px"></dd>
 															<dt class="col-sm-6 button-wrapper">
-							        							<input id="findPwd-auth-check-duplicate" type="button" value="확인" class="btn btn-primary " style="width:80px" />
-							    					</dt>
+							        							<input id="findPwd-auth-check-duplicate" type="button" value="확인" class="btn btn-primary " style="width:80px" disabled />
+															</dt>
+							        							<dd><label type="text" id="result-pwd-auth-1" name="result-pwd-auth-1"  class="input-txt-1" style="color: green; display: none;">인증번호가 일치합니다.</label></dd>
+																<dd><label type="text" id="result-pwd-auth-2" name="result-pwd-auth-2"  class="input-txt-2" style="color: red; display: none;">인증번호가 일치하지 않습니다.</label></dd>
 												</dl>
 											</div>		
 										</div>
-		                               
 	                            	</div>
-	                            	
-	                                <div class="col-12">
-	                                    <button class="btn btn-dark w-100 py-3" type="submit">비밀번호 변경</button>
-	                                </div>
+	                            </div>
+                        	</form>
+	                              	<div class="col-12 mt-3">
+								    	<button type="submit" class="btn btn-dark w-100 py-3" id="changePwd-button" disabled>비밀번호 변경하러가기</button>
+									</div>
 	                                <div class="col-12">
 	                                	<a href="/user/findIdform" class="btn" >아이디 찾기</a>
 	                                </div>
-	                            </div>
-                        	</form>
                         	
                         </div>
                     </div>
@@ -124,10 +125,12 @@
     <script src="/resources/lib/counterup/counterup.min.js"></script>
     <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script> 
 
+
+
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
     <script type="text/javascript">
-    	$(function(){
+    	$(function() {
     		$(":radio[name=certification]").change(function() {
     			let value=$(this).val();
     			if(value =='tel'){
@@ -143,43 +146,62 @@
     		$("#findPwd-id-check-duplicate").click(function() {
 	    		$.ajax({
 					type : "get",
-					url : "findPwdAuth",
+					url : "findPwdByAuth",
 					data : {id:$("input[name=findPwd-id]").val() },
 					success : function(result) {
 						console.log("result------------------> ", result)
 						if (result != 'fail') {
 							$("#result-pwd-id-1").css("display", "inline-block");
 							$("#result-pwd-id-2").css("display", "none");
+							$("#findPwd-auth-check-duplicate").prop("disabled", false);
+							$('#changePwd-button').prop("disabled", false);
 						} else {
 							 $('#result-pwd-id-2').css("display", "inline-block");
 			                 $('#result-pwd-id-1').css("display", "none");
+							 $('#changePwd-button').prop("disabled", true);
 						}
 					}
 	    		
 				});
     		})
     		
-    		/* 비밀번호 찾기 - 인증번호 인증 ajax */
+    		/* 비밀번호 찾기 - 인증번호 확인 ajax */
     		$("#findPwd-auth-check-duplicate").click(function() {
 	    		$.ajax({
 					type : "get",
-					url : "findPwd",
-					data : {id:$("input[name=findPwd-id]").val() },
+					url : "findPwdAuthChk",
+					data : {id:$("input[name=findPwd-id]").val(), auth:$("input[name=findPwd-auth]").val() },
 					success : function(result) {
 						console.log("result------------------> ", result)
 						if (result != 'fail') {
-							$("#result-pwd-id-1").css("display", "inline-block");
-							$("#result-pwd-id-2").css("display", "none");
+							$("#result-pwd-auth-1").css("display", "inline-block");
+							$("#result-pwd-auth-2").css("display", "none");
+			                $('#changePwd-button').prop("disabled", false);
 						} else {
-							 $('#result-pwd-id-2').css("display", "inline-block");
-			                 $('#result-pwd-id-1').css("display", "none");
+							 $('#result-pwd-auth-2').css("display", "inline-block");
+			                 $('#result-pwd-auth-1').css("display", "none");
+			                 $('#changePwd-button').prop("disabled", true);
 						}
 					}
 	    		
 				});
     		})
     		
-    	})
+
+ 	$(document).ready(function() {
+	    $("#changePwd-button").click(function() {
+	    	let id = $("#findPwd-id").val();
+	        // 버튼 클릭 시 이동할 링크
+	        var link = "/user/changePwdForm?id=" + id; 
+	        
+	        // 링크로 이동
+	        window.location.href = link;
+	    })
+	 })
+  
+  
+   })
+    	
     </script>
 </body>
 

@@ -52,7 +52,7 @@ public class UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	
+	// 유저 회원가입
 	public void createUser(AddUserForm form) {
 		User user = new User();
 		
@@ -75,7 +75,7 @@ public class UserService {
 		
 	}
 
-	
+	// 트레이너 회원가입
 	String directory = "C:\\Users\\drk25\\git\\spring-boot-helf\\src\\main\\webapp\\resources\\img\\photo";
 	
 	public void createTrainer(AddUserForm form) throws IOException {
@@ -120,17 +120,18 @@ public class UserService {
 		userMapper.insertTrainerCareer(trainerCareer);
 	}
 	
-	// 전화번호로 아이디찾기
-	public User getFindByTel(String name, String tel) {
-		return userMapper.getFindByTel(name, tel);
-	}
 	
 	// 아이디 찾기(ajax)
-	public List<String> findId(String name, String tel) throws Exception {
-		return userMapper.getIdByTel(name, tel);
-	}
+		public List<String> findId(String name, String tel) throws Exception {
+			return userMapper.getIdByTel(name, tel);
+		}
+		
+	// 아이디 중복검사(ajax)
+		public int idCheck(String userId) throws Exception {
+			return userMapper.idCheck(userId);
+		}
 	
-	// 비밀번호 찾기 (ajax)
+	// 비밀번호 찾기 (ajax) - 인증번호 전송
 		public void findPwdAuth(String userId) throws Exception {
 			User user = userMapper.getUserById(userId);
 			if (user == null) {
@@ -145,7 +146,31 @@ public class UserService {
 			sendEmail(user.getEmail(), auth);
 
 		}
-
+		
+	// 비밀번호 찾기 (ajax) - 인증번호 확인
+		public void checkPwdAuth(String auth, String userId) throws Exception {
+			String userAuth = userMapper.getUserAuthById(auth, userId);
+			
+			 if (!userAuth.equals(auth)) {
+				throw new RuntimeException("인증번호가 일치하지 않음");
+			}
+		}
+		
+	// 비밀번호 변경
+		public void updateUserPwd(String userId, String newPwd) {
+			
+			User user = userMapper.getUserById(userId);
+			
+			user.setEncryptedPassword(newPwd);
+			
+			//비밀번호를 암호화해서 저장시키기
+			String encryptedPassword = passwordEncoder.encode(user.getEncryptedPassword());
+			user.setEncryptedPassword(encryptedPassword);
+			
+			userMapper.updateUser(user);
+		}
+		
+	// 인증번호 생성
 		private String generateAuth() {
 			String text = "1234567890qwertyuiopasdfghjklzxcbnmQWERTYUIOPASDFGHJKLZXCVBNM";
 			Random random = new Random();
@@ -156,6 +181,7 @@ public class UserService {
 			return sb.toString();
 		}
 
+	// 인증번호 이메일로 전송
 		private void sendEmail(String email, String auth) {
 			SimpleMailMessage message = new SimpleMailMessage();
 
@@ -184,10 +210,6 @@ public class UserService {
 
 	}
 	
-	// 아이디 중복검사(ajax)
-	public int idCheck(String userId) throws Exception {
-		return userMapper.idCheck(userId);
-	}
 	
 	// // 입장시 회원권 유저 아이디로 조회 - 채경 (추후 membershipService로 이동 예정) 
 	public Optional<MyMembership> getMyMembershipDetail(String userId){
