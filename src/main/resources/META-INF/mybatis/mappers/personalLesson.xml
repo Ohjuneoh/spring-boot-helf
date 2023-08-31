@@ -213,7 +213,8 @@
 		and a.user_id = c.user_id
         and c.membership_no = d.membership_no
 		and c.my_membership_remainder_cnt > 0
-		and c.my_membership_state = '사용가능'
+		and (c.my_membership_state = '사용가능' or c.my_membership_state = '사용중')
+		and (a.lesson_consultation_status = '대기중' or a.lesson_consultation_status = '수강중')
         and d.category_no = 4
 		order by a.lesson_consultation_request_date asc
 	</select>

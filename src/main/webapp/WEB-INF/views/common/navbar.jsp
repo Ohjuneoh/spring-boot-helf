@@ -80,7 +80,7 @@
 	                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업(트레이너)</a>
 	                <div class="dropdown-menu m-0">
 	                    <a href="/group-lesson/list" class="dropdown-item">그룹 수업</a>
-	                    <a href="/personal-lesson/list" class="dropdown-item">개인 PT</a>
+	                    <a href="/personal-lesson/list" class="dropdown-item">PT 신청내역</a>
 	                </div>
 	            </div>
 	            </sec:authorize>
