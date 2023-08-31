@@ -1,10 +1,10 @@
 package kr.co.helf.controller;
 
+import static kr.co.helf.enums.MembershipEnum.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static kr.co.helf.controller.MembershipEnum.*;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -32,7 +32,7 @@ import kr.co.helf.service.OrderService;
 import kr.co.helf.vo.Category;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.MyOption;
-import kr.co.helf.vo.Order;
+import kr.co.helf.vo.Refund;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 
@@ -49,7 +49,6 @@ public class MembershipController {
 	public String membershipList(@AuthenticationPrincipal User user, Model model) {
 		
 		List<MyMembershipListDto> myMemberships = membershipService.getMyMembershipListById(user.getId());
-		
 		model.addAttribute("list", myMemberships);
 		
 		return "membership/list";
@@ -57,25 +56,22 @@ public class MembershipController {
 	
 	@GetMapping("/refund")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public String refund(@RequestParam("no") int no, @AuthenticationPrincipal User user) {
-		Order order = membershipService.getOrderByMyMembershipNo(no);
+	public String waitRefund(@RequestParam("no") int no, @AuthenticationPrincipal User user) {
 		
-		if(!user.getId().equals(order.getUser().getId())) {
+		MyMembership myMembership = membershipService.getRefundMyMembershipByNo(no);
+		
+		int remain = myMembership.remainPeriod();
+		if(remain <= 30) {
+			return "redirect:list?error=no-refund";
+		}
+		
+		if(!user.getId().equals(myMembership.getUser().getId())) {
 			return "redirect: list?error=no-authority";
 		}
 		
-		order.setState(WAITREFUND.getMembershiEnum());
-		membershipService.updateOrder(order);
-		
-		MyMembership myMembership = membershipService.getMyMembershipByNo(no);
-		
-		if(IMPOSSIBILITY.getMembershiEnum().equals(myMembership.getState())) {
-			throw new RuntimeException();
-		}
-		
-		myMembership.setState(IMPOSSIBILITY.getMembershiEnum());
-		membershipService.updateMyMembership(myMembership);
-		membershipService.insertRefund(order);
+		membershipService.updateRefundMyMembership(no);
+		membershipService.updateRefundOrder(no);
+		membershipService.insertRefund(no);
 		
 		return "redirect:list";
 	}
@@ -99,7 +95,6 @@ public class MembershipController {
 		if (StringUtils.hasText(form.getKeyword())) {
 			map.put("keyword", form.getKeyword());
 		}
-		
 		map.put("userId", user.getId());
 		
 		OrderListDto orderList = membershipService.getOrdersById(form.getPage(), map);
@@ -112,6 +107,7 @@ public class MembershipController {
 	@GetMapping("/order-detail")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String orderDetail(@RequestParam("no") int no, Model model, @AuthenticationPrincipal User user) {
+		
 		OrderJoin orderJoin = membershipService.getOrderDetailByNo(no);
 
 		if(!user.getId().equals(orderJoin.getUser().getId())) {
@@ -123,6 +119,11 @@ public class MembershipController {
 		
 		List<MyOption> myOptions = membershipService.getMyOptions(orderJoin.getMyMembershipNo());
 		dto.setMyOptions(myOptions);
+		
+		if(!PAYMENT.getMembershiEnum().equals(orderJoin.getOrderState())) {
+			Refund refund = membershipService.getRefundByOrderNo(orderJoin.getNo());
+			dto.setRefund(refund);
+		}
 		
 		model.addAttribute("dto", dto);
 		
@@ -138,15 +139,7 @@ public class MembershipController {
 							   @RequestParam(name = "page", required = false, defaultValue = "1") int page,
 							   RedirectAttributes attributes) {
 		
-		Order order = membershipService.getOrderByNo(no);
-		order.setState(PAYMENT.getMembershiEnum());
-		membershipService.updateOrderByNo(order);
-		
-		MyMembership myMembership = membershipService.getMyMembershipByNo(order.getMyMembership().getNo());
-		myMembership.setState(POSSIBILITY.getMembershiEnum());
-		membershipService.updateMyMembership(myMembership);
-		
-		membershipService.deleteRefund(order.getMyMembership().getNo());
+		membershipService.cancleRefund(no);
 		
 		attributes.addAttribute("no", no);
 		attributes.addAttribute("state", state);
@@ -154,7 +147,7 @@ public class MembershipController {
 		attributes.addAttribute("keyword", keyword);
 		attributes.addAttribute("page", page);
 		
-		return "redirect: order-detail";
+		return "redirect:order-detail";
 	}
 	
 	@GetMapping("/create-form")
@@ -173,7 +166,7 @@ public class MembershipController {
 		
 		membershipService.addMembership(form);
 		
-		return "redirect:listManager";
+		return "redirect:list-manager";
 	}
 
 	@GetMapping("/list-manager")
@@ -206,6 +199,7 @@ public class MembershipController {
 	@GetMapping("/detail-manager")
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public String detailManager(Model model, @RequestParam("no") int no) {
+		
 		MembershipJoinCategory membership = orderService.getMembershipJoinCatByNo(no);
 		model.addAttribute("membership", membership);
 		
@@ -259,12 +253,13 @@ public class MembershipController {
 	@GetMapping("/refund-manager")
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public String refundManager(Model model, @RequestParam(name = "state", required = false) String state,
-										      @RequestParam(name = "type", required = false) String type,
-										      @RequestParam(name = "keyword", required = false) String keyword,
-										      @RequestParam(name = "id", required = false) String id,
-										      @RequestParam(name = "page", required = false, defaultValue = "1") int page) {
+										     @RequestParam(name = "type", required = false) String type,
+										     @RequestParam(name = "keyword", required = false) String keyword,
+										     @RequestParam(name = "id", required = false) String id,
+										     @RequestParam(name = "page", required = false, defaultValue = "1") int page) {
 		
 		Map<String, Object> param = new HashMap<>();
+		param.put("page", page);
 		
 		if(StringUtils.hasText(state)) {
 			param.put("state", state);
@@ -282,9 +277,42 @@ public class MembershipController {
 			}
 		}
 		
-		OrderListDto refunds = membershipService.getAllRefund(param);
-		model.addAttribute(refunds);
+		OrderListDto dto = membershipService.getAllRefund(param);
+		model.addAttribute("dto", dto);
 		
 		return "membership/refundManager";
+	}
+	
+	@GetMapping("/refund-detail")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
+	public String refundDetail(Model model, @RequestParam("no") int no) {
+		
+		OrderJoin orderJoin = membershipService.getRefundDetailByNo(no);
+		model.addAttribute("orderJoin", orderJoin);
+		
+		return "membership/refundDetail";
+	}
+	
+	@PostMapping("/refund")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
+	public String refund(@RequestParam("no") List<Integer> noList,
+						 @RequestParam(name = "state", required = false) String state,
+					     @RequestParam(name = "type", required = false) String type,
+					     @RequestParam(name = "keyword", required = false) String keyword,
+					     @RequestParam(name = "id", required = false) String id,
+					     @RequestParam(name = "page", required = false, defaultValue = "1") int page, 
+					     RedirectAttributes redirectAttributes) {
+		try {
+			membershipService.refundApproved(noList);
+		} catch (RuntimeException e) {
+			return "redirect:refund-manager?error=refunded";
+		}
+		
+		redirectAttributes.addAttribute("state", state);
+		redirectAttributes.addAttribute("type", type);
+		redirectAttributes.addAttribute("keyword", keyword);
+		redirectAttributes.addAttribute("page", page);
+		
+		return "redirect:refund-manager";
 	}
 }

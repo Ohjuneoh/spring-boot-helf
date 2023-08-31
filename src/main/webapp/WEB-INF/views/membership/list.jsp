@@ -84,18 +84,25 @@
 				<h1 class="mb-0">나의 이용권을 확인하세요</h1>
 			</div>
 		</div>
-		<c:if test="${param.error eq 'no-authority' }">
-			<div class="alert alert-danger" style="height: 50px; width: 800px;">
-				<strong>[잘못된 접근]</strong> 권한이 없습니다.
-			</div>
-		</c:if>
-		<c:if test="${empty list }">
-			<div class="d-grid gap-2 col-6 mx-auto align-items-center justify-content-center text-center">
-				<div>
-					<h4 style="color:gray"><strong>구매하신 이용권이 없습니다.</strong></h4>
+		<div class="offset-2 col-lg-8 col-md-6 wow zoomIn row g-5 align-items-center justify-content-center text-center">
+			<c:if test="${param.error eq 'no-authority' }">
+				<div class="alert alert-danger" style="height: 50px; width: 600px;">
+					<strong>[잘못된 접근]</strong> 권한이 없습니다.
 				</div>
-			</div>
-		</c:if>
+			</c:if>
+			<c:if test="${param.error eq 'no-refund' }">
+				<div class="alert alert-danger" style="height: 50px; width: 600px;">
+					<strong>[잘못된 접근]</strong> 해당 이용권은 취소기간이 지났기 때문에 환불이 불가합니다.
+				</div>
+			</c:if>
+			<c:if test="${empty list }">
+				<div class="d-grid gap-2 col-6 mx-auto align-items-center justify-content-center text-center">
+					<div>
+						<h4 style="color:gray"><strong>구매하신 이용권이 없습니다.</strong></h4>
+					</div>
+				</div>
+			</c:if>
+		</div>
 		
 		<c:forEach var="dto" items="${list }">
 			<div class="d-grid gap-2 col-6 mx-auto align-items-center justify-content-center text-center"

@@ -1,11 +1,11 @@
 package kr.co.helf.service;
 
-import java.time.LocalDate;
+import static kr.co.helf.enums.MembershipEnum.*;
+
+import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import static kr.co.helf.controller.MembershipEnum.*;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -20,6 +20,7 @@ import kr.co.helf.form.AddMembershipForm;
 import kr.co.helf.form.ModifyMembershipForm;
 import kr.co.helf.mapper.MembershipMapper;
 import kr.co.helf.mapper.OrderMapper;
+import kr.co.helf.mapper.UserMapper;
 import kr.co.helf.vo.Category;
 import kr.co.helf.vo.Membership;
 import kr.co.helf.vo.MyMembership;
@@ -30,6 +31,7 @@ import kr.co.helf.vo.Order;
 import kr.co.helf.vo.Period;
 import kr.co.helf.vo.PointHistory;
 import kr.co.helf.vo.Refund;
+import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -38,6 +40,7 @@ public class MembershipService {
 
 	private final MembershipMapper membershipMapper;
 	private final OrderMapper orderMapper;
+	private final UserMapper userMapper;
 	
 	public List<MyMembershipListDto> getMyMembershipListById(String id) {
 		
@@ -91,19 +94,24 @@ public class MembershipService {
 		return order;
 	}
 
-	public void updateOrder(Order order) {
-		membershipMapper.updateOrder(order);
-	}
+//	public void updateOrder(int no) {
+//		Order order = membershipMapper.getOrderByNo(no);
+//		if(order == null) {
+//			throw new RuntimeException();
+//		}
+//		
+//		membershipMapper.updateOrder(order);
+//	}
 
-	public MyMembership getMyMembershipByNo(int no) {
-		MyMembership myMembership = membershipMapper.getMyMembershipByNo(no);
-
-		if(myMembership == null) {
-			throw new RuntimeException();
-		}
-		
-		return myMembership;
-	}
+//	public MyMembership getMyMembershipByNo(int no) {
+//		MyMembership myMembership = membershipMapper.getMyMembershipByNo(no);
+//
+//		if(myMembership == null) {
+//			throw new RuntimeException();
+//		}
+//		
+//		return myMembership;
+//	}
 
 	public void updateMyMembership(MyMembership myMembership) {
 		membershipMapper.updateMyMembership(myMembership);
@@ -128,6 +136,7 @@ public class MembershipService {
 
 	public OrderJoin getOrderDetailByNo(int no) {
 		OrderJoin orderJoin = membershipMapper.getOrderJoinByNo(no);
+		System.out.println(orderJoin);
 		
 		if(orderJoin == null) {
 			throw new RuntimeException("구매내역이 없습니다.");
@@ -135,11 +144,9 @@ public class MembershipService {
 		
 		Period period = orderMapper.getPeriodByNo(orderJoin.getPeriod().getNo());
 		orderJoin.setPeriod(period);
-			
-		if(orderJoin.getPointHistory() != null) {
-			PointHistory pointHistory = membershipMapper.getPointHistoryByNo(orderJoin.getPointHistory().getNo());
-			orderJoin.setPointHistory(pointHistory);
-		}
+		
+		List<PointHistory> points = membershipMapper.getPointHistoryByOrderNo(orderJoin.getNo());
+		orderJoin.setPoints(points);
 		
 		return orderJoin;
 	}
@@ -211,8 +218,6 @@ public class MembershipService {
 		Membership membership = orderMapper.getMembershipByNo(form.getNo());
 		BeanUtils.copyProperties(form, membership);
 		
-		System.out.println(membership);
-		
 		membershipMapper.updateMembership(membership);
 	}
 
@@ -224,6 +229,10 @@ public class MembershipService {
 		int totalRow = membershipMapper.getOrderTotalRow(param);
 		Pagination pagination = new Pagination(page, totalRow);
 		dto.setPagination(pagination);
+		int begin = pagination.getBegin();
+		int end = pagination.getEnd();
+		param.put("begin", begin);
+		param.put("end", end);
 		
 		List<OrderJoin> refundList = membershipMapper.getOrders(param);
 		dto.setOrders(refundList);
@@ -231,28 +240,167 @@ public class MembershipService {
 		return dto;
 	}
 
-	public void insertRefund(Order order) {
-		Refund refund = new Refund();
-		refund.setOrder(order);
+	public void insertRefund(int no) {
+		Refund check = membershipMapper.getRefundByOrderNo(no);
+		if(check != null) {
+			throw new RuntimeException();
+		}
 		
+		Order order = membershipMapper.getOrderByMyMembershipNo(no);
+		OrderJoin orderJoin = membershipMapper.getOrderJoinByNo(order.getNo());
+		Period period = orderMapper.getPeriodByNo(orderJoin.getPeriod().getNo());
+
+		int totalPrice = orderJoin.getTotalPrice();
+		int surtax = orderJoin.getSurtax();
+
+		Refund refund = new Refund();
+		if(PERIOD.getMembershiEnum().equals(period.getType())) {
+			LocalDate start = orderJoin.getStartDate();
+			LocalDate end = orderJoin.getEndDate();
+			
+			int amount = refund.periodAmount(start, end, totalPrice, surtax);
+			refund.setAmount(amount);
+			System.out.println(amount);
+		}
+		
+		if(TIME.getMembershiEnum().equals(period.getType())) {
+			int remainCnt = orderJoin.getRemainderCnt();
+			int totalCnt = period.getProperty();
+			
+			int amount = refund.timeAmount(totalPrice, surtax, remainCnt, totalCnt);
+			refund.setAmount(amount);
+			System.out.println(amount);
+		}
+		refund.setOrder(order);
 		membershipMapper.insertRefundByNo(refund);
 	}
 
-	public Order getOrderByNo(int no) {
+//	public Order getOrderByNo(int no) {
+//		Order order = membershipMapper.getOrderByNo(no);
+//		
+//		if(order == null) {
+//			throw new RuntimeException();
+//		}
+//		
+//		return order;
+//	}
+
+	public void cancleRefund(int no) {
 		Order order = membershipMapper.getOrderByNo(no);
 		
 		if(order == null) {
 			throw new RuntimeException();
 		}
 		
-		return order;
-	}
-
-	public void updateOrderByNo(Order order) {
+		order.setState(PAYMENT.getMembershiEnum());
 		membershipMapper.updateOrder(order);
+		
+		MyMembership myMembership = membershipMapper.getMyMembershipByNo(order.getMyMembership().getNo());
+		
+		if(myMembership == null) {
+			throw new RuntimeException();
+		}
+		if(!IMPOSSIBILITY.getMembershiEnum().equals(myMembership.getState())) {
+			throw new RuntimeException();
+		}
+		
+		myMembership.setState(POSSIBILITY.getMembershiEnum());
+		membershipMapper.updateMyMembership(myMembership);
+		
+		membershipMapper.deleteRefund(order.getNo());
 	}
 
 	public void deleteRefund(int no) {
 		membershipMapper.deleteRefund(no);
+	}
+
+	public OrderJoin getRefundDetailByNo(int no) {
+		OrderJoin orderJoin = membershipMapper.getRefundDetailByNo(no);
+		if(orderJoin == null) {
+			throw new RuntimeException();
+		}
+		
+		List<PointHistory> points = membershipMapper.getPointHistoryByOrderNo(orderJoin.getNo());
+		orderJoin.setPoints(points);
+		
+		return orderJoin;
+	}
+
+	public void refundApproved(List<Integer> noList) {
+
+		for(int no : noList) {
+			Order order = membershipMapper.getOrderByNo(no);
+			
+//			if(REFUNDCOMPLETED.getMembershiEnum().equals(order.getState())) {
+//				throw new RuntimeException();
+//			}
+			
+			order.setState(REFUNDCOMPLETED.getMembershiEnum());
+			membershipMapper.updateOrder(order);
+			
+			List<PointHistory> points = membershipMapper.getPointHistoryByOrderNo(order.getNo());
+			System.out.println(points);
+			for(PointHistory point : points) {
+				User user = userMapper.getUserById(order.getUser().getId());
+				System.out.println("["+point.getNo()+"] ["+point.getType()+"]");
+				// 적립 포인트 회수
+				if(point.getType().equals(SAVEPOINT.getMembershiEnum())) {
+					user.setPoint(user.getPoint() - point.getUsePoint());
+					point.setType(GETBACKPOINT.getMembershiEnum());
+					userMapper.updateUser(user);
+					membershipMapper.updatePointHistory(point);
+					
+				}
+
+				// 사용한 포인트 환불
+				if(point.getType().equals(PAYMENT.getMembershiEnum())) {
+					user.setPoint(user.getPoint() + point.getUsePoint());
+					point.setType(REFUNDCOMPLETED.getMembershiEnum());
+					userMapper.updateUser(user);
+					membershipMapper.updatePointHistory(point);
+
+				}
+			}
+
+			Refund refund = membershipMapper.getRefundByOrderNo(no);
+			refund.setState(YES.getMembershiEnum());
+			membershipMapper.updateRefund(refund);
+		}
+	}
+
+	public MyMembership getRefundMyMembershipByNo(int no) {
+		MyMembership myMembership = membershipMapper.getMyMembershipByNo(no);
+		if(IMPOSSIBILITY.getMembershiEnum().equals(myMembership.getState())) {
+			throw new RuntimeException();
+		}
+		
+		return myMembership;
+	}
+
+	public void updateRefundMyMembership(int no) {
+		MyMembership myMembership = membershipMapper.getMyMembershipByNo(no);
+		myMembership.setState(IMPOSSIBILITY.getMembershiEnum());
+
+		membershipMapper.updateMyMembership(myMembership);
+	}
+
+	public void updateRefundOrder(int no) {
+		Order order = membershipMapper.getOrderByMyMembershipNo(no);
+		
+		if(order == null) {
+			throw new RuntimeException();
+		}
+		
+		order.setState(WAITREFUND.getMembershiEnum());
+		membershipMapper.updateOrder(order);
+	}
+
+	public Refund getRefundByOrderNo(int no) {
+		Refund refund = membershipMapper.getRefundByOrderNo(no);
+		if(refund == null) {
+			throw new RuntimeException();
+		}
+		
+		return refund;
 	}
 }

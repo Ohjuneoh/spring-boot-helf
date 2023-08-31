@@ -345,4 +345,11 @@
 	and ca.user_id = #{value}
 	order by ca.customer_attendance_date desc 	</select>
 
+	<select id="getAllCustomer" resultType="user">
+		select A.rank_no		as "rank.no"
+			   B.rank_name		as "rank.name"
+		from helf_users A, helf_rank B
+		where A.rank_no = B.rank_no  
+		and user_type = 'ROLE_USER'
+	</select>
 </mapper>

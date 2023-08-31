@@ -1,6 +1,7 @@
 package kr.co.helf.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
@@ -38,9 +39,10 @@ public class OrderJoin {
 	private LocalDate deleteDate;
 	
 	private int refundNo;
+	private int refundAmount;
 	private String refundState;
 	private LocalDate refundDate;
 	
 	private User user;					
-	private PointHistory pointHistory;
+	private List<PointHistory> points;
 }

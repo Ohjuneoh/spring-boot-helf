@@ -66,4 +66,16 @@ public interface MembershipMapper {
 	Order getOrderByNo(int no);
 
 	void deleteRefund(int no);
+
+	OrderJoin getRefundDetailByNo(int no);
+
+	Refund getRefundByNo(int refundNo);
+
+	Refund getRefundByOrderNo(int no);
+
+	void updateRefund(Refund refund);
+
+	List<PointHistory> getPointHistoryByOrderNo(int no);
+
+	void updatePointHistory(PointHistory point);
 }
