@@ -74,4 +74,6 @@ public interface UserMapper {
 	
 	// 고객별 상세 조회 (5)방문내역 - 채경
 	List<CustomerAttendance> getCustomerAttendance(String id);
+
+	List<User> getAllCustomer();
 }

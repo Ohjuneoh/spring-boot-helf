@@ -1,8 +1,8 @@
 package kr.co.helf.controller;
 
-import java.util.List;
+import static kr.co.helf.enums.MembershipEnum.*;
 
-import static kr.co.helf.controller.MembershipEnum.*;
+import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -161,8 +161,8 @@ public class OrderController {
 						SessionStatus sessionStatus) {
 		
 		kakaoPayService.approveResponse(tid, pgToken);
-		orderService.updateUser(form, user);
 		orderService.insertOrder(form, user);
+		orderService.updateUserByOrder(form, user);
 		
 		sessionStatus.setComplete();
 		

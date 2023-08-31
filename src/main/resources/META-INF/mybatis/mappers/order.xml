@@ -150,9 +150,9 @@
 			select helf_point_history_seq.nextval from dual
 		</selectKey>
 		insert into helf_point_history
-			(point_history_no, point_history_use, user_id, point_history_type)
+			(point_history_no, point_history_use, user_id, point_history_type, orders_no)
 		values
-			(#{no}, #{usePoint}, #{user.id}, #{type})
+			(#{no}, #{usePoint}, #{user.id}, #{type}, #{order.no})
 	</insert>
 	
 	<select id="getRankByNo" parameterType="int" resultType="Rank">
@@ -166,12 +166,15 @@
 	</select>
 	
 	<insert id="insertOrder" parameterType="order">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select helf_order_seq.nextval from dual
+		</selectKey>
 		insert into helf_orders
 			(orders_no, orders_total_price, user_id, orders_surtax,
-			 orders_membership_price, my_membership_no, point_history_no)
+			 orders_membership_price, my_membership_no)
 		values
-			(helf_order_seq.nextval, #{totalPrice}, #{user.id}, #{surtax},
-			 #{membershipPrice}, #{myMembership.no}, #{pointHistory.no})
+			(#{no}, #{totalPrice}, #{user.id}, #{surtax},
+			 #{membershipPrice}, #{myMembership.no})
 	</insert>
 	
 	<select id="getUseMyMembershipByNoById" parameterType="map" resultType="myMembership">
@@ -232,7 +235,7 @@
 		from helf_membership_my_option
 		where my_membership_no = #{value}
 	</select>
-	
+
 	<select id="getCustomerOrders" parameterType="String" resultType="kr.co.helf.vo.Order">
 	select 
 		o.orders_payment_date		as paymentDate, 

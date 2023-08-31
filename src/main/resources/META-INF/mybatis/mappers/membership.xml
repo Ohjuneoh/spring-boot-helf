@@ -48,6 +48,19 @@
 		order by option_no
 	</select>
 	
+	<select id="getOrderByNo" parameterType="int" resultType="order">
+		select orders_no					as no,
+			   orders_total_price			as totalPrice,
+			   orders_payment_date			as paymentDate,
+			   orders_payment_state			as state,
+			   user_id						as "user.id",
+			   orders_membership_price		as membershipPrice,
+			   my_membership_no				as "myMembership.no",
+			   orders_surtax				as surtax
+		from helf_orders
+		where orders_no = #{value}
+	</select>
+	
 	<select id="getOrderByMyMembershipNo" parameterType="int" resultType="order">
 		select orders_no				as no,
 			   orders_total_price		as totalPrice,
@@ -56,7 +69,6 @@
 			   user_id					as "user.id",
 			   orders_membership_price	as membershipPrice,
 			   my_membership_no			as "myMembership.no",
-			   point_history_no			as "pointHistory.no",
 			   orders_surtax			as surtax
 		from helf_orders
 		where my_membership_no = #{value}
@@ -142,9 +154,21 @@
 			   point_history_use	as usePoint,
 			   point_history_date	as useDate,
 			   user_id				as "user.id",
+			   orders_no			as "order.no",
 			   point_history_type	as type
 		from helf_point_history
 		where point_history_no = #{value}
+	</select>
+
+	<select id="getPointHistoryByOrderNo" parameterType="int" resultType="pointHistory">
+		select point_history_no		as no,
+			   point_history_use	as usePoint,
+			   point_history_date	as useDate,
+			   user_id				as "user.id",
+			   orders_no			as "order.no",
+			   point_history_type	as type
+		from helf_point_history
+		where orders_no = #{value}
 	</select>
 	
 	<select id="getOrderJoinByNo" parameterType="int" resultType="orderJoin">
@@ -153,7 +177,6 @@
 			   A.orders_payment_state			as orderState,
 			   A.user_id						as "user.id",
 			   A.orders_membership_price		as membershipPrice,
-			   A.point_history_no				as "pointHistory.no",
 			   A.orders_surtax					as surtax,
 			   B.my_membership_no				as myMembershipNo,
 			   B.my_membership_startdate		as startDate,
@@ -280,7 +303,6 @@
 					 user_id,
 					 orders_membership_price,
 					 my_membership_no,
-					 point_history_no,
 					 orders_surtax
 			  from helf_orders) A, helf_my_membership B, helf_membership_refund C, helf_membership D
 		where A.my_membership_no = B.my_membership_no
@@ -333,20 +355,6 @@
 		values
 			(helf_membership_refund_seq.nextval, #{order.no}, #{amount})
 	</insert>
-	
-	<select id="getOrderByNo" parameterType="int" resultType="order">
-		select orders_no					as no,
-			   orders_total_price			as totalPrice,
-			   orders_payment_date			as paymentDate,
-			   orders_payment_state			as state,
-			   user_id						as "user.id",
-			   orders_membership_price		as membershipPrice,
-			   my_membership_no				as "myMembership.no",
-			   point_history_no				as "pointHistory.no",
-			   orders_surtax				as surtax
-		from helf_orders
-		where orders_no = #{value}
-	</select>
 
 	<delete id="deleteRefund" parameterType="int">
 		delete from helf_membership_refund
@@ -360,7 +368,6 @@
 			   A.orders_payment_state			as orderState,
 			   A.user_id						as "user.id",
 			   A.orders_membership_price		as membershipPrice,
-			   A.point_history_no				as "pointHistory.no",
 			   A.orders_surtax					as surtax,
 			   B.my_membership_no				as myMembershipNo,
 			   B.my_membership_startdate		as startDate,
@@ -408,5 +415,14 @@
 			refund_amount = #{amount}
 		</set>
 		where refund_no = #{no}
+	</update>
+	
+	<update id="updatePointHistory" parameterType="pointHistory">
+		update helf_point_history
+		<set>
+			point_history_date = sysdate,
+			point_history_type = #{type}
+		</set>
+		where point_history_no = #{no}
 	</update>
 </mapper>

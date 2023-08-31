@@ -74,4 +74,8 @@ public interface MembershipMapper {
 	Refund getRefundByOrderNo(int no);
 
 	void updateRefund(Refund refund);
+
+	List<PointHistory> getPointHistoryByOrderNo(int no);
+
+	void updatePointHistory(PointHistory point);
 }

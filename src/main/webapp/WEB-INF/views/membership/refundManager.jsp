@@ -82,6 +82,13 @@
 		<div class="container py-5 ">
 			<div class="row mb-3 d-flex align-items-center justify-content-center">
 				<div class="col-10">
+				
+					<c:if test="${param.error eq 'refunded' }">
+						<div class="alert alert-danger" style="height: 50px; width: 1075px;">
+							<strong>[중복 실행]</strong> 이미 환불이 완료된 상품입니다.
+						</div>
+					</c:if>
+				
 					<div class="card" style="margin-bottom: 20px;" >
 						<form action="refund-manager" method="get">
 							<input type="hidden" name="page" value="${dto.pagination.page}"/>

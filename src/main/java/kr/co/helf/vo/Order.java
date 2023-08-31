@@ -20,5 +20,4 @@ public class Order {
 	private String state;
 	private User user;						// 넣어야됨
 	private MyMembership myMembership;		// 넣어야됨
-	private  PointHistory pointHistory;
 }

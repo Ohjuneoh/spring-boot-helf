@@ -1,10 +1,10 @@
 package kr.co.helf.controller;
 
+import static kr.co.helf.enums.MembershipEnum.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static kr.co.helf.controller.MembershipEnum.*;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -69,7 +69,7 @@ public class MembershipController {
 			return "redirect: list?error=no-authority";
 		}
 		
-		membershipService.updateWaitMyMembership(no);
+		membershipService.updateRefundMyMembership(no);
 		membershipService.updateRefundOrder(no);
 		membershipService.insertRefund(no);
 		
@@ -302,8 +302,11 @@ public class MembershipController {
 					     @RequestParam(name = "id", required = false) String id,
 					     @RequestParam(name = "page", required = false, defaultValue = "1") int page, 
 					     RedirectAttributes redirectAttributes) {
-		
-		membershipService.refundApproved(noList);
+		try {
+			membershipService.refundApproved(noList);
+		} catch (RuntimeException e) {
+			return "redirect:refund-manager?error=refunded";
+		}
 		
 		redirectAttributes.addAttribute("state", state);
 		redirectAttributes.addAttribute("type", type);

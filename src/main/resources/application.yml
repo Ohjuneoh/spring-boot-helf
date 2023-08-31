@@ -1,6 +1,9 @@
 #내장 웹서버의 포트번호 지정하기
 server:
   port: 80
+  servlet:
+    session:
+      timeout: 600
   
 # 로그레벨 지정하기
 logging:

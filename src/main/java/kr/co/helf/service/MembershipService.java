@@ -1,11 +1,11 @@
 package kr.co.helf.service;
 
+import static kr.co.helf.enums.MembershipEnum.*;
+
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import static kr.co.helf.controller.MembershipEnum.*;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -144,11 +144,9 @@ public class MembershipService {
 		
 		Period period = orderMapper.getPeriodByNo(orderJoin.getPeriod().getNo());
 		orderJoin.setPeriod(period);
-			
-		if(orderJoin.getPointHistory() != null) {
-			PointHistory pointHistory = membershipMapper.getPointHistoryByNo(orderJoin.getPointHistory().getNo());
-			orderJoin.setPointHistory(pointHistory);
-		}
+		
+		List<PointHistory> points = membershipMapper.getPointHistoryByOrderNo(orderJoin.getNo());
+		orderJoin.setPoints(points);
 		
 		return orderJoin;
 	}
@@ -277,15 +275,15 @@ public class MembershipService {
 		membershipMapper.insertRefundByNo(refund);
 	}
 
-	public Order getOrderByNo(int no) {
-		Order order = membershipMapper.getOrderByNo(no);
-		
-		if(order == null) {
-			throw new RuntimeException();
-		}
-		
-		return order;
-	}
+//	public Order getOrderByNo(int no) {
+//		Order order = membershipMapper.getOrderByNo(no);
+//		
+//		if(order == null) {
+//			throw new RuntimeException();
+//		}
+//		
+//		return order;
+//	}
 
 	public void cancleRefund(int no) {
 		Order order = membershipMapper.getOrderByNo(no);
@@ -302,7 +300,7 @@ public class MembershipService {
 		if(myMembership == null) {
 			throw new RuntimeException();
 		}
-		if(IMPOSSIBILITY.getMembershiEnum().equals(myMembership.getState())) {
+		if(!IMPOSSIBILITY.getMembershiEnum().equals(myMembership.getState())) {
 			throw new RuntimeException();
 		}
 		
@@ -322,10 +320,8 @@ public class MembershipService {
 			throw new RuntimeException();
 		}
 		
-		if(orderJoin.getPointHistory() != null) {
-			PointHistory pointHistory = membershipMapper.getPointHistoryByNo(orderJoin.getPointHistory().getNo());
-			orderJoin.setPointHistory(pointHistory);
-		}
+		List<PointHistory> points = membershipMapper.getPointHistoryByOrderNo(orderJoin.getNo());
+		orderJoin.setPoints(points);
 		
 		return orderJoin;
 	}
@@ -334,19 +330,36 @@ public class MembershipService {
 
 		for(int no : noList) {
 			Order order = membershipMapper.getOrderByNo(no);
+			
+//			if(REFUNDCOMPLETED.getMembershiEnum().equals(order.getState())) {
+//				throw new RuntimeException();
+//			}
+			
 			order.setState(REFUNDCOMPLETED.getMembershiEnum());
 			membershipMapper.updateOrder(order);
 			
-			if(order.getPointHistory() != null) {
-				PointHistory point = membershipMapper.getPointHistoryByNo(order.getPointHistory().getNo());
+			List<PointHistory> points = membershipMapper.getPointHistoryByOrderNo(order.getNo());
+			System.out.println(points);
+			for(PointHistory point : points) {
 				User user = userMapper.getUserById(order.getUser().getId());
-				user.setPoint(user.getPoint() + point.getUsePoint());
+				System.out.println("["+point.getNo()+"] ["+point.getType()+"]");
+				// 적립 포인트 회수
+				if(point.getType().equals(SAVEPOINT.getMembershiEnum())) {
+					user.setPoint(user.getPoint() - point.getUsePoint());
+					point.setType(GETBACKPOINT.getMembershiEnum());
+					userMapper.updateUser(user);
+					membershipMapper.updatePointHistory(point);
+					
+				}
 
-				PointHistory refundPoint = new PointHistory();
-				refundPoint.setType(REFUNDCOMPLETED.getMembershiEnum());
-				refundPoint.setUser(user);
-				refundPoint.setUsePoint(point.getUsePoint());
-				orderMapper.insertHistory(refundPoint);
+				// 사용한 포인트 환불
+				if(point.getType().equals(PAYMENT.getMembershiEnum())) {
+					user.setPoint(user.getPoint() + point.getUsePoint());
+					point.setType(REFUNDCOMPLETED.getMembershiEnum());
+					userMapper.updateUser(user);
+					membershipMapper.updatePointHistory(point);
+
+				}
 			}
 
 			Refund refund = membershipMapper.getRefundByOrderNo(no);
@@ -364,7 +377,7 @@ public class MembershipService {
 		return myMembership;
 	}
 
-	public void updateWaitMyMembership(int no) {
+	public void updateRefundMyMembership(int no) {
 		MyMembership myMembership = membershipMapper.getMyMembershipByNo(no);
 		myMembership.setState(IMPOSSIBILITY.getMembershiEnum());
 

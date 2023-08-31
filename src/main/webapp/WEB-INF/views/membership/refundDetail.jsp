@@ -115,10 +115,13 @@
 									<tr>
 										<th class="bg-primary" style="color:white;">구매 금액</th>
 										<td><fmt:formatNumber value="${orderJoin.totalPrice }" pattern="###,###"/>원</td>
-										<th class="bg-primary" style="color:white;">사용 포인트</th>
-										<c:if test="${orderJoin.pointHistory ne null }">
-											<td>${orderJoin.pointHistory.usePoint }P</td>
-										</c:if>
+										<th class="bg-primary" style="color:white;">포인트</th>
+										<td>
+											<div class="d-grid gap-2 col-6 mx-auto align-items-center justify-content-center text-center"
+				 						 		 data-bs-toggle="modal" data-bs-target="#point-modal">
+			   									<button id="btn-point" class="btn btn-success btn-sm">내역보기</button>
+			   								</div>
+										</td>
 									</tr>
 									<tr>
 										<th class="bg-primary" style="color:white;" >환불 금액</th>
@@ -154,7 +157,43 @@
 	    	</div>
 	    </div>
     </div>
-	
+	<div class="modal fade" id="point-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">포인트 내역</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="card" >
+						<div class="card-body align-items-center justify-content-center text-center">
+							<table class="table">
+								<thead>
+									<tr>
+										<th style="width: 30%;">사용 날짜</th>
+										<th style="width: 30%;">포인트 금액</th>
+										<th style="width: 30%;">속성</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="point" items="${orderJoin.points }">
+										<tr>
+											<td>${point.useDate }</td>
+											<td>${point.usePoint }P</td>
+											<td>${point.type}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<br/>
+				</div>
+			</div>
+		</div>
+	</div>
 	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
 
     <!-- Back to Top -->
