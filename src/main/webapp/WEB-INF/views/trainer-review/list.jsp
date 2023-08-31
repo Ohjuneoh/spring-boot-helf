@@ -152,6 +152,7 @@
           <div class="col-3 text-end">
             <sec:authorize access="isAuthenticated()">
               <sec:authentication property="principal.id" var="loginUserId" />
+              <input type="hidden" id="login-user-id" value="${loginUserId}" />
               <c:if test="${trainerReview.lessonApply.user.id eq loginUserId}">
                 <a href="/trainer-review/delete?reviewNo=${trainerReview.no }" class="btn btn-danger btn-sm float-end" style="margin-left: 5px;">삭제</a>
                 <a href="/trainer-review/modify?reviewNo=${trainerReview.no }" class="btn btn-warning btn-sm float-end">수정</a>
@@ -204,6 +205,8 @@
             more = false;
           }
 
+          let loginUserId = $("#login-user-id").val();
+
           // reviews = [{no:x, title:x, }, {}, {}]
           reviews.forEach(function(r, index) {
 
@@ -230,8 +233,15 @@
                <p>\${r.content }</p>
              </div>
              <div class="col-3 text-end">
-               <a href="/trainer-review/delete?reviewNo=\${r.no }" class="btn btn-danger btn-sm float-end" style="margin-left: 5px;">삭제</a>
-               <a href="/trainer-review/modify?reviewNo=\${r.no }" class="btn btn-warning btn-sm float-end">수정</a>
+            `
+            if (loginUserId == r.lessonApply.user.id) {
+             content += `
+                <a href="/trainer-review/delete?reviewNo=\${r.no }" class="btn btn-danger btn-sm float-end" style="margin-left: 5px;">삭제</a>
+                <a href="/trainer-review/modify?reviewNo=\${r.no }" class="btn btn-warning btn-sm float-end">수정</a>
+                `
+            }
+            content +=
+                    `
              </div>
           </div>
             `;

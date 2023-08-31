@@ -40,4 +40,7 @@ public interface TrainerReviewMapper {
 
     // 트레이버 리뷰 리스트(더보기 페이징처리)
     List<TrainerReview> getReviewsByMore(@Param("trainerNo") int trainerNo, @Param("begin") int begin,@Param("end") int end);
+
+    // 마이페이지 - 내 리뷰 보기
+    List<TrainerReview> getMyReviews(String userId);
 }
