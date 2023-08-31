@@ -82,8 +82,15 @@
 		<div class="container py-5 ">
 			<div class="row mb-3 d-flex align-items-center justify-content-center">
 				<div class="col-10">
+				
+					<c:if test="${param.error eq 'refunded' }">
+						<div class="alert alert-danger" style="height: 50px; width: 1075px;">
+							<strong>[중복 실행]</strong> 이미 환불이 완료된 상품입니다.
+						</div>
+					</c:if>
+				
 					<div class="card" style="margin-bottom: 20px;" >
-						<form action="order-list" method="get">
+						<form action="refund-manager" method="get">
 							<input type="hidden" name="page" value="${dto.pagination.page}"/>
 							<div class="card-body">							
 								<div class="row mb-3 pt-3">
@@ -99,8 +106,8 @@
 									<div class="col-2">
 										<select name="type"  class="form-select">
 											<option selected="selected" disabled="disabled">전체보기</option>
-											<option value="name" ${param.type eq 'name' ? 'selected' : '' }>구매상품</option>
-											<option value="no" ${param.type eq 'no' ? 'selected' : '' }>구매번호</option>	
+											<option value="refundNo" ${param.type eq 'selected' ? 'selected' : '' }>환불번호</option>
+											<option value="name" ${param.type eq 'name' ? 'selected' : '' }>구매상품</option>	
 											<option value="id" ${param.type eq 'id' ? 'selected' : '' }>회원 아이디</option>	
 										</select>
 									</div>
@@ -115,48 +122,56 @@
 						</form>
 					</div>
 					<div style="margin-bottom: 20px;" >
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+						<div class="form-check" style="margin-left: 30px;">
+							<input class="form-check-input" type="checkbox" id="all-check">
 							<label>전체선택</label>
-							<button class="btn btn-danger btn-sm" style="margin-left: 10px;">환불승인</button>
+							<button id="btn-refund" class="btn btn-danger btn-sm" style="margin-left: 10px;">환불승인</button>
 						</div>
 					</div>
 					<div class="card" >
 						<div class="card-body">
-							<table class="table text-center">
-				               	<thead>
-									<tr>
-				                        <th style="width: 5%;">선택</th>
-				                        <th style="width: 25%;">환불날짜</th>
-				                        <th style="width: 20%">구매번호</th>
-				                        <th style="width: 20%">회원 아이디</th>
-				                        <th style="width: 20%">조회</th>
-				                    	<th style="width: 20%">비고</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:if test="${empty dto.orders }">
-								   		<tr>
-									   		<td colspan="5" class="text-center">환불 내역이 없습니다.</td>
-								   		</tr>
-									</c:if>
-								   	<c:forEach var="order" items="${dto.orders }">
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-										</div>
+							<form id="form-refund" action="refund" method="post">
+								<input type="hidden" name="state" value="${param.state }">
+								<input type="hidden" name="type" value="${param.type }">
+								<input type="hidden" name="keyword" value="${param.keyword }">
+								<input type="hidden" name="page" value="${param.page }">
+								<table class="table text-center">
+					            	<thead>
 										<tr>
-					                        <td>${order.paymentDate }</td>
-											<td>${order.no }</td>
-											<td>${order.name }</td>
-											<td>
-												<a href="order-detail?no=${order.no }&page=${dto.pagination.page}&state=${param.state }&type=${param.type }&keyword=${param.keyword}" 
-												   type="button" class="btn btn-info btn-sm">상세정보</a>
-											</td>
-					                        <td>${order.orderState }</td>
-			                    		 </tr>
-									</c:forEach>
-								</tbody>
-				        	</table>
+					                        <th style="width: 5%;">선택</th>
+					                        <th style="width: 25%;">환불번호</th>
+					                        <th style="width: 20%">상품이름</th>
+					                        <th style="width: 20%">회원 아이디</th>
+					                        <th style="width: 20%">조회</th>
+					                    	<th style="width: 20%">비고</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${empty dto.orders }">
+									   		<tr>
+										   		<td colspan="6" class="text-center">환불 내역이 없습니다.</td>
+									   		</tr>
+										</c:if>
+									   	<c:forEach var="order" items="${dto.orders }">
+											<tr>
+												<td>
+						                        <input class="form-check-input" type="checkbox" id="check-${order.no }" name="no" value="${order.no }">
+												</td>
+						                        <td>
+						                        ${order.refundNo }
+						                        </td>
+												<td>${order.name }</td>
+												<td>${order.user.id }</td>
+												<td>
+													<a href="refund-detail?no=${order.no }&page=${dto.pagination.page}&state=${param.state }&type=${param.type }&keyword=${param.keyword}" 
+													   type="button" class="btn btn-info btn-sm">상세정보</a>
+												</td>
+						                        <td>${order.orderState }</td>
+				                    		 </tr>
+										</c:forEach>
+									</tbody>
+					        	</table>
+							</form>
 	        			</div>
 	    			</div>
 	    		</div>
@@ -210,4 +225,31 @@
     <!-- Template Javascript -->
 	<script src="/resources/js/main.js"></script>
 </body>
+<script type="text/javascript">
+$(function() {
+	$("#all-check").on('click', function () {
+		let allState = $(this).prop('checked');
+		
+		if(allState) {
+			$('[id^="check"]').prop('checked', true);
+		}
+		
+		if(!allState) {
+			$('[id^="check"]').prop('checked', false);
+		}
+	})
+	
+	$("[id^=check]").change(function() {
+		let checkboxLength = $("[id^=check]").length;
+		let checkedCheckboxLength = $("[id^=check]:checked").length;
+		
+		$("#all-check").prop('checked', checkboxLength == checkedCheckboxLength);
+	});
+	
+	$("#btn-refund").click(function () {
+		$("#form-refund").trigger('submit');
+	})
+	
+})
+</script>
 </html>

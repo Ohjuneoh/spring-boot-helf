@@ -82,38 +82,37 @@
 				<h5 class="fw-bold text-primary text-uppercase">Order</h5>
 				<h1 class="mb-0">구매를 진행하세요</h1>
 			</div>
-			<br/>
-			<br/>
-			<br/>
 			<div class="text-center ">
-				<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
-					  padding-top:46px; padding-left:1px;">
-					<strong>이용약관</strong>
-				</span>
-				<c:if test="${membershipJoinCat.getCatName() ne '하루운동'}">
+				<div style="margin-bottom: 150px;">
+					<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
+						  padding-top:46px; padding-left:1px;">
+						<strong>이용약관</strong>
+					</span>
+					<c:if test="${membershipJoinCat.getCatName() ne '하루운동'}">
+				  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
+				  		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
+				  			  padding-top:46px; padding-left:1px;">
+				  			<strong>
+					  			세부설정
+				  			</strong>
+				  		</span>
+					</c:if>
 			  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
-			  		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
-			  			  padding-top:46px; padding-left:1px;">
-			  			<strong>
-				  			세부설정
+			  		<span class="border border-primary rounded-circle d-inline-block bg-primary" style="height:125px; width:125px; 
+			  			  padding-top:46px; padding-left:-2px;">
+			  			<strong style="color:white">
+					  		결제
 			  			</strong>
 			  		</span>
-				</c:if>
-		  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
-		  		<span class="border border-primary rounded-circle d-inline-block bg-primary" style="height:125px; width:125px; 
-		  			  padding-top:46px; padding-left:-2px;">
-		  			<strong style="color:white">
-				  		결제
-		  			</strong>
-		  		</span>
+			  	</div>
 		  		<form action="kakaopay-ready" method="post">
-					<div style="margin: 100px;">
+					<div class="offset-1" style="margin: 0 auto; width:900px;">
 						<h4 class="text-start">
 							<strong style="color:gray">결제내역</strong>
 						</h4>
 						<hr style="border: 2px solid gray;"/>
-						<div class="d-flex align-items-center justify-content-center">
-							<table class="table table-bordered" style="margin: 50px; width: 900px;">
+						<div class="d-flex align-items-center justify-content-center" style="margin-top: 50px;">
+							<table class="table table-bordered" style="width: 800px; table-layout: fixed;">
 				   				<thead>
 				   					<tr class="table-primary" style="width: 1200px;">
 				   						<th>상품명</th>
@@ -210,11 +209,14 @@
 							</table>
 						</div>
 					</div>
-					<div class="offset-1" style="margin: 100px;">
+					<div style="margin-top:100px;"></div>
+					<div class="offset-1" style="margin: 0 auto; width:900px;">
 						<h4 class="text-start">
 							<strong style="color:gray">시작일</strong>
 						</h4>
-						<hr style="border: 2px solid gray;"/>
+						<hr style="border: 2px solid gray; margin-bottom: 50px;"/>
+					</div>
+					<div class="offset-1" style="margin: 0 auto; width:800px;">
 						<div class="border border-black border-2 p-3 text-center" >
 							<input name="startDate" type="date" style="width: 300px; height: 35px; " /> 
 							<span class="ps-3 pe-3">~</span>
@@ -222,13 +224,20 @@
 							<input type="hidden" type="date" name="endDate">
 						</div>
 					</div>
-<!-- 				<div class="offset-10">
-						<a href="list" class="btn btn-danger">취소</a>
-						<button type="submit" id="btn-order" class="btn btn-primary disabled">결제</button>
-					</div>	 -->
-					<button type="button" class="btn btn-warning" id="btn-kakao-pay" style="width: 400px; height: 50px; ">
-						카카오페이로 결제하기
-					</button>
+					<div class="d-flex align-items-center justify-content-center" style="margin-top: 100px;">
+    					<span class="text-start mr-3" style="margin-right: 10px; color:black;">
+    						<strong>
+	    						카톡 하나로 결제 끝<br/>
+	    						<span style=" text-decoration: underline; text-decoration-color: yellow; text-decoration-thickness: 5px;
+	    									  text-underline-offset: -3px;">
+	    							카카오페이
+	    						</span>
+    						</strong>
+    					</span>
+					    <button type="button" id="btn-kakao-pay" class="border-0 bg-white">
+					    	<img src="/resources/img/kakaopay/kakaopay button.png" style="height: 50px;">
+					    </button>
+					</div>
 				</form>
 			</div>
 		</div>

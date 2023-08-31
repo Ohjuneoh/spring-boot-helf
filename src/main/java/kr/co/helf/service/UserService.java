@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
+import static kr.co.helf.enums.RankEnum.*;
+
+import org.apache.jasper.tagplugins.jstl.core.Choose;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -24,6 +27,7 @@ import kr.co.helf.dto.AttendanceList;
 import kr.co.helf.dto.CustomerDetailDto;
 import kr.co.helf.dto.CustomerListDto;
 import kr.co.helf.dto.Pagination;
+import kr.co.helf.enums.RankEnum;
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.mapper.OrderMapper;
 import kr.co.helf.mapper.UserMapper;
@@ -296,6 +300,31 @@ public class UserService {
 		result.setCustomerAttendance(customerAttendance);
 	
 		return result; 
+	}
+
+	public void updateRank() {
+		List<User> customers = userMapper.getAllCustomer();
+		for(User customer : customers) {
+//			switch (customer.getRank().getName()) {
+//				case BRONZE:
+//					if() {
+//						
+//						break;
+//					}
+//
+//				case SILVER:
+//					break;
+//				
+//				case GOLD:
+//					break;
+//					
+//				case PLATINUM:
+//					break;
+//					
+//				case DIAMOND:
+//					break;
+//			}
+		}
 	}
 }
 
