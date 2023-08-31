@@ -202,6 +202,21 @@ public class UserController {
 		
 		return "/mypage/userModifyInfo";
 	}
+	
+	// 트레이너 마이페이지화면
+	@GetMapping("/trainerMypage")
+	public String trainerMypage() {
+		
+		return "/mypage/trainerInfo";
+	}
+	
+	// 트레이너 마이페이지 수정화면
+	// 유저 마이페이지 수정화면
+		@GetMapping("/trainerModify")
+		public String trainerModifypage() {
+			
+			return "/mypage/trainerModifyInfo";
+		}
 /* 마이페이지 끝 */
 	
 }
