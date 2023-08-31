@@ -30,13 +30,15 @@ public interface UserMapper {
 	
 	void insertTrainerCareer(TrainerCareer trainerCarrer);
 	
-	User getFindByTel(String name, String tel);
-	
 	// 아이디 찾기(ajax)
 	List<String> getIdByTel(String name, String tel);
 	
+	// 비밀번호 찾기 - 인증번호 확인하기 (ajax)
+	String getUserAuthById(String auth, String id);
+	
 	// 아이디 중복검사
 	int idCheck (String userId);
+	
 	
 	void updateUser(User user);
 	
@@ -72,4 +74,6 @@ public interface UserMapper {
 	
 	// 고객별 상세 조회 (5)방문내역 - 채경
 	List<CustomerAttendance> getCustomerAttendance(String id);
+
+	List<User> getAllCustomer();
 }

@@ -17,6 +17,8 @@
             a.lesson_no = b.lesson_no
           and b.user_id = c.user_id
           and a.user_id = #{value}
+        order by
+            a.lesson_apply_no desc
     </select>
     <!-- 내가 개설한 모든 개인수업 조회(트레이너) by 준오   -->
     <select id="getAllPersonalLesson" parameterType="int" resultType="PersonalLesson">

@@ -127,7 +127,7 @@
                  a.trainer_review_rating as rating,
                  a.trainer_review_status as status,
                  b.lesson_name as "lesson.name",
-                 c.user_id as "user.id",
+                 c.user_id as "lessonApply.user.id",
                  d.user_name as "lessonApply.user.name",
                  row_number() over(order by trainer_review_no asc) rownumber
              from
@@ -141,6 +141,25 @@
             )
         where
             rownumber between #{begin} and #{end}
+    </select>
+
+    <!-- 마이페이지 - 내 리뷰 보기 -->
+    <select id="getMyReviews" parameterType="string" resultType="TrainerReview">
+        select a.trainer_review_no as no,
+       b.lesson_name as "lesson.name",
+       a.trainer_review_title as title,
+       a.trainer_review_create_date as "createDate",
+       a.trainer_no as "trainer.trainerNo",
+       d.user_name as "lesson.user.name"
+        from
+            helf_trainer_review a, helf_lesson b, helf_lesson_apply c, helf_users d
+        where
+            a.lesson_no = b.lesson_no
+          and a.lesson_apply_no = c.lesson_apply_no
+          and c.user_id = #{userId}
+          and b.user_id = d.user_id
+        order by
+            a.trainer_review_no desc
     </select>
 
 </mapper>

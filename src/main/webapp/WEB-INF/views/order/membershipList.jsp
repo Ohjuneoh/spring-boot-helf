@@ -78,7 +78,7 @@
 	</div>
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
 		<div class="container py-5">
-			<div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+			<div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;" >
 				<h5 class="fw-bold text-primary text-uppercase">Membership List</h5>
 				<h1 class="mb-0">이용권을 선택하세요</h1>
 			</div>
@@ -99,7 +99,7 @@
 					</div>
 				</c:if>
 				<c:forEach var="membership" items="${memberships}">
-					<div id="box-membership-${membership.no }" data-wow-delay="0.3s">
+					<div id="box-membership-${membership.no }" data-wow-delay="0.3s" style="margin-top: 100px;">
 						<div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
 							<div class="service-icon">
 								<i class="bi bi-trophy-fill text-white"></i>

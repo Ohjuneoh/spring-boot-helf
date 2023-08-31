@@ -28,7 +28,7 @@
                  a.lesson_date as "date",
                  a.lesson_type as type,
                  a.lesson_time as time,
-                 row_number() over (order by a.lesson_no asc) rownumber
+                 row_number() over (order by a.lesson_no desc) rownumber
              from
                 helf_lesson a, helf_users b
              where a.user_id = b.user_id
@@ -70,17 +70,6 @@
         where
             lesson_no = #{no}
     </update>
-
-    <!-- 모집인원 신청인원 같을 시 모집여부 변경 -->
-<!--    <update id="updateReservation" parameterType="Lesson">-->
-<!--        update-->
-<!--            helf_lesson-->
-<!--        set-->
-<!--            lesson_reservation = '모집완료'-->
-<!--        where-->
-<!--            lesson_req_cnt = lesson_quota;-->
-<!--    </update>-->
-
     <!-- 개설된 PT 수정 -->
     <update id="updateLesson" parameterType="Lesson">
         update
@@ -174,25 +163,4 @@
             my_membership_remainder_cnt = 0
         and my_membership_no = #{no}
     </update>
-
-    <!-- 레슨번호로 레슨테이블에 있는 값 조회 -->
-<!--    <select id="getAllLessonByNo" parameterType="int" resultType="Lesson">-->
-<!--        select-->
-<!--            lesson_no as no,-->
-<!--            lesson_name as name,-->
-<!--            lesson_time as time,-->
-<!--            lesson_description as description,-->
-<!--            lesson_disabled as disabled,-->
-<!--            lesson_req_cnt as reqCnt,-->
-<!--            lesson_quota as quota,-->
-<!--            lesson_reservation as reservation,-->
-<!--            lesson_type as type,-->
-<!--            lesson_date as "date",-->
-<!--            user_id as "user.id",-->
-<!--            membership_no as "membership.no"-->
-<!--        from-->
-<!--            helf_lesson-->
-<!--        where-->
-<!--            lesson_no = #{no}-->
-<!--    </select>-->
 </mapper>

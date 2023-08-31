@@ -7,7 +7,9 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import kr.co.helf.vo.TrainerReview;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,8 +38,9 @@ public class UserController {
 	
 	@Autowired
 	UserService userService = new UserService();
+
 	
-	/* 회원가입 시작 */
+/* 회원가입 시작 */
 	// 회원가입 초기화면 
 	@GetMapping(value="/registerform")
 	public String registerForm(Model model) {
@@ -96,13 +99,12 @@ public class UserController {
 			return "success";	// 중복 아이디 x
 		}
 	} 
-	/* 회원가입 끝 */
+/* 회원가입 끝 */
 	
 	
 	
 	
-	/* 로그인 시작 */
-	
+/* 로그인 시작 */
 	// 로그인화면 
 	@GetMapping(value="/loginform")
 	public String loginForm() {
@@ -117,8 +119,6 @@ public class UserController {
 		return "login/findId";
 	}
 	
-	
-	
 	// 아이디 찾기 (ajax)
 	@GetMapping("/findId")
 	@ResponseBody
@@ -127,8 +127,15 @@ public class UserController {
 		return result;
 	}
 	
+	// 비밀번호찾기 화면
+		@GetMapping(value="/findPwd")
+		public String findPassword() {
+			
+			return "login/findPwd";
+	}
+		
 	// 비밀번호 찾기 (ajax) - 인증번호 전송
-	@GetMapping("/findPwdAuth")
+	@GetMapping("/findPwdByAuth")
 	@ResponseBody
 	public String findPwd(@RequestParam("id") String userId) throws Exception {
 		
@@ -142,20 +149,38 @@ public class UserController {
 		}
 	}
 	
-	// 비밀번호 찾기 (ajax) - 인증번호 인증
-
-//		@PostMapping("/findPwd")
-//		public String findPassword(String userId) {
-//			userService.initPassword(userId);
-//			return "/login/findPwdFinish";
-//		}
-	
-	// 비밀번호찾기 화면
-	@GetMapping(value="/findPwd")
-	public String findPassword() {
+	// 비밀번호 찾기 (ajax) - 인증번호 인증(확인)
+	@GetMapping("/findPwdAuthChk")
+	@ResponseBody
+	public String checkAuth(@RequestParam("auth") String auth, @RequestParam("id") String userId) throws Exception {
 		
-		return "login/findPwd";
+		
+		try {
+			userService.checkPwdAuth(auth, userId);
+			return "success";	
+
+		} catch (RuntimeException ex) {
+			ex.printStackTrace();
+			return "fail";	
+		}
 	}
+	
+	// 비밀번호 변경 화면
+	@GetMapping("/changePwdForm")
+	public String changePwdform() {
+		
+		return "/login/changePwdForm";
+	}
+	
+	// 비밀번호 변경 
+	@PostMapping("/changePwd")
+	public String changePwd(@RequestParam("id") String userId, @RequestParam("newPwd") String newPwd) {
+		
+		userService.updateUserPwd(userId, newPwd);
+		
+		return "/login/changePwdFinish";
+	}
+	
 	
 	//인증되지 않은 사용자가 접근 했을 때 이동되는 페이지(by 준오)
 	@GetMapping(value="/denied")
@@ -163,6 +188,50 @@ public class UserController {
 		
 		return "error/user";
 	}
+/* 로그인 끝 */
+	
+	
+/* 마이페이지 시작 */
+	// 유저 마이페이지 화면 - 내 리뷰 보기(예광)
+	@GetMapping("/userMypage")
+	public String userMypage(@AuthenticationPrincipal User user, Model model) {
+		List<TrainerReview>  reviews = userService.getMyReviews(user.getId());
+		model.addAttribute("reviews", reviews);
+		return "/mypage/userInfo";
+	}
+	
+	// 유저 마이페이지 수정화면
+	@GetMapping("/userModify")
+	public String userModifypage() {
+		
+		return "/mypage/userModifyInfo";
+	}
+	
+	// 트레이너 마이페이지화면
+	@GetMapping("/trainerMypage")
+	public String trainerMypage() {
+		
+		return "/mypage/trainerInfo";
+	}
+	
+	// 트레이너 마이페이지 수정화면
+	// 유저 마이페이지 수정화면
+		@GetMapping("/trainerModify")
+		public String trainerModifypage() {
+			
+			return "/mypage/trainerModifyInfo";
+		}
 
-	/* 로그인 끝 */
+	// 마이페이지 - 트레이너 리뷰 더 보기 (예광)
+	@GetMapping("/moreReviews")
+	public String moreReviews(@AuthenticationPrincipal User user, Model model){
+		List<TrainerReview>  reviews = userService.getMyReviews(user.getId());
+		model.addAttribute("reviews", reviews);
+		return "/mypage/myMoreReviews";
+	}
+
+
+
+/* 마이페이지 끝 */
+	
 }

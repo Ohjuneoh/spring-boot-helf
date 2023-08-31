@@ -17,4 +17,5 @@ public class PointHistory {
 	private LocalDate useDate;
 	private User user;
 	private String type;
+	private Order order;
 }

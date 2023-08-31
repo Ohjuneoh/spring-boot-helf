@@ -1,6 +1,6 @@
 package kr.co.helf.service;
 
-import static kr.co.helf.controller.MembershipEnum.*;
+import static kr.co.helf.enums.MembershipEnum.*;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -96,7 +96,7 @@ public class OrderService {
 		form.totalPrice();
 	}
 
-	public void updateUser(AddOrderForm form, User user) {
+	public void updateUserByOrder(AddOrderForm form, User user) {
 		if(form.getUsePoint() != 0) {
 			user.setPoint(user.getPoint() - form.getUsePoint());
 			orderMapper.updateUserById(user);
@@ -155,17 +155,27 @@ public class OrderService {
 		BeanUtils.copyProperties(form, order);
 		order.setUser(user);
 		order.setMyMembership(myMembership);
-			
-		// 포인트 내역
-		if(form.getUsePoint() != 0) {
-			PointHistory pointHistory = new PointHistory();
-			
-			BeanUtils.copyProperties(form, pointHistory);
-			pointHistory.setUser(user);
-			orderMapper.insertHistory(pointHistory);
-			order.setPointHistory(pointHistory);
-		}
 		orderMapper.insertOrder(order);
+
+		// 포인트 내역
+		// 사용 포인트
+		if(form.getUsePoint() != 0) {
+			PointHistory usePoint = new PointHistory();
+			
+			BeanUtils.copyProperties(form, usePoint);
+			usePoint.setUser(user);
+			usePoint.setType(PAYMENT.getMembershiEnum());
+			usePoint.setOrder(order);
+			orderMapper.insertHistory(usePoint);
+		}
+		
+		// 적립 포인트
+		PointHistory savePoint = new PointHistory();
+		savePoint.setUsePoint(form.getSavePoint());
+		savePoint.setUser(user);
+		savePoint.setType(SAVEPOINT.getMembershiEnum());
+		savePoint.setOrder(order);
+		orderMapper.insertHistory(savePoint);
 	}
 
 	public Rank getRankByNo(int no) {
@@ -180,7 +190,7 @@ public class OrderService {
 		List<MyMembership> useMyMembership = orderMapper.getUseMyMembershipByNoById(map);
 		
 		if(!useMyMembership.isEmpty()) {
-			throw new RuntimeException("이미 구매하신 이용권입니다.");
+			throw new RuntimeException();
 		}
 	}
 

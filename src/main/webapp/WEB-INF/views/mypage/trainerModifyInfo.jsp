@@ -4,6 +4,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
+<style>
+
+</style>
 
 <head>
     <meta charset="utf-8">
@@ -59,171 +62,118 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">F&Q</h1>
-                    <a href="" class="h5 text-white">자주 묻는 질문</a>
+                    <h1 class="display-4 text-white animated zoomIn">MY PAGE</h1>
+                    <a href="" class="h5 text-white">내 정보 조회</a>
                 </div>
             </div>
         </div>
     </div>
+    
+   
 	
-	<!-- 자주묻는 질문 -->
-    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-                <h5 class="fw-bold text-primary text-uppercase">자주 묻는 질문</h5>
-                <h1 class="mb-0">HELF 고객님들이 자주묻는 질문들을 참고하세요.</h1>
-            </div>
-            
-           
-            
-            <!-- 도움말 -->
-			<div class="container mt-3">
-				<h4>자주 찾는 도움말</h4><br>
+	
+    <div class="p-3" style="max-width: 900px; margin: 0 auto;">
+                        
+    	<form action="/user/findPwd" method="post">
+	        <div class="row g-3">
+	            <div class="col-xl-12">
+	               <a style="display: flex; justify-content: center;">
+	               		<strong style="font-size: 30px;">내정보 수정하기</strong>
+	               </a>
+	             </div>
+	             <div class="border p-3 bg-light">
+		         	
+		         	<div class="row g-3">
+						<div class="mb-4"></div>
+					
+					<div class="row">
+						<h5>아이디</h5>
+						    <div class="col-sm-6 input-wrapper">
+						         <input id="trainer-id" name="id" style="height: 55px; width: 620px;" placeholder="4-12자, 영어소문자를 입력하세요." type="text" class="form-control bg-light border-0" value="">
+						    	 <div class="check_font" id="trainer-id_check"></div>
+						    	<div class="id_input_re_1" style="color: green; display: none;">사용 가능한 아이디입니다.</div>
+						    	<div class="id_input_re_2" style="color: red; display: none;">아이디가 이미 존재합니다.</div>
+						    </div>
+					</div>
 				
-				  <!-- 도움말 내용 -->
-				  <div class="tab-content">
-				  
-				    <div id="all" class="container tab-pane active"><br>
-					      <p>
-							<div class="row g-5">
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.3s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-search"></i>
-				                        </div>
-				                        <h4 class="mb-3">블로그 아이디 변경 유의사항</h4>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.6s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-search"></i>
-				                        </div>
-				                        <h4 class="mb-3">Data Analytics</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-search"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-search"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                           <i class="bi bi-arrow-right"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                           <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                           <i class="bi bi-arrow-right"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				            </div>
+				    <div class="col-12">
+				    	<h5>비밀번호</h5>
+				        <input id="trainer-password" name="password" style="height: 55px;" placeholder="4-12자, 영문+숫자+특수문자를 꼭 포함하여 입력하세요." type="password" class="form-control bg-light border-0" value="">
+				   		<div class="check_font" id="trainer-password_check"></div>
 				    </div>
 				    
-				    <div id="menu1" class="container tab-pane fade"><br>
-				      <h3>Menu 1</h3>
-				      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				    <div class="col-12">
+					    <h5>이메일</h5> 
+					    <div class="row">
+						    <div class="col-md-6">
+						        <input id="trainer-email" name="email1" style="height: 55px;" placeholder="특수문자를 제외하고 입력하세요." type="text" class="form-control bg-light border-0" value="">
+						    	<div class="check_font" id="trainer-email-check"></div>
+							</div>
+							<div class="col-md-6">
+							    <select id="trainer-email-2" name="email2" style="height: 55px; width: 200px;" class="form-select bg-light border-0">
+						            <option selected="" value="@naver.com">@naver.com</option>
+						            <option value="@gamil.com">@gamil.com</option>
+								    <option value="@kakao.com">@kakao.com</option>
+								    <option value="@hanmail.net">@hanmail.net</option>
+								    <option value="@nate.com">@nate.com</option>
+								    <option value="@outlook.com">@outlook.com</option>
+								    <option value="@yahoo.com">@yahoo.com</option>
+							    </select>
+						    </div>
+					    </div>
 				    </div>
 				    
-				    
-				    <div id="menu2" class="container tab-pane fade"><br>
-				      <h3>Menu 2</h3>
-				      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+				    <div class="col-12">
+				    <h5>이름</h5>
+				    	<div class="row">
+				    		<div class="col-md-6">
+					        	<input id="trainer-name" name="name" style="height: 55px;" placeholder="홍길동 (한글만 입력하세요.)" type="text" class="form-control bg-light border-0" value="">
+					    			<div class="check_font" id="trainer-name_check">
+					    				
+					    			</div>
+				    		</div>
+						    <div class="col-md-3">
+						        <select id="trainer-gender" name="gender" style="height: 55px; width: 100px;" class="form-select bg-light border-0">
+						            <option selected="" disabled="">성별</option>
+						            <option value="MAN">남자</option>
+						            <option value="WOMAN">여자</option>
+						        </select>
+				    		</div>
+				    	</div>  
 				    </div>
-				  </div>
-			</div>
-			
-        </div>
-    </div>
-    <!-- Service End -->
+				    
+				    <div class="col-12">
+				    <h5>전화번호</h5>
+				    	<div class="row">
+				    		<div class="col-md-6">
+					        	<input id="trainer-tel" name="tel" style="height: 55px;" placeholder="010-1111-1234 (특수문자는 '-'만 입력가능합니다. )" type="text" class="form-control bg-light border-0" value="">
+				    			<div class="check_font" id="trainer-tel_check"></div>
+				    		</div>
+						    <div class="col-md-6">
+							    <select id="trainer-mobileCarrier" name="mobileCarrier" style="height: 55px; width: 100px;" class="form-select bg-light border-0">
+						            <option selected="" disabled="">통신사</option>
+						            <option value="SK">SK</option>
+						            <option value="LG">LG</option>
+								    <option value="KT">KT</option>
+								    <option value="MVNO">알뜰폰</option>
+							    </select>
+						    </div>
+				    	</div>  
+				    </div>
+                  </div>
+              </div>
+          </div>
+                            <div class="col-12 mt-3">
+						    	<button type="submit" class="btn btn-dark w-100 py-3" id="changePwd-button" >회원정보 수정</button>
+							</div>
+      </form>
+                            
+                            
+      </div>                    
+                 
 	
 	
-	<!-- 자주묻는질문 모달창  -->
-	<div class="modal fade" id="modal-faq" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body" style="font-size: 19px; font-weight:bold; color:green" >
-	        Q. 블로그 아이디 변경 유의사항(리다이렉트 기간 안내)
-	      </div>
-	      <div class="modal-footer">
-	      <div class="boarder">
-	      	A. 외부에 공유한 이전 주소 링크는 변경 시점으로부터 3개월간 리다이렉트됩니다.
-	      </div>
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
+	
 	
 	
     <!-- Lesson Register Form End  -->

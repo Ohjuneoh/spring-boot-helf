@@ -90,10 +90,7 @@
 					<table class="table table-bordered" style="margin: 50px; width: 700px;">
 			   			<thead>
 			   				<tr>
-			   					<th class="bg-primary" style="color:white;">상품명</th>
-			   					<th class="bg-primary" style="color:white;">기간/횟수</th>
-			   					<th class="bg-primary" style="color:white;">상품가</th>
-			   					<th class="bg-primary" style="color:white;">비고</th>
+			   					<th class="bg-primary" style="color:white; height: 35px;" colspan="4"></th>
 			   				</tr>
 			   				<tr>
 			   					<th>
@@ -119,7 +116,7 @@
 										<br/><br/><fmt:formatNumber value="${myOption.price }"/> 원
 			   						</c:forEach>
 				   				</td>
-				   				<td rowspan="3" style="vertical-align: middle;">
+				   				<td rowspan="4" style="vertical-align: middle;">
 				   					${dto.orderJoin.orderState }
 				   					<c:if test="${dto.orderJoin.orderState eq '환불대기' }">
 										<br/>
@@ -131,24 +128,25 @@
 			   				<tr>
 			   					<th>
 			   						부가세
-			   						<c:if test="${dto.orderJoin.pointHistory != null }">
-			   							<br/><br/>사용 포인트
-			   						</c:if>
 			   					</th>
-			   					<td></td>
-			   					<td>
+			   					<td colspan="2">
 			   						<fmt:formatNumber value="${dto.orderJoin.surtax }" pattern="###,###"/>원
-			   						<c:if test="${dto.orderJoin.pointHistory != null }">
-				   						<br/><br/>${dto.orderJoin.pointHistory.usePoint }P
-			   						</c:if>
+			   					</td>
+			   				</tr>
+			   				<tr>
+			   					<th>포인트 내역</th>
+			   					<td colspan="2">
+			   						<div class="d-grid gap-2 col-6 mx-auto align-items-center justify-content-center text-center"
+				 						 data-bs-toggle="modal" data-bs-target="#point-modal">
+			   							<button id="btn-point" class="btn btn-success btn-sm">내역보기</button>
+			   						</div>
 			   					</td>
 			   				</tr>
 			   				<tr>
 			   					<th>
 			   						<strong>총 결제 금액</strong>
 			   					</th>
-			   					<td></td>
-			   					<td>
+			   					<td colspan="2" >
 			   						<strong>
 			   							<span id="total-price-text">
 			   								<fmt:formatNumber value="${dto.orderJoin.totalPrice }" pattern="###,###"/>
@@ -156,17 +154,67 @@
 			   						</strong>
 			   					</td>
 			   				</tr>
+		   					<c:if test="${dto.orderJoin.orderState ne '결제완료' }">
+				   				<tr>
+				   					<th>
+				   						<strong>환불금액</strong>
+				   					</th>
+				   					<td colspan="2" >
+				   						<strong>
+				   							<span>
+				   								<fmt:formatNumber value="${dto.refund.amount }" pattern="###,###"/>
+				   							</span>원
+				   						</strong>
+				   					</td>
+				   				</tr>
+		   					</c:if>
 			   			</thead>
 					</table>
-					<div style="margin: 100px;">
+					<div style="margin-top: 80px;">
 						<a href="order-list?page=${param.page }&state=${param.state }&type=${param.type }&keyword=${param.keyword}" 
-						   class="btn btn-primary btn-lg">목록</a>
+						   class="btn btn-primary">목록</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+	<div class="modal fade" id="point-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  		<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="exampleModalLabel">포인트 내역</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="card" >
+								<div class="card-body align-items-center justify-content-center text-center">
+									<table class="table">
+										<thead>
+			                        		<tr>
+			                            		<th style="width: 30%;">사용 날짜</th>
+			                            		<th style="width: 30%;">포인트 금액</th>
+			                            		<th style="width: 30%;">속성</th>
+			                        		</tr>
+										</thead>
+			                    		<tbody>
+											<c:forEach var="point" items="${dto.orderJoin.points }">
+												<tr>
+													<td>${point.useDate }</td>
+													<td>${point.usePoint }P</td>
+													<td>${point.type}</td>
+												</tr>
+ 											</c:forEach>
+				                        </tbody>
+		                    		</table>
+		                    	</div>
+		                    </div>
+						</div>
+						<div class="modal-footer">
+							<br/>
+				    	</div>
+					</div>
+				</div>
+			</div>
 	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
     
     <!-- Back to Top -->

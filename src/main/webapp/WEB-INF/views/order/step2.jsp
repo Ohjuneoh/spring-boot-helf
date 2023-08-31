@@ -82,39 +82,38 @@
 				<h5 class="fw-bold text-primary text-uppercase">Order</h5>
 				<h1 class="mb-0">구매를 진행하세요</h1>
 			</div>
-			<br/>
-			<br/>
-			<br/>
 			<div class="text-center" >
-				<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
-					  padding-top:46px; padding-left:1px;">
-					<strong>이용약관</strong>
-				</span>
-		  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
-		  		<span class="border border-primary rounded-circle d-inline-block bg-primary" style="height:125px; width:125px; 
-		  			  padding-top:46px; padding-left:1px;">
-		  			<strong style="color:white">
-			  			세부설정
-		  			</strong>
-		  		</span>
-		  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
-		  		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
-		  			  padding-top:46px; padding-left:-2px;">
-		  			<strong>
-				  		결제
-		  			</strong>
-		  		</span>
-				<div class="offset-1" style="margin: 100px;">
+				<div style="margin-bottom: 150px;">
+					<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
+						  padding-top:46px; padding-left:1px;">
+						<strong>이용약관</strong>
+					</span>
+			  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
+			  		<span class="border border-primary rounded-circle d-inline-block bg-primary" style="height:125px; width:125px; 
+			  			  padding-top:46px; padding-left:1px;">
+			  			<strong style="color:white"
+				  			>세부설정
+			  			</strong>
+			  		</span>
+			  		<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
+			  		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
+			  			  padding-top:46px; padding-left:-2px;">
+			  			<strong>
+					  		결제
+			  			</strong>
+			  		</span>
+				</div>
+				<div class="offset-1" style="margin: 0 auto; width:900px;">
 					<h4 class="text-start">
 						<strong style="color:gray">기간/횟수</strong>
 					</h4>
-					<hr style="border: 2px solid gray;"/>
+					<hr style="border: 2px solid gray; "/>
 				</div>
-				<div class="offset-2" style="margin: 100px;">
+				<div class="text-center" style="margin-top: 50px;">
 					<c:forEach var="period" items="${periods }">
 						<button	data-period-no="${period.no }" 
 							id="btn-period-${period.no }" class="btn btn-outline-primary btn-lg" 
-								style="width: 200px; height: 200px; margin: 20px;">
+								style="width: 180px; height: 180px; margin: 20px;">
 							${period.property }${period.type eq "기간" ? "개월" : "회"}
 							<br/>
 							<br/>
@@ -124,18 +123,19 @@
 				</div>
 				
 				<c:forEach var="option" items="${options }">
-			  		<div class="text-start offset-1" style="margin: 100px;">
+					<div style="margin-top: 100px;"></div>
+			  		<div class="text-start offset-1" style="width:900px; margin:0 auto;">
 						<h4>
 							<strong style="color:gray">${option.name }</strong>
 						</h4>
-						<hr style="border: 2px solid gray;" />
+						<hr style="border: 2px solid gray; " />
 			  		</div>
-					<div class="offset-1" style="margin: 100px;">
+					<div style="margin-top: 50px;">
 						<c:forEach var="optionJoinDetail" items="${optionJoinDetails }">
 							<c:if test="${option.name eq optionJoinDetail.name }">
 								<button id="btn-option-${optionJoinDetail.no }" data-option-no="${optionJoinDetail.no }" 
 										data-option-name="${option.name }" type="button" class="btn btn-outline-primary btn-lg" 
-										style="width: 300px; height: 200px; margin: 20px;">
+										style="width: 250px; height: 180px; margin: 20px;">
 									${optionJoinDetail.type }
 								</button>
 							</c:if>
@@ -143,7 +143,7 @@
 					</div>
 				</c:forEach>
 				
-				<div class="offset-10"> 
+				<div style="margin-top: 100px; margin-left: 800px;">
 					<form id="form-xxx" method="post" action="check">
 						<input type="hidden" name="periodNo" />
 						<input type="hidden" name="lockerNo" />

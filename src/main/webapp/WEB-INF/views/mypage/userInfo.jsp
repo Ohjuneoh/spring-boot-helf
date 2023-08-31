@@ -4,6 +4,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
+<style>
+
+</style>
 
 <head>
     <meta charset="utf-8">
@@ -59,171 +62,104 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">F&Q</h1>
-                    <a href="" class="h5 text-white">자주 묻는 질문</a>
+                    <h1 class="display-4 text-white animated zoomIn">MY PAGE</h1>
+                    <a href="" class="h5 text-white">내 정보 조회</a>
                 </div>
             </div>
         </div>
     </div>
-	
-	<!-- 자주묻는 질문 -->
+    
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-                <h5 class="fw-bold text-primary text-uppercase">자주 묻는 질문</h5>
-                <h1 class="mb-0">HELF 고객님들이 자주묻는 질문들을 참고하세요.</h1>
-            </div>
-            
-           
-            
-            <!-- 도움말 -->
-			<div class="container mt-3">
-				<h4>자주 찾는 도움말</h4><br>
-				
-				  <!-- 도움말 내용 -->
-				  <div class="tab-content">
-				  
-				    <div id="all" class="container tab-pane active"><br>
-					      <p>
-							<div class="row g-5">
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.3s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-search"></i>
-				                        </div>
-				                        <h4 class="mb-3">블로그 아이디 변경 유의사항</h4>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.6s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-search"></i>
-				                        </div>
-				                        <h4 class="mb-3">Data Analytics</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-search"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-search"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                           <i class="bi bi-arrow-right"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                           <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                           <i class="bi bi-arrow-right"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				            </div>
-				    </div>
-				    
-				    <div id="menu1" class="container tab-pane fade"><br>
-				      <h3>Menu 1</h3>
-				      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-				    </div>
-				    
-				    
-				    <div id="menu2" class="container tab-pane fade"><br>
-				      <h3>Menu 2</h3>
-				      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-				    </div>
-				  </div>
-			</div>
-			
-        </div>
+    	<div class="container py-5">
+    		<div class="row my-3">
+    			<div class="col-4">
+    				<div class="profile_pic">
+						<img src="https://atimg.sonyunara.com/files/attrangs/mempic/me.png" class="profile-img" style=" top:48%; left:55%;  width:70%">
+					</div>
+    			</div>
+    			<div class="col-4 ">
+    				<h4 class="mb-5"><strong style="color: blue;">홍길동</strong>님</h4>
+    				<p><strong>등급 </strong> : <span>다이아몬드</span></p>
+    				<p><strong>포인트 </strong> : <span>30</span>점 </p>
+    			</div>
+    			<div class="col-4 text-end">
+    				<a class="btn btn-outline-light btn-sm mb-2" href="/user/userModify">수정</a>
+    				<button class="btn btn-outline-light btn-sm mb-2">회원탈퇴</button>
+    			</div>
+    		</div>
+    		<hr>
+    		<div class="row my-3 " >
+    			<div class="col-6">
+    				<div class="card">
+    					<div class="card-header">내 문의내역</div>
+    					<div class="card-body">
+    						<p class="text-end"><a href="">더보기</a></p>
+    						<table class="table">
+    							<thead>
+    								<tr>
+    									<th>제목</th>
+    									<th>등록일자</th>
+    									<th>답변여부</th>
+    								</tr>
+    							</thead>
+    						</table>
+    					</div>
+    				</div>
+    			</div>
+
+    			<div class="col-6">
+    				<div class="card">
+    					<div class="card-header">내 리뷰내역</div>
+    					<div class="card-body">
+    						<p class="text-end"><a href="/user/moreReviews">더보기</a></p>
+							<table class="table">
+								<thead>
+								<tr>
+									<th>수업명</th>
+									<th>제목</th>
+									<th>작성일</th>
+								</tr>
+								</thead>
+								<tbody>
+								<c:choose>
+									<c:when test="${empty reviews }">
+										<tr>
+											<td colspan="5" class="text-center">
+												등록된 리뷰가 없습니다.
+											</td>
+										</tr>
+									</c:when>
+								</c:choose>
+								<c:forEach var="reviews" items="${reviews}" varStatus="status">
+									<c:choose>
+										<c:when test="${status.index < 5}">
+											<tr>
+												<td>${reviews.lesson.name}</td>
+												<td>${reviews.title}</td>
+												<td><fmt:formatDate value="${reviews.createDate}" pattern="yyyy년 M월 d일" /></td>
+											</tr>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								</tbody>
+							</table>
+    					</div>
+    				</div>
+    			</div>
+
+    		</div>
+    	</div>
     </div>
-    <!-- Service End -->
 	
 	
-	<!-- 자주묻는질문 모달창  -->
-	<div class="modal fade" id="modal-faq" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body" style="font-size: 19px; font-weight:bold; color:green" >
-	        Q. 블로그 아이디 변경 유의사항(리다이렉트 기간 안내)
-	      </div>
-	      <div class="modal-footer">
-	      <div class="boarder">
-	      	A. 외부에 공유한 이전 주소 링크는 변경 시점으로부터 3개월간 리다이렉트됩니다.
-	      </div>
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
+	
+	
+	
+	
+	
+	
 	
 	
     <!-- Lesson Register Form End  -->
