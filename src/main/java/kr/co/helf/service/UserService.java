@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
+import kr.co.helf.mapper.TrainerReviewMapper;
+import kr.co.helf.vo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -27,15 +29,6 @@ import kr.co.helf.dto.Pagination;
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.mapper.OrderMapper;
 import kr.co.helf.mapper.UserMapper;
-import kr.co.helf.vo.CustomerAttendance;
-import kr.co.helf.vo.LessonApply;
-import kr.co.helf.vo.MyMembership;
-import kr.co.helf.vo.Order;
-import kr.co.helf.vo.Rank;
-import kr.co.helf.vo.Trainer;
-import kr.co.helf.vo.TrainerCareer;
-import kr.co.helf.vo.TrainerAttendance;
-import kr.co.helf.vo.User;
 
 @Service
 public class UserService {
@@ -51,6 +44,9 @@ public class UserService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private TrainerReviewMapper trainerReviewMapper;
 	
 	// 유저 회원가입
 	public void createUser(AddUserForm form) {
@@ -291,11 +287,17 @@ public class UserService {
 		List<MyMembership> myMembershipList = orderMapper.getCustomerMyMemberships(id);
 		result.setMyMembership(myMembershipList);
 		
-		// 최근 방문 내역 
+		// 최근 방문 내역
 		List<CustomerAttendance> customerAttendance = userMapper.getCustomerAttendance(id);
 		result.setCustomerAttendance(customerAttendance);
 	
 		return result; 
+	}
+
+	// 마이페이지 - 내 리뷰 보기(예광)
+	public List<TrainerReview> getMyReviews(String userId){
+		List<TrainerReview> reviews =trainerReviewMapper.getMyReviews(userId);
+		return reviews;
 	}
 }
 
