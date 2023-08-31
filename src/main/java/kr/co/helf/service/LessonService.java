@@ -3,6 +3,7 @@ package kr.co.helf.service;
 import kr.co.helf.mapper.LessonMapper;
 import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.LessonApply;
+import kr.co.helf.vo.PersonalLesson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +32,9 @@ public class LessonService {
     public void updateAttendance(int lessonNo, String userId,String status){
         lessonMapper.updateAttendance(lessonNo,userId,status);
     }
+    // 내가 개설한 모든 개인수업 조회(트레이너) by 준오
+	public List<PersonalLesson> getAllPersonalLessons(String userId) {
+		return lessonMapper.getAllPersonalLesson(userId);
+	}
 
 }

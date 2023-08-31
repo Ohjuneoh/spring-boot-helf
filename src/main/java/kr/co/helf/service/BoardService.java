@@ -14,7 +14,6 @@ import kr.co.helf.form.AddBoardForm;
 import kr.co.helf.form.BoardModifyForm;
 import kr.co.helf.mapper.BoardMapper;
 import kr.co.helf.vo.Board;
-import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.User;
 
 @Service
@@ -71,7 +70,7 @@ public class BoardService {
 		return prevNext;
 	}
 	
-	// 공지사항 수정
+  // 공지사항 수정
 	public void updateBoard(BoardModifyForm form) {
 		 Board board = boardMapper.getBoardByNo(form.getNo());
 		 BeanUtils.copyProperties(form, board);

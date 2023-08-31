@@ -19,7 +19,7 @@ import kr.co.helf.vo.User;
 public interface PersonalLessonMapper {
 	
 	//경력을 가진 트레이너 조회
-	List<Trainer> getAllTrainersWithCareer();
+	List<Trainer> getAllTrainersWithCareer(String userId);
 	//1대1 PT 예약
 	void insertConsultation(Consultation consultation);
 
@@ -41,6 +41,7 @@ public interface PersonalLessonMapper {
 	Consultation getConsultationByNo(int consultationNo);
 	//상담상태 변경
 	void updatedConsultation(@Param("consultationNo") int consultationNo, @Param("status") String status);
+	void updateExpiredConsultation(@Param("id") String id, @Param("no") int no, @Param("status") String status);
 	
 
 }

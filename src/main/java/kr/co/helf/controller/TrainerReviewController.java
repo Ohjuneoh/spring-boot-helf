@@ -5,14 +5,15 @@ import kr.co.helf.form.AddReviewForm;
 import kr.co.helf.form.ModifyReviewForm;
 import kr.co.helf.service.TrainerReviewService;
 import kr.co.helf.vo.TrainerReview;
+import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Controller
@@ -22,6 +23,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TrainerReviewController {
 
     private final TrainerReviewService trainerReviewService;
+
+    @GetMapping("/reviews")
+    @ResponseBody
+    public List<TrainerReview> getTrainerReviews(@RequestParam("trainerNo") int trainerNo,
+                                                    @RequestParam("page") int page) {
+        List<TrainerReview> reviews = trainerReviewService.reviewMore(trainerNo, page);
+        return reviews;
+    }
+
     // 트레이너 리뷰 리스트 화면 출력 - 후에 강사소개 페이지에서 값 전달 되면 트레이너 번호 받아서 출력해야 함.
     @GetMapping("/list")
     public String reviewList(@RequestParam("trainerNo") int trainerNo, Model model){
@@ -38,7 +48,7 @@ public class TrainerReviewController {
     @PostMapping("/registration")
     public String review(AddReviewForm form){
         trainerReviewService.createReview(form);
-        return "trainer-review/list";
+        return "redirect:/trainerIntro";
     }
     // 트레이너 리뷰 수정 화면
     @GetMapping("/modify")

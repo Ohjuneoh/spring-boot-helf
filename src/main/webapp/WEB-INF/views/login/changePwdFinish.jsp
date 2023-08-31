@@ -45,7 +45,7 @@
 
 
     <!-- Topnavbar Start -->
-   	<jsp:include page="common/topnavbar.jsp">
+   	<jsp:include page="/WEB-INF/views/common/topnavbar.jsp">
 		<jsp:param name="menu" value="홈"/>
 	</jsp:include>
     <!-- Topnavbar End -->
@@ -53,15 +53,15 @@
 
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0 h-10 ">
-		<jsp:include page="common/navbar.jsp">
+		<jsp:include page="/WEB-INF/views/common/navbar.jsp">
 			<jsp:param name="menu" value="홈"/>
 		</jsp:include>
     <!-- Navbar End -->
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">REGISTER COMPLETE</h1>
-                    <a href="" class="h5 text-white">회원가입 완료</a>
+                    <h1 class="display-4 text-white animated zoomIn">CHANGE PASSWORD</h1>
+                    <a href="" class="h5 text-white">비밀번호 변경 완료</a>
                 </div>
             </div>
         </div>
@@ -70,7 +70,7 @@
     	<div class="row justify-content-center" style="text-align:center">
 		
 		 <div class="col-lg-5">
-		 	  <h2>HELF 헬스장에 가입해주셔서 감사합니다.</h2>
+		 	  <h2>비밀번호 변경이 완료되었습니다.</h2>
 		 	  
 		 	  <div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"  style="display: flex; justify-content: center;">
 		 	  	<div doz_type="widget" id="w20190820145dcc26dd4ed">
@@ -94,7 +94,7 @@
 								<div class="text-table mt-2">
 									<div>
 										<i class="bi bi-emoji-laughing-fill" style="font-size: 48px;"></i>
-										<p><span style="color: rgb(35, 38, 40); font-size: 24px;"><strong style="color: blue">${name}</strong>님, 만나서 반가워요!</span></p>
+										<p><span style="color: rgb(35, 38, 40); font-size: 24px;">비밀번호가 변경되었습니다!</span></p>
 									
 									</div>
 								</div>		
@@ -132,7 +132,6 @@
 							<div doz_type="text" class="widget _text_wrap widget_text_wrap fr-view  default_padding " id="text_w201908176065896b508a7">
 								<div class="text-table ">
 									<div>
-										<p>모두가 즐겨 찾는 서비스로 HELF를 시작해보세요.<br>
 											<a href="/user/loginform" class="btn btn-primary py-2 px-4 ms-3">로그인하기</a>
 											<a href="/" class="btn btn-primary py-2 px-4 ms-3">홈으로가기</a>
 										</p>

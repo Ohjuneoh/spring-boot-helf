@@ -63,11 +63,16 @@ public class CheckInController {
 	@GetMapping("/welcome")
 	@ResponseBody
 	public Optional<MyMembership> getMyMembership(@RequestParam("userId") String userId){
-		Optional<MyMembership> myMembership = userService.getMyMembershipDetail(userId);
-		if(myMembership.isPresent()) {
-			userService.createAttendance(userId);
+		Optional<MyMembership> optional = userService.getMyMembershipDetail(userId);
+		if(optional.isPresent()) {
+			MyMembership mm = optional.get();
+			int myMembershipNo = mm.getNo();
+			Map<String, Object> param = new HashMap<>();
+			param.put("userId", userId);
+			param.put("myMembershipNo", myMembershipNo);
+			userService.createAttendance(param);
 		}
-		return myMembership;  
+		return optional;  
 	}
 	
 	// 회원 수업 출석 정보 요청과 매핑되는 요청핸들러 메소드 
@@ -79,8 +84,11 @@ public class CheckInController {
 	}
 	
 	@PostMapping("/check-lesson-attendance")
-	public String checkAttendance(@RequestParam("userId")String userId) {
-		userService.createAttendance(userId);
+	public String checkAttendance(@RequestParam("userId")String userId, @RequestParam("membershipNo") int myMembershipNo) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("userId", userId);
+		param.put("myMembershipNo", myMembershipNo);
+		userService.createAttendance(param);
 		return "checkin/checkInChoice";
 	}
 	

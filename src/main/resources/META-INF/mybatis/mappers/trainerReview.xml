@@ -3,10 +3,10 @@
 <mapper namespace="kr.co.helf.mapper.TrainerReviewMapper">
 
     <!-- 트레이너 리뷰 테이블에 저장 -->
-    <insert id="insertReview" parameterType="kr.co.helf.form.AddReviewForm">
+    <insert id="insertReview" parameterType="TrainerReview">
         insert into
-            helf_trainer_review(trainer_review_no,trainer_review_title,trainer_review_content,lesson_apply_no, lesson_no, trainer_no,trainer_review_rating)
-        values(helf_trainer_review_seq.nextval,#{title},#{content},#{apply.no}, #{lesson.no},#{trainer.trainerNo}, #{rating})
+            helf_trainer_review(trainer_review_no,trainer_review_title,trainer_review_content,lesson_apply_no,lesson_no, trainer_no,trainer_review_rating)
+        values(helf_trainer_review_seq.nextval,#{title},#{content},#{lessonApply.no},#{lesson.no},#{trainer.trainerNo}, #{rating})
     </insert>
 
     <!-- 트레이너 아이디로 트레이너 번호 찾기 -->
@@ -34,7 +34,6 @@
             c.user_id as "user.id",
             d.user_name as "lessonApply.user.name",
             d.user_name as "user.name"
-
         from
             helf_trainer_review a, helf_lesson b, helf_lesson_apply c, helf_users d
         where
@@ -105,6 +104,43 @@
         FROM helf_trainer_review
         WHERE trainer_no = #{value}
           and trainer_review_status = 'Y'
+    </select>
+
+    <!-- 리뷰 전체 목록 갯수 조회 -->
+    <select id="getCountReviews" resultType="int" parameterType="int">
+        select count(trainer_no) as "trainer.no"
+        from helf_trainer_review
+        where trainer_no = #{value}
+    </select>
+
+    <!-- 트레이너 번호에 해당하는 리뷰 더보기 조회 -->
+    <select id="getReviewsByMore" resultType="TrainerReview">
+        select *
+        from(select
+                 a.trainer_review_no as no,
+                 a.trainer_review_title as title,
+                 a.trainer_review_content as content,
+                 a.trainer_review_create_date as createDate,
+                 a.lesson_apply_no as "apply.no",
+                 a.lesson_no as "lesson.no",
+                 a.trainer_no as "trainer.trainerNo",
+                 a.trainer_review_rating as rating,
+                 a.trainer_review_status as status,
+                 b.lesson_name as "lesson.name",
+                 c.user_id as "lessonApply.user.id",
+                 d.user_name as "lessonApply.user.name",
+                 row_number() over(order by trainer_review_no asc) rownumber
+             from
+                 helf_trainer_review a, helf_lesson b, helf_lesson_apply c, helf_users d
+             where
+                 a.trainer_no =#{trainerNo}
+             and a.lesson_apply_no = c.lesson_apply_no
+             and b.lesson_no = c.lesson_no
+             and c.user_id = d.user_id
+             and a.trainer_review_status = 'Y'
+            )
+        where
+            rownumber between #{begin} and #{end}
     </select>
 
 </mapper>

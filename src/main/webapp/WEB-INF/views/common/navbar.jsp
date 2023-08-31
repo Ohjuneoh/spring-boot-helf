@@ -23,20 +23,59 @@
 					</div>
 				</div>
             </sec:authorize>
+
             <sec:authorize access="isAnonymous()">
             	<a href="/concept" class="nav-item nav-link">Concept</a>
             	<a href="/branch" class="nav-item nav-link">오시는길</a>
             	<a href="/trainerIntro" class="nav-item nav-link">강사 소개</a>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">문의</a>
+                <div class="dropdown-menu m-0">
+                    <a href="/board/notice" class="dropdown-item">공지사항</a>
+                    <a href="/board/faq" class="dropdown-item">자주 묻는 질문(F&Q)</a>
+                    <a href="/board/inquiries" class="dropdown-item">1대1 문의</a>
+                </div>
+            </div>
+            </sec:authorize>
+            <sec:authorize access="hasRole('ROLE_USER') || hasRole('ROLE_TRAINER')">
+            <div class="nav-item dropdown">
+                <div class="dropdown-menu m-0">
+                    <sec:authorize access="hasRole('ROLE_USER')">
+                    <a href="price" class="dropdown-item">내 정보 조회</a>
+                    <a href="/lesson/user-my-lesson" class="dropdown-item">내 수업 조회</a>
+                    <a href="/membership/list" class="dropdown-item">내 이용권</a>
+                    <a href="/membership/order-list" class="dropdown-item">구매내역</a>
+                    </sec:authorize>
+                    <sec:authorize access="hasRole('ROLE_TRAINER')">
+                        <a href="price" class="dropdown-item">내 정보 조회</a>
+                        <a href="/lesson/trainer-my-lesson" class="dropdown-item">내 수업 조회</a>
+                        <a href="/checkin/attendance" class="dropdown-item">출퇴근 내역</a>
+                    </sec:authorize>
+                </div>
+            </div>
+             </sec:authorize>
+              <sec:authorize access="hasRole('ROLE_MANAGER')">
+             <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">고객&인사관리</a>
+                <div class="dropdown-menu m-0">
+                    <a href="" class="dropdown-item">고객 조회</a>
+                    <a href="" class="dropdown-item">인사관리</a>
+                    <a href="/checkin/check-in" class="dropdown-item">입장 화면</a>
+                </div>
+            </div>
             </sec:authorize>
             <sec:authorize access="isAuthenticated">
-	            <sec:authorize access="hasRole('ROLE_USER') || hasRole('ROLE_TRAINER')">
+	            <sec:authorize access="hasRole('ROLE_USER')">
 	            <div class="nav-item dropdown">
 	                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업(고객)</a>
 	                <div class="dropdown-menu m-0">
 	                    <a href="/group-lesson/list" class="dropdown-item">그룹 수업</a>
 	                    <a href="/personal-lesson/consultation" class="dropdown-item">개인 PT 신청</a>
+	                    <a href="/trainerIntro" class="dropdown-item">강사 리뷰 보기</a>
 	                </div>
 	            </div>
+	            </sec:authorize>
+	            <sec:authorize access="hasRole('ROLE_TRAINER')">
 	            <div class="nav-item dropdown">
 	                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업(트레이너)</a>
 	                <div class="dropdown-menu m-0">
@@ -49,7 +88,12 @@
 	            	<div class="nav-item dropdown">
 	               		<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">수업</a>
 	                	<div class="dropdown-menu m-0">
-	                    	<a href="" class="dropdown-item">전체 수업 조회</a>
+	                    	<a href="/group-lesson/list" class="dropdown-item">그룹 수업 조회</a>
+	                    	<a href="" class="dropdown-item">개인 수업 조회</a>
+	                	</div>
+	                	<div class="dropdown-menu m-0">
+	                    	<a href="/group-lesson/list" class="dropdown-item">그룹 수업 조회</a>
+	                    	<a href="" class="dropdown-item">개인 수업 조회</a>
 	                	</div>
 	            	</div>
 	            </sec:authorize>

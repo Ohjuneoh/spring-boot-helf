@@ -4,6 +4,7 @@ import kr.co.helf.form.ModifyReviewForm;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.TrainerReview;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -34,4 +35,9 @@ public interface TrainerReviewMapper {
     // 트레이너 리뷰 평점 평균 조회
     Double getAvgRating(int trainerNo);
 
+    // 트레이너번호에 해당하는 전체 리뷰 갯수 조회
+    Integer getCountReviews(int trainerNo);
+
+    // 트레이버 리뷰 리스트(더보기 페이징처리)
+    List<TrainerReview> getReviewsByMore(@Param("trainerNo") int trainerNo, @Param("begin") int begin,@Param("end") int end);
 }

@@ -53,12 +53,18 @@ public class TrainerReviewService {
 
     // 트레이너 번호에 해당하는 리뷰 조회
     public TrainerReviewDto getReviewByTrainerNo(int trainerNo) {
-        List<TrainerReview> reviews = trainerReviewMapper.getReviewByTrainerNo(trainerNo);
+        // 트레이너번호에 해당하는 전체 리스트
+        List<TrainerReview> reviews = trainerReviewMapper.getReviewsByMore(trainerNo, 1, 3);
+        // 트레이너 번호에 해당하는 평균평점
         Double avgRating = trainerReviewMapper.getAvgRating(trainerNo);
+        // 트레이너 번호에 해당하는 리스트 갯수
+        Integer cntReviews = trainerReviewMapper.getCountReviews(trainerNo);
 
         TrainerReviewDto dto = new TrainerReviewDto();
         dto.setTrainerReviews(reviews);
         dto.setAvgRating(avgRating);
+        dto.setCntReviews(cntReviews);
+
 
         return dto;
     }
@@ -86,5 +92,15 @@ public class TrainerReviewService {
         TrainerReview trainerReview = trainerReviewMapper.getTrainerReviewByNo(reviewNo);
         trainerReview.setStatus("N");
         trainerReviewMapper.deleteReview(trainerReview);
+    }
+
+    // 트레이너 리뷰 리스트 출력 (더 보기 페이징처리)
+    public List<TrainerReview> reviewMore(int trainerNo,int page){
+        int begin = (page-1)* 3 + 1;
+        int end = page * 3;
+
+        List<TrainerReview> reviews = trainerReviewMapper.getReviewsByMore(trainerNo,begin,end);
+
+        return reviews;
     }
 }

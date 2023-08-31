@@ -247,6 +247,45 @@
   </div>
 </div>
 
+<!-- 수정 모달 창 -->
+<div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="modifyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+		<div class="container" >
+        	<div class="container py-3">
+			   	<div class="modal-header">
+			   		<h3>공지사항 수정하기</h3>
+			   	</div>
+	            <div class="row g-5">
+	                <div class="col-lg-13">
+	                    <div class=" rounded h-100 d-flex align-items-center p-5" >
+	                        <form method="post" action="/board/modify">
+	                            <div class="row g-3">
+	                                <div class="col-12" >
+	                                	<input type="hidden" name="no" value="${board.no }" />
+	                                    <select class="form-select bg-light border-0" name="main" style="height: 55px;">
+	                                        <option value="0" ${board.main == '0' ? 'selected' : ''}>주요 공지사항</option>
+	                                        <option value="1" ${board.main == '1' ? 'selected' : ''}>일반 공지사항</option>
+	                                    </select>
+	                                </div>
+	                                <div class="col-xl-12">
+	                                    <input type="text" class="form-control bg-light border-0" name="title" placeholder="제목" style="height: 55px;" value="${board.title}">
+	                                </div>
+	                        		<textarea id="summernote" name="content" >${board.content }</textarea>
+	                            </div>
+					   			<div class="modal-footer">
+							        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">취소</button>
+							        <button type="submit" class="btn btn-warning">수정</button>
+					   			</div>
+	                        </form>
+	                    </div>
+	                </div>
+            	</div>
+        	</div>
+   		</div>
+    </div>
+  </div>
+</div>
 
 
 <!-- Lesson Register Form End  -->
@@ -354,7 +393,6 @@ $(document).ready(function() {
         lang: "ko-KR"
     });
 });
-
 function confirmDelete() {
     return confirm('정말로 삭제하시겠습니까? (되돌릴 수 없습니다.)');
 }

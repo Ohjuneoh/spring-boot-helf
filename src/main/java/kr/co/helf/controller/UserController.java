@@ -2,6 +2,7 @@ package kr.co.helf.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -116,43 +117,68 @@ public class UserController {
 		return "login/findId";
 	}
 	
-	
-	
-	//아이디 찾기 (ajax)
+	// 아이디 찾기 (ajax)
 	@GetMapping("/findId")
 	@ResponseBody
-	public String findId(@RequestParam("name") String name,@RequestParam("tel") String tel) throws Exception {
-		String result = userService.findId(name, tel);
+	public List<String> findId(@RequestParam("name") String name,@RequestParam("tel") String tel) throws Exception {
+		List<String> result = userService.findId(name, tel);
+		return result;
+	}
+	
+	// 비밀번호찾기 화면
+		@GetMapping(value="/findPwd")
+		public String findPassword() {
+			
+			return "login/findPwd";
+	}
 		
-		if(result == null) {
+	// 비밀번호 찾기 (ajax) - 인증번호 전송
+	@GetMapping("/findPwdByAuth")
+	@ResponseBody
+	public String findPwd(@RequestParam("id") String userId) throws Exception {
+		
+		try {
+			userService.findPwdAuth(userId);
+			return "success";	
+
+		} catch (RuntimeException ex) {
+			ex.printStackTrace();
 			return "fail";	
-		} else {
-			return result;	
 		}
 	}
 	
-//	@PostMapping(value="/findIdByEmail")
-//	@ResponseBody
-//	public String findIdEmail(@RequestParam("name") String name, 
-//			@RequestParam(name = "email", required = false) String email) {
-//		
-//		try {
-//			userService.getFindIdByTel(name, email);		
-//			return "success";
-//		} catch (RuntimeException ex) {
-//			return "fail";
-//		}
+	// 비밀번호 찾기 (ajax) - 인증번호 인증(확인)
+	@GetMapping("/findPwdAuthChk")
+	@ResponseBody
+	public String checkAuth(@RequestParam("auth") String auth, @RequestParam("id") String userId) throws Exception {
 		
 		
-		
-//	}
-	
-	// 비밀번호찾기 화면
-	@GetMapping(value="/findPwd")
-	public String findPassword() {
-		
-		return "login/findPwd";
+		try {
+			userService.checkPwdAuth(auth, userId);
+			return "success";	
+
+		} catch (RuntimeException ex) {
+			ex.printStackTrace();
+			return "fail";	
+		}
 	}
+	
+	// 비밀번호 변경 화면
+	@GetMapping("/changePwdForm")
+	public String changePwdform() {
+		
+		return "/login/changePwdForm";
+	}
+	
+	// 비밀번호 변경 
+	@PostMapping("/changePwd")
+	public String changePwd(@RequestParam("id") String userId, @RequestParam("newPwd") String newPwd) {
+		
+		userService.updateUserPwd(userId, newPwd);
+		
+		return "/login/changePwdFinish";
+	}
+	
 	
 	//인증되지 않은 사용자가 접근 했을 때 이동되는 페이지(by 준오)
 	@GetMapping(value="/denied")

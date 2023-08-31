@@ -37,7 +37,7 @@ public class PersonalLessonController {
     //유저가 트레이너에게 상담신청하는 페이지
 	@GetMapping("/consultation")
 	public String consultingForm(@AuthenticationPrincipal User user, Model model) {
-		List<Trainer> trainers = personalLessonService.getTrainers();
+		List<Trainer> trainers = personalLessonService.getTrainers(user.getId());
 		List<UserMyMemberships> memberships = personalLessonService.getUserMembershipById(user.getId());
 		model.addAttribute("memberships",memberships);
 		model.addAttribute("trainers", trainers); 

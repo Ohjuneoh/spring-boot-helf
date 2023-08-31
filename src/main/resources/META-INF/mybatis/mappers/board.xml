@@ -34,9 +34,10 @@
                 row_number() over (order by board_main asc, board_no asc) rownumber
              from
                 helf_boards
+
               where
               	board_deleted = 'N'
-            ) 
+            )
         where
             rownumber between #{begin} and #{end}
         
@@ -45,7 +46,7 @@
     <!-- 게시판 번호로 상세정보 조회  -->
     <select id="getBoardByNo" resultType="Board" parameterType="int">
     	select 
-    	    board_no			as no,
+    		board_no			as no,
     		board_title 		as title,
     		board_content		as content,
     		board_create_date	as createDate,
@@ -105,6 +106,7 @@
 			where
 				board_no = #{no}
 		</update>
-		
 
+  
+  
 </mapper>

@@ -15,6 +15,7 @@ import java.util.List;
 public class TrainerReviewDto {
     private List<TrainerReview> trainerReviews;
     private Double avgRating;
+    private Integer cntReviews;
 
     // 별점 평균을 적용시키기 위해 생성한 getter 메소드
     public int getFillCount() {

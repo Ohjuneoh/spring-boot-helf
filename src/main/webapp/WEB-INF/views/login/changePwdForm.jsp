@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="kr">
+
 <head>
     <meta charset="utf-8">
     <title>HELF</title>
@@ -30,6 +31,7 @@
 
     <!-- Template Stylesheet -->
     <link href="/resources/css/style.css" rel="stylesheet">
+    
 </head>
 
 <body>
@@ -60,37 +62,33 @@
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
                         
-                        	<form action="/user/findId" method="post" name="findId">
+                        	<form action="/user/changePwd" method="post">
+                        		<input type="hidden" name="id" value="${param.id }">
 	                            <div class="row g-3">
 	                            	<div class="col-xl-12">
-	                            		<a><strong style="font-size: 40px;">아이디 찾기</strong></a>
+	                            		<a><strong style="font-size: 40px;">비밀번호 변경하기</strong></a>
 	                            	</div>
 	                            	
-	                            	<div class="border p-3 bg-light">
-		                               <!-- 전화번호 인증  -->
-		                            	<div id="div_tel" class="box_inn selected  text-start mb-3 mt-2">
-											<input type="radio" id="r_pn1" class="input_rd" name="certification" value="tel">
-											<label for="r_pn2" class="label_rd" style="font-size: 18px; font-weight: bold;">휴대전화 인증(가입된 휴대전화)</label>
-												<p class="dsc" style="padding-left: 20px;">기존에 HELF 헬스장에 가입되어 있는 정보를 비교하여 아이디를 찾을 수 있습니다.</p>	
-											<div class="box-inn-sub-tel d-none">
-												<dl>
-													<dt><label for="telNm" class="label_txt">이름</label></dt>
-													<dd><input type="text" id="name" name="name" maxlength="40" class="input_txt" placeholder = "한글 입력" style="width:217px"></dd>
-													<dt><label for="tel" class="label_txt">전화번호</label></dt>
-												
-													<dd><input type="text" id="tel" name="tel" class = "btn-phone" placeholder = "'-'포함하여 입력"></dd>
-													<dd><label type="text" id="result-id-1" name="result-id-1"  class="input-txt-1" style="color: green; display: none;">고객님의 아이디는 <span id="find-user-id"></span>입니다.</label></dd>
-													<dd><label type="text" id="result-id-2" name="result-id-2"  class="input-txt-2" style="color: red; display: none;">정보가 존재하지 않습니다.</label></dd>
-												</dl>
-											</div>		
+									<!-- 비밀번호 변경하기  -->
+								    <div class="border p-3 bg-light">
+										<div id="div_email" class="box_inn selected text-start">
+										    <div class="box-inn-sub-email">
+										        <dl>
+										            <dt><label for="emailNm" class="label_txt">새 비밀번호</label></dt>
+										            	<dd><input type="password" id="newPwd" name="newPwd" maxlength="40" class="input_txt" style="width:217px"></dd>
+										            
+										            <dt><label for="emailNm" class="label_txt">새 비밀번호 확인</label></dt>
+										            	<dd><input type="password" id="newPwd-check" maxlength="40" class="input_txt" style="width:217px"></dd>
+										        </dl>
+										    </div>
 										</div>
-	                            	</div>
+									</div>
 	                            	
+	                              	<div class="col-12">
+								    	<button class="btn btn-dark w-100 py-3" >변경</button>
+									</div>
 	                                <div class="col-12">
-	                                    <button class="btn btn-dark w-100 py-3" type="button" id="search">찾기</button>
-	                                </div>
-	                                <div class="col-12">
-	                                	<a href="/user/findPwd" class="btn">비밀번호 찾기</a>
+	                                	<a href="/user/findIdform" class="btn" >아이디 찾기</a>
 	                                </div>
 	                            </div>
                         	</form>
@@ -117,42 +115,16 @@
     <script src="/resources/lib/counterup/counterup.min.js"></script>
     <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script> 
 
+
+
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
     <script type="text/javascript">
-    	
-    	$(function(){
-    		$(":radio[name=certification]").change(function() {
-    			let value=$(this).val();
-    			if(value =='tel'){
-    				$(".box-inn-sub-tel").removeClass('d-none')
-    			} 
-    		});
-    	
-	    	$("#search").click(function() {
-		        var username = $("#name").val();
-		        var usertel = $("#tel").val();
-		        var data = {name: username, tel:usertel };
-	    	
-	    	$.ajax({
-				type : "get",
-				url : "findId",
-				data : data,
-				success : function(results) {
-					console.log("result------------------> ", results)
-					if (results.length > 0) {
-						$("#result-id-1").css("display", "inline-block");
-						let text = results.join(",")
-						 $("#find-user-id").text(text)
-						$("#result-id-2").css("display", "none");
-					} else {
-						 $('#result-id-2').css("display", "inline-block");
-		                 $('#result-id-1').css("display", "none");
-					}
-				}
-			});
-    	});
+    $(function() {
+	   
+		 
     });
+    	
     </script>
 </body>
 

@@ -103,13 +103,13 @@
                             <tbody>
                             <c:forEach var="lessonApply" items="${applyList }">
                                 <tr>
-                                    <td>${lessonApply.lesson.no }</td>
-                                    <td><a href="/group-lesson/detail?no=${lessonApply.lesson.no }">${lessonApply.lesson.name }</a></td>
-                                    <td>${lessonApply.user.name }</td>
-                                    <td><fmt:formatDate value="${lessonApply.lesson.date }" pattern="yyyy년 M월 d일" /> ${lessonApply.lesson.time }시</td>
-                                    <td>${lessonApply.attendanceStatus }</td>
+                                    <td class="text-center">${lessonApply.lesson.no }</td>
+                                    <td class="text-center"><a href="/group-lesson/detail?no=${lessonApply.lesson.no }">${lessonApply.lesson.name }</a></td>
+                                    <td class="text-center">${lessonApply.user.name }</td>
+                                    <td class="text-center"><fmt:formatDate value="${lessonApply.lesson.date }" pattern="yyyy년 M월 d일" /> ${lessonApply.lesson.time }시</td>
+                                    <td class="text-center">${lessonApply.attendanceStatus }</td>
                                     <!-- 위의 <td>에서 attendanceStatus가 Y일때만 리뷰작성 버튼이 활성화 되게하는 코드 -->
-                                    <td><a href="/trainer-review/registration?applyNo=${lessonApply.no }" class="btn btn-primary btn-sm ${lessonApply.attendanceStatus eq 'Y' ? '' : 'disabled'}">리뷰작성</a></td>
+                                    <td class="text-center"><a href="/trainer-review/registration?applyNo=${lessonApply.no}&lessonNo=${lessonApply.lesson.no}" class="btn btn-primary btn-sm ${lessonApply.attendanceStatus eq 'Y' ? '' : 'disabled'}">리뷰작성</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>

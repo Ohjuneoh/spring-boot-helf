@@ -1,6 +1,5 @@
 package kr.co.helf.controller;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,6 +67,12 @@ public class BoardController {
 		return "board/noticeDetail";
 	}
 	
+  
+	// faq화면 
+	@GetMapping(value="/faq")
+	public String faqform() {
+		return "board/faq";
+	}
 	
 	// 공지사항 수정폼화면 (모달)
 	@GetMapping("/modifyform")
@@ -104,18 +109,20 @@ public class BoardController {
 		return "redirect:/board/notice";
 	}
 	
+		
 	
-	
-	// faq화면 요청처리
-	@GetMapping(value="/faq")
-	public String faqform() {
-		return "board/faq";
-	}
-
-	// 1:1문의 화면 요청처리
+	// 1:1문의 화면 
 	@GetMapping(value="/inquiries")
 	public String inquiriesform() {
 		return "board/inquiries";
 	}
+	
+	// 1:1문의 유저 문의하기 폼  
+	@GetMapping(value="/inquiryUserForm")
+	public String inquiryUserform() {
+		
+		return "board/inquiryUserForm";
+	}
+	
 	
 }

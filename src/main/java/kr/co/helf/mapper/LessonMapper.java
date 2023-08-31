@@ -2,6 +2,8 @@ package kr.co.helf.mapper;
 
 import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.LessonApply;
+import kr.co.helf.vo.PersonalLesson;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,5 +21,7 @@ public interface LessonMapper {
     void updateAttendance(@Param("no") int lessonNo, @Param("userId") String userId, @Param("status") String status);
     // 신청테이블에 저장되어 있는 목록 조회하기
     LessonApply getLessonApplyByNo(int no);
+    //내가 개설한 모든 개인수업 내역 조회(트레이너) by 준오
+	List<PersonalLesson> getAllPersonalLesson(String userId);
 
 }
