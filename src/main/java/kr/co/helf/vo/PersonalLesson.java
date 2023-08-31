@@ -13,6 +13,7 @@ public class PersonalLesson {
 	private int no;
 	private String name;
 	private Date date;
+	private Date createDate;
 	private String time;
 	private String content;
 	private String status;
