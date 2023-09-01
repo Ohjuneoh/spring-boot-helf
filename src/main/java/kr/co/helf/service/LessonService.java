@@ -1,13 +1,17 @@
 package kr.co.helf.service;
 
 import kr.co.helf.mapper.LessonMapper;
+import kr.co.helf.mapper.PersonalLessonMapper;
+import kr.co.helf.vo.Consultation;
 import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.PersonalLesson;
+import kr.co.helf.vo.Trainer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -32,9 +36,26 @@ public class LessonService {
     public void updateAttendance(int lessonNo, String userId,String status){
         lessonMapper.updateAttendance(lessonNo,userId,status);
     }
-    // 내가 개설한 모든 개인수업 조회(트레이너) by 준오
-	public List<PersonalLesson> getAllPersonalLessons(String userId) {
-		return lessonMapper.getAllPersonalLesson(userId);
+    // 트레이너 아이디로 트레이너 번호 조회
+	public Trainer getTrainerNo(String userId) {
+		
+		return lessonMapper.getTrainerNoByUserId(userId);
 	}
+	// 내가 개설한 모든 개인수업 조회 by 준오
+	public List<PersonalLesson> getAllPersonalLessons(int trainerNo) {
+		return lessonMapper.getAllPersonalLesson(trainerNo);
+	}
+	public List<PersonalLesson> getAllPersonalLessonByUser(Map<String, Object> params) {
+		return lessonMapper.getAllPersonalLessonByUser(params);
+	}
+	//트레이너 번호를 기준으로 상담내역 조회 by 준오
+	public List<Consultation> getAllConsultationList(int trainerNo) {
+		
+		return lessonMapper.getAllConsultationByTrainerNo(trainerNo);
+	}
+	public void updatePersonalLessonAttendance(int lessonNo, String status) {
+		lessonMapper.updatePersonalLessonAttendance(lessonNo,status);
+	}
+
 
 }

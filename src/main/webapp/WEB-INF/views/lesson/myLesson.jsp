@@ -84,20 +84,24 @@
     <div class="container py-5">
         <div class="row mb-3">
             <div class="col-12">
+            	<div>
+				    <button class="btn btn-outline-primary mb-1" type="button" >개인수업</button>
+				    <button class="btn btn-outline-primary mb-1" type="button">그룹수업</button>
+				</div>
                 <div class="card" >
                     <div class="card-header bg-dark" style="color: #ffffff">
-                        수업 목록
+                        <strong>수업 목록</strong>
                     </div>
                     <div class="card-body">
                         <table class="table"  id="x">
                             <thead>
                             <tr>
-                                <th style="width: 10%">레슨 번호</th>
-                                <th style="width: 20%">수업명</th>
-                                <th style="width: 20%">강사명</th>
-                                <th style="width: 20%">레슨시간</th>
-                                <th style="width: 20%">출석 상태</th>
-                                <th style="width: 10%">리뷰 작성</th>
+                                <th class="text-center" style="width: 10%">레슨 번호</th>
+                                <th class="text-center" style="width: 25%">수업명</th>
+                                <th class="text-center" style="width: 15%">강사명</th>
+                                <th class="text-center" style="width: 20%">레슨시간</th>
+                                <th class="text-center" style="width: 20%">출석 상태</th>
+                                <th class="text-center" style="width: 10%">리뷰 작성</th>
                             </tr>
                             </thead>
                             <tbody>
