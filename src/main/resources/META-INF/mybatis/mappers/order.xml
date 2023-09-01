@@ -236,15 +236,15 @@
 		where my_membership_no = #{value}
 	</select>
 
-	<select id="getCustomerOrders" parameterType="String" resultType="kr.co.helf.vo.Order">
+	<select id="getCustomerOrders" parameterType="String" resultType="kr.co.helf.dto.CustomerOrderDto">
 	select 
-		o.orders_payment_date		as paymentDate, 
-		mm.membership_no			as "myMembership.no", 
-		m.membership_name			as "myMembership.membership.name", 
-		o.orders_total_price		as totalPrice, 
-		o.orders_membership_price	as membershipPrice, 
-		o.orders_payment_state		as state, 
-		mo.option_name				as "myMembership.myOption.optionDetail.option.name"
+		o.orders_payment_date		as "order.paymentDate", 
+		mm.membership_no			as "order.myMembership.no", 
+		m.membership_name			as "order.myMembership.membership.name", 
+		o.orders_total_price		as "order.totalPrice", 
+		o.orders_membership_price	as "order.membershipPrice", 
+		o.orders_payment_state		as "order.state", 
+		mo.option_name				as "myOption.optionDetail.option.name"
 	from helf_orders o, helf_my_membership mm, helf_membership m, helf_membership_my_option mmo, 
 		 helf_membership_option mo, helf_membership_option_detail mod
 	where o.my_membership_no = mm.my_membership_no 

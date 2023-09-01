@@ -209,6 +209,7 @@
 		values(helf_trainer_attendance_seq.nextval, #{userId}, #{state}, #{cause})	
 	</insert>
 	
+	<!-- 고객 전체 행 개수 -->
 	<select id="getCustomerTotalRows" resultType="int">
 		select count(*)
 		from helf_users
@@ -315,35 +316,67 @@
 	
 	<select id="getCustomerLessons" parameterType="String" resultType="kr.co.helf.vo.LessonApply">
 	select 
-			l.lesson_date			as "lesson.date", 
-			l.lesson_time			as "lesson.time", 
-			l.lesson_name			as "lesson.name", 
-			u.user_name				as "lesson.user.name", 
-			la.lesson_apply_status	as attendanceStatus,
+			l.lesson_date						as "lesson.date", 
+			l.lesson_time						as "lesson.time", 
+			l.lesson_name						as "lesson.name", 
+			u.user_name							as "lesson.user.name", 
+			la.lesson_apply_attendance_status	as attendanceStatus,
 			m.membership_name		as "myMembership.membership.name"
 	from helf_lesson_apply la, helf_lesson l, helf_users u, helf_my_membership mm, helf_membership m
 	where la.lesson_no = l.lesson_no
 	and l.user_id = u.user_id
 	and la.my_membership_no = mm.my_membership_no 
 	and mm.membership_no = m.membership_no 
-	and la.user_id = #{value}
+	and la.user_id = #{userId}
 	</select>
 
+	<select id="getCustomerAttendanceList" parameterType="map" resultType="kr.co.helf.dto.CustomerAttendanceListDto">
+	select *
+	from (select distinct 
+				ca.customer_attendance_no		as "customerAttendance.no", 
+				ca.customer_attendance_date		as "customerAttendance.date", 
+				mc.category_name				as "customerAttendance.myMembership.membership.category.name", 
+				m.membership_name				as "customerAttendance.myMembership.membership.name", 
+				l.lesson_name					as "customerAttendance.lessonName",
+				row_number() over (order by ca.customer_attendance_date desc) rownumber
+		from helf_customer_attendance ca, helf_my_membership mm, helf_membership m, helf_membership_category mc, helf_lesson_apply la, helf_lesson l
+		where ca.my_membership_no = mm.my_membership_no 
+		and mm.membership_no = m.membership_no
+		and m.category_no = mc.category_no 
+		and la.my_membership_no(+) = mm.my_membership_no
+		and la.lesson_no = l.lesson_no(+)
+		and ca.user_id = #{userId}
+		<choose>
+			<when test="specificDate1 != null and specificDate2 != null">
+			and ca.customer_attendance_date between #{specificDate1} and #{specificDate2}
+			</when>
+		</choose>
+	)
+	where rownumber between #{begin} and #{end}	
+	</select>
+	
 	<select id="getCustomerAttendance" parameterType="String" resultType="kr.co.helf.vo.CustomerAttendance">
 	select distinct 
 				ca.customer_attendance_no		as no, 
 				ca.customer_attendance_date		as "date", 
 				mc.category_name				as "myMembership.membership.category.name", 
 				m.membership_name				as "myMembership.membership.name", 
-				l.lesson_name					as lessonName
-	from helf_customer_attendance ca, helf_my_membership mm, helf_membership m, helf_membership_category mc, helf_lesson_apply la, helf_lesson l
-	where ca.my_membership_no = mm.my_membership_no 
-	and mm.membership_no = m.membership_no
-	and m.category_no = mc.category_no 
-	and la.my_membership_no(+) = mm.my_membership_no
-	and la.lesson_no = l.lesson_no(+)
-	and ca.user_id = #{value}
-	order by ca.customer_attendance_date desc 	</select>
+				l.lesson_name					as lessonName,
+				row_number() over (order by ca.customer_attendance_date desc) rownumber
+		from helf_customer_attendance ca, helf_my_membership mm, helf_membership m, helf_membership_category mc, helf_lesson_apply la, helf_lesson l
+		where ca.my_membership_no = mm.my_membership_no 
+		and mm.membership_no = m.membership_no
+		and m.category_no = mc.category_no 
+		and la.my_membership_no(+) = mm.my_membership_no
+		and la.lesson_no = l.lesson_no(+)
+		and ca.user_id = #{value}
+	</select>
+	
+	<select id="getCustomerAttendanceTotalRowsById" parameterType="map" resultType="int">
+	select count(*)
+	from helf_customer_attendance
+	where user_id = #{userId}
+	</select>
 
 	<select id="getAllCustomer" resultType="user">
 		select A.rank_no		as "rank.no"
@@ -352,4 +385,54 @@
 		where A.rank_no = B.rank_no  
 		and user_type = 'ROLE_USER'
 	</select>
+	
+	
+	<select id="getAllTrainerTotalRows" parameterType="map" resultType="int">
+	select count(*)
+	from helf_users 
+	where user_type='ROLE_TRAINER'
+	</select>
+	
+	<select id="getAllTrainers" parameterType="map" resultType="kr.co.helf.vo.Trainer">
+	select * 
+	from (select u.user_id					as "user.id", 
+				   u.user_email					as "user.email", 
+				   u.user_name					as "user.name", 
+				   u.user_tel					as "user.tel", 
+				   u.user_gender				as "user.gender", 
+				   u.user_status				as "user.status", 
+				   u.user_type					as "user.type", 
+		           t.trainer_no					as trainerNo, 
+		           t.trainer_file				as trainerFile, 
+		           t.trainer_resignation_date	as resignationDate, 
+		           t.trainer_title				as title, 
+		           t.trainer_hired_date			as hiredDate,
+		           ROW_NUMBER() OVER (ORDER BY t.trainer_hired_date) AS row_number
+			from helf_users u, helf_trainers t
+			where u.user_id = t.user_id
+			and u.user_type='ROLE_TRAINER'
+			<choose>
+				<when test="opt == 'name'">
+				and u.user_name = #{keyword}
+				</when>
+				<when test="opt == 'tel'">
+				and u.user_tel = #{keyword}
+				</when>
+				<when test="trainerStatus == '재직'">
+				and u.user_type = 'Y'
+				</when>
+				<when test="trainerStatus == '퇴직'">
+				and u.user_type = 'N'
+				</when>
+				<when test="trainerTitle == '점장'">
+				and t.trainer_title = '점장'
+				</when>
+				<when test="trainerTitle == '직원'">
+				and t.trainer_title = '직원' 
+				</when>
+			</choose>)
+	where row_number BETWEEN #{begin} AND #{end}
+	ORDER BY row_number
+	</select>
+	
 </mapper>

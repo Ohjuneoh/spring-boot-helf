@@ -18,7 +18,7 @@ import lombok.Setter;
 public class CustomerDetailDto {
 	
 	private List<LessonApply> lessonApply;
-	private List<Order> order;
+	private List<CustomerOrderDto> order;
 	private List<MyMembership> myMembership;
 	private List<CustomerAttendance> customerAttendance;
 	private User user;

@@ -54,16 +54,6 @@
                 </div>
             </div>
              </sec:authorize>
-              <sec:authorize access="hasRole('ROLE_MANAGER')">
-             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">고객&인사관리</a>
-                <div class="dropdown-menu m-0">
-                    <a href="" class="dropdown-item">고객 조회</a>
-                    <a href="" class="dropdown-item">인사관리</a>
-                    <a href="/checkin/check-in" class="dropdown-item">입장 화면</a>
-                </div>
-            </div>
-            </sec:authorize>
             <sec:authorize access="isAuthenticated">
 	            <sec:authorize access="hasRole('ROLE_USER')">
 	            <div class="nav-item dropdown">
@@ -123,16 +113,16 @@
 	                	</div>
 	            	</div>
 	            </sec:authorize>
-	            <sec:authorize access="hasRole('ROLE_MANAGER')">
-		            <div class="nav-item dropdown">
-		            	<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">고객&인사관리</a>
-		                <div class="dropdown-menu m-0">
-		                	<a href="" class="dropdown-item">고객 조회</a>
-		                    <a href="" class="dropdown-item">인사관리</a>
-		                    <a href="/checkin-/check-in" class="dropdown-item">입장 화면</a>
-		            	</div>
-		            </div>
-	            </sec:authorize>
+	             <sec:authorize access="hasRole('ROLE_MANAGER')">
+	             <div class="nav-item dropdown">
+	                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">고객&인사관리</a>
+	                <div class="dropdown-menu m-0">
+	                    <a href="/management/customer-list" class="dropdown-item">고객 관리</a>
+	                    <a href="/management/trainer-list" class="dropdown-item">인사관리</a>
+	                    <a href="/checkin/check-in" class="dropdown-item">입장 화면</a>
+	                </div>
+	            </div>
+            </sec:authorize>
             </sec:authorize>
         </div>
         <button type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>

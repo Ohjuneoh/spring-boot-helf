@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.helf.dto.CustomerAttendanceListDto;
 import kr.co.helf.dto.CustomerDetailDto;
 import kr.co.helf.dto.CustomerListDto;
 import kr.co.helf.service.UserService;
+import kr.co.helf.vo.CustomerAttendance;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -63,7 +65,7 @@ public class ManagementController {
 		Map<String, Object> result = userService.getAllCustomerInfo(param);
 		
 		model.addAttribute("customers", result.get("customerList"));
-		model.addAttribute("pagination", result.get("paginatioin"));
+		model.addAttribute("pagination", result.get("pagination"));
 		model.addAttribute("totalRows", result.get("totalRows"));
 		
 		return "management/customerList";
@@ -79,11 +81,73 @@ public class ManagementController {
 		return "management/customerDetail";
 	}
 	
+	// 고객 상세 - 최근 방문 내역 페이지 요청과 매핑되는 요청핸들러 메소드 
+	@GetMapping(value="customer-recent-visit")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
+	public String customerRecentVisit(@RequestParam("id") String userId, 
+			@RequestParam(name = "specificDate1", required = false) String specificDate1,
+			@RequestParam(name = "specificDate2", required = false) String specificDate2,
+			@RequestParam(name = "page", required = false, defaultValue = "1") int page,
+			Model model) { 
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("page", page);
+		param.put("userId", userId);
+		if (StringUtils.hasText(specificDate1)) {
+			param.put("specificDate1", specificDate1);			
+		}
+		if (StringUtils.hasText(specificDate2)) {
+			param.put("specificDate2", specificDate2);			
+		}
+		
+		Map<String, Object> result = userService.getCustomerAttendances(param);
+		CustomerDetailDto customerDetailDto = userService.getPrivateInfo(userId);
+		
+		model.addAttribute("recentVisits", result.get("recentVisits"));
+		model.addAttribute("pagination", result.get("pagination"));
+		model.addAttribute("customerDetailDto", customerDetailDto);
+		
+		return "management/customerRecentVisits";
+	}
+	
 	// 트레이너 목록 페이지 요청과 매핑되는 요청핸들러 메소드
 	@GetMapping(value="trainer-list")
-//	@PreAuthorize("hasRole('ROLE_MANAGER')")
-	public String trainerList(Model model) {
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
+	public String trainerList(@RequestParam(name="rows", required=false, defaultValue="10") int rows,
+			@RequestParam(name="page", required=false, defaultValue="1") int page,
+			@RequestParam(name="opt", required=false, defaultValue="") String opt, 
+			@RequestParam(name="keyword", required=false, defaultValue="") String keyword,
+			@RequestParam(name="trainerStatus", required=false, defaultValue="전체") String trainerStatus,
+			@RequestParam(name="trainerTitle", required=false, defaultValue="전체") String trainerTitle,
+			Model model) {
+		log.info("rows='{}', page='{}', opt='{}' keyword='{}' userStatus='{}' membershipState='{}' remainderCnt='{}' remainingDays1='{}' remainingDays2='{}' ", 
+				rows, page, opt, keyword, trainerStatus, trainerTitle);
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("rows", rows);
+		param.put("page", page);
+		param.put("trainerStatus", trainerStatus);
+		param.put("trainerTitle", trainerTitle); 
+		if(StringUtils.hasText(opt)) {
+			param.put("opt", opt);
+		}
+		if(StringUtils.hasText(keyword)) {
+			param.put("keyword", keyword);
+		}
+		
+		Map<String, Object> result = userService.getAllTrainerInfo(param);
+		model.addAttribute("trainers", result.get("trainerList"));
+		model.addAttribute("pagination", result.get("pagination"));
+		model.addAttribute("totalRows", result.get("totalRows"));
+		
 		return "management/trainerList";
+	}
+	
+	@GetMapping(value="trainer-detail")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
+	public String trainerDetail() {
+		
+		return "management/trainerDetail";
 	}
 	
 }
