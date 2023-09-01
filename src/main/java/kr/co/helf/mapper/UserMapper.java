@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.helf.dto.CustomerAttendanceListDto;
 import kr.co.helf.dto.CustomerDetailDto;
 import kr.co.helf.dto.CustomerListDto;
 import kr.co.helf.vo.CustomerAttendance;
@@ -61,8 +62,12 @@ public interface UserMapper {
 	// 직원 출퇴근 등록 - 채경 
 	void insertTrainerAttendances(Map<String, Object> param);
 	
-	// 고객 전체 수 - 채경 
+	// 전체 고객 수 - 채경 
 	int getCustomerTotalRows();
+	
+	// 고객 아이디 별 출석 수 - 채경 
+	int getCustomerAttendanceTotalRowsById(Map<String, Object> param);
+	
 	// 고객 조회 목록 - 채경
 	List<CustomerListDto> getCustomers(Map<String, Object> param);
 	
@@ -75,5 +80,15 @@ public interface UserMapper {
 	// 고객별 상세 조회 (5)방문내역 - 채경
 	List<CustomerAttendance> getCustomerAttendance(String id);
 
+
 	List<User> getAllCustomer();
+
+	// 고객별 상세 조회 - 최근 방문 내역 - 채경 
+	List<CustomerAttendanceListDto> getCustomerAttendanceList(Map<String, Object> param);
+	
+	// 전체 직원 수 - 채경 
+	int getAllTrainerTotalRows(Map<String, Object> param);
+	
+	// 전체 직원 목록 조회 - 채경 
+	List<Trainer> getAllTrainers(Map<String, Object> param);
 }

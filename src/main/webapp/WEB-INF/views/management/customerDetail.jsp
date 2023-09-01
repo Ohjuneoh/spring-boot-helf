@@ -5,7 +5,9 @@
 <!DOCTYPE html>
 <html lang="kr">
 <style>     
-
+.hidden-row {
+    display: none;
+}
 </style>
 <head>
     <meta charset="utf-8">
@@ -60,7 +62,7 @@
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-4 text-white animated zoomIn">HELF 입장하기</h1>
+                    <h1 class="display-4 text-white animated zoomIn">HELF 고객조회</h1>
                     <a href="/home" class="h5 text-white">Home</a>
                     <i class="far fa-circle text-white px-2"></i>
                     <a href="" class="h5 text-white">Concept</a>
@@ -229,7 +231,7 @@
         	</div>
      	</div>
    	</div>
-   	<!-- 최근 수업 내역  -->	
+   	<!-- 최근 결제 내역  -->	
   <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
    	<div class="container py-5">
     	<div class="col-12">
@@ -237,8 +239,7 @@
             	<h3 class="mb-0 text-primary">최근 결제 내역 </h3>
             </div>
             <div class="col-sm wow zoomIn" data-wow-delay="0.2s">
-            	<p style="text-align: right;"><a href="">자세히보기</a></p>
-              		<table class="table table-bordered shadow-sm" style="text-align: center; vertical-align: middle;">
+              		<table class="table table-bordered shadow-sm" style="text-align: center; vertical-align: middle;" id="table-order-list">
                			<thead>
 	               			<tr>
 	               				<th>결제날짜</th>
@@ -249,13 +250,31 @@
 	               				<th>옵션이용</th>
 	               			</tr>
 	               		</thead>
-	               		<tbody>
+	               		<tbody id="order-table-body">
 	               		<c:set var="rowCount" value="0"/>
 	               		<c:choose>
 	               			<c:when test="${not empty detailDto.order}">
 	               				<c:forEach var="order" items="${detailDto.order }" varStatus="loop">
 	               					<c:if test="${loop.index <3 }">
 				               			<tr>
+				               				<td>${order.order.paymentDate }</td>
+				               				<td>${order.order.myMembership.membership.name }</td>
+				               				<td>${order.order.totalPrice }</td>
+				               				<td>${order.order.membershipPrice }</td>
+				               				<td>${order.order.state }</td>
+				               				<c:choose>
+				               					<c:when test="${not empty order.myOption}">
+				               				<td>${order.myOption.optionDetail.option.name }</td>
+				               					</c:when>
+				               					<c:otherwise>	
+				               				<td>-</td>
+				               					</c:otherwise>
+				               				</c:choose>
+				               			</tr>
+				               			<c:set var="rowCount" value="${rowCount + 1 }"/>
+		               				</c:if>
+		               				<c:if test="${loop.index >=3 }">
+				               			<tr class="hidden-row">
 				               				<td>${order.paymentDate }</td>
 				               				<td>${order.myMembership.membership.name }</td>
 				               				<td>${order.totalPrice }</td>
@@ -270,7 +289,6 @@
 				               					</c:otherwise>
 				               				</c:choose>
 				               			</tr>
-				               			<c:set var="rowCount" value="${rowCount + 1 }"/>
 		               				</c:if>
 		               			</c:forEach>
 		               			<c:forEach begin="1" end="${3-rowCount }">
@@ -285,8 +303,8 @@
 		               			</c:forEach>
 	               			</c:when>
 	               			<c:otherwise>
-	               				<tr>
-	               					<td colspan="6">최근 결제 내역이 없습니다.</td>
+	               				<tr id="see-more-orders">
+	               					<td colspan="6" style="cursor:pointer;" id="td-more-orders">최근 결제 내역이 없습니다.</td>
 	               				</tr>
 	               			</c:otherwise>
 	               		</c:choose>
@@ -296,7 +314,7 @@
         	</div>
      	</div>
    	</div>
-   	<!-- 최근 수업 내역  -->	
+   	<!-- 이용권 목록  -->	
   <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
    	<div class="container py-5">
     	<div class="col-12">
@@ -304,8 +322,7 @@
             	<h3 class="mb-0 text-primary">이용권 목록 </h3>
             </div>
             <div class="col-sm wow zoomIn" data-wow-delay="0.2s">
-            	<p style="text-align: right;"><a href="">자세히보기</a></p>
-              		<table class="table table-bordered shadow-sm" style="text-align: center; vertical-align: middle;">
+              		<table class="table table-bordered shadow-sm" style="text-align: center; vertical-align: middle;" id="table-myMembership-list">
                			<thead>
 	               			<tr>
 	               				<th>종류</th>
@@ -317,7 +334,7 @@
 	               				<th>잔여횟수</th>
 	               			</tr>
 	               		</thead>
-	               		<tbody>
+	               		<tbody id="membership-table-body">
 	               		<c:set var="rowCount" value="0"/>
 	               		<c:choose>
 	               			<c:when test="${not empty detailDto.myMembership }">
@@ -348,9 +365,34 @@
 				               			</tr>
 				               			<c:set var="rowCount" value="${rowCount +1 }"/>
 			               			</c:if>
+			               			<c:if test="${loop.index >=3 }">
+			               				<tr class="hidden-row">
+				               				<td>${mm.membership.category.property }제</td>
+				               				<td>${mm.membership.name }</td>
+					               			<c:choose>	
+					               				<c:when test="${mm.state == 'Y' }">
+					               					<td>이용중</td>
+					               				</c:when>
+					               				<c:otherwise>
+					               					<td>만료</td>
+					               				</c:otherwise>
+					               			</c:choose>
+					               				<td>${mm.startDate }</td>
+					               				<td>${mm.endDate }</td>
+					               				<td></td>
+					               			<c:choose>
+						               			<c:when test="${mm.remainderCnt == -1 }">
+						               				<td>무제한</td>
+						               			</c:when>
+						               			<c:otherwise>
+						               				<td>${mm.remainderCnt }회</td>
+						               			</c:otherwise>
+					               			</c:choose>
+			               				</tr>
+			               			</c:if>
 		               			</c:forEach>
 		               			<c:forEach begin="1" end="${3-rowCount }">
-			               			<tr>
+			               			<tr class="hidden-row">
 			               				<td>-</td>
 			               				<td>-</td>
 			               				<td>-</td>
@@ -360,6 +402,9 @@
 			               				<td>-</td>
 			               			</tr>
 	               				</c:forEach>
+	               				<tr id="see-more-myMemberships">
+	               					<td colspan="7" style="cursor:pointer;" id="td-more-myMemberships">더보기</td>
+	               				</tr>
 	               			</c:when>
 	               			<c:otherwise>
 	               				<tr>
@@ -373,7 +418,7 @@
         	</div>
      	</div>
    	</div>
-   	<!-- 최근 수업 내역  -->	
+   	<!-- 최근 방문 내역  -->	
   <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
    	<div class="container py-5">
     	<div class="col-12">
@@ -381,7 +426,7 @@
             	<h3 class="mb-0 text-primary">최근 방문 내역 </h3>
             </div>
             <div class="col-sm wow zoomIn" data-wow-delay="0.2s">
-            	<p style="text-align: right;"><a href="#" id="open-modal-recent-visits">자세히보기</a></p>
+            	<p style="text-align: right;"><a href="customer-recent-visit?id=${detailDto.user.id }">자세히보기</a></p>
             	<table class="table table-bordered shadow-sm" style="text-align: center; vertical-align: middle;">
                			<thead>
 	               			<tr>
@@ -440,63 +485,8 @@
    	</div>
 	<!--  회원별 상세 페이지 form End -->
 	
-	<!-- 최근 방문 내역 Modal Start 
-	<div class="modal fade" id="modal-recent-visits" tabindex="-1" aria-labelledby="visitModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="visitModalLabel">최근 방문 내역</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-				<table class="table table-bordered shadow-sm" style="text-align: center; vertical-align: middle;" id="RVTable"ß>
-               			<thead>
-	               			<tr>
-	               				<th>번호</th>
-	               				<th>방문날짜</th>
-	               				<th>이용권 종류</th>
-	               				<th>이용권명</th>
-	               				<th>수업명</th>
-	               			</tr>
-	               		</thead>
-	               		<tbody>
-	               		<c:choose>
-	               			<c:when test="${not empty detailDto.customerAttendance }">
-	               				<c:forEach var="attendance" items="${detailDto.customerAttendance }">
-				               			<tr>
-				               				<td>${attendance.no }</td>
-				               				<td><fmt:formatDate value="${attendance.date }" pattern="yyyy-MM-dd hh:mm:ss"></fmt:formatDate></td>
-				               				<td>${attendance.myMembership.membership.category.name }</td>
-				               				<td>${attendance.myMembership.membership.name }</td>
-				               				<c:choose>
-				               					<c:when test="${not empty attendance.lessonName }">
-				               				<td>${attendance.lessonName }</td>
-				               					</c:when>
-				               					<c:otherwise>
-				               						<td>-</td>
-				               					</c:otherwise>
-				               				</c:choose>
-			               				</tr>
-			               		</c:forEach>
-	               			</c:when>
-	               			<c:otherwise>	
-	               				<tr>
-	               					<td colspan="5">방문 이력이 없습니다.</td>
-	               				</tr>
-	               			</c:otherwise>
-	               		</c:choose>
-	               		</tbody>
-	               </table>
-				</div>
-				<div class="modal-footer">
-					<nav aria-label="Page navigation">
-						<ul class="pagination" id="RVPagination">
-						</ul>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</div>
+	<!-- 최근 결제 내역 Modal Start 
+	
 	 최근 방문 내역 Modal End -->
 	
     <!-- Footer Start -->
@@ -508,7 +498,7 @@
 
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/resources/lib/wow/wow.min.js"></script>
     <script src="/resources/lib/easing/easing.min.js"></script>
@@ -520,11 +510,40 @@
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
     
+    
     <script type="text/javascript">
 	
-    <!-- 최근 방문 내역 Modal 페이지테이션 Start -->
-  
-    <!-- 최근 방문 내역 Modal 페이지테이션 End -->
+    <!-- 이용권 목록 더보기 Start -->
+    $(document).ready(function() {
+        // Initialize some rows to be hidden
+        $("#membership-table-body tr.hidden-row").hide(); // Assuming the 'hidden-row' class initially hides the row
+
+        // Show more rows when '더보기' is clicked
+        $("#td-more-myMemberships").click(function() {
+            $("#membership-table-body tr.hidden-row").slice(0, 3).removeClass("hidden-row").show();
+            
+            // Hide the '더보기' row if there are no more hidden rows
+            if ($("#membership-table-body tr.hidden-row").length == 0) {
+                $("#see-more-myMemberships").hide();
+                alert("마지막 페이지입니다.");
+            }
+        });
+    });
+    <!-- 이용권 목록 더보기 End -->
+    
+    <!-- 최근 결제 내역 더보기 Start -->
+    $(document).ready(function(){
+    	$("#order-table-body tr.hidden-row").hide();
+    	$("#td-more-orders").click(function(){
+    		$("#order-table-body tr.hidden-row").slice(0,3).removeClass("hidden-row").show();
+    		
+    		if($("#order-table-body tr.hidden-row").length == 0){
+    			$("see-more-orders").hide();
+    			alert("마지막 페이지입니다.");
+    		}
+    	});
+    });
+    <!-- 최근 결제 내역 더보기 End -->
     
 	</script>
 </body>
