@@ -103,24 +103,41 @@
 									<tr>
 			                        	<th style="width: 20%;">글번호</th>
 			                        	<th style="width: 30%;">제목</th>
-			                        	<th style="width: 40%;">작성일</th>
+			                        	<th style="width: 20%;">작성자</th>
+			                        	<th style="width: 20%;">작성일</th>
 			                        	<th style="width: 10%;">답변여부</th>
 			                     	</tr>
 								</thead>
 							   <tbody>
-							   <c:forEach var="board" items="${result.notices }">
+							   <c:forEach var="inquiry" items="${result.inquiries }">
 				                        <tr>
-				                        	<c:choose>
-												<c:when test="${board.main == 0 }">
-					                        		<td><i class="bi bi-megaphone-fill" style="color: blue; font-size: 20px;"></i></td>
-												</c:when>
-												<c:otherwise>
-									                <td>${board.main }</td>
-									            </c:otherwise>
-				                        	</c:choose>
-											<td><a href="/board/detail?no=${board.no }">${board.title }</a></td>
-				                        	<td><fmt:formatDate value="${board.createDate }" pattern="yyyy년 M월 d일" /></td>
-											<td>${board.readCount }</td>
+				                        	
+											<td>${inquiry.no }</td>
+											<td>
+												<sec:authorize access="isAuthenticated()">
+													<sec:authentication property="principal.username" var="loginUserId"/>
+												</sec:authorize>
+												<a href="/inquiry/inquiryDetail?no=${inquiry.no }"
+													class="${inquiry.secret == 'N' || (inquiry.secret == 'Y' && loginUserId == inquiry.user.id) ? '': 'disabled'}"
+													>
+													<c:if test="${inquiry.secret == 'Y' }">
+														<i class="bi bi-lock-fill"></i>
+													</c:if>
+													${inquiry.title }
+												</a>
+											</td>
+				                        	<td>${inquiry.user.name }</td>
+				                        	<td><fmt:formatDate value="${inquiry.createDate }" pattern="yyyy년 M월 d일" /></td>
+											<td>
+												 <c:choose>
+											        <c:when test="${inquiry.isAnswer eq 'N'}">
+											            미답변
+											        </c:when>
+											        <c:when test="${inquiry.isAnswer eq 'Y'}">
+											            답변완료
+											        </c:when>
+											    </c:choose>
+											</td>
 		                    		 	</tr>
 							   </c:forEach>
 

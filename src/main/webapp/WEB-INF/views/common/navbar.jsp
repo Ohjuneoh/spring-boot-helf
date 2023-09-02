@@ -33,7 +33,7 @@
                 <div class="dropdown-menu m-0">
                     <a href="/board/notice" class="dropdown-item">공지사항</a>
                     <a href="/board/faq" class="dropdown-item">자주 묻는 질문(F&Q)</a>
-                    <a href="/board/inquiries" class="dropdown-item">1대1 문의</a>
+                    <a href="/inquiry/inquiries" class="dropdown-item">1대1 문의</a>
                 </div>
             </div>
             </sec:authorize>
@@ -92,7 +92,7 @@
 	                <div class="dropdown-menu m-0">
 	                    <a href="/board/notice" class="dropdown-item">공지사항</a>
 	                    <a href="/board/faq" class="dropdown-item">자주 묻는 질문(F&Q)</a>
-	                    <a href="/board/inquiries" class="dropdown-item">1대1 문의</a>
+	                    <a href="/inquiry/inquiries" class="dropdown-item">1대1 문의</a>
 	                </div>
 	            </div>
 	            <sec:authorize access="hasRole('ROLE_USER') || hasRole('ROLE_TRAINER')">
