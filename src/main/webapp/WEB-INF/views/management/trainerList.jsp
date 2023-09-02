@@ -189,7 +189,7 @@
 	    							<td>${trainer.user.tel }</td>
 	    							<c:choose>
 	    								<c:when test="${trainer.user.status == 'R'}">
-	    									<td>승인대기중</td>
+	    									<td>승인대기</td>
 	    								</c:when>
 	    								<c:when test="${trainer.user.status == 'Y' }">
 	    									<td>재직</td>
@@ -208,7 +208,7 @@
 	    									<td>-</td>
 	    								</c:otherwise>
 	    							</c:choose>
-	   								<td><a href="/management/trainer-detail?id=" class="btn btn-outline-primary">상세</a></td>
+	   								<td><a href="/management/trainer-detail?id=${trainer.user.id }" class="btn btn-outline-primary">상세</a></td>
 	    						</tr>
 	    					</c:forEach>
     					</c:when>

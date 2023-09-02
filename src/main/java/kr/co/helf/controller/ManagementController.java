@@ -20,6 +20,8 @@ import kr.co.helf.dto.CustomerDetailDto;
 import kr.co.helf.dto.CustomerListDto;
 import kr.co.helf.service.UserService;
 import kr.co.helf.vo.CustomerAttendance;
+import kr.co.helf.vo.MySalary;
+import kr.co.helf.vo.TrainerAttendance;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -143,11 +145,35 @@ public class ManagementController {
 		return "management/trainerList";
 	}
 	
+	// 트레이너 상세 페이지 - 채경, 준오, 예광 
 	@GetMapping(value="trainer-detail")
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
-	public String trainerDetail() {
+	public String trainerDetail(@RequestParam("id") String userId, Model model) {
+		
+		// 트레이너 개인 정보 
+		MySalary trainerInfo = userService.getTrainerDetailById(userId);
+		// 트레이너 출결 내역 
+		List<TrainerAttendance> attendances = userService.getTrainerThreeAttendances(userId);
+		
+		
+		model.addAttribute("trainerInfo", trainerInfo);
+		model.addAttribute("attendances", attendances);
 		
 		return "management/trainerDetail";
+	}
+	
+	// 트레이너 상세 페이지 - 최근 출결 내역 자세히 보기 채경 
+	@GetMapping(value="trainer-attendance-list")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
+	public String trainerAttendances(@RequestParam("id") String userId, Model model) {
+		// 트레이너 개인 정보 
+		MySalary trainerInfo = userService.getTrainerDetailById(userId);
+		Map<String, Object> param = new HashMap<>();
+		param.put("userId", userId);
+		
+		model.addAttribute("trainerInfo", trainerInfo);
+		
+		return "management/trainerAttendances";
 	}
 	
 }

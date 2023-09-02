@@ -358,6 +358,23 @@ public class UserService {
 		
 	}
 	
+	// 트레이너 상세 조회 -개인정보 - 채경
+	public MySalary getTrainerDetailById(String userId){
+		// 트레이너 인적사항 조회 
+		MySalary trainerInfo = userMapper.getTrainerDetailById(userId);
+		return trainerInfo;
+	}
+	
+	// 트레이너 상세 조회 -출결내역(목록) - 채경
+	public List<TrainerAttendance> getTrainerThreeAttendances(String userId){
+		Map<String, Object> param = new HashMap<>();
+		param.put("userId", userId);
+		param.put("begin", 1);
+		param.put("end", 3);
+		
+		List<TrainerAttendance> trainerAttendance = userMapper.getTrainerAttendances(param);
+		return trainerAttendance;
+	}
 }
 
 

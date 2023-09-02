@@ -118,7 +118,6 @@
                       		<c:when test="${detailDto.user.status == 'Y'}">유효회원</c:when>
                       		<c:when test="${detailDto.user.status == 'N'}">탈퇴회원</c:when>
                       	</c:choose>
-                    
                       </span>
                       </div>
                 </div>
