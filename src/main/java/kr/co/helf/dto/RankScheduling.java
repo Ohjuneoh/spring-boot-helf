@@ -14,6 +14,6 @@ public class RankScheduling {
 	
 	@Scheduled(cron = "0 0 0 * * ?")
 	public void updateRank() {
-		userService.updateRank();
+//		userService.updateRank();
 	}
 }

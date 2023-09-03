@@ -11,6 +11,22 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
+    
+    <!-- Star Review  -->
+	<style>
+    @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+	    .rate { display: inline-block;border: 0;margin-right: 15px;}
+	    .rate > input {display: none;}
+	    .rate > label {float: right;color: #ddd}
+	    .rate > label:before {display: inline-block;font-size: 2rem;padding: .1rem .3rem;margin: 0;cursor: pointer;font-family: FontAwesome;content: "\f005 ";}
+	    .rate .half:before {content: "\f089 "; position: absolute;padding-right: 0;}
+	    .rate input:checked ~ label, 
+	    .rate label:hover,.rate label:hover ~ label { color: #0d6efd !important;  } 
+	    .rate input:checked + .rate label:hover,
+	    .rate input input:checked ~ label:hover,
+	    .rate input:checked ~ .rate label:hover ~ label,  
+	    .rate label:hover ~ input:checked ~ label { color: #0d6efd !important;  } 
+  	</style>
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -85,12 +101,92 @@
         <div class="row mb-3">
             <div class="col-12">
             	<div>
-				    <button class="btn btn-outline-primary mb-1" type="button" >개인수업</button>
-				    <button class="btn btn-outline-primary mb-1" type="button">그룹수업</button>
+				    <button id="personal-lesson-button" class="btn btn-outline-primary mb-1" type="button" >개인수업</button>
+				    <button id="group-lesson-button" class="btn btn-outline-primary mb-1" type="button">그룹수업</button>
 				</div>
-                <div class="card" >
+				
+				<!-- PersonalLesson start  -->
+                <div class="card"  id="personal-lesson">
                     <div class="card-header bg-dark" style="color: #ffffff">
-                        <strong>수업 목록</strong>
+		                <c:if test="${not empty personalLessonList}">
+							담당 강사명 : <strong style="font-size: 20px;"class="text-info"><c:out value="${personalLessonList[0].user.name}" /></strong>
+							
+						</c:if>
+						<p class="mb-0" style="font-size: 8px;">남은 PT회수 :
+							<c:if test="${not empty personalLessonList }">
+								<strong><c:out value="${personalLessonList[0].myMembership.remainderCnt }"></c:out>회</strong>
+							</c:if> 	
+						</p>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="text-center" style="width: 35%">수업명</th>
+                                <th class="text-center" style="width: 20%">수업 날짜</th>
+                                <th class="text-center" style="width: 15%">수업 시간</th>
+                                <th class="text-center" style="width: 15%">출석</th>
+                                <th class="text-center" style="width: 15%">리뷰</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            	<c:forEach var="lesson"  items="${personalLessonList }"> 
+	                                <tr>
+	                                    <td class="text-center">${lesson.personalLesson.name }</td>
+	                                    <td class="text-center"><fmt:formatDate value="${lesson.personalLesson.date }" pattern="yyyy년 M월 d일" /></td>
+	                                    <td class="text-center">${lesson.personalLesson.time }</td>
+	                                    <td class="text-center">${lesson.personalLesson.status }</td>
+                               			<td class="text-center"><a class="btn btn-primary btn-sm " data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" 
+                               										data-lesson-no="${lesson.personalLesson.no}"
+                               										data-consultation-no="${lesson.consultation.consultationNo }"
+                               										data-trainer-no="${lesson.trainer.trainerNo }" >리뷰작성</a></td>
+	                                </tr>
+	                        	</c:forEach>
+                            </tbody>
+                        </table>
+                        <div class="collapse" id="collapseExample" id="review">
+	                        <form method="post" action="/trainer-review/personal-review-registration">
+	                        	<input id="personal-lesson-no" name="personalLessonNo" type="hidden" />
+	                        	<input id="trainer-no" name="trainerNo" type="hidden"/>
+	                        	<input id="consultation-no" name="ConsultationNo" type="hidden"/>
+								<div class="card card-body bg-light">
+									<div class="row">
+										<div class="text-primary mb-0 col-3  d-flex align-items-center" style="font-size: 30px;"><strong>리뷰작성</strong></div>
+											<div class="col-7 text-primary mb-0 d-flex align-items-center" style="font-size: 30px;">
+												<strong style="margin-right: 15px;">평점</strong>
+												<fieldset class="rate">
+								                    <input type="radio" id="rating10" name="rating" value="5"><label for="rating10" title="5점"></label>
+								                    <input type="radio" id="rating9" name="rating" value="4.5"><label class="half" for="rating9" title="4.5점"></label>
+								                    <input type="radio" id="rating8" name="rating" value="4"><label for="rating8" title="4점"></label>
+								                    <input type="radio" id="rating7" name="rating" value="3.5"><label class="half" for="rating7" title="3.5점"></label>
+								                    <input type="radio" id="rating6" name="rating" value="3"><label for="rating6" title="3점"></label>
+								                    <input type="radio" id="rating5" name="rating" value="2.5"><label class="half" for="rating5" title="2.5점"></label>
+								                    <input type="radio" id="rating4" name="rating" value="2"><label for="rating4" title="2점"></label>
+								                    <input type="radio" id="rating3" name="rating" value="1.5"><label class="half" for="rating3" title="1.5점"></label>
+								                    <input type="radio" id="rating2" name="rating" value="1"><label for="rating2" title="1점"></label>
+								                    <input type="radio" id="rating1" name="rating" value="0.5"><label class="half" for="rating1" title="0.5점"></label>
+							               		</fieldset>
+											</div>
+										</div>
+									<hr></hr>
+				                	<div class="col-12 m-3">
+				                    	<input type="text" class="form-control border-0 bg-light m-0" name="content" placeholder="내용 (최소 15자 이상을 입력해주세요)" style="height: 80px;">
+				                	</div>
+				                	<div class="col-12 d-flex justify-content-end">
+				                	<button type="submit" class="btn btn-primary btn-sm m-1">등록하기</button>
+				                	<button type="button" class="btn btn-success btn-sm m-1" data-bs-toggle="collapse" data-bs-target="#collapseExample" id="closeButton">닫기</button>
+				                	</div>
+								</div>
+							</form>
+						</div>
+                    </div>
+                </div>
+                
+                <!-- PersonalLesson end  -->
+                <!-- GroupLesson start  -->
+                <div class="card"  id="group-lesson" style="display: none;">
+                    <div class="card-header bg-dark" style="color: #ffffff">
+                        <strong>그룹수업 목록</strong>
                     </div>
                     <div class="card-body">
                         <table class="table"  id="x">
@@ -120,6 +216,7 @@
                         </table>
                     </div>
                 </div>
+                <!-- groupLesson end -->
             </div>
         </div>
     </div>
@@ -146,6 +243,56 @@
 <script src="/resources/js/main.js"></script>
 
 <script>
+	/* 개인,그룹수업 버튼 display 설정  */
+	$(document).ready(function(){
+	    $("#personal-lesson-button").click(function(){
+	        $(this).addClass('active');
+	        $("#group-lesson-button").removeClass('active');
+	        $("#personal-lesson").show();
+	        $("#group-lesson").hide();
+	    });
+	
+	    $("#group-lesson-button").click(function(){
+	        $(this).addClass('active');
+	        $("#personal-lesson-button").removeClass('active');
+	        $("#group-lesson").show();
+	        $("#personal-lesson").hide();
+	    });
+	});
+	/* 개인수업 리뷰작성 data 전달 */
+	$(document).ready(function(){
+	    $('a[data-lesson-no]').click(function(){
+	        var lessonNo = $(this).attr('data-lesson-no');
+	        var consultationNo = $(this).attr('data-consultation-no');
+	        var trainerNo = $(this).attr('data-trainer-no');
+	        $('#personal-lesson-no').val(lessonNo);
+	        $('#consultation-no').val(consultationNo);
+	        $('#trainer-no').val(trainerNo);
+	    });
+	});
+	/* 닫기 버튼 눌렀을 때 값 초기화  */
+    $('#closeButton').click(function() {
+        $('#personal-lesson-no').val('');
+        $('#trainer-no').val('');
+        $('#consultation-no').val('');
+        $('input[name="rating"]:checked').prop('checked', false);
+        $('input[name="content"]').val('');
+    });
+	/* 공백, 최소 입력글자  */
+    $(document).ready(function(){
+        $("form").submit(function(e){
+            var content = $("input[name='content']").val();
+            if($.trim(content).length == 0) {
+                alert("리뷰 내용을 입력해주세요");
+                $("input[name='content']").focus();
+                e.preventDefault();
+            } else if(content.length < 15){
+                alert("최소 15자 이상을 입력해주세요");
+                $("input[name='content']").focus();
+                e.preventDefault();
+            }
+        });
+    });
 
 </script>
 
