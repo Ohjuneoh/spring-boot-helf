@@ -91,6 +91,7 @@
             <h2 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">최근후기</h2>
             <h3 class="mb-3" >생생한 후기를 확인하세요!</h3>
           </div>
+          <!-- 평균 펼점 조회 -->
           <div id="1" class="col-6 d-flex align-items-center">
             <div id="2" class="d-flex justify-content-end">
               <p class="m-1 text-primary" style="font-size: 80px;"><fmt:formatNumber value="${dto.avgRating }" pattern="#.#" /> </p>
@@ -107,6 +108,7 @@
                   <i class="bi bi-star"></i>
                 </c:forEach>
               </h6>
+              <!-- 리뷰 총 갯수 조회 -->
               <strong class="m-1 text-primary" style="font-size: 20px;">${dto.cntReviews }개의 리뷰</strong>
             </div>
           </div>
@@ -192,6 +194,7 @@
 <script src="/resources/js/main.js"></script>
 
 <script>
+      // 더 보기(페이징처리)
       let currentPage = 1;
       let more = true;
       $("#btn-more").click(function() {
@@ -205,9 +208,10 @@
             more = false;
           }
 
+          // 위에 id가 login-user-id 인 부분을 찾아서 값 조회
           let loginUserId = $("#login-user-id").val();
 
-          // reviews = [{no:x, title:x, }, {}, {}]
+          // 더보기에 해당하는 부분 위에와 동일하게 content에 붙여서 ajax처리
           reviews.forEach(function(r, index) {
 
             let content = `
@@ -251,6 +255,7 @@
         });
       });
 
+      // ajax에서 더보기 부분에서 평점을 표현하기 위한 코드
       function getFillStar(count) {
         let content = "";
         for (let i=1; i<=count; i++) {

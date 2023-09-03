@@ -239,7 +239,7 @@
 <script src="/resources/js/main.js"></script>
 
 <script>
-	//개인수업/그룹수업 diplay 설정
+	//개인수업/그룹수업 display 설정
 	$(document).ready(function(){
 	    $("#personal-lesson-button").click(function(){
 	        $(this).addClass('active');

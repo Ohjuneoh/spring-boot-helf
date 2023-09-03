@@ -24,6 +24,7 @@ public class TrainerReviewController {
 
     private final TrainerReviewService trainerReviewService;
 
+    // 트레이너 리스트(더 보기 페이징처리)
     @GetMapping("/reviews")
     @ResponseBody
     public List<TrainerReview> getTrainerReviews(@RequestParam("trainerNo") int trainerNo,

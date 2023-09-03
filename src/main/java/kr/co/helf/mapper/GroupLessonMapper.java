@@ -43,6 +43,8 @@ public interface GroupLessonMapper {
     MyMembership getMyMembershipByUserId(String userId);
     // 멤버십 이용권이 모두 소진한 경우 멤버십 상태 변경
     void updateMembershipState(MyMembership membership);
-    // 레슨번호로 레슨조회
-//    Lesson getAllLessonByNo(int no);
+    // 내가 개설한 최근 수업명, 수업날짜 조회
+    List<Lesson> getRecentLessons(String userId);
+    // 마이페이지(트레이너) - 더 보기(출석률 , 페이징처리)
+    List<Lesson> trainerMyAllLessons(Map<String,Object> param);
 }

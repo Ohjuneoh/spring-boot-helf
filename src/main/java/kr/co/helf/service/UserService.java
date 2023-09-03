@@ -301,6 +301,7 @@ public class UserService {
 		List<TrainerReview> reviews =trainerReviewMapper.getMyReviews(userId);
 		return reviews;
 	}
+
 }
 
 
