@@ -226,7 +226,7 @@
         my_membership_state     as state
 		from    helf_my_membership
 		where my_membership_no = #{myMembershipNo}
-		and my_membership_state = '사용가능'
+		and (my_membership_state = '사용가능' or my_membership_state = '사용중')
 	</select>
 	<update id="updateMyMembership" parameterType="myMembership">
 		update helf_my_membership
