@@ -24,8 +24,10 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.helf.dto.AttendanceList;
+import kr.co.helf.dto.CustomerAttendanceListDto;
 import kr.co.helf.dto.CustomerDetailDto;
 import kr.co.helf.dto.CustomerListDto;
+import kr.co.helf.dto.CustomerOrderDto;
 import kr.co.helf.dto.Pagination;
 import kr.co.helf.enums.RankEnum;
 import kr.co.helf.form.AddUserForm;
@@ -282,8 +284,8 @@ public class UserService {
 		result.setLessonApply(lessonApply);
 		
 		// 결제 내역 조회 
-		List<Order> orderList = orderMapper.getCustomerOrders(id);
-		result.setOrder(orderList);
+		List<CustomerOrderDto> customerOrderDto = orderMapper.getCustomerOrders(id);
+		result.setOrder(customerOrderDto);
 		
 		// 이용권 목록 조회 
 		List<MyMembership> myMembershipList = orderMapper.getCustomerMyMemberships(id);
@@ -296,10 +298,82 @@ public class UserService {
 		return result; 
 	}
 
+
 	// 마이페이지 - 내 리뷰 보기(예광)
 	public List<TrainerReview> getMyReviews(String userId){
 		List<TrainerReview> reviews =trainerReviewMapper.getMyReviews(userId);
 		return reviews;
+	}
+
+	// 관리자 고객상세조회 - 최근 방문 내역 조회 - 채경
+	public Map<String, Object> getCustomerAttendances(Map<String, Object> param){
+		// 총 행의 갯수
+		int totalRows = userMapper.getCustomerAttendanceTotalRowsById(param);
+		int page = (int) param.get("page");
+		int rows = 10;
+		Pagination pagination = new Pagination(rows, page, totalRows);
+		
+		int begin = pagination.getBegin();
+		int end = pagination.getEnd();
+		param.put("begin", begin);
+		param.put("end", end);
+		
+		
+		List<CustomerAttendanceListDto> customerAttendanceListDto = userMapper.getCustomerAttendanceList(param);
+		
+		return Map.of("recentVisits", customerAttendanceListDto, "pagination", pagination);
+
+	}
+	
+	// 관리자 고객 상세 조회 - 개인 정보 - 채경 
+	public CustomerDetailDto getPrivateInfo(String id) {
+	CustomerDetailDto result =	userMapper.getCustomerInfoDetails(id);
+	return result;
+	}
+	
+	
+	// 관리자 트레이너 목록 조회 - 채경
+	public Map<String, Object> getAllTrainerInfo(Map<String, Object> param){
+		
+		int totalRows = userMapper.getAllTrainerTotalRows(param);
+		
+		int page = (int) param.get("page");
+		int rows = (int) param.get("rows");
+		
+		Pagination pagination = new Pagination(rows, page, totalRows);
+		
+		int begin = pagination.getBegin();
+		int end = pagination.getEnd();
+		param.put("begin", begin);
+		param.put("end", end);
+		
+		List<Trainer> trainerList = userMapper.getAllTrainers(param);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("trainerList", trainerList);
+		result.put("pagination", pagination);
+		result.put("totalRows", totalRows);
+		
+		return result;
+		
+	}
+	
+	// 트레이너 상세 조회 -개인정보 - 채경
+	public MySalary getTrainerDetailById(String userId){
+		// 트레이너 인적사항 조회 
+		MySalary trainerInfo = userMapper.getTrainerDetailById(userId);
+		return trainerInfo;
+	}
+	
+	// 트레이너 상세 조회 -출결내역(목록) - 채경
+	public List<TrainerAttendance> getTrainerThreeAttendances(String userId){
+		Map<String, Object> param = new HashMap<>();
+		param.put("userId", userId);
+		param.put("begin", 1);
+		param.put("end", 3);
+		
+		List<TrainerAttendance> trainerAttendance = userMapper.getTrainerAttendances(param);
+		return trainerAttendance;
 	}
 }
 
