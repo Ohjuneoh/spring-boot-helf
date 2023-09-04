@@ -59,7 +59,7 @@ public interface TrainerReviewMapper {
 
 	Integer getCountPersonalReviews(int trainerNo);
 
-	TrainerPersonalReview getTrainerPersonalReviewByNo(int reviewNo);
+	TrainerPersonalReview getTrainerPersonalReviewByNo(int no);
 
 	void updatePersonalReview(ModifyPersonalReviewForm form);
 

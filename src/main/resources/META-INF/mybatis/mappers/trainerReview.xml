@@ -219,7 +219,6 @@
             rownumber between #{begin} and #{end}
     </select>
     
-    개인리뷰 수정 
 	<update id="updatePersonalReview" parameterType="TrainerPersonalReview">
         update
             helf_trainer_personal_review
@@ -229,5 +228,20 @@
         where
             trainer_personal_review_no = #{no}
     </update> 
+    
+    <select id="getTrainerPersonalReviewByNo" parameterType="int" resultType="TrainerPersonalReview">
+        select
+            trainer_personal_review_no as no,
+            trainer_personal_review_content as content,
+            trainer_personal_review_create_date as createDate,
+            personal_lesson_no as "personalLesson.no",
+            trainer_no as "trainer.trainerNo",
+            trainer_personal_review_rating as rating,
+            trainer_personal_review_status as status
+        from
+            helf_trainer_personal_review
+        where
+            trainer_personal_review_no = #{no}
+    </select>
 
 </mapper>

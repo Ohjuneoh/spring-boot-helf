@@ -163,6 +163,10 @@ public class TrainerReviewService {
 
 	public void updatePersonalReview(ModifyPersonalReviewForm form) {
 		
+		TrainerPersonalReview trainerPersonalReview = trainerReviewMapper.getTrainerPersonalReviewByNo(form.getNo());
+		
+		BeanUtils.copyProperties(form, trainerPersonalReview);
+		
 	    trainerReviewMapper.updatePersonalReview(form);
 	}
 
