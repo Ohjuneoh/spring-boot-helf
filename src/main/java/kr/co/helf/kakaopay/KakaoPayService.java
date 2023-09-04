@@ -1,7 +1,9 @@
 package kr.co.helf.kakaopay;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -14,10 +16,14 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Component
 public class KakaoPayService {
 
-	static final String cid = "TC0ONETIME";
-	static final String admin_key = "dacd2a3cef1262ad93685ddcfa9f02df";
+	@Value("${custom.oauth.cid}")
+    private String cid;
+
+    @Value("${custom.oauth.admin_key}")
+    private String adminKey;
 	
 	public KakaoPayReadyResponse kakaoPayReadyResponse(AddOrderForm form) {
 		MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
@@ -70,7 +76,7 @@ public class KakaoPayService {
 
 	private HttpHeaders getHeaders() {
 		HttpHeaders header = new HttpHeaders();
-		String auth = "KakaoAK " + admin_key;
+		String auth = "KakaoAK " + adminKey;
 		
 		header.set("Authorization", auth);
 		header.set("Content-type", "application/x-www-form-urlencoded;charset=utf-8");

@@ -115,9 +115,13 @@
 								<br/>
 								<p>${membership.description }</p>
 							</div>
-							<a class="btn btn-lg btn-primary rounded" href="condition?no=${membership.no }">
-                            	<i class="bi bi-arrow-right"></i>
-                        	</a>
+							<form id="form-${membership.no }" action="condition" method="post">
+								<a id="btn-${membership.no }" class="btn btn-lg btn-primary rounded" style="height: 50px;"
+									data-membership-no="${membership.no }">
+	                            	<i class="bi bi-arrow-right"></i>
+	                        	</a>
+	                        	<input type="hidden" name="no">
+							</form>
 						</div> 
 					</div>
 				</c:forEach>
@@ -153,6 +157,12 @@ $(function() {
         								.next().removeClass('d-none')
         								.next().addClass('d-none')
 	});
+	
+	$("a[id^=btn]").on('click', function () {
+		let no = $(this).attr('data-membership-no');
+		$("[name=no]").val(no);
+		$("form[id^=form]").submit();
+	})
 });
 </script>
 </html>

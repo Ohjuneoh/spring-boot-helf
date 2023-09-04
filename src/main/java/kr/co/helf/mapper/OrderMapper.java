@@ -54,7 +54,7 @@ public interface OrderMapper {
 
 	void insertOrder(Order order);
 
-	List<MyMembership> getUseMyMembershipByNoById(Map<String, Object> map);
+	MyMembership getUseMyMembershipByNoById(Map<String, Object> map);
 
 	void updateMyMembership(MyMembership myMembership);
 
@@ -69,4 +69,10 @@ public interface OrderMapper {
 	
 	// 고객별 상세 조회 (4)나의 이용권 내역 - 채경
 	List<MyMembership> getCustomerMyMemberships(String id);
+
+	List<Order> getMonthOrderById(String id);
+
+	void updateStartMyMemberships(List<Integer> noList);
+	
+	void updateEndMyMemberships(List<Integer> noList);
 }

@@ -13,7 +13,7 @@ import kr.co.helf.vo.CustomerAttendance;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.MySalary;
-import kr.co.helf.vo.Order;
+import kr.co.helf.vo.Rank;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.TrainerCareer;
 import kr.co.helf.vo.TrainerAttendance;
@@ -94,5 +94,7 @@ public interface UserMapper {
 	
 	// 트레이너 상세 조회 - 채경 
 	MySalary getTrainerDetailById(String id);
+	
+	Rank getNewRank(String id);
 	
 }

@@ -38,6 +38,7 @@
 			user_gender	=	#{gender},		
 			user_status	=	#{status},	
 			user_update_date = sysdate,
+			rank_no = #{rank.no},
 			user_type	= #{type},
 			user_point 	= #{point},
 			user_mobile_carrier = #{mobileCarrier},
@@ -379,11 +380,39 @@
 	</select>
 
 	<select id="getAllCustomer" resultType="user">
-		select A.rank_no		as "rank.no"
-			   B.rank_name		as "rank.name"
-		from helf_users A, helf_rank B
-		where A.rank_no = B.rank_no  
-		and user_type = 'ROLE_USER'
+		select user_id						as id,
+			   user_email					as email,
+			   user_name					as name,
+			   user_tel						as tel,
+			   user_encrypted_password		as encryptedPassword,
+			   user_gender					as gender,
+			   user_status					as status,	
+			   user_create_date				as createDate,
+			   user_update_date				as updateDate,
+			   user_type					as type,
+			   rank_no						as "rank.no",
+			   user_point					as point,
+			   user_mobile_carrier			as mobileCarrier,
+			   user_authentication_no		as authenticationNo
+		from helf_users
+		where user_type = 'ROLE_USER'
+	</select>
+	
+	<select id="getNewRank" resultType="rank" parameterType="string">
+		select b.rank_no				as no,
+			   b.rank_name				as name,
+			   b.rank_min_criteria		as minCriteria,
+			   b.rank_max_criteria		as maxCriteria,
+			   b.rank_benefit			as benefit,
+			   b.rank_point_rate		as pointRate
+		from (select user_id, sum(orders_total_price) total
+      		  from helf_orders
+      		  where ORDERS_PAYMENT_DATE >= TO_DATE(TO_CHAR(ADD_MONTHS(SYSDATE, -1), 'YYYYMM') || '01', 'YYYYMMDD')
+      		  <![CDATA[AND ORDERS_PAYMENT_DATE < TRUNC(LAST_DAY(ADD_MONTHS(SYSDATE, -1)) + 1)]]>
+      		  and orders_payment_state = '결제완료'
+      		  group by user_id
+      		  HAVING user_id = #{value}) A, helf_ranks B 
+      	<![CDATA[where A.total >= B.RANK_Min_CRITERIA and A.total <= B.RANK_MAX_CRITERIA]]>
 	</select>
 	
 	
@@ -419,10 +448,13 @@
 				and u.user_tel = #{keyword}
 				</when>
 				<when test="trainerStatus == '재직'">
-				and u.user_type = 'Y'
+				and u.user_status = 'Y'
 				</when>
 				<when test="trainerStatus == '퇴직'">
-				and u.user_type = 'N'
+				and u.user_status = 'N'
+				</when>
+				<when test="trainerStatus == '승인대기'">
+				and u.user_status = 'R'
 				</when>
 				<when test="trainerTitle == '점장'">
 				and t.trainer_title = '점장'

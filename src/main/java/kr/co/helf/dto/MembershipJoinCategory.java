@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.apache.ibatis.type.Alias;
 
+import kr.co.helf.enums.MembershipEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,4 +24,8 @@ public class MembershipJoinCategory {
 	private String catName;
 	private String catProperty;
 	private String useOption;
+	
+	public boolean isOneDay(MembershipEnum e) {
+		return e.ONE_DAY.getValue().equals(this.catName);
+	}
 }

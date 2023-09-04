@@ -91,26 +91,25 @@
             <h2 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">최근후기</h2>
             <h3 class="mb-3" >생생한 후기를 확인하세요!</h3>
           </div>
+          <!-- 평균 펼점 조회 -->
           <div id="1" class="col-6 d-flex align-items-center">
             <div id="2" class="d-flex justify-content-end">
-              <p class="m-1 text-primary" style="font-size: 80px;"><fmt:formatNumber value="${averageRating }" pattern="#.#" /> </p>
+              <p class="m-1 text-primary" style="font-size: 80px;"><fmt:formatNumber value="${dto.avgRating }" pattern="#.#" /> </p>
             </div>
             <div id="3" class="d-flex flex-column align-items-start m-1">
-            <c:set var="fillCount" value="${Math.floor(averageRating)}"/>
-			<c:set var="halfCount" value="${averageRating > fillCount ? 1 : 0}"/>
-			<c:set var="emptyCount" value="${5 - fillCount - halfCount}"/>
               <h6 class="m-1 text-primary" style="font-size: 20px;">
-                <c:forEach begin="1" end="${fillCount}">
-			    	<i class="bi bi-star-fill"></i>
-			  	</c:forEach>
-			  	<c:forEach begin="1" end="${halfCount}">
-			    	<i class="bi bi-star-half"></i>
-			  	</c:forEach>
-			  	<c:forEach begin="1" end="${emptyCount}">
-			   		<i class="bi bi-star"></i>
-			 	</c:forEach>
+                <c:forEach begin="1" end="${dto.fillCount}">
+                  <i class="bi bi-star-fill"></i>
+              </c:forEach>
+                <c:forEach begin="1" end="${dto.halfCount}">
+                  <i class="bi bi-star-half"></i>
+                </c:forEach>
+                <c:forEach begin="1" end="${dto.emptyCount}">
+                  <i class="bi bi-star"></i>
+                </c:forEach>
               </h6>
-              <strong class="m-1 text-primary" style="font-size: 20px;">${totalReviews} 개의 리뷰</strong>
+              <!-- 리뷰 총 갯수 조회 -->
+              <strong class="m-1 text-primary" style="font-size: 20px;">${dto.cntReviews }개의 리뷰</strong>
             </div>
           </div>
         </div>
@@ -164,53 +163,7 @@
           </div>
         </div>
         <!-- 작성일자 밑에 있는 리뷰내용 div -->
-      </div>
-    </c:forEach>
-    <!-- 개인수업  -->
-    <c:forEach var="trainerPersonalReview" items="${personalReviews.trainerPersonalReviews }">
-      <!-- 한 사람에 해당되는 전체 div-->                                                                                                                    
-      <div class="testimonial-item bg-light mt-1 mb-3 border-bottom ">
-        <!-- 파라미터로 전달받은 트레이너번호 -->
-        <input type="hidden" name="trainerNo" value="${param.trainerNo }">
-        <h5 class="m-1 text-primary float-end">
-          <c:forEach begin="1" end="${trainerPersonalReview.fillCount}">
-            <i class="bi bi-star-fill"></i>
-          </c:forEach>
-          <c:forEach begin="1" end="${trainerPersonalReview.halfCount}">
-            <i class="bi bi-star-half"></i>
-          </c:forEach>
-          <c:forEach begin="1" end="${trainerPersonalReview.emptyCount}">
-            <i class="bi bi-star"></i>
-          </c:forEach>
-        </h5>
-        <div class="d-flex align-items-center pt-1 pb-1 px-5">
-          <h5 class="text-primary">${trainerPersonalReview.personalLesson.name } </h5>
-        </div>
 
-        <!-- 리뷰 내용 위의 작성자명, 작성일자 div -->
-        <div class="d-flex align-items-center pt-1 pb-3 px-5 border-bottom mb-3">
-          <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
-          <div class="ps-4">
-            <h4 class="text-primary mb-1">${trainerPersonalReview.personalLesson.user.name }</h4>
-            <small class="text-uppercase"><fmt:formatDate value="${trainerPersonalReview.createDate }" pattern="yyyy년 M월 d일" /></small>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-9 ps-5">
-            <p>${trainerPersonalReview.content }</p>
-          </div>
-          <div class="col-3 text-end">
-            <sec:authorize access="isAuthenticated()">
-              <sec:authentication property="principal.id" var="loginUserId" />
-              <input type="hidden" id="login-user-id" value="${loginUserId}" />
-              <c:if test="${trainerPersonalReview.personalLesson.user.id eq loginUserId}">
-                <a href="/trainer-review/delete?reviewNo=${trainerPersonalReview.no }" class="btn btn-danger btn-sm float-end" style="margin-left: 5px;">삭제</a>
-                <a href="/trainer-review/personal-modify?reviewNo=${trainerPersonalReview.no }" class="btn btn-warning btn-sm float-end">수정</a>
-              </c:if>
-            </sec:authorize>
-          </div>
-        </div>
-        <!-- 작성일자 밑에 있는 리뷰내용 div -->
       </div>
     </c:forEach>
     </div>
@@ -241,6 +194,7 @@
 <script src="/resources/js/main.js"></script>
 
 <script>
+      // 더 보기(페이징처리)
       let currentPage = 1;
       let more = true;
       $("#btn-more").click(function() {
@@ -254,9 +208,10 @@
             more = false;
           }
 
+          // 위에 id가 login-user-id 인 부분을 찾아서 값 조회
           let loginUserId = $("#login-user-id").val();
 
-          // reviews = [{no:x, title:x, }, {}, {}]
+          // 더보기에 해당하는 부분 위에와 동일하게 content에 붙여서 ajax처리
           reviews.forEach(function(r, index) {
 
             let content = `
@@ -300,6 +255,7 @@
         });
       });
 
+      // ajax에서 더보기 부분에서 평점을 표현하기 위한 코드
       function getFillStar(count) {
         let content = "";
         for (let i=1; i<=count; i++) {

@@ -80,9 +80,6 @@
             </div>
         </div>
     </div>
-    
-    
- 
     <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
 		<div class="container py-5">
 			<div class="row mb-3">
@@ -91,12 +88,31 @@
 						<div class="card-body">
 							<!-- 검색 -->
 						    <div class="d-flex justify-content-center mb-4">
-								<div class="Search_search_box__2RnqG" >
-							      <input type="text" name="query" placeholder="궁금한 점을 검색해 보세요." autocomplete="off" class="Search_search_input__15WyK" value="" title="검색" style="width: 300px;">
-							       <button type="button" class="Search_btn_search__s1gr6 search-layer" id="search-button">
-							       	<span class="blind"> <i class="bi bi-search"></i></span>
-							       </button>
-							     </div>
+								<div class="card" style="margin-bottom: 20px; width: 1500px;" >
+							    	<div class="card-body">
+							    		<form action="inquiries" method="get">
+											<div class="row mb-3 pt-3">
+												<label style="margin-bottom: 10px;">
+													<strong>‘자주하는 질문(F&Q)’ 을 먼저 확인하여 주시기 바랍니다.</strong>
+												</label>
+												<div class="col-2">
+													<select name="type" class="form-select">
+														<option selected="selected" disabled="disabled">전체보기</option>
+														<option value="name" ${param.type eq 'name' ? 'selected' : '' }>제목</option>
+														<option value="id" ${param.type eq 'id' ? 'selected' : '' }>작성자</option>
+													</select>
+												</div>
+												<div class="col-9">
+											        <input type="text" style="width: 100%;" name="keyword" class="form-control" value="${param.keyword }">
+											    </div>
+											    <div class="col-1">
+											        <button type="submit" class="btn btn-success">검색</button>
+											    </div>
+											    <input type="hidden" name="page" value="${param.page }">
+											</div>
+							    		</form>						
+									</div>
+								</div>
 						    </div>
 			               <table class="table">
 			               		<thead>
@@ -160,22 +176,22 @@
 	<div class="row mb-3" >
 		<div class="col-12" style="text-align: center;">
 			<c:choose>
-				<c:when test="${not empty result }">
-			<nav>
-				<ul class="pagination justify-content-center">
-					<li class="page-item ${result.pagination.first ? 'disabled' : '' }">
-						<a class="page-link"  href="notice?page=${result.pagination.prePage }" >이전</a>
-					</li>
-				<c:forEach var="num" begin="${result.pagination.beginPage }" end="${result.pagination.endPage }">
-					<li class="page-item ${result.pagination.page eq num ? 'active' : '' }">
-						<a class="page-link" href="notice?page=${num }" >${num }</a>
-					</li>
-				</c:forEach>
-					<li class="page-item ${result.pagination.last ? 'disabled' : '' }">
-						<a class="page-link" href="notice?page=${result.pagination.nextPage }" >다음</a>
-					</li>
-				</ul>
-			</nav>
+				<c:when test="${result.pagination.totalRows ne 0 }">
+					<nav>
+						<ul class="pagination justify-content-center">
+							<li class="page-item ${result.pagination.first ? 'disabled' : '' }">
+								<a class="page-link"  href="notice?page=${result.pagination.prePage }" >이전</a>
+							</li>
+							<c:forEach var="num" begin="${result.pagination.beginPage }" end="${result.pagination.endPage }">
+								<li class="page-item ${result.pagination.page eq num ? 'active' : '' }">
+									<a class="page-link" href="notice?page=${num }" >${num }</a>
+								</li>
+							</c:forEach>
+							<li class="page-item ${result.pagination.last ? 'disabled' : '' }">
+								<a class="page-link" href="inquiries?page=${result.pagination.nextPage }" >다음</a>
+							</li>
+						</ul>
+					</nav>
 				</c:when>
 			</c:choose>
 		</div>

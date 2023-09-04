@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Alias("addOrderForm")
 public class AddOrderForm {
-
+	
 	private int membershipNo;					// 멤버십 번호 (내 이용권)
 	private String membershipName;
 	private int membershipDefaltPrice;			// 멤버십 기본 가격
