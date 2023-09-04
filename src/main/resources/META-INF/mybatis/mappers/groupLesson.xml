@@ -167,32 +167,41 @@
     <!-- 수업명, 수업날짜 출력 -->
     <select id="getRecentLessons" resultType="Lesson" parameterType="string">
         select
+            lesson_no as no,
             lesson_name as name,
-            lesson_date as "date"
+            lesson_date as "date",
+            lesson_time as time
         from
             helf_lesson
         where
             user_id = #{value}
+        order by
+            lesson_no desc
     </select>
 
     <!--  트레이너(마이페이지 - 내가 개설한 수업 보기(출석률, 페이징처리 포함 -->
     <select id="trainerMyAllLessons" resultType="Lesson" parameterType="map">
-        select y.lesson_name as name,
-               y.lesson_date as "date",
-               y.lesson_time as time,
-               y.lesson_req_cnt as reqCnt,
-               y.lesson_quota as quota,
-               trunc(x.cnt/y.lesson_req_cnt, 2) * 100 as attendanceRate
-        from (
-            select l.lesson_no,
-            count(*)  as cnt,
-            row_number() over (order by l.lesson_no desc) rownumber
-            from helf_lesson_apply a, helf_lesson l
-            where l.user_id = #{userId}
-            and a.lesson_no = l.lesson_no
-            and  a.lesson_apply_attendance_status = 'Y'
-            group by l.lesson_no) x, helf_lesson y
-        where x.lesson_no = y.lesson_no
-          and rownumber between #{begin} and #{end}
+        select *
+        from(
+                select
+                    y.lesson_no as no,
+                    y.lesson_name as name,
+                    y.lesson_date as "date",
+                    y.lesson_time as time,
+                    y.lesson_req_cnt as reqCnt,
+                    y.lesson_quota as quota,
+                    trunc(x.cnt/y.lesson_req_cnt, 2) * 100 as attendanceRate,
+                    row_number() over (order by y.lesson_no desc) rownumber
+                from (
+                    select l.lesson_no,
+                    count(*)  as cnt
+                    from helf_lesson_apply a, helf_lesson l
+                    where l.user_id = #{userId}
+                    and a.lesson_no = l.lesson_no
+                    and  a.lesson_apply_attendance_status = 'Y'
+                    group by l.lesson_no) x, helf_lesson y
+                where x.lesson_no = y.lesson_no
+            )
+        where rownumber between #{begin} and #{end}
     </select>
 </mapper>

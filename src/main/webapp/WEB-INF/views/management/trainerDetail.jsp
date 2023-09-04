@@ -198,26 +198,29 @@
             	<h3 class="mb-0 text-primary">최근 그룹 수업 내역 </h3>
             </div>
             <div class="col-sm wow zoomIn" data-wow-delay="0.2s">
+				<p style="text-align: right;"><a href="/management/moreGroupLesson?id=${param.id}">자세히보기</a></p>
               		<table class="table table-bordered shadow-sm" style="text-align: center; vertical-align: middle;" id="table-order-list">
                			<thead>
 	               			<tr>
-	               				<th>수업날짜</th>
-	               				<th>예약날짜</th>
 	               				<th>수업명</th>
-	               				<th>회원 수</th>
-	               				<th>출결상태</th>
-	               				<th>이용권명</th>
+								<th>수업날짜</th>
+	               				<th>이용권 명</th>
 	               			</tr>
 	               		</thead>
 	               		<tbody>
-	               			<tr>
-				               	<td>-</td>
-				       			<td>-</td>
-			    				<td>-</td>
-				   				<td>-</td>
-			      				<td>-</td>
-			     				<td>-</td>
-			               	</tr>
+						<c:forEach var="lesson" items="${lessons }" varStatus="status">
+							<c:choose>
+								<c:when test="${status.index < 5}">
+									<tr>
+										<td>${lesson.name }</td>
+										<td><fmt:formatDate value="${lesson.date }" pattern="yyyy년 M월 d일" /> ${lesson.time }시 </td>
+										<td>그룹 PT</td>
+									</tr>
+								</c:when>
+								<c:otherwise>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
 	               		</tbody>
 	               </table>
             	</div>
