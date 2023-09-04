@@ -69,7 +69,7 @@
     								select trainer_no
 									from helf_lesson_consultation
 									where user_id = #{userId}
-									and lesson_consultation_status = '수강중')
+									and (lesson_consultation_status = '수강중' or lesson_consultation_status = '대기중'))
 		order by
 			trainer_no
 	</select>

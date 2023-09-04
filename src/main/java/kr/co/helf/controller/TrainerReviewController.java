@@ -99,9 +99,9 @@ public class TrainerReviewController {
     
     // 개인수업 리뷰 수정 로직
     @PostMapping("/review-update")
-    public String personalReviewModifyForm(ModifyPersonalReviewForm form){
+    public String personalReviewModifyForm(int trainerNo, ModifyPersonalReviewForm form){
         trainerReviewService.updatePersonalReview(form);
 
-        return "redirect:/lesson/user-my-lesson";
+        return "redirect:/trainer-review/list?trainerNo=" + trainerNo;
     }
 }
