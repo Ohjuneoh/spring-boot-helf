@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +33,17 @@ public class InquiryController {
 	
 	// 1:1문의 전체 화면 
 		@GetMapping(value="/inquiries")
-		public String inquirylist(@RequestParam(name="page", required=false, defaultValue="1")int page, Model model) {
+		public String inquirylist(@RequestParam(name="page", required=false, defaultValue="1") int page, 
+								  @RequestParam(name="type", required=false) String type,
+								  @RequestParam(name="keyword", required=false) String keyword,
+								  Model model) {
 			Map<String, Object> param = new HashMap<>();
 			param.put("page",page);
+			
+			if(StringUtils.hasText(type) && StringUtils.hasText(keyword)) {
+				param.put("type", type);
+				param.put("keyword", keyword);
+			}
 			
 			Map<String, Object> result = inquiryService.getAllInquiry(param);
 			
@@ -42,8 +52,9 @@ public class InquiryController {
 			return "inquiry/inquiries";
 		}
 			
-	// 1:1문의 유저 문의하기 폼  
+	// 1:1문의 유저 문의하기 폼
 		@GetMapping(value="/inquiryUserForm")
+		@PreAuthorize("hasRole('ROLE_USER')")
 		public String inquiryUserform() {
 			
 			return "inquiry/inquiryUserForm";
