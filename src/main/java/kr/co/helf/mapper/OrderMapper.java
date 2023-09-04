@@ -71,4 +71,8 @@ public interface OrderMapper {
 	List<MyMembership> getCustomerMyMemberships(String id);
 
 	List<Order> getMonthOrderById(String id);
+
+	void updateStartMyMemberships(List<Integer> noList);
+	
+	void updateEndMyMemberships(List<Integer> noList);
 }

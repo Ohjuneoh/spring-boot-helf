@@ -24,10 +24,12 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.helf.dto.AttendanceList;
 import kr.co.helf.dto.CustomerDetailDto;
 import kr.co.helf.dto.CustomerListDto;
+import kr.co.helf.dto.CustomerOrderDto;
 import kr.co.helf.dto.Pagination;
 import kr.co.helf.enums.RankEnum;
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.mapper.OrderMapper;
+import kr.co.helf.mapper.TrainerReviewMapper;
 import kr.co.helf.mapper.UserMapper;
 import kr.co.helf.vo.CustomerAttendance;
 import kr.co.helf.vo.LessonApply;
@@ -36,6 +38,7 @@ import kr.co.helf.vo.Order;
 import kr.co.helf.vo.Rank;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.TrainerCareer;
+import kr.co.helf.vo.TrainerReview;
 import kr.co.helf.vo.TrainerAttendance;
 import kr.co.helf.vo.User;
 
@@ -53,6 +56,9 @@ public class UserService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private TrainerReviewMapper trainerReviewMapper;
 	
 	// 유저 회원가입
 	public void createUser(AddUserForm form) {
@@ -278,6 +284,11 @@ public class UserService {
 		
 	}
 	
+	public List<TrainerReview> getMyReviews(String userId) {
+		List<TrainerReview> reviews = trainerReviewMapper.getMyReviews(userId);
+		return reviews;
+	}
+	
 	// 관리자 - 고객 상세 조회 
 	public CustomerDetailDto getCustomerDetails(String id) {
 		CustomerDetailDto result =	userMapper.getCustomerInfoDetails(id); // 여기에다가 계속 업데이트 해야 함 
@@ -286,7 +297,7 @@ public class UserService {
 		result.setLessonApply(lessonApply);
 		
 		// 결제 내역 조회 
-		List<Order> orderList = orderMapper.getCustomerOrders(id);
+		List<CustomerOrderDto> orderList = orderMapper.getCustomerOrders(id);
 		result.setOrder(orderList);
 		
 		// 이용권 목록 조회 

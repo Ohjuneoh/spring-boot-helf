@@ -270,4 +270,22 @@
 	and m.category_no = mc.category_no
 	and mm.user_id = #{value}
 	</select>
+	
+	<update id="updateStartMyMemberships" parameterType="list">
+		update helf_my_membership
+		set
+			my_membership_state = '사용가능'
+		<foreach collection="noList" item="no" open="(" close=")" separator=",">
+			#{no}
+		</foreach>
+	</update>
+
+	<update id="updateEndMyMemberships" parameterType="list">
+		update helf_my_membership
+		set
+			my_membership_state = '사용불가'
+		<foreach collection="noList" item="no" open="(" close=")" separator=",">
+			#{no}
+		</foreach>
+	</update>
 </mapper>

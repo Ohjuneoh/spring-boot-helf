@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -195,18 +196,17 @@ public class OrderService {
 	public void getMyMembershipStartToday() {
 		List<MyMembership> todayStartMyMemberships = orderMapper.getMyMembershipStartToday();
 		
-		for(MyMembership todayStartMyMembership : todayStartMyMemberships) {
-			todayStartMyMembership.possibility();
-			orderMapper.updateMyMembership(todayStartMyMembership);
-		}
+		List<Integer> noList = todayStartMyMemberships.stream()
+				.map(MyMembership::getNo)
+				.collect(Collectors.toList());
+		orderMapper.updateStartMyMemberships(noList);
 	}
 
 	public void getMyMembershipEndToday() {
 		List<MyMembership> todayEndMyMemberships = orderMapper.getMyMembershipEndToday();
-		
-		for(MyMembership todayEndMyMembership : todayEndMyMemberships) {
-			todayEndMyMembership.impossibility();
-			orderMapper.updateMyMembership(todayEndMyMembership);
-		}
+		List<Integer> noList = todayEndMyMemberships.stream()
+				.map(MyMembership::getNo)
+				.collect(Collectors.toList());
+		orderMapper.updateEndMyMemberships(noList);
 	}
 }

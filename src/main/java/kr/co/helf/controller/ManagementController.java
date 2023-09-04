@@ -102,12 +102,12 @@ public class ManagementController {
 			param.put("specificDate2", specificDate2);			
 		}
 		
-		Map<String, Object> result = userService.getCustomerAttendances(param);
-		CustomerDetailDto customerDetailDto = userService.getPrivateInfo(userId);
+//		Map<String, Object> result = userService.getCustomerAttendances(param);
+//		CustomerDetailDto customerDetailDto = userService.getPrivateInfo(userId);
 		
-		model.addAttribute("recentVisits", result.get("recentVisits"));
-		model.addAttribute("pagination", result.get("pagination"));
-		model.addAttribute("customerDetailDto", customerDetailDto);
+//		model.addAttribute("recentVisits", result.get("recentVisits"));
+//		model.addAttribute("pagination", result.get("pagination"));
+//		model.addAttribute("customerDetailDto", customerDetailDto);
 		
 		return "management/customerRecentVisits";
 	}
@@ -137,10 +137,10 @@ public class ManagementController {
 			param.put("keyword", keyword);
 		}
 		
-		Map<String, Object> result = userService.getAllTrainerInfo(param);
-		model.addAttribute("trainers", result.get("trainerList"));
-		model.addAttribute("pagination", result.get("pagination"));
-		model.addAttribute("totalRows", result.get("totalRows"));
+//		Map<String, Object> result = userService.getAllTrainerInfo(param);
+//		model.addAttribute("trainers", result.get("trainerList"));
+//		model.addAttribute("pagination", result.get("pagination"));
+//		model.addAttribute("totalRows", result.get("totalRows"));
 		
 		return "management/trainerList";
 	}
@@ -151,13 +151,13 @@ public class ManagementController {
 	public String trainerDetail(@RequestParam("id") String userId, Model model) {
 		
 		// 트레이너 개인 정보 
-		MySalary trainerInfo = userService.getTrainerDetailById(userId);
-		// 트레이너 출결 내역 
-		List<TrainerAttendance> attendances = userService.getTrainerThreeAttendances(userId);
-		
-		
-		model.addAttribute("trainerInfo", trainerInfo);
-		model.addAttribute("attendances", attendances);
+//		MySalary trainerInfo = userService.getTrainerDetailById(userId);
+//		// 트레이너 출결 내역 
+//		List<TrainerAttendance> attendances = userService.getTrainerThreeAttendances(userId);
+//		
+//		
+//		model.addAttribute("trainerInfo", trainerInfo);
+//		model.addAttribute("attendances", attendances);
 		
 		return "management/trainerDetail";
 	}
@@ -167,11 +167,11 @@ public class ManagementController {
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public String trainerAttendances(@RequestParam("id") String userId, Model model) {
 		// 트레이너 개인 정보 
-		MySalary trainerInfo = userService.getTrainerDetailById(userId);
-		Map<String, Object> param = new HashMap<>();
-		param.put("userId", userId);
-		
-		model.addAttribute("trainerInfo", trainerInfo);
+//		MySalary trainerInfo = userService.getTrainerDetailById(userId);
+//		Map<String, Object> param = new HashMap<>();
+//		param.put("userId", userId);
+//		
+//		model.addAttribute("trainerInfo", trainerInfo);
 		
 		return "management/trainerAttendances";
 	}
