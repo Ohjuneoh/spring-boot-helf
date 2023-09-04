@@ -188,9 +188,9 @@
      				<tbody>
      				<c:choose>
      					<c:when test="${not empty customers}">
-     						<c:forEach var="cus" items="${customers}"> 
+     						<c:forEach var="cus" items="${customers}" varStatus="status"> 
      							<tr>
-    								<td></td>
+    								<td>${status.index + 1 }</td>
     								<td>${cus.userName }</td>
     								<td>${cus.userGender == 'WOMAN' ? '여성' : (cus.userGender == 'MAN' ? '남성' : '') }</td>
     								<td>${cus.userTel }</td>
@@ -229,7 +229,7 @@
     									<c:when test="${not empty cus.getDaysRemaining()}">
     										<td>${cus.getDaysRemaining()} 일</td>
     									</c:when>
-    									<c:when test="${cus.getDaysRemaining() == ''}">
+    									<c:when test="${cus.getDaysRemaining() == null }">
     										<td>-</td>
     									</c:when>
     								</c:choose>
@@ -238,24 +238,11 @@
      						</c:forEach>
      					</c:when>
      					<c:otherwise>
-     						<td></td>
-     						<td></td>
-     						<td></td>
-     						<td></td>
-     						<td></td>
-     						<td></td>
-     						<td>일치하는 회원 정보가 없습니다.</td>
-     						<td></td>
-     						<td></td>
-     						<td></td>
-     						<td></td>
-     						<td></td>
-     						<td></td>
+     						<td colspan="13" style="text-align: center; vertical-align: middle;">일치하는 회원 정보가 없습니다.</td>
      					</c:otherwise>
      				</c:choose> 
      			</tbody>
      		</table>
-     		<a href="/management/customer-list" class="btn btn-primary">목록</a>
      		<!--  페이지네이션 --> 
      		<c:if test="${pagination.totalRows gt 0 }">
      			<c:set var="currentPage" value="${pagination.page }" />
@@ -281,6 +268,9 @@
                			</ul>
                		</nav> 
      		</c:if>
+     		<div style="text-align:center;">
+	     		<a href="/management/customer-list" class="btn btn-primary">목록</a>
+     		</div>
      	</div>
      </div>
      </div>
@@ -329,7 +319,6 @@
 		let remainderCnt = document.querySelector("input[name=remainderCnt]").value;
 		let remainingDays1 = document.querySelector("input[name=remainingDays1]").value;
 		let remainingDays2 = document.querySelector("input[name=remainingDays2]").value;
-		document.querySelector("input[name=page]").value=1;
 		document.querySelector("#form-customer-search").submit();
 	}
 	

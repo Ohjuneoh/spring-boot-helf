@@ -13,9 +13,7 @@
     text-align: center;
     vertical-align: middle;
     font-size: 1.5em;
-}
-	
-	
+}	
 </style>
 <head>
     <title>HELF 입장하기</title>
@@ -227,26 +225,6 @@
             				<td>\${maskedTel}</td>
             				<td><a href="/checkin/check-in-choice?id=\${user.id}" class="btn btn-outline-primary">선택</a></td>
             			</tr>
-            			<tr>
-            	        	<td>&nbsp;</td>
-            	        	<td>&nbsp;</td>
-            	        	<td></td>
-            	    	</tr>
-            	    	<tr>
-        	        		<td>&nbsp;</td>
-        	        		<td>&nbsp;</td>
-        	        		<td></td>
-        	    		</tr>
-        	    		<tr>
-    	        			<td>&nbsp;</td>
-    	        			<td>&nbsp;</td>
-    	        			<td></td>
-    	    			</tr>
-    	    			<tr>
-	        				<td>&nbsp;</td>
-	        				<td>&nbsp;</td>
-	        				<td></td>
-	    				</tr>
             		`
             		$("#modal-table-users tbody").append(tr);
             	});

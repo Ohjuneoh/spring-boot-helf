@@ -1,5 +1,6 @@
 package kr.co.helf.service;
 
+import kr.co.helf.dto.MyPersonalLessonDto;
 import kr.co.helf.mapper.LessonMapper;
 import kr.co.helf.mapper.PersonalLessonMapper;
 import kr.co.helf.vo.Consultation;
@@ -55,6 +56,11 @@ public class LessonService {
 	}
 	public void updatePersonalLessonAttendance(int lessonNo, String status) {
 		lessonMapper.updatePersonalLessonAttendance(lessonNo,status);
+	}
+	
+	public List<MyPersonalLessonDto> getAllMyTrainers(String id) {
+		
+		return lessonMapper.getAllMyTrainerByUserId(id);
 	}
 
 

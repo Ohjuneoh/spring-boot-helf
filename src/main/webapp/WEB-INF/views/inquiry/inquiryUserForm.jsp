@@ -91,21 +91,30 @@
 	            <div class="row g-5">
 	                <div class="col-lg-13">
 	                    <div class=" rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s">
-	                        <form method="post" action="/board/addNotice">
+	                        <form method="post" action="/inquiry/inquiryRegister" enctype="multipart/form-data">
 	                            <div class="row g-3">
 	                                <div class="col-12" >
-	                                    <select class="form-select bg-light border-0" name="main" style="height: 55px;">
-	                                        <option value="Y">주요 공지사항</option>
-	                                        <option value="N">일반 공지사항</option>
+	                                    <select class="form-select bg-light border-0" name="type" style="height: 55px;">
+	                                        <option value="수업">수업 관련</option>
+	                                        <option value="헬스장">헬스장 관련</option>
+	                                        <option value="웹사이트">웹사이트 관련</option>
+	                                        <option value="기타">기타</option>
 	                                    </select>
 	                                </div>
 	                                <div class="col-xl-12">
 	                                    <input type="text" class="form-control bg-light border-0" name="title" placeholder="제목" style="height: 55px;">
 	                                </div>
 	                                <div>
-	                                <label class="attr-value-option"><input type="checkbox" name="secret" value="true" onchange="kboard_toggle_password_field(this)"> 비밀글</label>
+	                                	<label class="attr-value-option"><input type="checkbox" name="secret" value="Y" onchange="kboard_toggle_password_field(this)" checked> 비밀글</label>
+										<input type='file' name="photofile" style="margin-left: 20px;"/>
 	                                </div>
-	                        		<textarea id="summernote" name="content" ></textarea>
+	                        			<textarea id="summernote" name="content">
+	                        				1. 성함 : <br>
+											2. 연락처 : <br>
+											3. 상담내용 : <br>
+											위 내용을 작성해 주시면 답변 후 회원님의 연락처로 답변 알림을 드리겠습니다. <br>
+											(개인정보는 상담관련 내용 이외에 사용하지 않습니다.) <br>
+	                        			</textarea>
 	                                <div class="col-12">
 	                                    <button class="btn btn-dark w-100 py-3" type="submit">문의하기</button>
 	                                </div>
