@@ -117,7 +117,7 @@
 	             <div class="nav-item dropdown">
 	                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">고객&인사관리</a>
 	                <div class="dropdown-menu m-0">
-	                    <a href="/management/customer-list" class="dropdown-item">고객 관리</a>
+	                    <a href="/management/customer-list" class="dropdown-item">고객관리</a>
 	                    <a href="/management/trainer-list" class="dropdown-item">인사관리</a>
 	                    <a href="/checkin/check-in" class="dropdown-item">입장 화면</a>
 	                </div>

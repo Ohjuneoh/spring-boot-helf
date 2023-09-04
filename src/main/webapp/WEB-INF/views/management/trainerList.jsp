@@ -127,6 +127,7 @@
      								<input type="radio" name="trainerStatus" value="전체" checked/> 전체  
      								<input type="radio" name="trainerStatus" value="재직"/> 재직
      								<input type="radio" name="trainerStatus" value="퇴직"/> 퇴직
+     								<input type="radio" name="trainerStatus" value="승인대기"/> 승인대기
      							</th>
      						</tr>
      						<tr>

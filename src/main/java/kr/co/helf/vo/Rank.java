@@ -1,16 +1,20 @@
 package kr.co.helf.vo;
 
+
 import org.apache.ibatis.type.Alias;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Alias("Rank")
 public class Rank {
 
 	private int no;
 	private String name;
-	private int criteria;
-	private String benefit;
+	private int minCriteria;
+	private int maxCriteria;
+	private int benefit;
 	private double pointRate;
 }

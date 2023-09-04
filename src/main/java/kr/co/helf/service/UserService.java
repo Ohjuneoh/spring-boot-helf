@@ -264,28 +264,47 @@ public class UserService {
 
 	}
 
-	// 관리자 - 고객 상세 조회 
-	public CustomerDetailDto getCustomerDetails(String id) {
-		CustomerDetailDto result = userMapper.getCustomerInfoDetails(id); // 여기에다가 계속 업데이트 해야 함
+	// 관리자 - 고객 상세 조회
+	public Map<String, Object> getCustomerDetails(String id) {
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		// 개인 정보 조회
+		CustomerDetailDto customerInfo =	userMapper.getCustomerInfoDetails(id); 
+		result.put("customerInfo", customerInfo);
 		// 수업 내역 조회
 		List<LessonApply> lessonApply = userMapper.getCustomerLessons(id);
-		result.setLessonApply(lessonApply);
-
+		result.put("lessonApply", lessonApply);
+		
 		// 결제 내역 조회 
 		List<CustomerOrderDto> customerOrderDto = orderMapper.getCustomerOrders(id);
-		result.setOrder(customerOrderDto);
-
+		result.put("customerOrderDto", customerOrderDto);
+		
 		// 이용권 목록 조회 
 		List<MyMembership> myMembershipList = orderMapper.getCustomerMyMemberships(id);
-		result.setMyMembership(myMembershipList);
-
+		result.put("myMembershipList", myMembershipList);
+		
 		// 최근 방문 내역
 		List<CustomerAttendance> customerAttendance = userMapper.getCustomerAttendance(id);
-		result.setCustomerAttendance(customerAttendance);
-
-		return result;
+		result.put("customerAttendance", customerAttendance);
+	
+		return result; 
 	}
 
+	public void checkRank() {
+		
+		List<User> customers = userMapper.getAllCustomer();
+		for(User customer : customers) {
+			Rank rank = userMapper.getNewRank(customer.getId());
+			if(rank == null) {
+				continue;
+			}
+			
+			customer.setRank(rank);
+			customer.setPoint(customer.getPoint() + rank.getBenefit());
+			userMapper.updateUser(customer);
+		}
+	}
 
 	// 마이페이지 - 내 리뷰 보기(예광)
 	public List<TrainerReview> getMyReviews(String userId) {

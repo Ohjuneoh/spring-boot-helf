@@ -9,9 +9,11 @@ import kr.co.helf.vo.Category;
 import kr.co.helf.vo.Period;
 import kr.co.helf.vo.PointHistory;
 import kr.co.helf.vo.User;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Alias("orderJoin")
 public class OrderJoin {
 

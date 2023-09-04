@@ -2,6 +2,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="kr">
 <style>     
@@ -158,15 +159,25 @@
 	   	<div class="col-10">
 	   	<div class="row mb-3">
 	   		<h3 class="mb-0 text-primary">최근 출결 내역 </h3>
-	   			<form id="form-specific-dates" method="get" action="customer-recent-visit">
+	   			<form id="form-specific-dates" method="get" action="trainer-attendance-list">
 	   				<div class="card-body shadow-sm" style="text-align: center; vertical-align: middle;">
 	   					<div style="display: inline-flex; align-items: center;">
-							<input type="date" id="specificDate1" name="specificDate1"/> 
+	   						<select id="state" name="state" class="btn btn-outline-primary">
+	   							<option disabled selected>전체</option>
+	   							<option value="출근">출근</option>
+	   							<option value="퇴근">퇴근</option>
+	   							<option value="지각">지각</option>
+	   							<option value="외출">외출</option>
+	   							<option value="외근">외근</option>
+	   							<option value="복귀">복귀</option>
+	   						</select>
+	   						<span class="px-2"></span>
+							<input type="date" id="specificDate1" name="specificDate1" class="btn btn-outline-primary"/> 
 						    <span class="px-2">~</span>
-					       	<input type="date" id="specificDate2" name="specificDate2"/> 
+					       	<input type="date" id="specificDate2" name="specificDate2" class="btn btn-outline-primary"/> 
+	   						<span class="px-2"></span>	
+		   					<button type="submit" class="btn btn-primary btn-sm" onclick="searchSpecificDates()">검색</button>	   		
 						</div>   	   									
-	   					<span class="px-2"></span>
-		   				<button type="button" class="btn btn-primary btn-sm" onclick="searchSpecificDates()">검색</button>	   		
 		   				<input type="hidden" name="page" value="${pagination.page }"/>
 		   				<input type="hidden" name="id" value="${param.id }"/>
 	   				</div>
@@ -182,16 +193,15 @@
 	               		</thead>
 	               		<tbody>
 	               		<c:choose>
-	               			<c:when test="${not empty trainerAttendance }">
-	               			<c:forEach var="ta" items="${trainerAttendance }" varStatus="loop">
+	               			<c:when test="${not empty attendance }">
+	               			<c:forEach var="ta" items="${attendance }" varStatus="loop">
 			               		<tr>
-			               			<td>${loop.count }</td>
+			               			<td>${loop.count}</td>
 			               			<td><fmt:formatDate  value="${ta.date }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
-			               			<td></td>
-			               			<td>${rv.customerAttendance.myMembership.membership.name }</td>
+			               			<td>${ta.state }</td>
 			               			<c:choose>
-			               				<c:when test="${rv.customerAttendance.lessonName != null}">
-			               					<td>${rv.customerAttendance.lessonName }</td>
+			               				<c:when test="${ta.cause != null}">
+			               					<td>${ta.cause }</td>
 			               				</c:when>
 			               				<c:otherwise>
 			               					<td>-</td>
@@ -218,7 +228,7 @@
                		<nav>
                			<ul class="pagination justify-content-center">
                				<li class="page-item ${first ? 'disabled' : '' }">
-               					<a href="customer-recent-visit?page=${prePage }" class="page-link" onclick="changePage(event, ${prePage})">이전</a>
+               					<a href="trainer-attendance-list?page=${prePage }" class="page-link" onclick="changePage(event, ${prePage})">이전</a>
                				</li>
                				<c:forEach var="num" begin="${beginPage }" end="${endPage }">
                					<li class="page-item ${currentPage eq num ? 'active' : '' }">
@@ -226,7 +236,7 @@
                					</li>
                				</c:forEach>
                				<li class="page-item ${last ? 'disabled' : '' }">
-               					<a href="customer-recent-visit?page=${nextPage }" class="page-link" onclick="changePage(event, ${nextPage})">다음</a>
+               					<a href="trainer-attendance-list?page=${nextPage }" class="page-link" onclick="changePage(event, ${nextPage})">다음</a>
                				</li>
                			</ul>
                		</nav> 
@@ -266,10 +276,9 @@
     <!-- 검색 하기 Start -->
    function searchSpecificDates(){
 	   document.querySelector("input[name=page]").value=1;
-	   
+	   let state = document.querySelector("select[name=state]").value;
 	   let specificDate1 = document.querySelector("input[name=specificDate1]").value;
 	   let specificDate2 = document.querySelector("input[name=specificDate2]").value;
-   		
 	   document.querySelector("#form-specific-dates").submit();
    }
 

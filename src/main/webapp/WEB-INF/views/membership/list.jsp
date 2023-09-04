@@ -104,10 +104,10 @@
 			</c:if>
 		</div>
 		
-		<c:forEach var="dto" items="${list }">
+		<c:forEach var="myMembership" items="${list }">
 			<div class="d-grid gap-2 col-6 mx-auto align-items-center justify-content-center text-center"
-				 data-bs-toggle="modal" data-bs-target="#detail-modal-${dto.myMembership.no }">
-				<button id="btn-my-membership-${dto.myMembership.no }" type="button" class="btn btn-outline-info d-inline-block" 
+				 data-bs-toggle="modal" data-bs-target="#detail-modal-${myMembership.no }">
+				<button id="btn-my-membership-${myMembership.no }" type="button" class="btn btn-outline-info d-inline-block" 
 						style="margin: 30px; height: 200px; width: 600px;">
 					<div class="service-item rounded d-flex flex-column align-items-center justify-content-center text-center "
      					 style="height: 100px;">
@@ -115,10 +115,10 @@
 							<i class="bi bi-trophy-fill text-white"></i>
 						</div>
 					</div>
-					${dto.myMembership.membership.name }
+					${myMembership.name }
 				</button>
 			</div>
-			<div class="modal fade" id="detail-modal-${dto.myMembership.no }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal fade" id="detail-modal-${myMembership.no }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  		<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -128,34 +128,34 @@
 						<div class="modal-body">
 							<div class="card" >
 								<div class="card-header bg-primary" style="color: #ffffff">
-									<strong style="color:white">${dto.myMembership.membership.name }</strong>
+									<strong style="color:white">${myMembership.name }</strong>
 								</div>
 								<div class="card-body align-items-center justify-content-center text-center">
 									<table class="table">
 			                    		<tbody>
 			                        		<tr>
 			                            		<th>기간</th>
-			                            		<td>${dto.myMembership.startDate } ~ ${dto.myMembership.endDate }</td>
+			                            		<td>${myMembership.startDate } ~ ${myMembership.endDate }</td>
 			                        		</tr>
-			                       			<c:if test="${dto.myMembership.period.type eq '횟수' }">
+			                       			<c:if test="${myMembership.type eq '횟수' }">
 				                       			<tr>
 				                           			<th>횟수</th>
-				                           			<td>${dto.myMembership.remainderCnt }회</td>
+				                           			<td>${myMembership.remainderCnt }회</td>
 				                       			</tr>
 				                        	</c:if>
 				                          	<tr>
-				                            	<th class="${empty dto.myOptions ? 'border-bottom-0' : '' }" >상태</th>
-				                            	<td class="${empty dto.myOptions ? 'border-bottom-0' : '' }" >
-				                            		${dto.myMembership.state }
+				                            	<th class="${empty myMembership.myOptionJoins ? 'border-bottom-0' : '' }" >상태</th>
+				                            	<td class="${empty myMembership.myOptionJoins ? 'border-bottom-0' : '' }" >
+				                            		${myMembership.state }
 				                            	</td>
 				                           	</tr>
-				                           	<c:if test="${not empty dto.myOptions }">
+				                           	<c:if test="${not empty myMembership.myOptionJoins }">
 				                     			<tr>
 				                            		<th class="align-middle border-bottom-0" >옵션</th>
 				                            		<td class="border-bottom-0" >
-				                            			<c:forEach var="myOption" items="${dto.myOptions }">
+				                            			<c:forEach var="myOption" items="${myMembership.myOptionJoins }">
 					                            			<div>
-																${myOption.optionDetail.option.name }
+																${myOption.name }
 					                            			</div>
 														</c:forEach>
 				                            		</td>
@@ -166,9 +166,12 @@
 		                    	</div>
 		                    </div>
 						</div>
-						<div class="align-items-end justify-content-end text-end" style="margin: 15px;">
-							<a href="refund?no=${dto.myMembership.no }" type="button" class="btn btn-danger" >환불하기</a>
-						</div>
+						<form action="wait-refund" method="post">
+							<div class="align-items-end justify-content-end text-end" style="margin: 15px;">
+								<button type="submit" class="btn btn-danger" >환불하기</button>
+								<input type="hidden" name="no" value="${myMembership.no }">
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
