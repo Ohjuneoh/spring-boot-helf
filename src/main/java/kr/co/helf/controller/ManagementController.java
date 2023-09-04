@@ -16,11 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.helf.dto.AttendanceList;
-import kr.co.helf.dto.CustomerAttendanceListDto;
 import kr.co.helf.dto.CustomerDetailDto;
-import kr.co.helf.dto.CustomerListDto;
 import kr.co.helf.service.UserService;
-import kr.co.helf.vo.CustomerAttendance;
 import kr.co.helf.vo.MySalary;
 import kr.co.helf.vo.TrainerAttendance;
 import lombok.extern.slf4j.Slf4j;

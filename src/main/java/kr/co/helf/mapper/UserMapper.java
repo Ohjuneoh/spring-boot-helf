@@ -6,11 +6,13 @@ import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.helf.dto.CustomerAttendanceListDto;
 import kr.co.helf.dto.CustomerDetailDto;
 import kr.co.helf.dto.CustomerListDto;
 import kr.co.helf.vo.CustomerAttendance;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.MyMembership;
+import kr.co.helf.vo.MySalary;
 import kr.co.helf.vo.Rank;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.TrainerCareer;
@@ -61,8 +63,12 @@ public interface UserMapper {
 	// 직원 출퇴근 등록 - 채경 
 	void insertTrainerAttendances(Map<String, Object> param);
 	
-	// 고객 전체 수 - 채경 
+	// 전체 고객 수 - 채경 
 	int getCustomerTotalRows();
+	
+	// 고객 아이디 별 출석 수 - 채경 
+	int getCustomerAttendanceTotalRowsById(Map<String, Object> param);
+	
 	// 고객 조회 목록 - 채경
 	List<CustomerListDto> getCustomers(Map<String, Object> param);
 	
@@ -77,5 +83,18 @@ public interface UserMapper {
 
 	List<User> getAllCustomer();
 
-	Rank getNewRank(String userId);
+	// 고객별 상세 조회 - 최근 방문 내역 - 채경 
+	List<CustomerAttendanceListDto> getCustomerAttendanceList(Map<String, Object> param);
+	
+	// 전체 직원 수 - 채경 
+	int getAllTrainerTotalRows(Map<String, Object> param);
+	
+	// 전체 트레이너 목록 조회 - 채경 
+	List<Trainer> getAllTrainers(Map<String, Object> param);
+	
+	// 트레이너 상세 조회 - 채경 
+	MySalary getTrainerDetailById(String id);
+	
+	Rank getNewRank(String id);
+	
 }
