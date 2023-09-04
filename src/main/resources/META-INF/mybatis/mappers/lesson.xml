@@ -17,23 +17,27 @@
             a.lesson_no = b.lesson_no
           and b.user_id = c.user_id
           and a.user_id = #{value}
+        order by
+            a.lesson_apply_no desc
     </select>
     <!-- 내가 개설한 모든 개인수업 조회(트레이너) by 준오   -->
-    <select id="getAllPersonalLesson" parameterType="string" resultType="PersonalLesson">
+    <select id="getAllPersonalLesson" parameterType="int" resultType="PersonalLesson">
     	select 
-                a.personal_lesson_no,
-                a.personal_lesson_name,
-                a.personal_lesson_date,
-                a.personal_lesson_time,
-                a.personal_lesson_content,
-                a.personal_lesson_status,
-                a.my_membership_no,
-                a.trainer_no,
-                a.user_id,
-                b.user_name
-        from helf_personal_lesson a,  helf_users b
+                a.personal_lesson_no as no,
+                a.personal_lesson_name as name,
+                a.personal_lesson_date as "date",
+                a.personal_lesson_create_date as createDate,
+                a.personal_lesson_time	as time,
+                a.personal_lesson_content as content,
+                a.personal_lesson_status as status,
+                a.my_membership_no		as "myMembership.no",
+                a.trainer_no			as "trainer.trainerNo",
+                a.user_id				as "user.id",
+                b.user_name				as "user.name"
+        from helf_personal_lesson a,  helf_users b, helf_trainers c
         where 	a.user_id = b.user_id
-        and 	a.user_id = #{value}
+        and     a.trainer_no = c.trainer_no
+        and 	c.trainer_no = #{value}
         order by	a.personal_lesson_no asc
     </select>
     <!-- 내가 개설한 모든 수업 조회(트레이너) -->
@@ -93,4 +97,77 @@
         where
             lesson_apply_no =#{no}
     </select>
+    <select id="getTrainerNoByUserId" parameterType="string" resultType="Trainer">
+		select trainer_no 		as trainerNo
+		from helf_trainers
+		where user_id = #{userId}
+	</select>
+	<select id="getAllPersonalLessonByUser" parameterType="map" resultType="PersonalLesson">
+		select 
+                a.personal_lesson_no as no,
+                a.personal_lesson_name as name,
+                a.personal_lesson_date as "date",
+                a.personal_lesson_create_date as createDate,
+                a.personal_lesson_time	as time,
+                a.personal_lesson_content as content,
+                a.personal_lesson_status as status,
+                a.my_membership_no		as "myMembership.no",
+                a.trainer_no			as "trainer.trainerNo",
+                a.user_id				as "user.id",
+                b.user_name				as	"user.name"
+        from helf_personal_lesson a,  helf_users b, helf_trainers c
+        where 	a.user_id = b.user_id
+        and     a.trainer_no = c.trainer_no
+        and 	a.user_id = #{userId}
+        and     a.my_membership_no = #{membershipNo}
+        and     a.trainer_no = #{trainerNo}
+        order by	a.personal_lesson_no asc
+	</select>
+	<select id="getAllConsultationByTrainerNo" parameterType="int" resultType="Consultation">
+		select a.lesson_consultation_no as consultationNo,
+		        a.lesson_consultation_status as consultationStatus,
+		        a.lesson_consultation_application_date   as applicationDate,
+		        a.user_id					as "user.id",
+		        b.user_name                 as "user.name",
+		        a.trainer_no                 as "trainer.trainerNo",
+		        c.my_membership_no			 as "myMembership.no",
+		        c.my_membership_remainder_cnt as "myMembership.remainderCnt"
+		from 	helf_lesson_consultation a, helf_users b, helf_my_membership c
+		where 	a.user_id = b.user_id
+		and     a.my_membership_no = c.my_membership_no
+		and     a.lesson_consultation_status = '수강중'
+		and     a.trainer_no = #{value}
+	</select>
+    <update id="updatePersonalLessonAttendance">
+        update
+            helf_personal_lesson
+        set
+            personal_lesson_status = #{status}
+        where
+            personal_lesson_no =#{no}
+    </update>
+	<!-- 유저 ID로 유저의 1:1 수업 리스트 조회  -->    
+	<select id="getAllMyTrainerByUserId" parameterType="string" resultType="MyPersonalLesson">
+		select 		u.user_name as "user.name",
+					l.personal_lesson_no   as "personalLesson.no",		
+			        l.personal_lesson_name as "personalLesson.name",
+			        l.personal_lesson_date as "personalLesson.date",
+			        l.personal_lesson_time as "personalLesson.time",
+			        l.personal_lesson_status as "personalLesson.status",
+			        c.lesson_consultation_no	as "consultation.consultationNo",
+			        l.trainer_no				as  "trainer.trainerNo",
+			        m.my_membership_remainder_cnt as "myMembership.remainderCnt",
+			        l.trainer_no    as "trainer.trainerNo",
+			        m.my_membership_no as "myMembership.no"
+		from 		helf_personal_lesson l, helf_users u, helf_trainers t, helf_my_membership m, helf_lesson_consultation c
+		where 		l.trainer_no = t.trainer_no
+		and   		u.user_id = t.user_id
+		and   		m.user_id = l.user_id
+		and   		c.user_id = l.user_id
+		and   		l.user_id = #{userId}
+		and  		c.lesson_consultation_status = '수강중'
+		and   		m.my_membership_state = '사용중'
+		order by l.personal_lesson_date asc
+	</select>
+
 </mapper>

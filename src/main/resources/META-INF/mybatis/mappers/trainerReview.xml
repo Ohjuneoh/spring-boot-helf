@@ -105,11 +105,24 @@
         WHERE trainer_no = #{value}
           and trainer_review_status = 'Y'
     </select>
+       <!-- 개인수업 트레이너 리뷰 평점 평균 조회 -->
+    <select id="getPersonalAvgRating" resultType="double" parameterType="int">
+        SELECT AVG(trainer_personal_review_rating) AS avgRating
+        FROM helf_trainer_personal_review
+        WHERE trainer_no = #{value}
+          and trainer_personal_review_status = 'Y'
+    </select>
 
     <!-- 리뷰 전체 목록 갯수 조회 -->
     <select id="getCountReviews" resultType="int" parameterType="int">
         select count(trainer_no) as "trainer.no"
         from helf_trainer_review
+        where trainer_no = #{value}
+    </select>
+    <!-- 개인수업 리뷰 전체 목록 갯수 조회 -->
+    <select id="getCountPersonalReviews" resultType="int" parameterType="int">
+        select count(trainer_no) as "trainer.no"
+        from helf_trainer_personal_review
         where trainer_no = #{value}
     </select>
 
@@ -138,6 +151,69 @@
              and b.lesson_no = c.lesson_no
              and c.user_id = d.user_id
              and a.trainer_review_status = 'Y'
+            )
+        where
+            rownumber between #{begin} and #{end}
+    </select>
+
+    <!-- 마이페이지 - 내 리뷰 보기 -->
+    <select id="getMyReviews" parameterType="string" resultType="TrainerReview">
+        select a.trainer_review_no as no,
+       b.lesson_name as "lesson.name",
+       a.trainer_review_title as title,
+       a.trainer_review_create_date as "createDate",
+       a.trainer_no as "trainer.trainerNo",
+       d.user_name as "lesson.user.name"
+        from
+            helf_trainer_review a, helf_lesson b, helf_lesson_apply c, helf_users d
+        where
+            a.lesson_no = b.lesson_no
+          and a.lesson_apply_no = c.lesson_apply_no
+          and c.user_id = #{userId}
+          and b.user_id = d.user_id
+        order by
+            a.trainer_review_no desc
+    </select>
+    
+        <!-- 개인수업 리뷰 테이블 저장 -->
+    <insert id="insertPersonalReview" parameterType="TrainerPersonalReview">
+        insert into
+            helf_trainer_personal_review(trainer_personal_review_no,trainer_personal_review_content,lesson_consultation_no,personal_lesson_no, trainer_no,trainer_personal_review_rating)
+        values(helf_trainer_personal_review_seq.nextval,#{content},#{consultation.consultationNo},#{personalLesson.no},#{trainer.trainerNo}, #{rating})
+    </insert>
+    
+    <select id="getLessonNoByPersonalReviewCount" parameterType="int" resultType="int">
+    	select count(*)
+    	from helf_trainer_personal_review
+    	where personal_lesson_no = #{value}
+	</select>
+	<select id="getLessonNoByPersonalLesson" parameterType="int" resultType="string">
+		select personal_lesson_status
+		from helf_personal_lesson
+		where personal_Lesson_no = ${value}
+	</select>
+	 <!-- 개인수업 리뷰 트레이너 번호에 해당하는 리뷰 더보기 조회 -->
+    <select id="getPersonalReviewsByMore"  resultType="TrainerPersonalReview">
+        select *
+        from(select
+                 a.trainer_personal_review_no as no,
+                 a.trainer_personal_review_content as content,
+                 a.trainer_personal_review_create_date as createDate,
+                 a.personal_lesson_no as "personalLesson.no",
+                 a.trainer_no as "trainer.trainerNo",
+                 a.trainer_personal_review_rating as rating,
+                 a.trainer_personal_review_status as status,
+                 b.personal_lesson_name as "personalLesson.name",
+                 b.user_id as "personalLesson.user.id",
+                 d.user_name as "personalLesson.user.name",
+                 row_number() over(order by trainer_personal_review_no asc) rownumber
+             from
+                 helf_trainer_personal_review a, helf_personal_lesson b,  helf_users d
+             where
+                 a.trainer_no =#{trainerNo}
+             and a.personal_lesson_no = b.personal_lesson_no
+             and b.user_id = d.user_id
+             and a.trainer_personal_review_status = 'Y'
             )
         where
             rownumber between #{begin} and #{end}

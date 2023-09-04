@@ -1,7 +1,9 @@
 package kr.co.helf.mapper;
 
 import kr.co.helf.form.ModifyReviewForm;
+import kr.co.helf.vo.PersonalLesson;
 import kr.co.helf.vo.Trainer;
+import kr.co.helf.vo.TrainerPersonalReview;
 import kr.co.helf.vo.TrainerReview;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -40,4 +42,24 @@ public interface TrainerReviewMapper {
 
     // 트레이버 리뷰 리스트(더보기 페이징처리)
     List<TrainerReview> getReviewsByMore(@Param("trainerNo") int trainerNo, @Param("begin") int begin,@Param("end") int end);
+
+    // 마이페이지 - 내 리뷰 보기
+    List<TrainerReview> getMyReviews(String userId);
+
+	void insertPersonalReview(TrainerPersonalReview personalReview);
+
+	int getLessonNoByPersonalReviewCount(int personalLessonNo);
+
+	String getLessonNoByPersonalLesson(int personalLessonNo);
+
+	List<TrainerPersonalReview> getPersonalReviewsByMore(@Param("trainerNo") int trainerNo, @Param("begin") int begin,@Param("end") int end);
+
+	Double getPersonalAvgRating(int trainerNo);
+
+	Integer getCountPersonalReviews(int trainerNo);
+
+	TrainerPersonalReview getTrainerPersonalReviewByNo(int reviewNo);
+
+
+
 }

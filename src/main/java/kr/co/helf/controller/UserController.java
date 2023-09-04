@@ -7,7 +7,9 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import kr.co.helf.vo.TrainerReview;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,6 +38,7 @@ public class UserController {
 	
 	@Autowired
 	UserService userService = new UserService();
+
 	
 /* 회원가입 시작 */
 	// 회원가입 초기화면 
@@ -189,10 +192,11 @@ public class UserController {
 	
 	
 /* 마이페이지 시작 */
-	// 유저 마이페이지 화면
+	// 유저 마이페이지 화면 - 내 리뷰 보기(예광)
 	@GetMapping("/userMypage")
-	public String userMypage() {
-		
+	public String userMypage(@AuthenticationPrincipal User user, Model model) {
+		List<TrainerReview>  reviews = userService.getMyReviews(user.getId());
+		model.addAttribute("reviews", reviews);
 		return "/mypage/userInfo";
 	}
 	
@@ -217,6 +221,17 @@ public class UserController {
 			
 			return "/mypage/trainerModifyInfo";
 		}
+
+	// 마이페이지 - 트레이너 리뷰 더 보기 (예광)
+	@GetMapping("/moreReviews")
+	public String moreReviews(@AuthenticationPrincipal User user, Model model){
+		List<TrainerReview>  reviews = userService.getMyReviews(user.getId());
+		model.addAttribute("reviews", reviews);
+		return "/mypage/myMoreReviews";
+	}
+
+
+
 /* 마이페이지 끝 */
 	
 }
