@@ -53,7 +53,7 @@
 					and i.inquiry_title like '%' || #{keyword} || '%'
 				</when>
 		        <when test="type == 'id'">
-		        	and u.user_id = #{keyword}
+		        	and u.user_name = #{keyword}
 		        </when>
 			</choose>
 		</if>

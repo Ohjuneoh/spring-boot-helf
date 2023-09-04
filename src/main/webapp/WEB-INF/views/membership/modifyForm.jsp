@@ -137,6 +137,7 @@
 						<a href="deleted?no=${membership.no }&state=${param.state }&keyword=${param.keyword }&type=${param.type }&page=${param.page }" class="btn btn-danger btn-lg">취소</a>
 						<button id="btn-submit" type="submit" class="btn btn-primary btn-lg" >완료</button>
 						<input name="no" type="hidden" value="${membership.no }">
+						<input name="catNo" type="hidden">
 					</div>
 				</form>
 			</div>
@@ -184,11 +185,11 @@ $(function() {
 		$(this).addClass('active');
 		$(this).siblings().removeClass('active');
 		
-		let no = $(this).attr('data-cat-no');
+		let catNo = $(this).attr('data-cat-no');
 		let property = $(this).attr('data-cat-property');
 		let useOption = $(this).attr('data-cat-option');
 		
-		$("input[name=no]").val(no);
+		$("input[name=catNo]").val(catNo);
 		$("#property").val(property);
 		$("#useOption").val(useOption);
 		

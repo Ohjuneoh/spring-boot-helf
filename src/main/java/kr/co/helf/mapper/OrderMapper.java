@@ -54,7 +54,7 @@ public interface OrderMapper {
 
 	void insertOrder(Order order);
 
-	List<MyMembership> getUseMyMembershipByNoById(Map<String, Object> map);
+	MyMembership getUseMyMembershipByNoById(Map<String, Object> map);
 
 	void updateMyMembership(MyMembership myMembership);
 

@@ -24,6 +24,7 @@ import kr.co.helf.kakaopay.KakaoPayReadyResponse;
 import kr.co.helf.kakaopay.KakaoPayService;
 import kr.co.helf.service.OrderService;
 import kr.co.helf.vo.Membership;
+import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.Option;
 import kr.co.helf.vo.Period;
 import kr.co.helf.vo.Rank;
@@ -52,9 +53,8 @@ public class OrderController {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String condition(@RequestParam("no") int no, @AuthenticationPrincipal User user, Model model) {
 
-		try {
-			orderService.checkUseMyMembership(no, user.getId());
-		} catch (RuntimeException ex) {
+		MyMembership useMyMembership = orderService.checkUseMyMembership(no, user.getId());
+		if(useMyMembership != null) {
 			return "redirect:list?error=dup";
 		}
 		
