@@ -18,27 +18,45 @@
   
   	<!-- 모든 문의 조회(페이징처리 포함) -->
     <select id="getAllInquiry" resultType="Inquiry" parameterType="map">
-        select *
+        select i.inquiry_no				as no,	
+               i.inquiry_type			as type,
+               i.inquiry_title			as title,
+               i.inquiry_create_date	as createDate,
+               i.inquiry_update_date	as updateDate,
+               i.inquiry_is_answer		as isAnswer,
+               i.inquiry_answer			as answer,
+               i.user_id				as "user.id",
+               i.inquiry_secret			as secret,
+               i.file_name				as filename,
+               i.inquiry_content		as content,
+               u.user_name				as "user.name"
         from(select
-                i.inquiry_no						as no,				
-                i.inquiry_type						as type,
-                i.inquiry_title						as title,
-                i.inquiry_create_date				as createDate,
-                i.inquiry_update_date				as updateDate,
-                i.inquiry_is_answer					as isAnswer,
-                i.inquiry_answer					as answer,
-                i.user_id							as "user.id",
-                i.inquiry_secret					as secret,
-                i.file_name							as filename,
-                u.user_name							as "user.name",
-                i.inquiry_content					as content,
+                inquiry_no,
+                inquiry_type,
+                inquiry_title,
+                inquiry_create_date,
+                inquiry_update_date,
+                inquiry_is_answer,
+                inquiry_answer,
+                user_id,
+                inquiry_secret,
+                file_name,
+                inquiry_content,
                 row_number() over (order by inquiry_no asc) rownumber
              from
-                helf_inquiries i
-             LEFT JOIN helf_users u ON i.user_id = u.user_id
-            )
-        where
-            rownumber between #{begin} and #{end}
+                helf_inquiries
+            )i LEFT JOIN helf_users u ON i.user_id = u.user_id
+		where rownumber between #{begin} and #{end}
+		<if test="type != null">
+			<choose>
+				<when test="type == 'name'">
+					and i.inquiry_title like '%' || #{keyword} || '%'
+				</when>
+		        <when test="type == 'id'">
+		        	and u.user_id = #{keyword}
+		        </when>
+			</choose>
+		</if>
     </select>
   
   	<!-- 문의 상세정보 조회  -->
