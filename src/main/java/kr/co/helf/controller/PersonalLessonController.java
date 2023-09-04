@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +36,7 @@ public class PersonalLessonController {
 	private final PersonalLessonService personalLessonService;
 
     //유저가 트레이너에게 상담신청하는 페이지
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping("/consultation")
 	public String consultingForm(@AuthenticationPrincipal User user, Model model) {
 		List<Trainer> trainers = personalLessonService.getTrainers(user.getId());
@@ -44,6 +46,7 @@ public class PersonalLessonController {
 		return "personal-lesson/consultingform";
 	}
 	//상담신청 제출
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@PostMapping("/consultation")
 	public String createConsultation(@AuthenticationPrincipal User user,
 							 @Valid Consultation consultation,BindingResult bindingResult,
@@ -72,6 +75,7 @@ public class PersonalLessonController {
 	}
 	
 	//트레이너 1대1 상담신청 조회
+	@PreAuthorize("hasRole('ROLE_TRAINER')")
 	@GetMapping("/list")
 	public String consultationList(@AuthenticationPrincipal User user, Model model) {
 		
@@ -83,6 +87,7 @@ public class PersonalLessonController {
 
 
 	//트레이너 1대1 상담신청 조회 후 수업개설
+	@PreAuthorize("hasRole('ROLE_TRAINER')")
 	@PostMapping("/list")
 	public String reservation(@RequestParam("userId") String userId,
 								@RequestParam("trainerNo") int trainerNo,

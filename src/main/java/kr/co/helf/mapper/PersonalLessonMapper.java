@@ -13,7 +13,6 @@ import kr.co.helf.dto.UserConsultations;
 import kr.co.helf.dto.UserMyMemberships;
 import kr.co.helf.vo.Consultation;
 import kr.co.helf.vo.Trainer;
-import kr.co.helf.vo.User;
 
 @Mapper
 public interface PersonalLessonMapper {
