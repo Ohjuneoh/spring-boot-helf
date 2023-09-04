@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.helf.dto.AttendanceList;
 import kr.co.helf.dto.CustomerAttendanceListDto;
 import kr.co.helf.dto.CustomerDetailDto;
 import kr.co.helf.dto.CustomerListDto;
@@ -77,8 +78,12 @@ public class ManagementController {
 	@GetMapping(value="customer-detail")
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public String customerDetail(@RequestParam("id") String userId, Model model) {
-		CustomerDetailDto detailDto = userService.getCustomerDetails(userId);
-		model.addAttribute("detailDto", detailDto);
+		Map<String, Object> result = userService.getCustomerDetails(userId);
+		model.addAttribute("customerInfo", result.get("customerInfo"));
+		model.addAttribute("lessonApply", result.get("lessonApply"));
+		model.addAttribute("customerOrderDto", result.get("customerOrderDto"));
+		model.addAttribute("myMembershipList", result.get("myMembershipList"));
+		model.addAttribute("customerAttendance", result.get("customerAttendance"));
 		
 		return "management/customerDetail";
 	}
@@ -122,7 +127,7 @@ public class ManagementController {
 			@RequestParam(name="trainerStatus", required=false, defaultValue="전체") String trainerStatus,
 			@RequestParam(name="trainerTitle", required=false, defaultValue="전체") String trainerTitle,
 			Model model) {
-		log.info("rows='{}', page='{}', opt='{}' keyword='{}' userStatus='{}' membershipState='{}' remainderCnt='{}' remainingDays1='{}' remainingDays2='{}' ", 
+		log.info("rows='{}', page='{}', opt='{}' keyword='{}' trainerStatus='{}' trainerTitle='{}' ", 
 				rows, page, opt, keyword, trainerStatus, trainerTitle);
 		
 		Map<String, Object> param = new HashMap<>();
@@ -165,13 +170,25 @@ public class ManagementController {
 	// 트레이너 상세 페이지 - 최근 출결 내역 자세히 보기 채경 
 	@GetMapping(value="trainer-attendance-list")
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
-	public String trainerAttendances(@RequestParam("id") String userId, Model model) {
+	public String trainerAttendances(@RequestParam("id") String userId, 
+			@RequestParam(name="state", required=false, defaultValue="") String state,
+			@RequestParam(name="page", required=false, defaultValue="1") int page,
+			Model model) {
+		log.info("userId='{}', state='{}', page='{}'", userId, state, page);
 		// 트레이너 개인 정보 
 		MySalary trainerInfo = userService.getTrainerDetailById(userId);
+		// 트레이너 출결 내역 
 		Map<String, Object> param = new HashMap<>();
-		param.put("userId", userId);
+		param.put("userId", userId);		
+		param.put("page", page);
+		if(StringUtils.hasText(state)) {
+			param.put("state", state);
+		}
+		AttendanceList attendance = userService.getTrainerAttendances(param);
 		
 		model.addAttribute("trainerInfo", trainerInfo);
+		model.addAttribute("attendance", attendance.getAttendances());
+		model.addAttribute("pagination", attendance.getPagination());
 		
 		return "management/trainerAttendances";
 	}
