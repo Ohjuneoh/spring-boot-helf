@@ -5,6 +5,7 @@ import kr.co.helf.dto.TrainerPersonalReviewDto;
 import kr.co.helf.dto.TrainerReviewDto;
 import kr.co.helf.form.AddPersonalReviewForm;
 import kr.co.helf.form.AddReviewForm;
+import kr.co.helf.form.ModifyPersonalReviewForm;
 import kr.co.helf.form.ModifyReviewForm;
 import kr.co.helf.service.TrainerReviewService;
 import kr.co.helf.vo.TrainerPersonalReview;
@@ -94,5 +95,13 @@ public class TrainerReviewController {
     public String deleteReview(@RequestParam("reviewNo") int reviewNo){
         trainerReviewService.deleteReview(reviewNo);
         return "redirect:/trainerIntro";
+    }
+    
+    // 개인수업 리뷰 수정 로직
+    @PostMapping("/review-update")
+    public String personalReviewModifyForm(ModifyPersonalReviewForm form){
+        trainerReviewService.updatePersonalReview(form);
+
+        return "redirect:/lesson/user-my-lesson";
     }
 }
