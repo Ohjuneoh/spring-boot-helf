@@ -34,6 +34,12 @@ public class BoardService {
 		
 		board.setType("notice");
 		
+		if(form.getMain().equals("0")) {
+			board.setMain(0);
+		} else {
+			board.setMain(1);
+		}
+		
 		boardMapper.insertNotice(board);
 	}
 	
@@ -91,6 +97,14 @@ public class BoardService {
 		board.setDeleted("Y");
 		
 		boardMapper.deleteBoard(board);
+	}
+	
+	// faq 조회
+	public List<Board> getfaq() {
+
+		List<Board> faqs = boardMapper.getFaq();
+		
+		return faqs;
 	}
 	
 }

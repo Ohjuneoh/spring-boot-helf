@@ -78,9 +78,12 @@
 					</div>
     			</div>
     			<div class="col-4 ">
-    				<h4 class="mb-5"><strong style="color: blue;">홍길동</strong>님</h4>
-    				<p><strong>등급 </strong> : <span>다이아몬드</span></p>
-    				<p><strong>포인트 </strong> : <span>30</span>점 </p>
+    				<h4 class="mb-5"><strong style="color: blue;">${userInfo.name }</strong>님</h4>
+    				<p><strong>성별 : </strong> ${userInfo.gender }</p> 	
+    				<p><strong>전화번호 : </strong> ${userInfo.tel }</p>
+    				<p><strong>이메일 : </strong> ${userInfo.email }</p>
+    				<p><strong>등급 : </strong> <span>${userInfo.rank.name } </span></p>
+    				<p><strong>포인트 : </strong> <span>${userInfo.point } </span>점 </p>
     			</div>
     			<div class="col-4 text-end">
     				<a class="btn btn-outline-light btn-sm mb-2" href="/user/userModify">수정</a>

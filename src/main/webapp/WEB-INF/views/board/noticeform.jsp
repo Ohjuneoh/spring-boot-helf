@@ -95,8 +95,8 @@
 	                            <div class="row g-3">
 	                                <div class="col-12" >
 	                                    <select class="form-select bg-light border-0" name="main" style="height: 55px;">
-	                                        <option value="Y">주요 공지사항</option>
-	                                        <option value="N">일반 공지사항</option>
+	                                        <option value="0">주요 공지사항</option>
+	                                        <option value="1">일반 공지사항</option>
 	                                    </select>
 	                                </div>
 	                                <div class="col-xl-12">

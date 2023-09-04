@@ -297,10 +297,14 @@ public class UserService {
 	
 		return result; 
 	}
-
+	
+	// 마이페이지 - 내 정보 조회(유리)
+	public User getUserById(String id) {
+		return userMapper.getUserById(id);
+	}
 
 	// 마이페이지 - 내 리뷰 보기(예광)
-	public List<TrainerReview> getMyReviews(String userId){
+	public List<TrainerReview> getMyReviews(String userId) {
 		List<TrainerReview> reviews =trainerReviewMapper.getMyReviews(userId);
 		return reviews;
 	}

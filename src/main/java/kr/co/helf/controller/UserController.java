@@ -52,8 +52,12 @@ public class UserController {
 
 	// 회원가입 요청(유저)
 	@PostMapping(value="/register/user") 
-	public String registerUser(AddUserForm form, RedirectAttributes attributes) {
-
+	public String registerUser(@Valid AddUserForm form, BindingResult bindingResult, RedirectAttributes attributes) {
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(System.out::println);
+			return "registerform";
+		}
+		
 		userService.createUser(form);
 		attributes.addFlashAttribute("name", form.getName());
 		
@@ -195,14 +199,26 @@ public class UserController {
 	// 유저 마이페이지 화면 - 내 리뷰 보기(예광)
 	@GetMapping("/userMypage")
 	public String userMypage(@AuthenticationPrincipal User user, Model model) {
+		
+		// 마이페이지 내정보 조회
+		User userInfo = userService.getUserById(user.getId());
+		model.addAttribute("userInfo", userInfo);
+		
+		// 트레이너 리뷰 
 		List<TrainerReview>  reviews = userService.getMyReviews(user.getId());
 		model.addAttribute("reviews", reviews);
+		
 		return "/mypage/userInfo";
 	}
 	
 	// 유저 마이페이지 수정화면
 	@GetMapping("/userModify")
-	public String userModifypage() {
+	public String userModifypage(Model model, User user) {
+		
+		System.out.println(user.getId());
+		// 마이페이지 내정보 조회
+		User userInfo = userService.getUserById(user.getId());
+		model.addAttribute("userInfo", userInfo);
 		
 		return "/mypage/userModifyInfo";
 	}

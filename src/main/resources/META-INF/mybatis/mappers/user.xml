@@ -5,25 +5,27 @@
 	
 	<select id="getUserById" parameterType="string" resultType="User">
 		select
-			user_id					as id,
-			user_email				as email,
-			user_name				as name,
-			user_tel				as tel,
-			user_encrypted_password as encryptedPassword,
-			user_gender				as gender,
-			user_status				as status,
-			user_mobile_carrier		as mobileCarrier,
-			user_create_date		as createDate,
-			user_update_date		as updateDate,
-			user_point				as point,
-			rank_no					as "rank.no",
-			user_type				as type,
-			user_authentication_no	as authenticationNo
+			u.user_id					as id,
+			u.user_email				as email,
+			u.user_name					as name,
+			u.user_tel					as tel,
+			u.user_encrypted_password 	as encryptedPassword,
+			u.user_gender				as gender,
+			u.user_status				as status,
+			u.user_mobile_carrier		as mobileCarrier,
+			u.user_create_date			as createDate,
+			u.user_update_date			as updateDate,
+			u.user_point				as point,
+			u.rank_no					as "rank.no",
+			r.rank_name					as "rank.name",
+			u.user_type					as type,
+			u.user_authentication_no	as authenticationNo
 			
 		from
-			helf_users
+			helf_users u, helf_ranks r
 		where 
-			user_id = #{value}
+			u.user_id = #{user.id}
+		and u.rank_no = r.rank_no
 	</select>
 	
 	<!-- 유저정보 업데이트(수정)  -->

@@ -5,9 +5,9 @@
 	<!-- 문의 글쓰기 -->
 	<insert id="insertInquiry" parameterType="Inquiry">
 		insert into helf_inquiries
-		(inquiry_no, inquiry_type, inquiry_title, inquiry_secret, user_id, inquiry_content)
+		(inquiry_no, inquiry_type, inquiry_title, inquiry_secret, user_id, inquiry_content, file_name)
 		values
-		(helf_inquiry_seq.nextval, #{type}, #{title}, #{secret}, #{user.id}, #{content})
+		(helf_inquiry_seq.nextval, #{type}, #{title}, #{secret}, #{user.id}, #{content}, #{filename})
 	</insert>
 	
 	<!-- 모든 행 조회 (페이징처리) -->
@@ -62,5 +62,53 @@
     		i.user_id = u.user_id
     		and inquiry_no = #{no}
     </select>
+    
+    <!-- 문의글 수정하기  -->
+    <update id="updateInquiry" parameterType="Inquiry">
+    	update helf_inquiries 
+    	
+    	set inquiry_type = #{type}, 
+    		inquiry_title = #{title},
+    		inquiry_secret = #{secret},
+    		file_name = #{filename},
+    		inquiry_content = #{content},
+    		inquiry_is_answer = #{isAnswer}
+    	where inquiry_no = #{no}
+    </update>
+    
+    <!-- 문의 답변 등록하기  -->
+    <insert id="addAnswer" parameterType="Answer">
+    	insert into helf_answers
+		(answer_no, inquiry_no, answer_content, user_id)
+		values
+		(helf_answer_seq.nextval, #{inquiry.no}, #{content}, #{user.id})
+    </insert>
+    
+    <!-- 답변 목록 조회하기 -->
+    <select id="getAllAnswer" resultType="Answer" parameterType="int">
+    	select 
+    		answer_no					as no,
+    		inquiry_no					as "inquiry.no",
+    		answer_content 				as content,
+    		answer_create_date			as createDate,
+    		answer_deleted				as deleted,
+    		answer_delete_date			as deleteDate,
+    		user_id						as "user.id"
+    	from
+    		helf_answers
+    	where
+    		inquiry_no = #{value}
+    	and answer_deleted = 'N'
+    </select>
+    
+    
+    <!-- 답변 삭제 -->
+	<update id="deleteAnswer" parameterType="int">
+		update helf_answers ha
+		set ha.answer_deleted = 'Y',
+		    ha.answer_delete_date = sysdate
+		where ha.answer_no = #{value}
+		
+	</update>
     
 </mapper>
