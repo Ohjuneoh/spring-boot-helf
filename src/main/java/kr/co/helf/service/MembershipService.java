@@ -169,7 +169,12 @@ public class MembershipService {
 	public void updateMembershipByNo(ModifyMembershipForm form) {
 		
 		Membership membership = orderMapper.getMembershipByNo(form.getNo());
-		BeanUtils.copyProperties(form, membership);
+		membership.setName(form.getName());
+		membership.setDeleted(form.getDeleted());
+		membership.setPrice(form.getPrice());
+		Category cat = membershipMapper.getcategoryByNo(form.getCatNo());
+		membership.setCategory(cat);
+		membership.setDescription(form.getDescription());
 		
 		membershipMapper.updateMembership(membership);
 	}

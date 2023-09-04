@@ -116,10 +116,11 @@
 								<p>${membership.description }</p>
 							</div>
 							<form id="form-${membership.no }" action="condition" method="post">
-								<a id="btn-${membership.no }" class="btn btn-lg btn-primary rounded" style="height: 50px;">
+								<a id="btn-${membership.no }" class="btn btn-lg btn-primary rounded" style="height: 50px;"
+									data-membership-no="${membership.no }">
 	                            	<i class="bi bi-arrow-right"></i>
 	                        	</a>
-	                        	<input type="hidden" name="no" value="${membership.no }">
+	                        	<input type="hidden" name="no">
 							</form>
 						</div> 
 					</div>
@@ -158,6 +159,8 @@ $(function() {
 	});
 	
 	$("a[id^=btn]").on('click', function () {
+		let no = $(this).attr('data-membership-no');
+		$("[name=no]").val(no);
 		$("form[id^=form]").submit();
 	})
 });

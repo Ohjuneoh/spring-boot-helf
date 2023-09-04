@@ -181,16 +181,12 @@ public class OrderService {
 		return orderMapper.getRankByNo(no);
 	}
 
-	public void checkUseMyMembership(int no, String id) {
+	public MyMembership checkUseMyMembership(int no, String id) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("no", no);
 		map.put("id", id);
 		
-		List<MyMembership> useMyMembership = orderMapper.getUseMyMembershipByNoById(map);
-		
-		if(!useMyMembership.isEmpty()) {
-			throw new RuntimeException("해당 이용권은 이미 구매한 상품입니다.");
-		}
+		return orderMapper.getUseMyMembershipByNoById(map);
 	}
 
 	public void getMyMembershipStartToday() {
