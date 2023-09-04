@@ -12,8 +12,6 @@ import java.util.Optional;
 import java.util.Random;
 import kr.co.helf.mapper.TrainerReviewMapper;
 import kr.co.helf.vo.*;
-import static kr.co.helf.enums.RankEnum.*;
-import org.apache.jasper.tagplugins.jstl.core.Choose;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -29,7 +27,6 @@ import kr.co.helf.dto.CustomerDetailDto;
 import kr.co.helf.dto.CustomerListDto;
 import kr.co.helf.dto.CustomerOrderDto;
 import kr.co.helf.dto.Pagination;
-import kr.co.helf.enums.RankEnum;
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.mapper.OrderMapper;
 import kr.co.helf.mapper.UserMapper;
@@ -303,6 +300,20 @@ public class UserService {
 		return result; 
 	}
 
+	public void checkRank() {
+		
+		List<User> customers = userMapper.getAllCustomer();
+		for(User customer : customers) {
+			Rank rank = userMapper.getNewRank(customer.getId());
+			if(rank == null) {
+				continue;
+			}
+			
+			customer.setRank(rank);
+			customer.setPoint(customer.getPoint() + rank.getBenefit());
+			userMapper.updateUser(customer);
+		}
+	}
 
 	// 마이페이지 - 내 리뷰 보기(예광)
 	public List<TrainerReview> getMyReviews(String userId){

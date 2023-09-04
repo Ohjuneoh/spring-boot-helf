@@ -95,8 +95,8 @@
 			   				<tr>
 			   					<th>
 			   						${dto.orderJoin.name }
-			   						<c:forEach var="myOption" items="${dto.myOptions }">
-										<br/><br/>${myOption.optionDetail.option.name }
+			   						<c:forEach var="myOption" items="${dto.myOptionJoins }">
+										<br/><br/>${myOption.name }
 			   						</c:forEach>
 			   					</th>
 				   				<td>
@@ -106,13 +106,13 @@
 				   					<c:if test="${dto.orderJoin.remainderCnt ne null }">
 				   						${dto.orderJoin.period.property }회
 				   					</c:if>
-				   					<c:forEach var="myOption" items="${dto.myOptions }">
+				   					<c:forEach var="myOption" items="${dto.myOptionJoins }">
 										<br/><br/>${dto.orderJoin.period.duration }개월
 			   						</c:forEach>
 				   				</td>
 				   				<td>
 				   					<fmt:formatNumber value="${dto.orderJoin.membershipPrice }" pattern="###,###"/>원
-				   					<c:forEach var="myOption" items="${dto.myOptions }">
+				   					<c:forEach var="myOption" items="${dto.myOptionJoins }">
 										<br/><br/><fmt:formatNumber value="${myOption.price }"/> 원
 			   						</c:forEach>
 				   				</td>
@@ -120,8 +120,14 @@
 				   					${dto.orderJoin.orderState }
 				   					<c:if test="${dto.orderJoin.orderState eq '환불대기' }">
 										<br/>
-										<a href="cancle-refund?no=${dto.orderJoin.no }&page=${param.page }&state=${param.state }&type=${param.type }&keyword=${param.keyword}" 
-										   class="btn btn-warning btn-sm" style="margin-top: 5px;">취소</a>
+										<form action="cancle-refund" method="post">
+											<button class="btn btn-warning btn-sm" style="margin-top: 5px;">취소</button>
+											<input type="hidden" name="no" value="${dto.orderJoin.no }">
+											<input type="hidden" name="page" value="${param.page }">
+											<input type="hidden" name="state" value="${param.state }">
+											<input type="hidden" name="type" value="${param.type }">
+											<input type="hidden" name="keyword" value="${param.keyword}">
+										</form>
 									</c:if>
 				   				</td>
 			   				</tr>

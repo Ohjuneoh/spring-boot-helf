@@ -167,13 +167,15 @@
 					</label> 
 				</div>
 			</div>
-			<div style="margin-top: 95px;">
-				<span style="margin-left:950px;">
+			<div style="display: flex; margin-left:950px; margin-top: 95px;">
+				<span style="margin-right: 10px;">
 					<a href="list" class="btn btn-danger">취소</a>
 				</span>
-				<span class="text-end">
-					<a href="period" id="btn-next" class="btn btn-primary disabled">다음</a>
-				</span>
+				<form action="period" method="post">
+					<span>
+						<button id="btn-next" type="submit" class="btn btn-primary disabled">다음</button>
+					</span>
+				</form>
 			</div>
 		</div>
 	</div>

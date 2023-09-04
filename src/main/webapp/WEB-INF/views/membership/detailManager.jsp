@@ -153,8 +153,14 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-					<a href="deleted?no=${membership.no }&state=${param.state }&keyword=${param.keyword }&type=${param.type }&page=${param.page }" 
-					   class="btn btn-danger" onclick="deleted()">확인</a>
+					<form action="deleted" method="post">
+						<button type="submit" class="btn btn-danger" onclick="deleted()">확인</button>
+						<input type="hidden" name="no" value="${membership.no }">
+						<input type="hidden" name="page" value="${param.page }">
+						<input type="hidden" name="state" value="${param.state }">
+						<input type="hidden" name="type" value="${param.type }">
+						<input type="hidden" name="keyword" value="${param.keyword}">	   
+					</form>
 				</div>
 			</div>
 		</div>
