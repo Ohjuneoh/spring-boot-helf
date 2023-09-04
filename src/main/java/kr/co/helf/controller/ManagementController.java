@@ -1,5 +1,6 @@
 package kr.co.helf.controller;
 
+import kr.co.helf.dto.AttendanceList;
 import kr.co.helf.dto.CustomerDetailDto;
 import kr.co.helf.service.UserService;
 import kr.co.helf.vo.Lesson;
@@ -20,12 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import kr.co.helf.dto.AttendanceList;
-import kr.co.helf.dto.CustomerDetailDto;
-import kr.co.helf.service.UserService;
-import kr.co.helf.vo.MySalary;
-import kr.co.helf.vo.TrainerAttendance;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/management")
