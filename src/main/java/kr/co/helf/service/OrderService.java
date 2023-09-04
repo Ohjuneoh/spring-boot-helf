@@ -40,6 +40,7 @@ public class OrderService {
 		return orderMapper.getPeriodsByType(type);
 	}
 
+	// 
 	public Period getPeriodByNo(int no) {
 		Period period =  orderMapper.getPeriodByNo(no);
 		if(period == null) {
