@@ -5,6 +5,7 @@ import kr.co.helf.dto.TrainerPersonalReviewDto;
 import kr.co.helf.dto.TrainerReviewDto;
 import kr.co.helf.form.AddPersonalReviewForm;
 import kr.co.helf.form.AddReviewForm;
+import kr.co.helf.form.ModifyPersonalReviewForm;
 import kr.co.helf.form.ModifyReviewForm;
 import kr.co.helf.mapper.GroupLessonMapper;
 import kr.co.helf.mapper.LessonMapper;
@@ -158,6 +159,11 @@ public class TrainerReviewService {
         personalReviewDto.setCntReviews(cntPersonalReviews);
         
 		return personalReviewDto;
+	}
+
+	public void updatePersonalReview(ModifyPersonalReviewForm form) {
+		
+	    trainerReviewMapper.updatePersonalReview(form);
 	}
 
 

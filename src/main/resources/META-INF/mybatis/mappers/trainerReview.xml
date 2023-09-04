@@ -218,5 +218,16 @@
         where
             rownumber between #{begin} and #{end}
     </select>
+    
+    개인리뷰 수정 
+	<update id="updatePersonalReview" parameterType="TrainerPersonalReview">
+        update
+            helf_trainer_personal_review
+        set
+            trainer_personal_review_content = #{content},
+            trainer_personal_review_rating = #{rating}
+        where
+            trainer_personal_review_no = #{no}
+    </update> 
 
 </mapper>
