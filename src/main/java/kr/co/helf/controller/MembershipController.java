@@ -1,6 +1,6 @@
 package kr.co.helf.controller;
 
-import static kr.co.helf.enums.MembershipEnum.*;
+import static kr.co.helf.enums.OrderStateEnum.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.helf.dto.MembershipJoinCategory;
 import kr.co.helf.dto.MembershipListDto;
-import kr.co.helf.dto.MyMembershipListDto;
+import kr.co.helf.dto.MyMembershipJoinDto;
+import kr.co.helf.dto.MyOptionJoinDto;
 import kr.co.helf.dto.OrderDetailDto;
 import kr.co.helf.dto.OrderJoin;
 import kr.co.helf.dto.OrderListDto;
@@ -31,7 +33,6 @@ import kr.co.helf.service.MembershipService;
 import kr.co.helf.service.OrderService;
 import kr.co.helf.vo.Category;
 import kr.co.helf.vo.MyMembership;
-import kr.co.helf.vo.MyOption;
 import kr.co.helf.vo.Refund;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
@@ -48,20 +49,20 @@ public class MembershipController {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String membershipList(@AuthenticationPrincipal User user, Model model) {
 		
-		List<MyMembershipListDto> myMemberships = membershipService.getMyMembershipListById(user.getId());
+		List<MyMembershipJoinDto> myMemberships = membershipService.getMyMembershipListById(user.getId());
 		model.addAttribute("list", myMemberships);
 		
 		return "membership/list";
 	}
 	
-	@GetMapping("/refund")
+	@PostMapping("/wait-refund")
 	@PreAuthorize("hasRole('ROLE_USER')")
+	@Transactional
 	public String waitRefund(@RequestParam("no") int no, @AuthenticationPrincipal User user) {
 		
 		MyMembership myMembership = membershipService.getRefundMyMembershipByNo(no);
 		
-		int remain = myMembership.remainPeriod();
-		if(remain <= 30) {
+		if(myMembership.remainPeriod() <= 30) {
 			return "redirect:list?error=no-refund";
 		}
 		
@@ -117,10 +118,10 @@ public class MembershipController {
 		OrderDetailDto dto = new OrderDetailDto();
 		dto.setOrderJoin(orderJoin);
 		
-		List<MyOption> myOptions = membershipService.getMyOptions(orderJoin.getMyMembershipNo());
-		dto.setMyOptions(myOptions);
+		List<MyOptionJoinDto> myOptions = membershipService.getMyOptions(orderJoin.getMyMembershipNo());
+		dto.setMyOptionJoins(myOptions);
 		
-		if(!PAYMENT.getMembershiEnum().equals(orderJoin.getOrderState())) {
+		if(!PAYMENT.getValue().equals(orderJoin.getOrderState())) {
 			Refund refund = membershipService.getRefundByOrderNo(orderJoin.getNo());
 			dto.setRefund(refund);
 		}
@@ -130,7 +131,7 @@ public class MembershipController {
 		return "membership/orderDetail";
 	}
 	
-	@GetMapping("/cancle-refund")
+	@PostMapping("/cancle-refund")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String cancleRefund(@RequestParam(name = "no", required = false) int no,
 							   @RequestParam(name = "state", required = false) String state,
@@ -191,8 +192,6 @@ public class MembershipController {
 		MembershipListDto dto = membershipService.getAllMembership(param);
 		model.addAttribute("dto", dto);
 		
-		System.out.println(dto);
-		
 		return "membership/listManager";
 	}
 	
@@ -206,7 +205,7 @@ public class MembershipController {
 		return "membership/detailManager";
 	}
 	
-	@GetMapping("/deleted")
+	@PostMapping("/deleted")
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public String deleted(Model model, @RequestParam("no") int no) {
 		
@@ -295,16 +294,22 @@ public class MembershipController {
 	
 	@PostMapping("/refund")
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
-	public String refund(@RequestParam("no") List<Integer> noList,
+	public String refund(@RequestParam(name = "no", required = false) List<Integer> noList,
 						 @RequestParam(name = "state", required = false) String state,
 					     @RequestParam(name = "type", required = false) String type,
 					     @RequestParam(name = "keyword", required = false) String keyword,
 					     @RequestParam(name = "id", required = false) String id,
 					     @RequestParam(name = "page", required = false, defaultValue = "1") int page, 
 					     RedirectAttributes redirectAttributes) {
+		
+		if(noList == null) {
+			return "redirect:/membership/refund-manager?error=no-subject";
+		}
+		
 		try {
 			membershipService.refundApproved(noList);
 		} catch (RuntimeException e) {
+			e.printStackTrace();
 			return "redirect:refund-manager?error=refunded";
 		}
 		

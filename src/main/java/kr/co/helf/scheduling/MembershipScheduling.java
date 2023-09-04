@@ -1,4 +1,4 @@
-package kr.co.helf.dto;
+package kr.co.helf.scheduling;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

@@ -11,7 +11,7 @@ import kr.co.helf.dto.CustomerListDto;
 import kr.co.helf.vo.CustomerAttendance;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.MyMembership;
-import kr.co.helf.vo.Order;
+import kr.co.helf.vo.Rank;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.TrainerCareer;
 import kr.co.helf.vo.TrainerAttendance;
@@ -76,4 +76,6 @@ public interface UserMapper {
 	List<CustomerAttendance> getCustomerAttendance(String id);
 
 	List<User> getAllCustomer();
+
+	Rank getNewRank(String userId);
 }

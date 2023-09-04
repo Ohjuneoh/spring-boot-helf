@@ -11,13 +11,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
-import static kr.co.helf.enums.RankEnum.*;
-
-import org.apache.jasper.tagplugins.jstl.core.Choose;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -302,28 +300,18 @@ public class UserService {
 		return result; 
 	}
 
-	public void updateRank() {
+	public void checkRank() {
+		
 		List<User> customers = userMapper.getAllCustomer();
 		for(User customer : customers) {
-//			switch (customer.getRank().getName()) {
-//				case BRONZE:
-//					if() {
-//						
-//						break;
-//					}
-//
-//				case SILVER:
-//					break;
-//				
-//				case GOLD:
-//					break;
-//					
-//				case PLATINUM:
-//					break;
-//					
-//				case DIAMOND:
-//					break;
-//			}
+			Rank rank = userMapper.getNewRank(customer.getId());
+			if(rank == null) {
+				continue;
+			}
+			
+			customer.setRank(rank);
+			customer.setPoint(customer.getPoint() + rank.getBenefit());
+			userMapper.updateUser(customer);
 		}
 	}
 }

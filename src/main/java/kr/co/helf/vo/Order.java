@@ -4,11 +4,13 @@ import java.time.LocalDate;
 
 import org.apache.ibatis.type.Alias;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Alias("order")
 public class Order {
 

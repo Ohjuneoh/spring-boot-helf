@@ -5,9 +5,11 @@ import java.time.LocalDate;
 
 import org.apache.ibatis.type.Alias;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Alias("refund")
 public class Refund {
 

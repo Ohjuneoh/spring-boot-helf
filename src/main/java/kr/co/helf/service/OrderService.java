@@ -1,15 +1,13 @@
 package kr.co.helf.service;
 
-import static kr.co.helf.enums.MembershipEnum.*;
-
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.helf.dto.MembershipJoinCategory;
 import kr.co.helf.dto.OptionJoinDetail;
@@ -44,29 +42,28 @@ public class OrderService {
 	public Period getPeriodByNo(int no) {
 		Period period =  orderMapper.getPeriodByNo(no);
 		if(period == null) {
-			throw new RuntimeException();
+			throw new RuntimeException("해당 기간 데이터가 존재하지 않습니다.");
 		}
 		return period;
 	}
 
 	public MembershipJoinCategory getMembershipJoinCatByNo(int no) {
 		MembershipJoinCategory membershipJoinCat = orderMapper.getMembershipJoinCatByNo(no);
-		Optional<MembershipJoinCategory> optionalMembershipJoinCat = Optional.of(membershipJoinCat);
-		membershipJoinCat = 
-					optionalMembershipJoinCat.orElseThrow(() -> new RuntimeException());
+		if(membershipJoinCat == null) {
+			throw new RuntimeException("번호에 해당하는 기본 이용권 정보가 없습니다.");
+		}
 		
 		return membershipJoinCat;
 	}
 
 	public List<OptionJoinDetail> getAllOptionJoinDetail() {
-		List<OptionJoinDetail> optionDetails = orderMapper.getOptionJoinDetails();
-		return optionDetails;
+		return orderMapper.getOptionJoinDetails();
 	}
 
 	public OptionJoinDetail getOptionJoinDetailByNo(int no) {
 		OptionJoinDetail joinDetail = orderMapper.getOptionJoinDetailByNo(no);
 		if(joinDetail == null) {
-			throw new RuntimeException();
+			throw new RuntimeException("번호에 해당하는 옵션 정보가 없습니다.");
 		}
 		return joinDetail;
 	}
@@ -75,11 +72,12 @@ public class OrderService {
 		return orderMapper.getOptions();
 	}
 
+	@Transactional
 	public void setOneDay(MembershipJoinCategory catProperty, AddOrderForm form, User user) {
 		Period onePeriod = orderMapper.getPeriodsByOne(catProperty.getCatProperty());
 		
 		if(onePeriod == null) {
-			throw new RuntimeException();
+			throw new RuntimeException("하루 이용권에 해당하는 기간 정보가 없습니다.");
 		}
 		
 		form.setPeriodNo(onePeriod.getNo());
@@ -102,56 +100,31 @@ public class OrderService {
 			orderMapper.updateUserById(user);
 		}
 		
-		int savePoint = (int)form.getSavePoint();
+		int savePoint = form.getSavePoint();
 		user.setPoint(user.getPoint() + savePoint);
 		
 		orderMapper.updateUserById(user);
 	}
 
+	@Transactional
 	public void insertOrder(AddOrderForm form, User user) {
 		// 내 이용권 
 		MyMembership myMembership = new MyMembership();
-		
-		BeanUtils.copyProperties(form, myMembership);
-		
-		myMembership.setUser(user);
-		Period period = orderMapper.getPeriodByNo(form.getPeriodNo());
-		myMembership.setPeriod(period);
-		Membership membership = orderMapper.getMembershipByNo(form.getMembershipNo());
-		myMembership.setMembership(membership);
-		myMembership.setState(WAITING.getMembershiEnum());
-		
-		if(form.getStartDate().isEqual(LocalDate.now())) {
-			myMembership.setState(POSSIBILITY.getMembershiEnum());
-		}
-		orderMapper.insertMyMembership(myMembership);
+		addMyMembership(form, myMembership, user);
 		
 		// 내 옵션
 		if(form.getLockerPrice() != 0) {
 			MyOption myOptionLocker = new MyOption();
-			
-			myOptionLocker.setPrice(form.getLockerPrice());
-			myOptionLocker.setMyMembership(myMembership);
-			OptionDetail optionDetail = orderMapper.getOptionDetailByNo(form.getLockerNo());
-			myOptionLocker.setOptionDetail(optionDetail);
-			
-			orderMapper.insertMyOption(myOptionLocker);
+			addMyOption(form.getLockerPrice(), form.getLockerNo(), myMembership, myOptionLocker);
 		}
 		
 		if(form.getWearPrice() != 0) {
 			MyOption myOptionWear = new MyOption();
-			
-			myOptionWear.setPrice(form.getWearPrice());
-			myOptionWear.setMyMembership(myMembership);
-			OptionDetail optionDetail = orderMapper.getOptionDetailByNo(form.getWearNo());
-			myOptionWear.setOptionDetail(optionDetail);
-			
-			orderMapper.insertMyOption(myOptionWear);
+			addMyOption(form.getWearPrice(), form.getWearNo(), myMembership, myOptionWear);
 		}
 		
 		// 결제 
 		Order order = new Order();
-
 		BeanUtils.copyProperties(form, order);
 		order.setUser(user);
 		order.setMyMembership(myMembership);
@@ -161,21 +134,46 @@ public class OrderService {
 		// 사용 포인트
 		if(form.getUsePoint() != 0) {
 			PointHistory usePoint = new PointHistory();
-			
-			BeanUtils.copyProperties(form, usePoint);
-			usePoint.setUser(user);
-			usePoint.setType(PAYMENT.getMembershiEnum());
-			usePoint.setOrder(order);
-			orderMapper.insertHistory(usePoint);
+			usePoint.setPaymentPoint();
+			addPointHistory(usePoint, user, order, form.getUsePoint());
 		}
 		
 		// 적립 포인트
 		PointHistory savePoint = new PointHistory();
-		savePoint.setUsePoint(form.getSavePoint());
-		savePoint.setUser(user);
-		savePoint.setType(SAVEPOINT.getMembershiEnum());
-		savePoint.setOrder(order);
-		orderMapper.insertHistory(savePoint);
+		savePoint.setSavePoint();
+		addPointHistory(savePoint, user, order, form.getSavePoint());
+	}
+
+	private void addPointHistory(PointHistory usePoint, User user, Order order, int point) {
+		usePoint.setUsePoint(point);
+		usePoint.setUser(user);
+		usePoint.setOrder(order);
+		orderMapper.insertHistory(usePoint);
+	}
+
+	private void addMyOption(int price, int no, MyMembership myMembership, MyOption myOption) {
+		myOption.setPrice(price);
+		myOption.setMyMembership(myMembership);
+		OptionDetail optionDetail = orderMapper.getOptionDetailByNo(no);
+		myOption.setOptionDetail(optionDetail);
+		
+		orderMapper.insertMyOption(myOption);
+	}
+
+	private void addMyMembership(AddOrderForm form, MyMembership myMembership, User user) {
+		BeanUtils.copyProperties(form, myMembership);
+		
+		myMembership.setUser(user);
+		Period period = orderMapper.getPeriodByNo(form.getPeriodNo());
+		myMembership.setPeriod(period);
+		Membership membership = orderMapper.getMembershipByNo(form.getMembershipNo());
+		myMembership.setMembership(membership);
+		myMembership.waitState();
+		
+		if(form.getStartDate().isEqual(LocalDate.now())) {
+			myMembership.possibility();
+		}
+		orderMapper.insertMyMembership(myMembership);
 	}
 
 	public Rank getRankByNo(int no) {
@@ -190,7 +188,7 @@ public class OrderService {
 		List<MyMembership> useMyMembership = orderMapper.getUseMyMembershipByNoById(map);
 		
 		if(!useMyMembership.isEmpty()) {
-			throw new RuntimeException();
+			throw new RuntimeException("해당 이용권은 이미 구매한 상품입니다.");
 		}
 	}
 
@@ -198,7 +196,7 @@ public class OrderService {
 		List<MyMembership> todayStartMyMemberships = orderMapper.getMyMembershipStartToday();
 		
 		for(MyMembership todayStartMyMembership : todayStartMyMemberships) {
-			todayStartMyMembership.setState(POSSIBILITY.getMembershiEnum());
+			todayStartMyMembership.possibility();
 			orderMapper.updateMyMembership(todayStartMyMembership);
 		}
 	}
@@ -207,7 +205,7 @@ public class OrderService {
 		List<MyMembership> todayEndMyMemberships = orderMapper.getMyMembershipEndToday();
 		
 		for(MyMembership todayEndMyMembership : todayEndMyMemberships) {
-			todayEndMyMembership.setState(IMPOSSIBILITY.getMembershiEnum());
+			todayEndMyMembership.impossibility();
 			orderMapper.updateMyMembership(todayEndMyMembership);
 		}
 	}

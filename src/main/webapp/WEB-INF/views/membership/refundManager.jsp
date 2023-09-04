@@ -88,6 +88,11 @@
 							<strong>[중복 실행]</strong> 이미 환불이 완료된 상품입니다.
 						</div>
 					</c:if>
+					<c:if test="${param.error eq 'no-subject' }">
+						<div class="alert alert-danger" style="height: 50px; width: 1075px;">
+							<strong>[잘못된 접근]</strong> 환불을 진행할 대상이 없습니다.
+						</div>
+					</c:if>
 				
 					<div class="card" style="margin-bottom: 20px;" >
 						<form action="refund-manager" method="get">
@@ -157,9 +162,7 @@
 												<td>
 						                        <input class="form-check-input" type="checkbox" id="check-${order.no }" name="no" value="${order.no }">
 												</td>
-						                        <td>
-						                        ${order.refundNo }
-						                        </td>
+						                        <td>${order.refundNo }</td>
 												<td>${order.name }</td>
 												<td>${order.user.id }</td>
 												<td>
@@ -247,6 +250,11 @@ $(function() {
 	});
 	
 	$("#btn-refund").click(function () {
+		debugger;
+		if("[id^=check]:checked".length === 0) {
+			window.location.href = "/membership/refund?error=no-subject";
+		}
+		
 		$("#form-refund").trigger('submit');
 	})
 	

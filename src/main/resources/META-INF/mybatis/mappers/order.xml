@@ -37,8 +37,8 @@
 			   B.category_name				as catName,
 			   B.category_property			as catProperty,
 			   B.category_use_option		as useOption
-		from helf_membership A, helf_membership_category B
-		where A.category_no = B.category_no
+		from helf_membership A join helf_membership_category B
+			on A.category_no = B.category_no
 		and A.membership_no = #{value}
 	</select>
 	
@@ -82,8 +82,8 @@
 			   B.detail_price		as price,
 			   B.detail_type		as type,
 			   A.option_no			as "option.no"
-		from helf_membership_option A, helf_membership_option_detail B
-		where A.option_no = B.option_no
+		from helf_membership_option A join helf_membership_option_detail B
+			on A.option_no = B.option_no
 		order by B.detail_price 
 	</select>
 	
@@ -93,8 +93,8 @@
 			   B.detail_price		as price,
 			   B.detail_type		as type,
 			   A.option_no			as "option.no"
-		from helf_membership_option A, helf_membership_option_detail B
-		where A.option_no = B.option_no
+		from helf_membership_option A join helf_membership_option_detail B
+			on A.option_no = B.option_no
 		and B.detail_no = #{value}
 	</select>
 	
@@ -156,11 +156,12 @@
 	</insert>
 	
 	<select id="getRankByNo" parameterType="int" resultType="Rank">
-		select rank_no			as no,
-			   rank_name		as name,
-			   rank_criteria	as criteria,
-			   rank_benefit		as benefit,
-			   rank_point_rate	as pointRate
+		select rank_no				as no,
+			   rank_name			as name,
+			   rank_min_criteria	as minCriteria,
+			   rank_max_criteria	as maxCriteria,
+			   rank_benefit			as benefit,
+			   rank_point_rate		as pointRate
 		from helf_ranks
 		where rank_no = #{value}
 	</select>
