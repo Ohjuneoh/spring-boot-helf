@@ -1,9 +1,13 @@
 package kr.co.helf.controller;
 
+import kr.co.helf.dto.ReviewIntegrationDto;
+import kr.co.helf.dto.TrainerPersonalReviewDto;
 import kr.co.helf.dto.TrainerReviewDto;
+import kr.co.helf.form.AddPersonalReviewForm;
 import kr.co.helf.form.AddReviewForm;
 import kr.co.helf.form.ModifyReviewForm;
 import kr.co.helf.service.TrainerReviewService;
+import kr.co.helf.vo.TrainerPersonalReview;
 import kr.co.helf.vo.TrainerReview;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +35,23 @@ public class TrainerReviewController {
         List<TrainerReview> reviews = trainerReviewService.reviewMore(trainerNo, page);
         return reviews;
     }
+    
+
 
     // 트레이너 리뷰 리스트 화면 출력 - 후에 강사소개 페이지에서 값 전달 되면 트레이너 번호 받아서 출력해야 함.
     @GetMapping("/list")
     public String reviewList(@RequestParam("trainerNo") int trainerNo, Model model){
         TrainerReviewDto dto = trainerReviewService.getReviewByTrainerNo(trainerNo);
+        TrainerPersonalReviewDto personalReviewDto = trainerReviewService.getPersonalReviewByTrainerNo(trainerNo);
+        
+        Integer totalReviews = dto.getCntReviews() + personalReviewDto.getCntReviews();
+        Double averageRating = (dto.getAvgRating() + personalReviewDto.getAvgRating()) / 2;
+        
+        model.addAttribute("personalReviews",personalReviewDto);
         model.addAttribute("dto",dto);
+        model.addAttribute("totalReviews", totalReviews);
+        model.addAttribute("averageRating", averageRating);
+        
         return "/trainer-review/list";
     }
     // 트레이너 리뷰 등록 화면
@@ -44,11 +59,17 @@ public class TrainerReviewController {
     public String reviewForm(){
         return "/trainer-review/form";
     }
-    // 트레이너 리뷰 등록
+    // 그룹수업 트레이너 리뷰 등록
     @PostMapping("/registration")
     public String review(AddReviewForm form){
         trainerReviewService.createReview(form);
         return "redirect:/trainerIntro";
+    }
+    // 개인수업 트레이너 리뷰 등록
+    @PostMapping("/personal-review-registration")
+    public String personalReview(AddPersonalReviewForm form){
+        trainerReviewService.createPersonalReview(form);
+        return "redirect:/lesson/user-my-lesson";
     }
     // 트레이너 리뷰 수정 화면
     @GetMapping("/modify")
@@ -58,6 +79,7 @@ public class TrainerReviewController {
 
         return "trainer-review/modifyForm";
     }
+
     // 리뷰 수정 로직
     @PostMapping("/modify")
     public String reviewModifyForm(int trainerNo,ModifyReviewForm form){

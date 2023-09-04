@@ -146,4 +146,28 @@
         where
             personal_lesson_no =#{no}
     </update>
+	<!-- 유저 ID로 유저의 1:1 수업 리스트 조회  -->    
+	<select id="getAllMyTrainerByUserId" parameterType="string" resultType="MyPersonalLesson">
+		select 		u.user_name as "user.name",
+					l.personal_lesson_no   as "personalLesson.no",		
+			        l.personal_lesson_name as "personalLesson.name",
+			        l.personal_lesson_date as "personalLesson.date",
+			        l.personal_lesson_time as "personalLesson.time",
+			        l.personal_lesson_status as "personalLesson.status",
+			        c.lesson_consultation_no	as "consultation.consultationNo",
+			        l.trainer_no				as  "trainer.trainerNo",
+			        m.my_membership_remainder_cnt as "myMembership.remainderCnt",
+			        l.trainer_no    as "trainer.trainerNo",
+			        m.my_membership_no as "myMembership.no"
+		from 		helf_personal_lesson l, helf_users u, helf_trainers t, helf_my_membership m, helf_lesson_consultation c
+		where 		l.trainer_no = t.trainer_no
+		and   		u.user_id = t.user_id
+		and   		m.user_id = l.user_id
+		and   		c.user_id = l.user_id
+		and   		l.user_id = #{userId}
+		and  		c.lesson_consultation_status = '수강중'
+		and   		m.my_membership_state = '사용중'
+		order by l.personal_lesson_date asc
+	</select>
+
 </mapper>

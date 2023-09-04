@@ -1,5 +1,6 @@
 package kr.co.helf.mapper;
 
+import kr.co.helf.dto.MyPersonalLessonDto;
 import kr.co.helf.vo.Consultation;
 import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.LessonApply;
@@ -33,5 +34,6 @@ public interface LessonMapper {
 	//트레이너 번호를 기준으로 상담내역 조회 by 준오
 	List<Consultation> getAllConsultationByTrainerNo(int trainerNo);
 	void updatePersonalLessonAttendance(@Param("no") int lessonNo,@Param("status") String status);
+	List<MyPersonalLessonDto> getAllMyTrainerByUserId(String id);
 
 }

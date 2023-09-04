@@ -1,6 +1,9 @@
 package kr.co.helf.service;
 
+import kr.co.helf.dto.ReviewIntegrationDto;
+import kr.co.helf.dto.TrainerPersonalReviewDto;
 import kr.co.helf.dto.TrainerReviewDto;
+import kr.co.helf.form.AddPersonalReviewForm;
 import kr.co.helf.form.AddReviewForm;
 import kr.co.helf.form.ModifyReviewForm;
 import kr.co.helf.mapper.GroupLessonMapper;
@@ -12,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,7 +63,7 @@ public class TrainerReviewService {
         Double avgRating = trainerReviewMapper.getAvgRating(trainerNo);
         // 트레이너 번호에 해당하는 리스트 갯수
         Integer cntReviews = trainerReviewMapper.getCountReviews(trainerNo);
-
+        
         TrainerReviewDto dto = new TrainerReviewDto();
         dto.setTrainerReviews(reviews);
         dto.setAvgRating(avgRating);
@@ -103,4 +107,60 @@ public class TrainerReviewService {
 
         return reviews;
     }
+
+	public void createPersonalReview(AddPersonalReviewForm form) {
+	
+		TrainerPersonalReview personalReview = new TrainerPersonalReview();
+		
+		personalReview.setContent(form.getContent());
+		personalReview.setRating(form.getRating());
+		
+		Trainer trainer = new Trainer();
+		trainer.setTrainerNo(form.getTrainerNo());
+		
+		Consultation consultation = new Consultation();
+		consultation.setConsultationNo(form.getConsultationNo());
+		
+		PersonalLesson personalLesson = new PersonalLesson();
+		personalLesson.setNo(form.getPersonalLessonNo());
+		
+		personalReview.setTrainer(trainer);
+		personalReview.setConsultation(consultation);
+		personalReview.setPersonalLesson(personalLesson);
+		
+		int existingPersonalLesson = trainerReviewMapper.getLessonNoByPersonalReviewCount(form.getPersonalLessonNo());
+		String attendanceCheck = trainerReviewMapper.getLessonNoByPersonalLesson(form.getPersonalLessonNo());
+		
+		
+	    if(existingPersonalLesson > 0) {
+	        throw new RuntimeException("이미 작성한 리뷰입니다.");
+	    }
+
+	    if("W".equals(attendanceCheck) || "N".equals(attendanceCheck)) {
+	        throw new RuntimeException("출석 후 리뷰를 작성할 수 있습니다.");
+	    }
+		trainerReviewMapper.insertPersonalReview(personalReview);
+	}
+
+
+	public TrainerPersonalReviewDto getPersonalReviewByTrainerNo(int trainerNo) {
+		
+		List<TrainerPersonalReview> personalReviews = trainerReviewMapper.getPersonalReviewsByMore(trainerNo, 1, 3);
+		
+        Double personalAvgRating = trainerReviewMapper.getPersonalAvgRating(trainerNo);
+        
+        Integer cntPersonalReviews = trainerReviewMapper.getCountPersonalReviews(trainerNo);
+        
+        TrainerPersonalReviewDto personalReviewDto = new TrainerPersonalReviewDto();
+        
+        personalReviewDto.setTrainerPersonalReviews(personalReviews);
+        personalReviewDto.setAvgRating(personalAvgRating);
+        personalReviewDto.setCntReviews(cntPersonalReviews);
+        
+		return personalReviewDto;
+	}
+
+
+
+
 }
