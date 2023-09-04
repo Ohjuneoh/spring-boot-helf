@@ -448,10 +448,13 @@
 				and u.user_tel = #{keyword}
 				</when>
 				<when test="trainerStatus == '재직'">
-				and u.user_type = 'Y'
+				and u.user_status = 'Y'
 				</when>
 				<when test="trainerStatus == '퇴직'">
-				and u.user_type = 'N'
+				and u.user_status = 'N'
+				</when>
+				<when test="trainerStatus == '승인대기'">
+				and u.user_status = 'R'
 				</when>
 				<when test="trainerTitle == '점장'">
 				and t.trainer_title = '점장'

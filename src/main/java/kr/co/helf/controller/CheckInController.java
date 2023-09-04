@@ -105,9 +105,6 @@ public class CheckInController {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("page", page);
 		param.put("userId", user.getId());
-//		if (!"전체".equals(state)) {
-//			param.put("state", state);			
-//		}
 		if(StringUtils.hasText(keyword)) {
 			param.put("keyword", keyword);
 		}
