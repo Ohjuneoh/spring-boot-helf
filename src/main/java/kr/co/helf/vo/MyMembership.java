@@ -48,4 +48,8 @@ public class MyMembership {
 	public int remainPeriod() {
 		return (int) ChronoUnit.DAYS.between(LocalDate.now(), this.endDate);
 	}
+	
+	public boolean isUserId(String userId) {
+		return this.user.getId().equals(userId);
+	}
 }

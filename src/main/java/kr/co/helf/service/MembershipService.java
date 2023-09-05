@@ -16,9 +16,11 @@ import kr.co.helf.dto.MembershipJoinCategory;
 import kr.co.helf.dto.MembershipListDto;
 import kr.co.helf.dto.MyMembershipJoinDto;
 import kr.co.helf.dto.MyOptionJoinDto;
+import kr.co.helf.dto.OrderDetailDto;
 import kr.co.helf.dto.OrderJoin;
 import kr.co.helf.dto.OrderListDto;
 import kr.co.helf.dto.Pagination;
+import kr.co.helf.exception.MembershipException;
 import kr.co.helf.form.AddMembershipForm;
 import kr.co.helf.form.ModifyMembershipForm;
 import kr.co.helf.mapper.MembershipMapper;
@@ -86,7 +88,7 @@ public class MembershipService {
 		return orderList;
 	}
 
-	public OrderJoin getOrderDetailByNo(int no) {
+	public OrderDetailDto getOrderDetailByNo(int no) {
 		OrderJoin orderJoin = membershipMapper.getOrderJoinByNo(no);
 		
 		if(orderJoin == null) {
@@ -99,7 +101,17 @@ public class MembershipService {
 		List<PointHistory> points = membershipMapper.getPointHistoryByOrderNo(orderJoin.getNo());
 		orderJoin.setPoints(points);
 		
-		return orderJoin;
+		OrderDetailDto dto = new OrderDetailDto();
+		dto.setOrderJoin(orderJoin);
+		
+		List<MyOptionJoinDto> myOptions = getMyOptions(orderJoin.getMyMembershipNo());
+		dto.setMyOptionJoins(myOptions);
+		if(!orderJoin.isPayment()) {
+			Refund refund = getRefundByOrderNo(orderJoin.getNo());
+			dto.setRefund(refund);
+		}
+		
+		return dto;
 	}
 
 	public List<Category> getAllCategory() {
@@ -232,6 +244,7 @@ public class MembershipService {
 		membershipMapper.insertRefundByNo(refund);
 	}
 
+	@Transactional
 	public void cancleRefund(int no) {
 		Order order = membershipMapper.getOrderByNo(no);
 		
@@ -242,10 +255,17 @@ public class MembershipService {
 		order.setPayment();
 		membershipMapper.updateOrder(order);
 		
+		List<MyMembershipJoinDto> useMyMemberships = membershipMapper.getMyMembershipsJoinById(order.getUser().getId());
 		MyMembership myMembership = membershipMapper.getMyMembershipByNo(order.getMyMembership().getNo());
 		
+		for(MyMembershipJoinDto useMyMembership : useMyMemberships) {
+			if(useMyMembership.getMembershipNo() == myMembership.getMembership().getNo()) {
+				throw new MembershipException("현재 사용중인 이용권이 존재하기 때문에 환불취소가 불가합니다.");
+			}
+		}
+		
 		if(myMembership == null) {
-			throw new RuntimeException();
+			throw new RuntimeException("환불 취소를 진행할 이용권이 존재하지 않습니다.");
 		}
 		if(!myMembership.isImpossibility()) {
 			throw new RuntimeException("이용권의 상태가 사용불가가 아니므로 해당 이용권은 환불 요청을 신청한 이용권이 아닙니다.");
@@ -366,10 +386,27 @@ public class MembershipService {
 		return orderPoint.getPointUse();
 	}
 
-	public MyMembership getRefundMyMembershipByNo(int no) {
+	@Transactional
+	public void updateWaitRefund(int no, String userId) {
+		getRefundMyMembershipByNo(no, userId);
+		updateRefundMyMembership(no);
+		updateRefundOrder(no);
+		insertRefund(no);
+	}
+	
+	
+	public MyMembership getRefundMyMembershipByNo(int no, String userId) {
 		MyMembership myMembership = membershipMapper.getMyMembershipByNo(no);
 		if(myMembership.isImpossibility()) {
 			throw new RuntimeException("해당 이용권은 현재 사용할 수 없기 때문에 환불요청이 불가합니다.");
+		}
+		
+		if(myMembership.remainPeriod() <= 30) {
+			throw new MembershipException("환불요청 기간이 지났습니다.");
+		}
+		
+		if(!myMembership.isUserId(userId)) {
+			throw new RuntimeException("이용권을 구매한 본인만 환불요청이 가능합니다.");
 		}
 		
 		return myMembership;

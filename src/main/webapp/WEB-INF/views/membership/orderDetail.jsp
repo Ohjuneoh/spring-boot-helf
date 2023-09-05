@@ -82,9 +82,11 @@
 				<h5 class="fw-bold text-primary text-uppercase">Your Order Detail</h5>
 				<h1 class="mb-0">구매내역 상세정보</h1>
 			</div>
-			<br/>
-			<br/>
-			<br/>
+			<c:if test="${param.error eq 'dup' }">
+				<div class="alert alert-danger text-center" style="height: 50px; width: 700px; margin: 0 auto;">
+					<strong>[중복 오류]</strong> 현재 사용중인 이용권이 존재하기 때문에 환불취소가 불가합니다.
+				</div>
+			</c:if>
 			<div class="text-center d-flex align-items-center justify-content-center">
 				<div>
 					<table class="table table-bordered" style="margin: 50px; width: 700px;">
