@@ -7,6 +7,7 @@ import kr.co.helf.vo.TrainerReview;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -181,6 +182,7 @@ public class UserController {
 /* 마이페이지 시작 */
 	// 유저 마이페이지 화면 - 내 리뷰 보기(예광)
 	@GetMapping("/userMypage")
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public String userMypage(@AuthenticationPrincipal User user, Model model) {
 		List<TrainerReview>  reviews = userService.getMyReviews(user.getId());
 		model.addAttribute("reviews", reviews);
@@ -221,7 +223,14 @@ public class UserController {
 		return "/mypage/myMoreReviews";
 	}
 
-
+	// controller
+	@PostMapping("/withdrawal")
+	@PreAuthorize("hasRole('ROLE_USER', 'ROLE_TRAINER')")
+	public String withdrawalUser(@AuthenticationPrincipal User user) {
+		userService.withdrawalUser(user.getId());
+		
+		return "redirect:/";
+	}
 
 
 /* 마이페이지 끝 */

@@ -9,10 +9,11 @@
 			   A.my_membership_remainder_cnt		as remainderCnt,
 			   A.my_membership_state				as state,
 			   A.user_id							as "user.id",
+			   B.membership_no						as membershipNo,
 			   B.membership_name					as name,
 			   C.period_type						as type
 		from helf_my_membership A join helf_membership B 
-            on A.MEMBERSHIP_NO = B.MEMBERSHIP_NO
+            on A.membership_no = B.membership_no
         join helf_membership_period C 
             on A.period_no = C.period_no
 		and A.user_id = #{value}

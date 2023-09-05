@@ -11,6 +11,6 @@ import lombok.Setter;
 public class OrderDetailDto {
 
 	private OrderJoin orderJoin;
-	List<MyOptionJoinDto> myOptionJoins;
-	Refund refund;
+	private List<MyOptionJoinDto> myOptionJoins;
+	private Refund refund;
 }
