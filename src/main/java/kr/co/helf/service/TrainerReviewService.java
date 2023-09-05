@@ -108,7 +108,8 @@ public class TrainerReviewService {
 
         return reviews;
     }
-
+    
+    //개인수업 리뷰 작성
 	public void createPersonalReview(AddPersonalReviewForm form) {
 	
 		TrainerPersonalReview personalReview = new TrainerPersonalReview();
@@ -143,7 +144,6 @@ public class TrainerReviewService {
 		trainerReviewMapper.insertPersonalReview(personalReview);
 	}
 
-
 	public TrainerPersonalReviewDto getPersonalReviewByTrainerNo(int trainerNo) {
 		
 		List<TrainerPersonalReview> personalReviews = trainerReviewMapper.getPersonalReviewsByMore(trainerNo, 1, 3);
@@ -168,6 +168,14 @@ public class TrainerReviewService {
 		BeanUtils.copyProperties(form, trainerPersonalReview);
 		
 	    trainerReviewMapper.updatePersonalReview(form);
+	}
+
+
+	public void deletePersonalReview(int reviewNo) {
+		TrainerPersonalReview personalReview = trainerReviewMapper.getTrainerPersonalReviewByNo(reviewNo);
+		personalReview.setStatus("N");
+		
+		trainerReviewMapper.deletePersonalReview(personalReview);
 	}
 
 
