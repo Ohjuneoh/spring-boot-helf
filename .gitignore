@@ -197,5 +197,5 @@ fabric.properties
 # https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
 .idea/**/azureSettings.xml
 
-/application-oauth.properties
+/src/main/resources/application-oauth.properties
 
