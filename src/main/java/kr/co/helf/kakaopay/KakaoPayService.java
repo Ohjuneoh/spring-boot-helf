@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 @Component
-public class KakaoPayService {
+public class KakaoPayService implements KakaopayInterface {
 
 	@Value("${custom.oauth.cid}")
     private String cid;
