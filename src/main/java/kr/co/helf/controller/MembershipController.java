@@ -120,7 +120,6 @@ public class MembershipController {
 		
 		List<MyOptionJoinDto> myOptions = membershipService.getMyOptions(orderJoin.getMyMembershipNo());
 		dto.setMyOptionJoins(myOptions);
-		
 		if(!PAYMENT.getValue().equals(orderJoin.getOrderState())) {
 			Refund refund = membershipService.getRefundByOrderNo(orderJoin.getNo());
 			dto.setRefund(refund);
