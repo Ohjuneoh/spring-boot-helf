@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -39,19 +40,45 @@ public class TrainerReviewController {
     // 트레이너 리뷰 리스트 화면 출력 - 후에 강사소개 페이지에서 값 전달 되면 트레이너 번호 받아서 출력해야 함.
     @GetMapping("/list")
     public String reviewList(@RequestParam("trainerNo") int trainerNo, Model model){
-        TrainerReviewDto dto = trainerReviewService.getReviewByTrainerNo(trainerNo);
-        TrainerPersonalReviewDto personalReviewDto = trainerReviewService.getPersonalReviewByTrainerNo(trainerNo);
-        
-        Integer totalReviews = dto.getCntReviews() + personalReviewDto.getCntReviews();
-//        Double averageRating = (dto.getAvgRating() + personalReviewDto.getAvgRating()) / 2;
-        
-        model.addAttribute("personalReviews",personalReviewDto);
-        model.addAttribute("dto",dto);
+        TrainerReviewDto dto = Optional.ofNullable(trainerReviewService.getReviewByTrainerNo(trainerNo))
+                                       .orElse(new TrainerReviewDto());
+        TrainerPersonalReviewDto personalReviewDto = Optional.ofNullable(trainerReviewService.getPersonalReviewByTrainerNo(trainerNo))
+                                                             .orElse(new TrainerPersonalReviewDto());
+
+        Integer totalReviews = Optional.ofNullable(dto.getCntReviews()).orElse(0) 
+                            + Optional.ofNullable(personalReviewDto.getCntReviews()).orElse(0);
+
+        Double dtoAvgRating = Optional.ofNullable(dto.getAvgRating()).orElse(null);
+        Double personalReviewDtoAvgRating = Optional.ofNullable(personalReviewDto.getAvgRating()).orElse(null);
+
+        int count = 0;
+        Double totalRating = 0.0;
+
+        if (dtoAvgRating != null) {
+            totalRating += dtoAvgRating;
+            count++;
+        }
+
+        if (personalReviewDtoAvgRating != null) {
+            totalRating += personalReviewDtoAvgRating;
+            count++;
+        }
+
+        Double averageRating = count == 0 ? 0 : totalRating / count;
+
+        model.addAttribute("personalReviews", personalReviewDto);
+        model.addAttribute("dto", dto);
         model.addAttribute("totalReviews", totalReviews);
-//        model.addAttribute("averageRating", averageRating);
-        
+        model.addAttribute("averageRating", averageRating);
+
         return "/trainer-review/list";
     }
+
+
+
+
+
+
     // 트레이너 리뷰 등록 화면
     @GetMapping("/registration")
     public String reviewForm(){
@@ -98,6 +125,14 @@ public class TrainerReviewController {
     public String personalReviewModifyForm(int trainerNo, ModifyPersonalReviewForm form){
         trainerReviewService.updatePersonalReview(form);
 
+        return "redirect:/trainer-review/list?trainerNo=" + trainerNo;
+    }
+    
+    // 개인수업 리뷰 삭제 로직
+    @PostMapping("/personal-delete")
+    public String deletePersonalReview(@RequestParam("trainerNo") int trainerNo ,@RequestParam("reviewNo") int reviewNo){
+        trainerReviewService.deletePersonalReview(reviewNo);
+        
         return "redirect:/trainer-review/list?trainerNo=" + trainerNo;
     }
 }
