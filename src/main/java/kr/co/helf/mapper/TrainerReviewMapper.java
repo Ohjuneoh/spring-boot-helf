@@ -65,6 +65,8 @@ public interface TrainerReviewMapper {
 
 	void updatePersonalReview(ModifyPersonalReviewForm form);
 
+	void deletePersonalReview(TrainerPersonalReview personalReview);
+
 
 
 }

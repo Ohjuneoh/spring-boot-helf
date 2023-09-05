@@ -25,7 +25,7 @@ public class MembershipJoinCategory {
 	private String catProperty;
 	private String useOption;
 	
-	public boolean isOneDay(MembershipEnum e) {
-		return e.ONE_DAY.getValue().equals(this.catName);
+	public boolean isOneDay() {
+		return MembershipEnum.ONE_DAY.getValue().equals(this.catName);
 	}
 }

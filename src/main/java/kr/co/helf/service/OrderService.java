@@ -169,10 +169,10 @@ public class OrderService {
 		myMembership.setPeriod(period);
 		Membership membership = orderMapper.getMembershipByNo(form.getMembershipNo());
 		myMembership.setMembership(membership);
-		myMembership.waitState();
+		myMembership.setWaitState();
 		
 		if(form.getStartDate().isEqual(LocalDate.now())) {
-			myMembership.possibility();
+			myMembership.setPossibility();
 		}
 		orderMapper.insertMyMembership(myMembership);
 	}

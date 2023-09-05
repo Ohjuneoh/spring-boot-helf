@@ -25,18 +25,24 @@ public class MyMembership {
 	private Period period;				// 넣어야됨
 	private Membership membership;		// 넣어야됨
 	
-	public void waitState() {
+	public void setWaitState() {
 		MembershipEnum en = MembershipEnum.WAITING;
 		this.state = en.getValue();
 	}
 	
-	public void possibility() {
+	public void setPossibility() {
 		MembershipEnum en = MembershipEnum.POSSIBILITY;
 		this.state = en.getValue();
 	}
-	public void impossibility() {
+	
+	public void setImpossibility() {
 		MembershipEnum en = MembershipEnum.IMPOSSIBILITY;
 		this.state = en.getValue();
+	}
+	
+	public boolean isImpossibility() {
+		MembershipEnum en = MembershipEnum.IMPOSSIBILITY;
+		return this.state.equals(en.getValue());
 	}
 
 	public int remainPeriod() {

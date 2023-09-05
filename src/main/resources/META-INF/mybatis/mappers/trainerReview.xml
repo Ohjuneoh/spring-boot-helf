@@ -125,6 +125,7 @@
         select count(trainer_no) as "trainer.no"
         from helf_trainer_personal_review
         where trainer_no = #{value}
+        and trainer_personal_review_status = 'Y'
     </select>
 
     <!-- 트레이너 번호에 해당하는 리뷰 더보기 조회 -->
@@ -268,5 +269,14 @@
         where
             trainer_personal_review_no = #{no}
     </select>
+    
+    <update id="deletePersonalReview" parameterType="TrainerPersonalReview">
+        update
+            helf_trainer_personal_review
+        set
+            trainer_personal_review_status = 'N'
+        where
+            trainer_personal_review_no = #{no}
+    </update>
 
 </mapper>

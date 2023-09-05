@@ -14,11 +14,11 @@ public class Period {
 	private int duration;
 	private int addPrice;
 	
-	public boolean isPeriod(MembershipEnum e) {
-		return e.PERIOD.equals(this.type);
+	public boolean isPeriod() {
+		return MembershipEnum.PERIOD.equals(this.type);
 	}
 	
-	public boolean isTime(MembershipEnum e) {
-		return e.TIME.getValue().equals(this.type);
+	public boolean isTime() {
+		return MembershipEnum.TIME.getValue().equals(this.type);
 	}
 }
