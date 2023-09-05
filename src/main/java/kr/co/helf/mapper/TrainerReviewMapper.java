@@ -1,5 +1,6 @@
 package kr.co.helf.mapper;
 
+import kr.co.helf.form.ModifyPersonalReviewForm;
 import kr.co.helf.form.ModifyReviewForm;
 import kr.co.helf.vo.PersonalLesson;
 import kr.co.helf.vo.Trainer;
@@ -58,7 +59,9 @@ public interface TrainerReviewMapper {
 
 	Integer getCountPersonalReviews(int trainerNo);
 
-	TrainerPersonalReview getTrainerPersonalReviewByNo(int reviewNo);
+	TrainerPersonalReview getTrainerPersonalReviewByNo(int no);
+
+	void updatePersonalReview(ModifyPersonalReviewForm form);
 
 
 

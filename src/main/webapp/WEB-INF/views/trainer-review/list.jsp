@@ -14,6 +14,23 @@
 
   <!-- Favicon -->
   <link href="img/favicon.ico" rel="icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  
+      <!-- Star Review  -->
+	<style>
+    @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+	    .rate { display: inline-block;border: 0;margin-right: 15px;}
+	    .rate > input {display: none;}
+	    .rate > label {float: right;color: #ddd}
+	    .rate > label:before {display: inline-block;font-size: 2rem;padding: .1rem .3rem;margin: 0;cursor: pointer;font-family: FontAwesome;content: "\f005 ";}
+	    .rate .half:before {content: "\f089 "; position: absolute;padding-right: 0;}
+	    .rate input:checked ~ label, 
+	    .rate label:hover,.rate label:hover ~ label { color: #0d6efd !important;  } 
+	    .rate input:checked + .rate label:hover,
+	    .rate input input:checked ~ label:hover,
+	    .rate input:checked ~ .rate label:hover ~ label,  
+	    .rate label:hover ~ input:checked ~ label { color: #0d6efd !important;  } 
+  	</style>
 
   <!-- Google Web Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -91,25 +108,26 @@
             <h2 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">최근후기</h2>
             <h3 class="mb-3" >생생한 후기를 확인하세요!</h3>
           </div>
-          <!-- 평균 펼점 조회 -->
           <div id="1" class="col-6 d-flex align-items-center">
             <div id="2" class="d-flex justify-content-end">
-              <p class="m-1 text-primary" style="font-size: 80px;"><fmt:formatNumber value="${dto.avgRating }" pattern="#.#" /> </p>
+              <p class="m-1 text-primary" style="font-size: 80px;"><fmt:formatNumber value="${averageRating }" pattern="#.#" /> </p>
             </div>
             <div id="3" class="d-flex flex-column align-items-start m-1">
+            <c:set var="fillCount" value="${Math.floor(averageRating)}"/>
+			<c:set var="halfCount" value="${averageRating > fillCount ? 1 : 0}"/>
+			<c:set var="emptyCount" value="${5 - fillCount - halfCount}"/>
               <h6 class="m-1 text-primary" style="font-size: 20px;">
-                <c:forEach begin="1" end="${dto.fillCount}">
-                  <i class="bi bi-star-fill"></i>
-              </c:forEach>
-                <c:forEach begin="1" end="${dto.halfCount}">
-                  <i class="bi bi-star-half"></i>
-                </c:forEach>
-                <c:forEach begin="1" end="${dto.emptyCount}">
-                  <i class="bi bi-star"></i>
-                </c:forEach>
+                <c:forEach begin="1" end="${fillCount}">
+			    	<i class="bi bi-star-fill"></i>
+			  	</c:forEach>
+			  	<c:forEach begin="1" end="${halfCount}">
+			    	<i class="bi bi-star-half"></i>
+			  	</c:forEach>
+			  	<c:forEach begin="1" end="${emptyCount}">
+			   		<i class="bi bi-star"></i>
+			 	</c:forEach>
               </h6>
-              <!-- 리뷰 총 갯수 조회 -->
-              <strong class="m-1 text-primary" style="font-size: 20px;">${dto.cntReviews }개의 리뷰</strong>
+              <strong class="m-1 text-primary" style="font-size: 20px;">${totalReviews} 개의 리뷰</strong>
             </div>
           </div>
         </div>
@@ -157,13 +175,95 @@
               <input type="hidden" id="login-user-id" value="${loginUserId}" />
               <c:if test="${trainerReview.lessonApply.user.id eq loginUserId}">
                 <a href="/trainer-review/delete?reviewNo=${trainerReview.no }" class="btn btn-danger btn-sm float-end" style="margin-left: 5px;">삭제</a>
-                <a href="/trainer-review/modify?reviewNo=${trainerReview.no }" class="btn btn-warning btn-sm float-end">수정</a>
+                <a  href="/trainer-review/modify?reviewNo=${trainerReview.no }" class="btn btn-warning btn-sm float-end">수정</a>
               </c:if>
             </sec:authorize>
           </div>
         </div>
         <!-- 작성일자 밑에 있는 리뷰내용 div -->
+      </div>
+    </c:forEach>
+    <!-- 개인수업  -->
+    <c:forEach var="trainerPersonalReview" items="${personalReviews.trainerPersonalReviews }">
+      <!-- 한 사람에 해당되는 전체 div-->                                                                                                                    
+      <div class="testimonial-item bg-light mt-1 mb-3 border-bottom ">
+        <!-- 파라미터로 전달받은 트레이너번호 -->
+        <input type="hidden" name="trainerNo" value="${param.trainerNo }">
+        <h5 class="m-1 text-primary float-end">
+          <c:forEach begin="1" end="${trainerPersonalReview.fillCount}">
+            <i class="bi bi-star-fill"></i>
+          </c:forEach>
+          <c:forEach begin="1" end="${trainerPersonalReview.halfCount}">
+            <i class="bi bi-star-half"></i>
+          </c:forEach>
+          <c:forEach begin="1" end="${trainerPersonalReview.emptyCount}">
+            <i class="bi bi-star"></i>
+          </c:forEach>
+        </h5>
+        <div class="d-flex align-items-center pt-1 pb-1 px-5">
+          <h5 class="text-primary">${trainerPersonalReview.personalLesson.name } </h5>
+        </div>
 
+        <!-- 리뷰 내용 위의 작성자명, 작성일자 div -->
+        <div class="d-flex align-items-center pt-1 pb-3 px-5 border-bottom mb-3">
+          <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
+          <div class="ps-4">
+            <h4 class="text-primary mb-1">${trainerPersonalReview.personalLesson.user.name }</h4>
+            <small class="text-uppercase"><fmt:formatDate value="${trainerPersonalReview.createDate }" pattern="yyyy년 M월 d일" /></small>
+          </div>
+        </div>
+       <div class="row">
+		    <div class="col-9 ps-5">
+		        <p>${trainerPersonalReview.content } </p>
+		    </div>
+		    <div class="col-3 text-end">
+		        <sec:authorize access="isAuthenticated()">
+		            <sec:authentication property="principal.id" var="loginUserId" />
+		            <input type="hidden" id="login-user-id" value="${loginUserId}" />
+		            <c:if test="${trainerPersonalReview.personalLesson.user.id eq loginUserId}">
+		                <a href="/trainer-review/delete?reviewNo=${trainerPersonalReview.no }" class="btn btn-danger btn-sm float-end" style="margin-left: 5px;">삭제</a>
+		                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseExample${trainerPersonalReview.no}" 
+		                		data-personal-review-no="${trainerPersonalReview.no }"
+		                		data-trainer-no="${trainerPersonalReview.trainer.trainerNo }"
+		                		aria-expanded="false" aria-controls="collapseExample${trainerPersonalReview.no}">수정</button>
+		            </c:if>
+		        </sec:authorize>
+		    </div>
+		</div>
+        <div class="collapse" id="collapseExample${trainerPersonalReview.no}">
+	        <form method="post" action="/trainer-review/review-update">
+	           <input id="personal-review-no-${trainerPersonalReview.no}" name="no" type="hidden"/>
+	           <input name="trainerNo" type="hidden">
+				<div class="card card-body bg-light">
+					<div class="row">
+						<div class="col-7 text-primary mb-0 d-flex align-items-center" style="font-size: 30px;">
+							<strong style="margin-right: 15px;">평점</strong>
+							 <fieldset class="rate" data-checked="0">
+			                    <input type="radio" id="rating10-${trainerPersonalReview.no}" name="rating" value="5"><label for="rating10-${trainerPersonalReview.no}" title="5점"></label>
+			                    <input type="radio" id="rating9-${trainerPersonalReview.no}" name="rating" value="4.5"><label class="half" for="rating9-${trainerPersonalReview.no}" title="4.5점"></label>
+			                    <input type="radio" id="rating8-${trainerPersonalReview.no}" name="rating" value="4"><label for="rating8-${trainerPersonalReview.no}" title="4점"></label>
+			                    <input type="radio" id="rating7-${trainerPersonalReview.no}" name="rating" value="3.5"><label class="half" for="rating7-${trainerPersonalReview.no}" title="3.5점"></label>
+			                    <input type="radio" id="rating6-${trainerPersonalReview.no}" name="rating" value="3"><label for="rating6-${trainerPersonalReview.no}" title="3점"></label>
+			                    <input type="radio" id="rating5-${trainerPersonalReview.no}" name="rating" value="2.5"><label class="half" for="rating5-${trainerPersonalReview.no}" title="2.5점"></label>
+			                    <input type="radio" id="rating4-${trainerPersonalReview.no}" name="rating" value="2"><label for="rating4-${trainerPersonalReview.no}" title="2점"></label>
+			                    <input type="radio" id="rating3-${trainerPersonalReview.no}" name="rating" value="1.5"><label class="half" for="rating3-${trainerPersonalReview.no}" title="1.5점"></label>
+			                    <input type="radio" id="rating2-${trainerPersonalReview.no}" name="rating" value="1"><label for="rating2-${trainerPersonalReview.no}" title="1점"></label>
+			                    <input type="radio" id="rating1-${trainerPersonalReview.no}" name="rating" value="0.5"><label class="half" for="rating1-${trainerPersonalReview.no}" title="0.5점"></label>
+			                </fieldset>
+						</div>
+					</div>
+					<hr></hr>
+		          	<div class="col-12 m-3">
+		           		<input type="text" class="form-control border-0 bg-light m-0" name="content" placeholder="내용 (최소 15자 이상을 입력해주세요)" style="height: 80px;">
+		           	</div>
+		           	<div class="col-12 d-flex justify-content-end">
+			        	<button type="submit" class="btn btn-primary btn-sm m-1">수정하기</button>
+			        	<button type="button" class="btn btn-success btn-sm m-1 close-button" data-bs-toggle="collapse" data-bs-target="#collapseExample${trainerPersonalReview.no}" id="closeButton">닫기</button>
+		           	</div>
+				</div>
+			</form>
+		</div>
+        <!-- 작성일자 밑에 있는 리뷰내용 div -->
       </div>
     </c:forEach>
     </div>
@@ -194,7 +294,6 @@
 <script src="/resources/js/main.js"></script>
 
 <script>
-      // 더 보기(페이징처리)
       let currentPage = 1;
       let more = true;
       $("#btn-more").click(function() {
@@ -208,10 +307,9 @@
             more = false;
           }
 
-          // 위에 id가 login-user-id 인 부분을 찾아서 값 조회
           let loginUserId = $("#login-user-id").val();
 
-          // 더보기에 해당하는 부분 위에와 동일하게 content에 붙여서 ajax처리
+          // reviews = [{no:x, title:x, }, {}, {}]
           reviews.forEach(function(r, index) {
 
             let content = `
@@ -255,7 +353,6 @@
         });
       });
 
-      // ajax에서 더보기 부분에서 평점을 표현하기 위한 코드
       function getFillStar(count) {
         let content = "";
         for (let i=1; i<=count; i++) {
@@ -279,6 +376,78 @@
         }
         return content;
       }
+      /* 수정 버튼을 눌렀을 때 각각의 div에 Collapse 부여 */  
+	$(document).ready(function(){
+	    $('.btn-warning').on('click', function(){
+	        var target = $(this).attr('href');
+	        handleToggle(target);
+	        return false; 
+	    });
+	
+	    $('.closeButton').on('click', function(){
+	        var target = $(this).data('bs-target');
+	        handleToggle(target);
+	    });
+	
+	    function handleToggle(target) {
+	        var isCurrentlyShown = $(target).hasClass('show');
+	        
+	        $('.collapse.show').each(function(){
+	            $(this).removeClass('show');
+	            $(this).find('input[name="content"]').val(''); // 닫힌 div의 내용을 삭제
+	            $(this).find('.rate input:checked').prop('checked', false); // 별점을 초기화
+	            $(this).find('.rate label').removeClass('selected hover'); // 별점 라벨을 초기화
+	            $(this).find('input[name="no"], input[name="trainerNo"]').val(''); // 숨겨진 입력값을 초기화
+	        });
+	
+	        if(!isCurrentlyShown) {
+	            // 현재 클릭한 div만 열거나 닫습니다
+	            $(target).toggleClass('show');
+	        }
+	    }
+	
+	    $("button[data-personal-review-no]").click(function(){
+	        var reviewNo = $(this).data('personal-review-no');
+	        $("#personal-review-no-" + reviewNo).val(reviewNo);
+	
+	        var trainerNo = $(this).data('trainer-no');
+	        $("input[name='trainerNo']").val(trainerNo); // hidden input에 trainerNo 값을 설정
+	    });
+	
+	    $('form').on('submit', function(e){
+	        var contentLength = $(this).find('input[name="content"]').val().length; // 이 부분을 수정합니다.
+	        if(contentLength < 15){
+	            alert('최소 15자 이상을 입력해주세요');
+	            e.preventDefault();
+	        }
+	    });
+	});
+	
+	$(document).ready(function(){
+	    $('.rate input').on('change', function(){
+	        var $set = $(this).closest('.rate');
+	        var $labels = $set.find('label');
+	
+	        $labels.removeClass('selected');
+	        $(this).next('label').addClass('selected');
+	    });
+	
+	    // 별점 위에 마우스를 올렸을 때 색이 채워지는 효과
+	    $('.rate label').on('mouseenter', function(){
+	        var $set = $(this).closest('.rate');
+	        var $labels = $set.find('label');
+	
+	        $labels.removeClass('hover');
+	        $(this).addClass('hover');
+	        $(this).prevAll('label').addClass('hover');
+	    });
+	
+	    // 별점에서 마우스를 떠날 때 호버 효과 제거
+	    $('.rate').on('mouseleave', function(){
+	        $(this).find('label').removeClass('hover');
+	    });
+	});
+	
 
 </script>
 </body>
