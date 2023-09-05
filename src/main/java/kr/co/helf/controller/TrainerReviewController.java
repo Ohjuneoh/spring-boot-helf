@@ -1,6 +1,5 @@
 package kr.co.helf.controller;
 
-import kr.co.helf.dto.ReviewIntegrationDto;
 import kr.co.helf.dto.TrainerPersonalReviewDto;
 import kr.co.helf.dto.TrainerReviewDto;
 import kr.co.helf.form.AddPersonalReviewForm;
@@ -8,12 +7,9 @@ import kr.co.helf.form.AddReviewForm;
 import kr.co.helf.form.ModifyPersonalReviewForm;
 import kr.co.helf.form.ModifyReviewForm;
 import kr.co.helf.service.TrainerReviewService;
-import kr.co.helf.vo.TrainerPersonalReview;
 import kr.co.helf.vo.TrainerReview;
-import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -47,12 +43,12 @@ public class TrainerReviewController {
         TrainerPersonalReviewDto personalReviewDto = trainerReviewService.getPersonalReviewByTrainerNo(trainerNo);
         
         Integer totalReviews = dto.getCntReviews() + personalReviewDto.getCntReviews();
-        Double averageRating = (dto.getAvgRating() + personalReviewDto.getAvgRating()) / 2;
+//        Double averageRating = (dto.getAvgRating() + personalReviewDto.getAvgRating()) / 2;
         
         model.addAttribute("personalReviews",personalReviewDto);
         model.addAttribute("dto",dto);
         model.addAttribute("totalReviews", totalReviews);
-        model.addAttribute("averageRating", averageRating);
+//        model.addAttribute("averageRating", averageRating);
         
         return "/trainer-review/list";
     }
