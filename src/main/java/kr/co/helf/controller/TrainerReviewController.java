@@ -43,12 +43,12 @@ public class TrainerReviewController {
         TrainerPersonalReviewDto personalReviewDto = trainerReviewService.getPersonalReviewByTrainerNo(trainerNo);
         
         Integer totalReviews = dto.getCntReviews() + personalReviewDto.getCntReviews();
-//        Double averageRating = (dto.getAvgRating() + personalReviewDto.getAvgRating()) / 2;
+//      Double averageRating = (dto.getAvgRating() + personalReviewDto.getAvgRating()) / 2;
         
         model.addAttribute("personalReviews",personalReviewDto);
         model.addAttribute("dto",dto);
         model.addAttribute("totalReviews", totalReviews);
-//        model.addAttribute("averageRating", averageRating);
+//      model.addAttribute("averageRating", averageRating);
         
         return "/trainer-review/list";
     }

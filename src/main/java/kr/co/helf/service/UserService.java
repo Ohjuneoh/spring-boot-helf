@@ -306,11 +306,25 @@ public class UserService {
 		}
 	}
 
-	// 마이페이지 - 내 리뷰 보기(예광)
+	// 마이페이지(유저) - 내 리뷰 보기(예광)
 	public List<TrainerReview> getMyReviews(String userId) {
 		List<TrainerReview> reviews = trainerReviewMapper.getMyReviews(userId);
 		return reviews;
 	}
+
+	// 마이페이지(트레이너) - 내 리뷰 보기(예광)
+	public List<TrainerReview> getTrainerReviews(User user) {
+		Trainer trainer = trainerReviewMapper.getTrainerById(user.getId());
+		List<TrainerReview> reviews = trainerReviewMapper.getReviewByTrainerNo(trainer.getTrainerNo());
+
+		return reviews;
+	}
+	// 마이페이지(트레이너) - 트레이너 번호를 전달받기 위한 메소드(예광)
+	public Trainer getTrainerById(User user){
+		Trainer trainer = trainerReviewMapper.getTrainerById(user.getId());
+		return trainer;
+	}
+
 
 	// 관리자 고객상세조회 - 최근 방문 내역 조회 - 채경
 	public Map<String, Object> getCustomerAttendances(Map<String, Object> param) {
