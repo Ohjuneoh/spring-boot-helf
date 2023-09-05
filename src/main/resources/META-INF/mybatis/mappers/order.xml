@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.helf.mapper.OrderMapper">
+
+	<select id="getMemberships" resultType="membership">
+		select membership_no			as no,
+			   membership_name			as name,
+			   membership_description	as description,
+			   Membership_delete		as deleted,
+			   category_no				as "category.no",
+			   membership_price			as price
+		from helf_membership
+		where Membership_delete = 'N'
+		order by membership_no desc
+	</select>
+
+	<select id="getMembershipByNo" resultType="membership" parameterType="int">
+		select membership_no			as no,
+			   membership_name			as name,
+			   membership_description	as description,
+			   Membership_delete		as deleted,
+			   category_no				as "category.no",
+			   membership_price			as price
+		from helf_membership
+		where membership_no = #{value}
+	</select>
+
+	<select id="getMembershipJoinCatByNo" resultType="membershipJoinCat" parameterType="int">
+		select A.membership_no				as no,
+			   A.membership_name			as name,
+			   A.membership_description		as description,
+			   A.membership_delete			as deleted,
+			   A.membership_price			as price,
+			   A.membership_create_date		as createDate,
+			   A.membership_delete_date		as deleteDate,
+			   B.category_no				as catNo,
+			   B.category_name				as catName,
+			   B.category_property			as catProperty,
+			   B.category_use_option		as useOption
+		from helf_membership A join helf_membership_category B
+			on A.category_no = B.category_no
+		and A.membership_no = #{value}
+	</select>
+	
+	<select id="getPeriodsByType" resultType="Period" parameterType="string">
+		select period_no				as no, 
+			   period_type				as type,	
+			   period_property			as property,
+			   period_duration			as duration,
+			   period_addprice			as addPrice
+		from helf_membership_period
+		where period_type = #{value}
+		<if test="type == '횟수'">
+			and period_property > 1
+		</if>
+	</select>
+
+	<select id="getPeriodsByOne" resultType="Period" parameterType="string">
+		select period_no				as no, 
+			    period_type				as type,	
+				period_property			as property,
+				period_duration			as duration,
+				period_addprice			as addPrice
+		from helf_membership_period
+		where period_type = #{value}
+		and period_property = 1
+	</select>
+
+	<select id="getPeriodByNo" resultType="Period" parameterType="int">
+		select period_no				as no, 
+			   period_type				as type,	
+			   period_property			as property,
+			   period_duration			as duration,
+			   period_addprice			as addPrice
+		from helf_membership_period
+		where period_no = #{value}
+	</select>
+	
+	<select id="getOptionJoinDetails" resultType="optionJoinDetail">
+		select B.detail_no			as no, 
+			   A.option_name		as name, 
+			   B.detail_price		as price,
+			   B.detail_type		as type,
+			   A.option_no			as "option.no"
+		from helf_membership_option A join helf_membership_option_detail B
+			on A.option_no = B.option_no
+		order by B.detail_price 
+	</select>
+	
+	<select id="getOptionJoinDetailByNo" parameterType="int" resultType="optionJoinDetail">
+		select B.detail_no			as no, 
+			   A.option_name		as name, 
+			   B.detail_price		as price,
+			   B.detail_type		as type,
+			   A.option_no			as "option.no"
+		from helf_membership_option A join helf_membership_option_detail B
+			on A.option_no = B.option_no
+		and B.detail_no = #{value}
+	</select>
+	
+	<select id="getOptionDetailByNo" parameterType="int" resultType="optionDetail">
+		select detail_no		as no,
+			   detail_price		as price,
+			   detail_type		as type,
+			   option_no		as "option.no"
+		from helf_membership_option_detail
+		where detail_no = #{value}
+	</select>
+	
+	<select id="getOptions" resultType="option">
+		select option_no	as no,
+			   option_name	as name
+		from helf_membership_option
+	</select>
+	
+	<update id="updateUserById" parameterType="User">
+		update helf_users
+		<set>
+			user_tel = #{tel},
+			user_status	= #{status},
+			user_update_date = sysdate,
+			rank_no = #{rank.no},
+			user_point = #{point}
+		</set> 
+		where user_id = #{id}
+	</update>
+	
+	
+	<insert id="insertMyMembership" parameterType="myMembership">
+		<selectKey keyProperty="no"  resultType="int" order="BEFORE">
+			select HELF_MY_MEMBERSHIP_SEQ.nextval from dual
+		</selectKey>
+		insert into helf_my_membership
+			(my_membership_no, my_membership_startdate, my_membership_enddate,
+			 my_membership_remainder_cnt, user_id, period_no, membership_no, my_membership_state)
+		values
+			(#{no}, #{startDate}, #{endDate},
+			 #{remainderCnt}, #{user.id}, #{period.no}, #{membership.no}, #{state})
+	</insert>
+
+	<insert id="insertMyOption" parameterType="myOption">
+		insert into helf_membership_my_option
+			(my_option_no, detail_no, my_membership_no, my_option_price)
+		values
+			(helf_membership_my_option_seq.nextval, #{optionDetail.no}, #{myMembership.no}, #{price})
+	</insert>
+	
+	<insert id="insertHistory" parameterType="pointHistory">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select helf_point_history_seq.nextval from dual
+		</selectKey>
+		insert into helf_point_history
+			(point_history_no, point_history_use, user_id, point_history_type, orders_no)
+		values
+			(#{no}, #{usePoint}, #{user.id}, #{type}, #{order.no})
+	</insert>
+	
+	<select id="getRankByNo" parameterType="int" resultType="Rank">
+		select rank_no				as no,
+			   rank_name			as name,
+			   rank_min_criteria	as minCriteria,
+			   rank_max_criteria	as maxCriteria,
+			   rank_benefit			as benefit,
+			   rank_point_rate		as pointRate
+		from helf_ranks
+		where rank_no = #{value}
+	</select>
+	
+	<insert id="insertOrder" parameterType="order">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select helf_order_seq.nextval from dual
+		</selectKey>
+		insert into helf_orders
+			(orders_no, orders_total_price, user_id, orders_surtax,
+			 orders_membership_price, my_membership_no)
+		values
+			(#{no}, #{totalPrice}, #{user.id}, #{surtax},
+			 #{membershipPrice}, #{myMembership.no})
+	</insert>
+	
+	<select id="getUseMyMembershipByNoById" parameterType="map" resultType="myMembership">
+		select my_membership_no				as no,
+			   my_membership_startdate		as startDate,
+			   my_membership_enddate		as endDate,
+			   my_membership_remainder_cnt	as remainderCnt,
+			   my_membership_state			as state,
+			   user_id						as "user.id",
+			   period_no					as "period.no",
+			   membership_no				as "membership.no"
+		from helf_my_membership
+		where membership_no = #{no}
+		and user_id = #{id}
+		and my_membership_state not in '사용불가'
+	</select>
+
+	<select id="getMyMembershipStartToday" resultType="myMembership">
+		select my_membership_no				as no,
+			   my_membership_startdate		as startDate,
+			   my_membership_enddate		as endDate,
+			   my_membership_remainder_cnt	as remainderCnt,
+			   my_membership_state			as state,
+			   user_id						as "user.id",
+			   period_no					as "period.no",
+			   membership_no				as "membership.no"
+		from helf_my_membership
+		where my_membership_startdate = sysdate
+	</select>
+	
+	<select id="getMyMembershipEndToday" resultType="myMembership">
+		select my_membership_no				as no,
+			   my_membership_startdate		as startDate,
+			   my_membership_enddate		as endDate,
+			   my_membership_remainder_cnt	as remainderCnt,
+			   my_membership_state			as state,
+			   user_id						as "user.id",
+			   period_no					as "period.no",
+			   membership_no				as "membership.no"
+		from helf_my_membership
+		where my_membership_enddate = sysdate
+	</select>
+	
+	<update id="updateMyMembership" parameterType="myMembership">
+		update helf_my_membership
+		<set>
+			my_membership_remainder_cnt	= #{remainderCnt},
+			my_membership_state = #{state}
+		</set>
+		where my_membership_no = #{no}
+	</update>
+
+	<select id="getMyOptionEndToday" resultType="myOption" parameterType="int">
+		select my_option_no				as no,
+			   detail_no				as "optionDetail.no",
+			   my_membership_no			as "myMembership.no",
+			   my_option_price			as price
+		from helf_membership_my_option
+		where my_membership_no = #{value}
+	</select>
+
+	<select id="getCustomerOrders" parameterType="String" resultType="kr.co.helf.dto.CustomerOrderDto">
+	select 
+		o.orders_payment_date		as "order.paymentDate", 
+		mm.membership_no			as "order.myMembership.no", 
+		m.membership_name			as "order.myMembership.membership.name", 
+		o.orders_total_price		as "order.totalPrice", 
+		o.orders_membership_price	as "order.membershipPrice", 
+		o.orders_payment_state		as "order.state", 
+		mo.option_name				as "myOption.optionDetail.option.name"
+	from helf_orders o, helf_my_membership mm, helf_membership m, helf_membership_my_option mmo, 
+		 helf_membership_option mo, helf_membership_option_detail mod
+	where o.my_membership_no = mm.my_membership_no 
+	and mm.membership_no = m.membership_no 
+	and mm.my_membership_no = mmo.my_membership_no (+)
+	and mmo.detail_no = mod.detail_no(+)
+	and mod.option_no = mo.option_no(+) 
+	and o.user_id = #{value}
+	</select>
+	
+	<select id="getCustomerMyMemberships" parameterType="String" resultType="kr.co.helf.vo.MyMembership">
+	select 
+    	mc.category_name				as "membership.category.name", 
+    	mc.category_property			as "membership.category.property", 
+    	m.membership_name				as "membership.name", 
+    	mm.my_membership_state			as state, 
+    	mm.my_membership_startdate		as startDate, 
+    	mm.my_membership_enddate		as endDate, 
+    	mm.my_membership_remainder_cnt	as remainderCnt
+	from helf_my_membership mm, helf_membership m, helf_membership_category mc
+	where mm.membership_no = m.membership_no
+	and m.category_no = mc.category_no
+	and mm.user_id = #{value}
+	</select>
+	
+	<update id="updateStartMyMemberships" parameterType="list">
+		update helf_my_membership
+		set
+			my_membership_state = '사용가능'
+		<foreach collection="noList" item="no" open="(" close=")" separator=",">
+			#{no}
+		</foreach>
+	</update>
+
+	<update id="updateEndMyMemberships" parameterType="list">
+		update helf_my_membership
+		set
+			my_membership_state = '사용불가'
+		<foreach collection="noList" item="no" open="(" close=")" separator=",">
+			#{no}
+		</foreach>
+	</update>
+</mapper>

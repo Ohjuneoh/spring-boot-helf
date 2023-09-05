@@ -1,0 +1,82 @@
+#내장 웹서버의 포트번호 지정하기
+server:
+  port: 80
+  servlet:
+    session:
+      timeout: 600
+  
+# 로그레벨 지정하기
+logging:
+  level:
+    root: info
+#    '[org.springframework.security]': info
+#    '[org.springframework.web]': trace
+    '[kr.co.helf.mapper]': trace
+# 커넥션 풀 관련 설정정보 지정하기
+spring:
+  datasource:
+      driver-class-name: oracle.jdbc.OracleDriver
+      url: jdbc:oracle:thin:@localhost:1521:xe
+      username: final
+      password : zxcv1234
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp     
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+# 이메일인증
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: oooorrrr0117@gmail.com
+    password: qbgwovlafhgjinli
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
+        debug: true
+# 카카오로그인
+  security:
+    oauth2:
+      client:
+        registration:
+         kakao:
+            client-id: 865ca56d4eae2d238a0d945acadb5b41
+            client-secret: ZiYibBStxCyjOUW1BgEiPc9IbpfPzxbF 
+            client-authentication-method: POST
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/kakao"
+            scope:
+            - profile_nickname
+            - profile_image
+            - account_email
+            client-name: Kakao
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id            
+  
+  spring:
+  profiles:
+    active: oauth
+  
+  config:
+    name: application-oauth
+    location: C:/workspace/spring-workspace/spring-boot-helf/src/main/resources/
+          
+# mybatis 관련 설정정보 저장하기
+mybatis:
+  mapper-locations:
+  - META-INF/mybatis/mappers/*.xml
+  configuration:
+    jdbc-type-for-null: 'NULL'
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+  type-aliases-package: kr.co.helf.vo, kr.co.helf.dto

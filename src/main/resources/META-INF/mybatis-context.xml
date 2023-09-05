@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+	
+	
+	<context:property-placeholder
+		location="classpath:db.properties"/>
+		
+	<!-- 
+		Connection Pool을 스프링 컨테이너의 빈(객체)로 등록시키기
+	 -->
+	<bean id="connectionPool" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${db.driver-class-name}" />
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+	</bean>
+	<!-- 
+		mybatis의 SqlSessionFactory 객체를 스프링 컨테이너의 빈으로 등록시키는
+		SqlSessionFactoryBean을 등록하기
+	 -->
+	 
+	 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	 	<property name="dataSource" ref="connectionPool"/>
+	 	<property name="configLocation" value="classpath:/META-INF/mybatis/mybatis-config.xml" />
+	 	<property name="mapperLocations" value="classpath:/META-INF/mybatis/mappers/*.xml"/>
+	 </bean>
+	 
+	 <!--
+	 	Mapper 인터페이스를 자동스캔하고, Mapper 인터페이스를 구현한 프록시 객체를 생성해서
+	 	스프링 컨테이너의 빈으로 등록시키는 Mapper MapperScannerConfigurer를 등록하기
+	   -->
+	  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	   	<property name="basePackage" value="kr.co.helf.hr.mapper" />
+	   	<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	  </bean>
+	<!-- id가 없는 이유: 다른 Bean에 주입 할 때 식별자로 구분이 필요할 때 id를 사용한다.  -->
+	<!--
+		+지정된 패키지 및 그 하위 패키지에서 컴포넌트를 스캔해서 
+		 스프링 컨테이너의 빈(객체)으로 자동등록시킨다.
+		+@autowired 어노테이션을 감지하고,
+		 스프링 컨테이너에서 등록된 객체중에서 적절한 객체를 찾아서 
+		 자동 의존성 주입한다.
+	  -->
+	  <context:annotation-config/>
+	  <context:component-scan base-package="kr.co.helf.hr.service">
+	  
+	  </context:component-scan>
+</beans>
+
+
+
+
+
+
+
+
+
+
