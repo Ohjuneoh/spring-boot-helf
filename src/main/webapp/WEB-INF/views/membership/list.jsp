@@ -167,7 +167,8 @@
 		                    </div>
 						</div>
 						<form action="wait-refund" method="post">
-							<div class="align-items-end justify-content-end text-end" style="margin: 15px;">
+							<div class="align-items-end justify-content-end text-end" 
+								 style="margin: 15px;">
 								<button type="submit" class="btn btn-danger" >환불하기</button>
 								<input type="hidden" name="no" value="${myMembership.no }">
 							</div>
@@ -200,8 +201,6 @@
 	<script src="/resources/js/main.js"></script>
 </body>
 <script type="text/javascript">
-$(function() {
 
-})
 </script>
 </html>

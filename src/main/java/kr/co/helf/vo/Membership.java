@@ -19,4 +19,12 @@ public class Membership {
 	private int price;
 	private LocalDate createDate;
 	private LocalDate deleteDate;
+	
+	public boolean yesDeleted() {
+		return "Y".equals(this.deleted);
+	}
+
+	public boolean NoDeleted() {
+		return "N".equals(this.deleted);
+	}
 }

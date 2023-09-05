@@ -18,7 +18,6 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import kr.co.helf.dto.MembershipJoinCategory;
 import kr.co.helf.dto.OptionJoinDetail;
-import kr.co.helf.enums.MembershipEnum;
 import kr.co.helf.form.AddOrderForm;
 import kr.co.helf.kakaopay.KakaoPayReadyResponse;
 import kr.co.helf.kakaopay.KakaoPayService;
@@ -37,7 +36,6 @@ import lombok.RequiredArgsConstructor;
 @SessionAttributes({"addOrderForm", "tid"})
 public class OrderController {
 	
-	private static final MembershipEnum MembershipEnum = null;
 	private final OrderService orderService;
 	private final KakaoPayService kakaoPayService;
 	
@@ -82,7 +80,7 @@ public class OrderController {
 		
 		MembershipJoinCategory membershipJoinCat = orderService.getMembershipJoinCatByNo(form.getMembershipNo());
 
-		if(membershipJoinCat.isOneDay(MembershipEnum)) {
+		if(membershipJoinCat.isOneDay()) {
 			orderService.setOneDay(membershipJoinCat, form, user);
 			
 			model.addAttribute("membershipJoinCat", membershipJoinCat);
@@ -117,7 +115,7 @@ public class OrderController {
 		form.setMembershipPrice(form.getMembershipDefaltPrice() + period.getAddPrice());
 		form.setPeriodDuration(period.getDuration());
 		
-		if(period.isTime(MembershipEnum)) {
+		if(period.isTime()) {
 			form.setRemainderCnt(period.getProperty());
 		}
 

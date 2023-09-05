@@ -1,7 +1,5 @@
 package kr.co.helf.service;
 
-import static kr.co.helf.enums.MembershipEnum.*;
-import static kr.co.helf.enums.OrderStateEnum.*;
 import static kr.co.helf.enums.PointHistorySateEnum.*;
 
 import java.time.*;
@@ -156,7 +154,7 @@ public class MembershipService {
 			throw new RuntimeException("번호에 해당하는 기본 이용권이 존재하지 않습니다.");
 		}
 		
-		if("Y".equals(membership.getDeleted())) {
+		if(membership.yesDeleted()) {
 			throw new RuntimeException("이미 삭제된 이용권입니다.");
 		}
 		
@@ -213,7 +211,7 @@ public class MembershipService {
 		int surtax = orderJoin.getSurtax();
 
 		Refund refund = new Refund();
-		if(period.getType().equals(PERIOD.getValue())) {
+		if(period.isPeriod()) {
 			LocalDate start = orderJoin.getStartDate();
 			LocalDate end = orderJoin.getEndDate();
 			
@@ -222,7 +220,7 @@ public class MembershipService {
 			System.out.println(amount);
 		}
 		
-		if(period.getType().equals(TIME.getValue())) {
+		if(period.isTime()) {
 			int remainCnt = orderJoin.getRemainderCnt();
 			int totalCnt = period.getProperty();
 			
@@ -241,7 +239,7 @@ public class MembershipService {
 			throw new RuntimeException("번호에 해당하는 주문내역이 존재하지 않습니다.");
 		}
 		
-		order.setState(PAYMENT.getValue());
+		order.setPayment();
 		membershipMapper.updateOrder(order);
 		
 		MyMembership myMembership = membershipMapper.getMyMembershipByNo(order.getMyMembership().getNo());
@@ -249,17 +247,19 @@ public class MembershipService {
 		if(myMembership == null) {
 			throw new RuntimeException();
 		}
-		if(!IMPOSSIBILITY.getValue().equals(myMembership.getState())) {
+		if(!myMembership.isImpossibility()) {
 			throw new RuntimeException("이용권의 상태가 사용불가가 아니므로 해당 이용권은 환불 요청을 신청한 이용권이 아닙니다.");
 		}
 		
-		myMembership.setState(POSSIBILITY.getValue());
+		myMembership.setPossibility();
 		membershipMapper.updateMyMembership(myMembership);
-		
+		System.out.println("cancel-refund에서 deleteRefund()실행");
 		membershipMapper.deleteRefund(order.getNo());
+		
 	}
 
 	public void deleteRefund(int no) {
+		System.out.println("delete-refund에서 deleteRefund()실행");
 		membershipMapper.deleteRefund(no);
 	}
 
@@ -368,7 +368,7 @@ public class MembershipService {
 
 	public MyMembership getRefundMyMembershipByNo(int no) {
 		MyMembership myMembership = membershipMapper.getMyMembershipByNo(no);
-		if(IMPOSSIBILITY.getValue().equals(myMembership.getState())) {
+		if(myMembership.isImpossibility()) {
 			throw new RuntimeException("해당 이용권은 현재 사용할 수 없기 때문에 환불요청이 불가합니다.");
 		}
 		
@@ -377,7 +377,7 @@ public class MembershipService {
 
 	public void updateRefundMyMembership(int no) {
 		MyMembership myMembership = membershipMapper.getMyMembershipByNo(no);
-		myMembership.setState(IMPOSSIBILITY.getValue());
+		myMembership.setImpossibility();
 
 		membershipMapper.updateMyMembership(myMembership);
 	}
@@ -389,7 +389,7 @@ public class MembershipService {
 			throw new RuntimeException("내 이용권 번호에 해당하는 주문내역이 존재하지 않습니다.");
 		}
 		
-		order.setState(WAITREFUND.getValue());
+		order.setWaitRefund();
 		membershipMapper.updateOrder(order);
 	}
 
