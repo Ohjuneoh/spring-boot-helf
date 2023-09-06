@@ -65,9 +65,9 @@
 	                            		<a><strong style="font-size: 40px;">LOGIN</strong></a>
 	                            	</div>
 	                            	<c:if test="${param.error eq 'fail'}">
-	                            	<div>
-	                            		아이디 혹은 패스워드가 다릅니다
-	                            	</div>
+	                            	<div class="alert alert-danger" style="height: 50px; width: 1000px;">
+										<strong>[잘못된 접근]</strong> 아이디 혹은 패스워드가 올바르지 않습니다.
+									</div>
 	                            	</c:if>
 	                                <div class="col-xl-12">
 	                                    <input type="text" class="form-control bg-light border-0" placeholder="ID" style="height: 55px;" name="id">

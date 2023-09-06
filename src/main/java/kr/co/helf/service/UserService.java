@@ -31,6 +31,8 @@ import kr.co.helf.dto.CustomerOrderDto;
 import kr.co.helf.dto.Pagination;
 import kr.co.helf.enums.RankEnum;
 import kr.co.helf.form.AddUserForm;
+import kr.co.helf.form.UpdateUserForm;
+import kr.co.helf.mapper.InquiryMapper;
 import kr.co.helf.mapper.OrderMapper;
 import kr.co.helf.mapper.UserMapper;
 
@@ -52,6 +54,10 @@ public class UserService {
 	@Autowired
 	private TrainerReviewMapper trainerReviewMapper;
 	
+	@Autowired
+	private InquiryMapper inquiryMapper;
+	
+	
 	// 유저 회원가입
 	public void createUser(AddUserForm form) {
 		User user = new User();
@@ -70,6 +76,7 @@ public class UserService {
 		rank.setNo(1);
 		user.setRank(rank);
 		user.setPoint(1000);
+		user.setSocial("web");
 		
 		userMapper.insertUser(user);
 		
@@ -192,19 +199,33 @@ public class UserService {
 			javaMailSender.send(message);
 		}
 
-//		public void initPassword(String userId) {
-//			User user = userMapper.getUserById(userId);
-//			
-//			String pwd = generatePassword();
-//			String encPassword = passwordEncoder.encode(pwd);
-//			user.setEncryptedPassword(encPassword);
-//			
-//			userMapper.updateUser(user);
-//			
-//			sendEmail(user.getEmail(), pwd);
-//		}
-
+	// 마이페이지 - 유저 정보 수정
+		public void updateUser(String userId, UpdateUserForm form) {
+			User user = userMapper.getUserById(userId);
+			  		user.setEncryptedPassword(passwordEncoder.encode(form.getPassword()));
+			 		user.setEmail(form.getEmail1() + form.getEmail2());
+			  		user.setTel(form.getTel());
+			  		user.setMobileCarrier(form.getMobileCarrier());
+			  
+			  		userMapper.updateUser(user);
+		}
 	
+	// 마이페이지 - 유저 회원탈퇴
+		public void withdrawalUser(String id) {
+	      User user = userMapper.getUserById(id);
+	      
+	      if(user == null) {
+	         throw new RuntimeException("탈퇴처리를 진행할 회원이 존재하지 않습니다.");
+	      }
+	      
+	      if("N".equals(user.getStatus())) {
+	         throw new RuntimeException("이미 탈퇴처리가 완료된 회원입니다.");
+	      }
+	      
+	      user.setStatus("N");
+	      userMapper.updateUser(user);
+	   }
+		
 	public List<User> getUsersWithFourDigits(String fourDigits) {
 		return userMapper.getUsersByDigits(fourDigits);
 
@@ -305,10 +326,17 @@ public class UserService {
 
 	// 마이페이지 - 내 리뷰 보기(예광)
 	public List<TrainerReview> getMyReviews(String userId) {
-		List<TrainerReview> reviews =trainerReviewMapper.getMyReviews(userId);
+		List<TrainerReview> reviews = trainerReviewMapper.getMyReviews(userId);
 		return reviews;
 	}
-
+	
+	// 마이페이지 - 내 문의내역(유리)
+	public List<Inquires> moreInquiries(String userId) {
+		List<Inquires> inquiries = inquiryMapper.getAllInquiryMypage(userId);
+		return inquiries;
+	}
+	
+	
 	// 관리자 고객상세조회 - 최근 방문 내역 조회 - 채경
 	public Map<String, Object> getCustomerAttendances(Map<String, Object> param){
 		// 총 행의 갯수

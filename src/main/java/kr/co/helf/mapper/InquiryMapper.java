@@ -20,6 +20,9 @@ public interface InquiryMapper {
 
 	// 문의 전체조회(페이징처리 포함)
 	List<Inquires> getAllInquiry(Map<String, Object> param);
+	
+	// 문의 전체조회(페이징처리 X, 마이페이지)
+	List<Inquires> getAllInquiryMypage(String userId);
 
 	// 문의 상세조회
 	Inquires getinquiryByNo(int inquiryNo);

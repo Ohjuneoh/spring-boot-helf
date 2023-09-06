@@ -73,8 +73,7 @@
 	
 	
     <div class="p-3" style="max-width: 900px; margin: 0 auto;">
-                        
-	    	<form action="/" method="post">
+	    	<form action="/user/userInfoChange" method="post">
 		        <div class="row g-3">
 		            <div class="col-xl-12">
 		               <a style="display: flex; justify-content: center;">
@@ -90,14 +89,14 @@
 							<h5>아이디</h5>
 							    <div class="col-sm-6 input-wrapper">
 							         <input id="trainer-id" name="id" style="height: 55px; width: 620px;" type="text" 
-							         		class="form-control bg-light border-0" value="${userInfo.id }">
+							         		class="form-control bg-light border-0" value="${userInfo.id }" readonly="readonly" disabled="disabled">
 							    </div>
 						</div>
 					
 					    <div class="col-12">
 					    	<h5>비밀번호</h5>
 					        <input id="trainer-password" name="password" style="height: 55px;"
-					        	   type="text" class="form-control bg-light border-0" value="${userInfo.password }">
+					        	   type="text" class="form-control bg-light border-0"  placeholder="4-12자, 영문+숫자+특수문자를 꼭 포함하여 입력하세요.">
 					   		<div class="check_font" id="trainer-password_check"></div>
 					    </div>
 					    
@@ -127,17 +126,10 @@
 					    <h5>이름</h5>
 					    	<div class="row">
 					    		<div class="col-md-6">
-						        	<input id="trainer-name" name="name" style="height: 55px;" placeholder="홍길동 (한글만 입력하세요.)" type="text" class="form-control bg-light border-0" value="">
+						        	<input id="trainer-name" name="name" style="height: 55px;"  type="text" class="form-control bg-light border-0" value="${userInfo.name }" readonly="readonly" disabled="disabled">
 						    			<div class="check_font" id="trainer-name_check">
 						    				
 						    			</div>
-					    		</div>
-							    <div class="col-md-3">
-							        <select id="trainer-gender" name="gender" style="height: 55px; width: 100px;" class="form-select bg-light border-0">
-							            <option selected="" disabled="">성별</option>
-							            <option value="MAN">남자</option>
-							            <option value="WOMAN">여자</option>
-							        </select>
 					    		</div>
 					    	</div>  
 					    </div>
@@ -146,7 +138,7 @@
 					    <h5>전화번호</h5>
 					    	<div class="row">
 					    		<div class="col-md-6">
-						        	<input id="trainer-tel" name="tel" style="height: 55px;" placeholder="010-1111-1234 (특수문자는 '-'만 입력가능합니다. )" type="text" class="form-control bg-light border-0" value="">
+						        	<input id="trainer-tel" name="tel" style="height: 55px;" value="${userInfo.tel }" type="text" class="form-control bg-light border-0" >
 					    			<div class="check_font" id="trainer-tel_check"></div>
 					    		</div>
 							    <div class="col-md-6">
@@ -163,9 +155,9 @@
 	                  </div>
 	              </div>
 	          </div>
-	                            <div class="col-12 mt-3">
-							    	<button type="submit" class="btn btn-dark w-100 py-3" id="changePwd-button" >회원정보 수정</button>
-								</div>
+	                        <div class="col-12 mt-3">
+						    	<button type="submit" class="btn btn-dark w-100 py-3" id="changePwd-button" >회원정보 수정</button>
+							</div>
 	      </form>
    </div>                    
                  

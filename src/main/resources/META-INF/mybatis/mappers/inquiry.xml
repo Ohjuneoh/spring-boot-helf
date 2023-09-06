@@ -26,7 +26,6 @@
                 i.inquiry_create_date				as createDate,
                 i.inquiry_update_date				as updateDate,
                 i.inquiry_is_answer					as isAnswer,
-                i.inquiry_answer					as answer,
                 i.user_id							as "user.id",
                 i.inquiry_secret					as secret,
                 i.file_name							as filename,
@@ -41,6 +40,28 @@
             rownumber between #{begin} and #{end}
     </select>
   
+  	<!-- 모든 문의 조회(페이징처리X)  -->
+  	<select id="getAllInquiryMypage" resultType="Inquiry" parameterType="String">
+  	select
+                i.inquiry_no						as no,				
+                i.inquiry_type						as type,
+                i.inquiry_title						as title,
+                i.inquiry_create_date				as createDate,
+                i.inquiry_update_date				as updateDate,
+                i.inquiry_is_answer					as isAnswer,
+                i.user_id							as "user.id",
+                i.inquiry_secret					as secret,
+                i.file_name							as filename,
+                u.user_name							as "user.name",
+                i.inquiry_content					as content
+    from
+                helf_inquiries i, helf_users u
+	where 
+				i.user_id = u.user_id
+	and			i.user_id = #{user.id}
+  	</select>
+  
+  
   	<!-- 문의 상세정보 조회  -->
   	<select id="getinquiryByNo" resultType="Inquiry" parameterType="int">
     	select 
@@ -50,7 +71,6 @@
             i.inquiry_create_date					as createDate,
             i.inquiry_update_date					as updateDate,
             i.inquiry_is_answer						as isAnswer,
-            i.inquiry_answer						as answer,
             u.user_id								as "user.id",
             i.inquiry_secret						as secret,
             i.file_name								as filename,
@@ -73,6 +93,7 @@
     		file_name = #{filename},
     		inquiry_content = #{content},
     		inquiry_is_answer = #{isAnswer}
+    		
     	where inquiry_no = #{no}
     </update>
     

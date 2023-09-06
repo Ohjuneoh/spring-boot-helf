@@ -129,4 +129,7 @@ public class InquiryController {
 			
 			return "redirect:/inquiry/inquiries";
 		}
+		
+
+		
 }
