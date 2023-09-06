@@ -117,6 +117,36 @@
                     </tr>
                 </tbody>
             </table>
+
+            <sec:authorize access="hasRole('ROLE_MANAGER')">
+            <!-- 관리자로 로그인 시 해당 수업에 신청한 회원 보기 -->
+            <div class="col-12">
+                <div class="card" >
+                    <div class="card-header bg-dark" style="color: #ffffff">
+                        신청 목록
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th style="width: 20%">유저명</th>
+                                <th style="width: 20%">출석 상태</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="lessonApply" items="${lessonApplies}">
+                                    <tr>
+                                        <td>${lessonApply.user.name}</td>
+                                        <td>${lessonApply.attendanceStatus}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </sec:authorize>
+
             <!-- 유저가 수업 신청 시 뜨는 모달 창 -->
             <div class="modal fade" id="insert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">

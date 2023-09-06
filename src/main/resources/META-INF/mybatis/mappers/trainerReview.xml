@@ -67,10 +67,11 @@
             trainer_review_no = #{no}
     </update>
 
-    <!-- 트레이너 소개 페이지 모든 트레이너 정보 가져오기 -->
+    <!-- 트레이너 소개 페이지 모든 트레이너 정보 가져오기 (예광)-->
     <select id="getAllTrainers" resultType="Trainer">
         select
             a.trainer_no as trainerNo,
+            a.trainer_file as trainerFile,
             a.trainer_title as title,
             b.user_id as "user.id",
             b.user_name as "user.name",
@@ -278,5 +279,20 @@
         where
             trainer_personal_review_no = #{no}
     </update>
+
+    <!-- 트레이너 번호로 트레이너 정보 조회 -->
+    <select id="getTrainerByNo" parameterType="int" resultType="Trainer">
+        select
+            trainer_no as trainerNo,
+            trainer_file as trainerFile,
+            trainer_resignation_date as resignationDate,
+            trainer_title as title,
+            user_id as "user.id",
+            trainer_hired_date as hiredDate
+        from
+            helf_trainers
+        where
+            trainer_no = #{trainerNo}
+    </select>
 
 </mapper>
