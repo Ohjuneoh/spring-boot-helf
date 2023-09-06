@@ -119,6 +119,7 @@
 	                <div class="dropdown-menu m-0">
 	                    <a href="/management/customer-list" class="dropdown-item">고객관리</a>
 	                    <a href="/management/trainer-list" class="dropdown-item">인사관리</a>
+	                    <a href="/salary/salary-list" class="dropdown-item">급여관리</a>
 	                    <a href="/checkin/check-in" class="dropdown-item">입장 화면</a>
 	                </div>
 	            </div>
