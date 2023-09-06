@@ -86,143 +86,50 @@
 				    <div id="all" class="container tab-pane active"><br>
 					      <p>
 							<div class="row g-5">
+				                <c:forEach var="faq" items="${faqs}">
 				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.3s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center" data-faq-no="${faq.no }">
 				                        <div class="service-icon">
 				                            <i class="bi bi-search"></i>
 				                        </div>
-				                        <h4 class="mb-3">블로그 아이디 변경 유의사항</h4>
+				                        
+				                     
+				                        <h4 class="mb-3">${faq.title }</h4>
 				                        <a class="btn btn-lg btn-primary rounded" href="">
 				                            <i class="bi bi-arrow-right"></i>
 				                        </a>
 				                    </div>
 				                </div>
-				                
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.6s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-search"></i>
-				                        </div>
-				                        <h4 class="mb-3">Data Analytics</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-search"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-search"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                           <i class="bi bi-arrow-right"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                           <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                           <i class="bi bi-arrow-right"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-				                        <div class="service-icon">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </div>
-				                        <h4 class="mb-3">Web Development</h4>
-				                        <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
+				                </c:forEach>
 				            </div>
-				    </div>
-				    
-				    <div id="menu1" class="container tab-pane fade"><br>
-				      <h3>Menu 1</h3>
-				      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-				    </div>
-				    
-				    
-				    <div id="menu2" class="container tab-pane fade"><br>
-				      <h3>Menu 2</h3>
-				      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-				    </div>
+				   		</div>
 				  </div>
 			</div>
-			
         </div>
     </div>
-    <!-- Service End -->
-	
 	
 	<!-- 자주묻는질문 모달창  -->
 	<div class="modal fade" id="modal-faq" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body" style="font-size: 19px; font-weight:bold; color:green" >
-	        Q. 블로그 아이디 변경 유의사항(리다이렉트 기간 안내)
-	      </div>
-	      <div class="modal-footer">
-	      <div class="boarder">
-	      	A. 외부에 공유한 이전 주소 링크는 변경 시점으로부터 3개월간 리다이렉트됩니다.
-	      </div>
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	      </div>
-	    </div>
-	  </div>
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body" style="font-size: 19px; font-weight:bold; color:green" >
+			      <c:forEach var="faq" items="${faqs}">
+					<div id="faq-${faq.no }">
+				      	<h4>Q. ${faq.title }</h4>
+					     <div class="boarder">
+					      	A. ${faq.content }
+					     </div>
+					</div>
+			      </c:forEach>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			      </div>
+			    </div>
+			  </div>
 	</div>
 	
 	
@@ -325,7 +232,10 @@
 	let faqModal = new bootstrap.Modal("#modal-faq");
 	
 	$(".service-item").click(function() {
-	
+		let faqNo = $(this).attr("data-faq-no");
+		
+		$("#modal-faq .modal-body > div").hide();
+		$("#faq-" + faqNo).show();
 		faqModal.show();
 	});
 

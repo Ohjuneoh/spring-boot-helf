@@ -9,7 +9,7 @@ server:
 logging:
   level:
     root: info
-#    '[org.springframework.security]': info
+#    '[org.springframework.security]': debug
 #    '[org.springframework.web]': trace
     '[kr.co.helf.mapper]': trace
 # 커넥션 풀 관련 설정정보 지정하기

@@ -37,6 +37,7 @@
 
               where
               	board_deleted = 'N'
+            and board_type='notice'
             )
         where
             rownumber between #{begin} and #{end}
@@ -107,6 +108,25 @@
 				board_no = #{no}
 		</update>
 
-  
+  	<!-- faq 조회 -->
+  	<select id="getFaq" parameterType="map">
+  		select
+                board_no					as no,				
+                board_title					as title,
+                board_content				as content,
+                board_create_date			as createDate,
+                board_update_date			as updateDate,
+                board_deleted				as deleted,
+                board_read_count			as readCount,
+                board_type					as type,
+                user_id						as "user.id",
+                board_delete_date			as deleteDate,
+                board_main					as main,
+                row_number() over (order by board_main asc, board_no asc) rownumber
+             from
+                helf_boards
+              where
+              	board_type='faq'
+  	</select>
   
 </mapper>

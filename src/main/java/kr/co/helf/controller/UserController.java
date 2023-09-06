@@ -1,5 +1,13 @@
 package kr.co.helf.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
+
+import kr.co.helf.vo.Inquires;
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.service.UserService;
 import kr.co.helf.vo.Trainer;
@@ -9,13 +17,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
-import java.util.List;
+import kr.co.helf.form.AddUserForm;
+import kr.co.helf.form.UpdateUserForm;
+import kr.co.helf.service.UserService;
+import kr.co.helf.vo.User;
+import lombok.RequiredArgsConstructor;
+
 
 @Controller
 @RequestMapping("/user")
@@ -40,8 +53,13 @@ public class UserController {
 
 	// 회원가입 요청(유저)
 	@PostMapping(value="/register/user") 
-	public String registerUser(AddUserForm form, RedirectAttributes attributes) {
-
+	public String registerUser(@Valid AddUserForm form, BindingResult bindingResult, RedirectAttributes attributes) {
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(System.out::println);
+			return "registerform";
+		}
+		
+		
 		userService.createUser(form);
 		attributes.addFlashAttribute("name", form.getName());
 		
@@ -97,7 +115,6 @@ public class UserController {
 	@GetMapping(value="/loginform")
 	public String loginForm() {
 		return "login/loginform";
-
 	}
 	
 	// 아이디찾기 화면
@@ -142,7 +159,6 @@ public class UserController {
 	@ResponseBody
 	public String checkAuth(@RequestParam("auth") String auth, @RequestParam("id") String userId) throws Exception {
 		
-		
 		try {
 			userService.checkPwdAuth(auth, userId);
 			return "success";	
@@ -180,57 +196,103 @@ public class UserController {
 	
 	
 /* 마이페이지 시작 */
-	// 유저 마이페이지 화면 - 내 리뷰 보기(예광)
+	// 유저 마이페이지 화면 (유리,예광)
 	@GetMapping("/userMypage")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String userMypage(@AuthenticationPrincipal User user, Model model) {
+		
+		// 마이페이지 내정보 조회
+		User userInfo = userService.getUserById(user.getId());
+		model.addAttribute("userInfo", userInfo);
+		
+		// 트레이너 리뷰 
 		List<TrainerReview>  reviews = userService.getMyReviews(user.getId());
 		model.addAttribute("reviews", reviews);
+		
+		// 내 문의내역
+		List<Inquires> moreInquiries = userService.moreInquiries(user.getId());
+		model.addAttribute("moreInquiries", moreInquiries);
+		
 		return "/mypage/userInfo";
 	}
 	
 	// 유저 마이페이지 수정화면
 	@GetMapping("/userModify")
-	public String userModifypage() {
+	public String userModifypage(Model model, @AuthenticationPrincipal User user) {
+		
+		System.out.println(user.getId());
+		// 마이페이지 내정보 조회
+		User userInfo = userService.getUserById(user.getId());
+		model.addAttribute("userInfo", userInfo);
 		
 		return "/mypage/userModifyInfo";
 	}
 	
-	// 트레이너 마이페이지화면 - 내 리뷰 보기 (예광)
+	// 트레이너 마이페이지화면 - 내 리뷰 보기 (유리, 예광)
 	@GetMapping("/trainerMypage")
-	public String trainerMypage(@AuthenticationPrincipal User user,Model model) {
+
+	public String trainerMypage(@AuthenticationPrincipal User user, Model model) {
+		
+		// 마이페이지 내정보 조회
+		User userInfo = userService.getUserById(user.getId());
+		model.addAttribute("userInfo", userInfo);
+    
+		// 트레이너 리뷰 보기
 		List<TrainerReview> reviews = userService.getTrainerReviews(user);
 		Trainer trainer = userService.getTrainerById(user);
 
 		model.addAttribute("reviews", reviews);
 		model.addAttribute("trainer", trainer);
+
 		return "/mypage/trainerInfo";
 	}
 	
 	// 트레이너 마이페이지 수정화면
-	// 유저 마이페이지 수정화면
-		@GetMapping("/trainerModify")
-		public String trainerModifypage() {
-			
-			return "/mypage/trainerModifyInfo";
-		}
+	@GetMapping("/trainerModify")
+	public String trainerModifypage() {
+		
+		return "/mypage/trainerModifyInfo";
+	}
 
+	// 유저 마이페이지 정보수정
+	@PostMapping("/userInfoChange")
+	public String userInfoChange(@AuthenticationPrincipal User user, @ModelAttribute("form") UpdateUserForm form) {
+		userService.updateUser(user.getId(), form);
+		
+		return "redirect:/user/userMypage";
+	}
+	
+	
 	// 마이페이지 - 트레이너 리뷰 더 보기 (예광)
 	@GetMapping("/moreReviews")
 	public String moreReviews(@AuthenticationPrincipal User user, Model model){
 		List<TrainerReview>  reviews = userService.getMyReviews(user.getId());
 		model.addAttribute("reviews", reviews);
-		return "/mypage/myMoreReviews";
+		
+			return "/mypage/myMoreReviews";
 	}
 
-	// controller
-	@PostMapping("/withdrawal")
-	@PreAuthorize("hasRole('ROLE_USER', 'ROLE_TRAINER')")
-	public String withdrawalUser(@AuthenticationPrincipal User user) {
-		userService.withdrawalUser(user.getId());
+	
+	// 마이페이지 - 내 문의내역 더보기 (유리)	
+	@GetMapping("/moreInquiries")
+	public String moreInquiries(@AuthenticationPrincipal User user, Model model) {
+		List<Inquires> moreInquiries = userService.moreInquiries(user.getId());
+		model.addAttribute("moreInquiries", moreInquiries);
 		
-		return "redirect:/";
+			return "/mypage/myMoreInquiry";
 	}
+	
+	// 마이페이지 - 유저 회원탈퇴
+   @GetMapping("/withdrawal")
+   @PreAuthorize("hasRole('ROLE_USER', 'ROLE_TRAINER')")
+   public String withdrawalUser(@AuthenticationPrincipal User user) {
+      userService.withdrawalUser(user.getId());
+      
+      // 회원탈퇴 후 로그아웃
+      SecurityContextHolder.getContext().setAuthentication(null);
+      
+      return "redirect:/";
+   }
 
 
 /* 마이페이지 끝 */

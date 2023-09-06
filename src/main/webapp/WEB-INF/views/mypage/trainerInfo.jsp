@@ -78,32 +78,20 @@
 					</div>
     			</div>
     			<div class="col-4 ">
-    				<h4 class="mb-5"><strong style="color: blue;">홍길동</strong>님</h4>
+    				<h4 class="mb-5"><strong style="color: blue;">${userInfo.name }</strong>님 [트레이너]</h4>
+    				<p><strong>성별 : </strong> ${userInfo.gender }</p> 	
+    				<p><strong>전화번호 : </strong> ${userInfo.tel }</p>
+    				<p><strong>이메일 : </strong> ${userInfo.email }</p>
+    				<p><strong>등급 : </strong> <span>${userInfo.rank.name } </span></p>
+    				<p><strong>포인트 : </strong> <span>${userInfo.point } </span>점 </p>
     			</div>
     			<div class="col-4 text-end">
-    				<a class="btn btn-outline-light btn-sm mb-2" href="/user/trainerModify">수정</a>
-    				<button class="btn btn-outline-light btn-sm mb-2">회원탈퇴</button>
+    				<a class="btn btn-outline-light btn-sm mb-2" href="">수정</a>
+    				<a class="btn btn-outline-light btn-sm mb-2" href="/user/withdrawal" onclick="return confirmDelete();" >회원탈퇴</a>
     			</div>
     		</div>
     		<hr>
     		<div class="row my-3 " >
-    			<div class="col-6">
-    				<div class="card">
-    					<div class="card-header">내 문의내역</div>
-    					<div class="card-body">
-    						<p class="text-end"><a href="">더보기</a></p>
-    						<table class="table">
-    							<thead>
-    								<tr>
-    									<th>제목</th>
-    									<th>등록일자</th>
-    									<th>답변여부</th>
-    								</tr>
-    							</thead>
-    						</table>
-    					</div>
-    				</div>
-    			</div>
     			<div class="col-6">
     				<div class="card">
     					<div class="card-header">내 리뷰내역</div>
@@ -145,6 +133,7 @@
     					</div>
     				</div>
     			</div>
+
     		</div>
     	</div>
     </div>
@@ -261,6 +250,10 @@
 		faqModal.show();
 	});
 
+	function confirmDelete() {
+	    return confirm('정말로 탈퇴하시겠습니까? (되돌릴 수 없습니다.)');
+	}
+	
 
 </script>
 

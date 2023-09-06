@@ -33,4 +33,7 @@ public interface BoardMapper {
 
 	// 공지사항 상세 - 이전글/다음글
 	BoardPrevNextDto getPrevNextBoardByNo(int boardNo);
+	
+	// faq 조회
+	List<Board> getFaq();
 }
