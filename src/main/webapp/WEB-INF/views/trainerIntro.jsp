@@ -94,7 +94,7 @@
                 <div class="col-lg-3 wow slideInUp" data-wow-delay="0.3s">
                     <div class="team-item bg-light rounded overflow-hidden">
                         <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="/resources/img/team-1.jpg" alt="" data-trainer-no="${trainer.trainerNo}" >
+                            <img class="img-fluid w-100" src="/resources/img/${trainer.trainerFile}" alt="" data-trainer-no="${trainer.trainerNo }" >
                         </div>
                         <div class="text-center py-4">
                             <h4 class="text-primary">${trainer.user.name }</h4>

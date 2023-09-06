@@ -1,23 +1,14 @@
 package kr.co.helf.mapper;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import org.apache.ibatis.annotations.Mapper;
-
 import kr.co.helf.dto.CustomerAttendanceListDto;
 import kr.co.helf.dto.CustomerDetailDto;
 import kr.co.helf.dto.CustomerListDto;
-import kr.co.helf.vo.CustomerAttendance;
-import kr.co.helf.vo.LessonApply;
-import kr.co.helf.vo.MyMembership;
-import kr.co.helf.vo.MySalary;
-import kr.co.helf.vo.Rank;
-import kr.co.helf.vo.Trainer;
-import kr.co.helf.vo.TrainerCareer;
-import kr.co.helf.vo.TrainerAttendance;
-import kr.co.helf.vo.User;
+import kr.co.helf.vo.*;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Mapper
 public interface UserMapper {
@@ -95,5 +86,7 @@ public interface UserMapper {
 	MySalary getTrainerDetailById(String id);
 	
 	Rank getNewRank(String id);
-	
+
+	// 총 이용자 수 및 강사 수 조회하는 쿼리(예광)
+	User getUserAndTrainerCount();
 }

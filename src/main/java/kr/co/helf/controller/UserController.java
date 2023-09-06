@@ -1,15 +1,9 @@
 package kr.co.helf.controller;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.validation.Valid;
-
-import kr.co.helf.vo.Inquires;
 import kr.co.helf.form.AddUserForm;
+import kr.co.helf.form.UpdateUserForm;
 import kr.co.helf.service.UserService;
+import kr.co.helf.vo.Inquires;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.TrainerReview;
 import kr.co.helf.vo.User;
@@ -20,14 +14,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import kr.co.helf.form.AddUserForm;
-import kr.co.helf.form.UpdateUserForm;
-import kr.co.helf.service.UserService;
-import kr.co.helf.vo.User;
-import lombok.RequiredArgsConstructor;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.util.List;
 
 
 @Controller
@@ -284,7 +277,6 @@ public class UserController {
 	
 	// 마이페이지 - 유저 회원탈퇴
    @GetMapping("/withdrawal")
-   @PreAuthorize("hasRole('ROLE_USER', 'ROLE_TRAINER')")
    public String withdrawalUser(@AuthenticationPrincipal User user) {
       userService.withdrawalUser(user.getId());
       

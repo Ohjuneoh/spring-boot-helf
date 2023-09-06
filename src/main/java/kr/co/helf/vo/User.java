@@ -8,12 +8,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import javax.validation.constraints.NotBlank;
 
 @Data
 @Alias("User")
@@ -38,6 +37,10 @@ public class User implements UserDetails, OAuth2User {
 	private String social;
 	
 	private Map<String, Object> attributes;
+
+	// 총 회원 수, 강사수을 위한 변수
+	private int totalUsers;
+	private int totalTrainers;
 
 	public User(){}
 	public User(String id) {
