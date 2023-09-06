@@ -68,9 +68,7 @@
             </div>
         </div>
     </div>
-    
-   	    <div class="container my-5 ">
-        <!-- Header section with Trainer's Picture and Name -->
+ 	<div class="container my-5 ">
         <div class="section-title position-relative pb-3 mb-3">
 	   		<h1 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">내 정보</h1>
 		</div>
@@ -171,16 +169,6 @@
     		</div>
     	</div>
     </div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
     <!-- Lesson Register Form End  -->
 	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
 	    <div class="container">

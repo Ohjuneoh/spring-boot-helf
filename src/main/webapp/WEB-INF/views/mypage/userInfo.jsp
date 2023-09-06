@@ -78,13 +78,23 @@
 					</div>
     			</div>
     			<div class="col-4 ">
-    				<h4 class="mb-5"><strong style="color: blue;">홍길동</strong>님</h4>
-    				<p><strong>등급 </strong> : <span>다이아몬드</span></p>
-    				<p><strong>포인트 </strong> : <span>30</span>점 </p>
+    				<h4 class="mb-5"><strong style="color: blue;">${userInfo.name }</strong>님 [유저]</h4>
+    				<c:if test="${userInfo.social eq 'kakao' }"> 
+    				<p><strong>소셜 로그인 회원입니다.</strong></p>
+    				</c:if>
+    				<c:if test="${userInfo.social eq 'web' }"> 
+    				<p><strong>성별 : </strong> ${userInfo.gender }</p> 	
+    				<p><strong>전화번호 : </strong> ${userInfo.tel }</p>
+    				<p><strong>이메일 : </strong> ${userInfo.email }</p>
+    				</c:if>
+    				<p><strong>등급 : </strong> <span>${userInfo.rank.name } </span></p>
+    				<p><strong>포인트 : </strong> <span>${userInfo.point } </span>점 </p>
     			</div>
     			<div class="col-4 text-end">
+    				<c:if test="${userInfo.social eq 'web' }"> 
     				<a class="btn btn-outline-light btn-sm mb-2" href="/user/userModify">수정</a>
-    				<button class="btn btn-outline-light btn-sm mb-2">회원탈퇴</button>
+    				</c:if>
+    				<a class="btn btn-outline-light btn-sm mb-2" href="/user/withdrawal" onclick="return confirmDelete();" >회원탈퇴</a>
     			</div>
     		</div>
     		<hr>
@@ -93,7 +103,7 @@
     				<div class="card">
     					<div class="card-header">내 문의내역</div>
     					<div class="card-body">
-    						<p class="text-end"><a href="">더보기</a></p>
+    						<p class="text-end"><a href="/user/moreInquiries">더보기</a></p>
     						<table class="table">
     							<thead>
     								<tr>
@@ -102,6 +112,39 @@
     									<th>답변여부</th>
     								</tr>
     							</thead>
+    							<tbody>
+    							<c:choose>
+									<c:when test="${empty moreInquiries }">
+										<tr>
+											<td colspan="5" class="text-center">
+												등록된 리뷰가 없습니다.
+											</td>
+										</tr>
+									</c:when>
+								</c:choose>
+								<c:forEach var="moreInquiries" items="${moreInquiries}" varStatus="status">
+									<c:choose>
+										<c:when test="${status.index < 5}">
+											<tr>
+												<td>${moreInquiries.title}</td>
+												<td><fmt:formatDate value="${moreInquiries.createDate}" pattern="yyyy년 M월 d일" /></td>
+												<td>
+													<c:choose>
+												        <c:when test="${moreInquiries.isAnswer eq 'N'}">
+												            미답변
+												        </c:when>
+												        <c:when test="${moreInquiries.isAnswer eq 'Y'}">
+												            답변완료
+												        </c:when>
+												    </c:choose>
+												</td>
+											</tr>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+    							</tbody>
     						</table>
     					</div>
     				</div>
@@ -265,6 +308,10 @@
 		faqModal.show();
 	});
 
+	function confirmDelete() {
+	    return confirm('정말로 탈퇴하시겠습니까? (되돌릴 수 없습니다.)');
+	}
+	
 
 </script>
 

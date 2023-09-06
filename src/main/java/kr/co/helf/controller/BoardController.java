@@ -1,6 +1,7 @@
 package kr.co.helf.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.helf.dto.BoardPrevNextDto;
 import kr.co.helf.form.AddBoardForm;
+import kr.co.helf.form.AddUserForm;
 import kr.co.helf.form.BoardModifyForm;
 import kr.co.helf.service.BoardService;
 import kr.co.helf.vo.Board;
@@ -70,7 +72,10 @@ public class BoardController {
   
 	// faq화면 
 	@GetMapping(value="/faq")
-	public String faqform() {
+	public String faqform(Model model) {
+		List<Board> faqs = boardService.getfaq();
+		model.addAttribute("faqs", faqs);
+		
 		return "board/faq";
 	}
 	

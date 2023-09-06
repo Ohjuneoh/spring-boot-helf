@@ -127,15 +127,13 @@
 							   <tbody>
 							   <c:forEach var="inquiry" items="${result.inquiries }">
 				                        <tr>
-				                        	
 											<td>${inquiry.no }</td>
 											<td>
 												<sec:authorize access="isAuthenticated()">
 													<sec:authentication property="principal.username" var="loginUserId"/>
 												</sec:authorize>
 												<a href="/inquiry/inquiryDetail?no=${inquiry.no }"
-													class="${inquiry.secret == 'N' || (inquiry.secret == 'Y' && loginUserId == inquiry.user.id) ? '': 'disabled'}"
-													>
+													class="${inquiry.secret == 'N' || (inquiry.secret == 'Y' && loginUserId == inquiry.user.id) ? '': 'disabled'}">
 													<c:if test="${inquiry.secret == 'Y' }">
 														<i class="bi bi-lock-fill"></i>
 													</c:if>
@@ -160,11 +158,13 @@
 
 							   </tbody>
 			               </table>
+			               <sec:authorize access="hasRole('ROLE_USER')">
 			               <div class="ExpandMoreBtn_more_btn_box__5lBg8 d-flex justify-content-end align-items-center">
 								<a href="inquiryUserForm" class="btn btn-primary btn-sm" >
 									문의하기
 								</a>
 							</div>
+			               </sec:authorize>
         				</div>
     				</div>
     			</div>
@@ -176,22 +176,22 @@
 	<div class="row mb-3" >
 		<div class="col-12" style="text-align: center;">
 			<c:choose>
-				<c:when test="${result.pagination.totalRows ne 0 }">
-					<nav>
-						<ul class="pagination justify-content-center">
-							<li class="page-item ${result.pagination.first ? 'disabled' : '' }">
-								<a class="page-link"  href="notice?page=${result.pagination.prePage }" >이전</a>
-							</li>
-							<c:forEach var="num" begin="${result.pagination.beginPage }" end="${result.pagination.endPage }">
-								<li class="page-item ${result.pagination.page eq num ? 'active' : '' }">
-									<a class="page-link" href="notice?page=${num }" >${num }</a>
-								</li>
-							</c:forEach>
-							<li class="page-item ${result.pagination.last ? 'disabled' : '' }">
-								<a class="page-link" href="inquiries?page=${result.pagination.nextPage }" >다음</a>
-							</li>
-						</ul>
-					</nav>
+				<c:when test="${not empty result }">
+			<nav>
+				<ul class="pagination justify-content-center">
+					<li class="page-item ${result.pagination.first ? 'disabled' : '' }">
+						<a class="page-link"  href="inquiries?page=${result.pagination.prePage }" >이전</a>
+					</li>
+				<c:forEach var="num" begin="${result.pagination.beginPage }" end="${result.pagination.endPage }">
+					<li class="page-item ${result.pagination.page eq num ? 'active' : '' }">
+						<a class="page-link" href="inquiries?page=${num }" >${num }</a>
+					</li>
+				</c:forEach>
+					<li class="page-item ${result.pagination.last ? 'disabled' : '' }">
+						<a class="page-link" href="inquiries?page=${result.pagination.nextPage }" >다음</a>
+					</li>
+				</ul>
+			</nav>
 				</c:when>
 			</c:choose>
 		</div>

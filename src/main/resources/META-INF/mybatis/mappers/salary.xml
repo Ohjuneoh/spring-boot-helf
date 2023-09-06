@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.helf.mapper.SalaryMapper">
+
+	<select id="getAllTrainerSalary" parameterType="int" resultType="kr.co.helf.vo.MySalary">
+		select * 
+		from (select u.user_id					as "user.id",
+		        u.user_name						as "user.name",
+		        u.user_gender					as "user.gender",
+		        u.user_status					as "user.status",
+		        t.trainer_no					as "trainer.trainerNo",
+		        t.trainer_title					as "trainer.title",
+		        t.trainer_hired_date			as "trainer.hiredDate",
+		        m.salary_regular_pay			as regularPay,
+		        m.monthly_pcl_commission_pct	as pclPct,
+		        m.monthly_gcl_commission_pct	as gclPct,
+		        m.salary_tax_rate				as taxRate,
+		        row_number() over (order by user_name) rownumber
+		        from helf_users u, helf_my_salary m, helf_trainers t
+		        where u.user_id = m.user_id(+)
+		        and u.user_id = t.user_id)
+	where rownumber between #{begin} and #{end}	
+	</select>
+	
+	<insert id="insertSalaryInfoById" parameterType="map">
+	insert into helf_my_salary(my_salary_no, 
+                       salary_regular_pay, 
+                       salary_tax_rate, 
+                       monthly_pcl_commission_pct,
+                       monthly_gcl_commission_pct,
+                       user_id,
+                       trainer_no)
+       values(helf_my_salary_seq.nextval,
+              #{regularPay},
+              #{taxRate},
+              #{pclCommissionPct},
+              #{gclCommissionPct},
+              #{userId},
+              #{trainerNo})
+	</insert>
+	
+	<select id="getTrainerSalaryInfoById" parameterType="String" resultType="kr.co.helf.vo.MySalary">
+	select my_salary_no					as no,
+        salary_regular_pay				as regularPay,
+        salary_tax_rate					as taxRate,
+        annual_salary					as annualSalary,
+        monthly_pcl_commission_pct		as pclPct,
+        monthly_gcl_commission_pct		as gclPct,
+        user_id							as "user.id",
+        trainer_no						as "trainer.no"       
+	from helf_my_salary
+	where user_id = #{value}
+	</select>
+	
+	<update id="updateSalaryInfoById" parameterType="map">
+		update 
+			helf_my_salary
+		set
+        	salary_regular_pay			= #{regularPay},
+        	salary_tax_rate				= #{taxRate},
+       	 	monthly_pcl_commission_pct	= #{pclCommissionPct},
+        	monthly_gcl_commission_pct	= #{gclCommissionPct}
+        where 
+        	user_id = #{userId}
+	</update>
+</mapper>

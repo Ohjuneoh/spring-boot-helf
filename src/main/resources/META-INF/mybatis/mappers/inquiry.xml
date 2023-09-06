@@ -5,9 +5,9 @@
 	<!-- 문의 글쓰기 -->
 	<insert id="insertInquiry" parameterType="Inquiry">
 		insert into helf_inquiries
-		(inquiry_no, inquiry_type, inquiry_title, inquiry_secret, user_id, inquiry_content)
+		(inquiry_no, inquiry_type, inquiry_title, inquiry_secret, user_id, inquiry_content, file_name)
 		values
-		(helf_inquiry_seq.nextval, #{type}, #{title}, #{secret}, #{user.id}, #{content})
+		(helf_inquiry_seq.nextval, #{type}, #{title}, #{secret}, #{user.id}, #{content}, #{filename})
 	</insert>
 	
 	<!-- 모든 행 조회 (페이징처리) -->
@@ -16,48 +16,51 @@
         from  helf_inquiries
     </select>
   
-  	<!-- 모든 문의 조회(페이징처리 포함) -->
+  <!-- 모든 문의 조회(페이징처리 포함) -->
     <select id="getAllInquiry" resultType="Inquiry" parameterType="map">
-        select i.inquiry_no				as no,	
-               i.inquiry_type			as type,
-               i.inquiry_title			as title,
-               i.inquiry_create_date	as createDate,
-               i.inquiry_update_date	as updateDate,
-               i.inquiry_is_answer		as isAnswer,
-               i.inquiry_answer			as answer,
-               i.user_id				as "user.id",
-               i.inquiry_secret			as secret,
-               i.file_name				as filename,
-               i.inquiry_content		as content,
-               u.user_name				as "user.name"
+        select *
         from(select
-                inquiry_no,
-                inquiry_type,
-                inquiry_title,
-                inquiry_create_date,
-                inquiry_update_date,
-                inquiry_is_answer,
-                inquiry_answer,
-                user_id,
-                inquiry_secret,
-                file_name,
-                inquiry_content,
+                i.inquiry_no						as no,				
+                i.inquiry_type						as type,
+                i.inquiry_title						as title,
+                i.inquiry_create_date				as createDate,
+                i.inquiry_update_date				as updateDate,
+                i.inquiry_is_answer					as isAnswer,
+                i.user_id							as "user.id",
+                i.inquiry_secret					as secret,
+                i.file_name							as filename,
+                u.user_name							as "user.name",
+                i.inquiry_content					as content,
                 row_number() over (order by inquiry_no asc) rownumber
              from
-                helf_inquiries
-            )i LEFT JOIN helf_users u ON i.user_id = u.user_id
-		where rownumber between #{begin} and #{end}
-		<if test="type != null">
-			<choose>
-				<when test="type == 'name'">
-					and i.inquiry_title like '%' || #{keyword} || '%'
-				</when>
-		        <when test="type == 'id'">
-		        	and u.user_name = #{keyword}
-		        </when>
-			</choose>
-		</if>
+                helf_inquiries i
+             LEFT JOIN helf_users u ON i.user_id = u.user_id
+            )
+        where
+            rownumber between #{begin} and #{end}
     </select>
+  
+  	<!-- 모든 문의 조회(페이징처리X)  -->
+  	<select id="getAllInquiryMypage" resultType="Inquiry" parameterType="String">
+  	select
+                i.inquiry_no						as no,				
+                i.inquiry_type						as type,
+                i.inquiry_title						as title,
+                i.inquiry_create_date				as createDate,
+                i.inquiry_update_date				as updateDate,
+                i.inquiry_is_answer					as isAnswer,
+                i.user_id							as "user.id",
+                i.inquiry_secret					as secret,
+                i.file_name							as filename,
+                u.user_name							as "user.name",
+                i.inquiry_content					as content
+    from
+                helf_inquiries i, helf_users u
+	where 
+				i.user_id = u.user_id
+	and			i.user_id = #{user.id}
+  	</select>
+  
   
   	<!-- 문의 상세정보 조회  -->
   	<select id="getinquiryByNo" resultType="Inquiry" parameterType="int">
@@ -68,7 +71,6 @@
             i.inquiry_create_date					as createDate,
             i.inquiry_update_date					as updateDate,
             i.inquiry_is_answer						as isAnswer,
-            i.inquiry_answer						as answer,
             u.user_id								as "user.id",
             i.inquiry_secret						as secret,
             i.file_name								as filename,
@@ -80,5 +82,54 @@
     		i.user_id = u.user_id
     		and inquiry_no = #{no}
     </select>
+    
+    <!-- 문의글 수정하기  -->
+    <update id="updateInquiry" parameterType="Inquiry">
+    	update helf_inquiries 
+    	
+    	set inquiry_type = #{type}, 
+    		inquiry_title = #{title},
+    		inquiry_secret = #{secret},
+    		file_name = #{filename},
+    		inquiry_content = #{content},
+    		inquiry_is_answer = #{isAnswer}
+    		
+    	where inquiry_no = #{no}
+    </update>
+    
+    <!-- 문의 답변 등록하기  -->
+    <insert id="addAnswer" parameterType="Answer">
+    	insert into helf_answers
+		(answer_no, inquiry_no, answer_content, user_id)
+		values
+		(helf_answer_seq.nextval, #{inquiry.no}, #{content}, #{user.id})
+    </insert>
+    
+    <!-- 답변 목록 조회하기 -->
+    <select id="getAllAnswer" resultType="Answer" parameterType="int">
+    	select 
+    		answer_no					as no,
+    		inquiry_no					as "inquiry.no",
+    		answer_content 				as content,
+    		answer_create_date			as createDate,
+    		answer_deleted				as deleted,
+    		answer_delete_date			as deleteDate,
+    		user_id						as "user.id"
+    	from
+    		helf_answers
+    	where
+    		inquiry_no = #{value}
+    	and answer_deleted = 'N'
+    </select>
+    
+    
+    <!-- 답변 삭제 -->
+	<update id="deleteAnswer" parameterType="int">
+		update helf_answers ha
+		set ha.answer_deleted = 'Y',
+		    ha.answer_delete_date = sysdate
+		where ha.answer_no = #{value}
+		
+	</update>
     
 </mapper>

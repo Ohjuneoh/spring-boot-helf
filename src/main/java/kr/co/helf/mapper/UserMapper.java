@@ -41,7 +41,6 @@ public interface UserMapper {
 	// 아이디 중복검사
 	int idCheck (String userId);
 	
-	
 	void updateUser(User user);
 	
 	// 입장시 회원 휴대폰 네 자리로 조회 - 채경 

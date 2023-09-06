@@ -35,7 +35,7 @@ public class User implements UserDetails, OAuth2User {
 	private int point;
 	private String mobileCarrier;
 	private String authenticationNo;
-
+	private String social;
 	
 	private Map<String, Object> attributes;
 

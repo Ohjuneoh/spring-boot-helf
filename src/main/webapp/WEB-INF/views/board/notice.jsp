@@ -103,7 +103,7 @@
 					                        		<td><i class="bi bi-megaphone-fill" style="color: blue; font-size: 20px;"></i></td>
 												</c:when>
 												<c:otherwise>
-									                <td>${board.main }</td>
+													 <td>${board.no}</td>
 									            </c:otherwise>
 				                        	</c:choose>
 											<td><a href="/board/detail?no=${board.no }">${board.title }</a></td>
@@ -115,17 +115,19 @@
 									
 							   </tbody>
 			               </table>
+			               <sec:authorize access="hasRole('ROLE_MANAGER')">
 			               <div class="ExpandMoreBtn_more_btn_box__5lBg8 d-flex justify-content-end align-items-center">
 								<a href="noticeform" class="btn btn-primary btn-sm" >
 									글쓰기
 								</a>
+							</div>
+							</sec:authorize>
 							</div>
         				</div>
     				</div>
     			</div>
     		</div>
         </div>
-    </div>
     
 	<div class="row mb-3" >
 		<div class="col-12" style="text-align: center;">

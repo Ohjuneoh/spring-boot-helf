@@ -168,7 +168,7 @@
             	<h3 class="mb-0 text-primary">최근 수업 내역 </h3>
             </div>
             <div class="col-sm wow zoomIn" data-wow-delay="0.2s">
-            	<p style="text-align: right;"><a href="">자세히보기</a></p>
+            	<p style="text-align: right;"><a href="customer-lesson?id=${customerInfo.user.id }">자세히보기</a></p>
               		<table class="table table-bordered shadow-sm" style="text-align: center; vertical-align: middle;">
                			<thead>
 	               			<tr>

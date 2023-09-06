@@ -2,6 +2,7 @@ package kr.co.helf.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.helf.form.AddInquiryForm;
 import kr.co.helf.service.InquiryService;
+import kr.co.helf.vo.Answer;
 import kr.co.helf.vo.Inquires;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
@@ -69,15 +72,75 @@ public class InquiryController {
 			return "redirect:/inquiry/inquiries";
 		}
 
-	// 1:1문의 상세보기 화면
-		@GetMapping(value="/inquiryDetail")
-		public String detail(@RequestParam("no") int no, Model model) {
-			Inquires inquiry = inquiryService.getinquiryByNo(no);
+		
+		// 1:1문의 수정
+		@PostMapping(value="/inquiryUpdate")
+		public String updateInquiry(@AuthenticationPrincipal User user, AddInquiryForm form) throws IOException {
+		
+			inquiryService.updateInquiry(user,form);
 			
+			return "redirect:/inquiry/inquiries";
+		}
+		
+		
+		// 1:1문의 상세보기 화면
+		@GetMapping(value="/inquiryDetail")
+		public String detail(@RequestParam("no") int no, @AuthenticationPrincipal User user, Model model) {
+			Inquires inquiry = inquiryService.getinquiryByNo(no);
 			model.addAttribute("inquiry", inquiry);
+			
+			if(inquiry.getSecret().equals("N")) {
+				return "inquiry/detail";
+			}
+			
+			
+			if(user == null) {
+				model.addAttribute("error", true);
+				return "inquiry/detail";
+			}
+			
+			
+			if(!user.getType().equals("ROLE_MANAGER")) {
+				if (!inquiry.getUser().getId().equals(user.getId())) {
+					model.addAttribute("error", true);
+					return "inquiry/detail";
+				}	
+			}
+			
+			List<Answer> answers = inquiryService.answerList(no);
+			model.addAttribute("answers", answers);
+			
 			
 			return "inquiry/detail";
 		}
 		
+		// 1:1 문의 답변
+		@PostMapping("/addReply")
+		@ResponseBody
+		public List<Answer> addReply(@AuthenticationPrincipal User user, 
+				@RequestParam("no") int inquiryNo,
+				@RequestParam("content") String content) {
+			
+			// answer 저장 로직
+			inquiryService.addAnswer(user, inquiryNo, content);
+			
+			// 답변목록 조회
+			List<Answer> answerList = inquiryService.answerList(inquiryNo);
+			
+			return answerList;
+		}
+		
+	
+		// 문의 답변 삭제 
+		@GetMapping("/deleteAnswer")
+		public String deleteAnswer(@RequestParam("inquiryNo") int inquiryNo,
+								   @RequestParam("answerNo") int answerNo) {
+			
+			inquiryService.deleteAnswer(inquiryNo, answerNo);
+			
+			return "redirect:/inquiry/inquiries";
+		}
+		
+
 		
 }

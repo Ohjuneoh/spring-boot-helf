@@ -2,28 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.helf.mapper.UserMapper">
 	
-	
+	<!-- 아이디로 유저 정보 조회  -->
 	<select id="getUserById" parameterType="string" resultType="User">
 		select
-			user_id					as id,
-			user_email				as email,
-			user_name				as name,
-			user_tel				as tel,
-			user_encrypted_password as encryptedPassword,
-			user_gender				as gender,
-			user_status				as status,
-			user_mobile_carrier		as mobileCarrier,
-			user_create_date		as createDate,
-			user_update_date		as updateDate,
-			user_point				as point,
-			rank_no					as "rank.no",
-			user_type				as type,
-			user_authentication_no	as authenticationNo
-			
+			u.user_id					as id,
+			u.user_email				as email,
+			u.user_name					as name,
+			u.user_tel					as tel,
+			u.user_encrypted_password 	as encryptedPassword,
+			u.user_gender				as gender,
+			u.user_status				as status,
+			u.user_mobile_carrier		as mobileCarrier,
+			u.user_create_date			as createDate, 
+			u.user_update_date			as updateDate,
+			u.user_point				as point,
+			u.rank_no					as "rank.no",
+			r.rank_name					as "rank.name",
+			u.user_type					as type,
+			u.user_authentication_no	as authenticationNo,
+			u.user_social				as social
 		from
-			helf_users
+			helf_users u, helf_ranks r
 		where 
-			user_id = #{value}
+			u.user_id = #{value}
+		and u.rank_no = r.rank_no(+)
 	</select>
 	
 	<!-- 유저정보 업데이트(수정)  -->
@@ -50,10 +52,12 @@
 	<insert id="insertUser" parameterType="User">
 		insert into helf_users
 		(user_id, user_email, user_name, user_tel, user_encrypted_password,
-		 user_gender, user_type, rank_no, user_point, user_mobile_carrier)
+		 user_gender, user_type, rank_no, user_point, user_mobile_carrier,
+		 user_social)
 		values
 		(#{id}, #{email}, #{name}, #{tel}, #{encryptedPassword}, 
-		 #{gender}, #{type}, #{rank.no}, #{point}, #{mobileCarrier})
+		 #{gender}, #{type}, 1, 0, #{mobileCarrier},
+		 #{social})
 	</insert>
 	
 	<!-- 트레이너 회원가입 1단계 (유저객체에 등록) -->
