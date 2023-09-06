@@ -8,7 +8,7 @@
 </style>
 <head>
     <meta charset="utf-8">
-    <title>고객 상세 정보_방문 내역</title>
+    <title>고객 상세 정보_수업 내역</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -146,7 +146,7 @@
 	   	</div>
 	   	<div class="col-10">
 	   	<div class="row mb-3">
-	   		<h3 class="mb-0 text-primary">최근 방문 내역 </h3>
+	   		<h3 class="mb-0 text-primary">최근 수업 내역 </h3>
 	   			<form id="form-specific-dates" method="get" action="customer-recent-visit">
 	   				<div class="card-body p-4 d-flex justify-content-center align-items-center">
 	   					<div>
