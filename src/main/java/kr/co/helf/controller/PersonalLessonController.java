@@ -84,7 +84,35 @@ public class PersonalLessonController {
 		model.addAttribute("consultations",consultations);
 		return "personal-lesson/consultationlist";
 	}
-
+	//유저 상담신청한 트레이너 조회
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@GetMapping("/trainer-list")
+	public String trainerList(@AuthenticationPrincipal User user, Model model) {
+		
+		List<UserConsultations> consultations = personalLessonService.getUserConsultationsByUserId(user.getId());
+		List<Trainer> trainers = personalLessonService.getTrainerByConsultationWithUserId(user.getId());
+		List<UserMyMemberships> memberships = personalLessonService.getUserMembershipById(user.getId());
+		
+		model.addAttribute("memberships",memberships);
+		model.addAttribute("trainers", trainers); 
+		model.addAttribute("consultations",consultations);
+		
+		return "personal-lesson/userConsultationList";
+	}
+	
+	//유저가 상담 신청한 신청내역 조회
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@GetMapping("/consultation-list")
+	public String userConsultationList(@AuthenticationPrincipal User user,@RequestParam("trainerNo") int trainerNo, Model model) {
+		
+		List<UserConsultations> consultations = personalLessonService.getUserConsultationsByUserId(user.getId());
+		
+		model.addAttribute("consultations",consultations);
+		
+		return "personal-lesson/userConsultationList";
+	}
+	
+	
 
 	//트레이너 1대1 상담신청 조회 후 수업개설
 	@PreAuthorize("hasRole('ROLE_TRAINER')")
@@ -123,7 +151,6 @@ public class PersonalLessonController {
 		
 		
 		personalLessonService.createPersonalLesson(personalLesson, consultation);
-		
 		
 		return "redirect:/personal-lesson/list";
 	}

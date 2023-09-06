@@ -64,13 +64,10 @@
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
                     <h1 class="display-4 text-white animated zoomIn">CONSULTATION</h1>
                     <a href="" class="h5 text-white">상담신청</a>
-                    
                 </div>
             </div>
         </div>
     </div>
-
-
     <div class="modal fade" id="searchModal" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
@@ -86,8 +83,30 @@
             </div>
         </div>
     </div>
-   	<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;" id="trainer-select">
-        <div class="container py-5">
+    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
+	    <div  class="container py-5">
+		    <div style="margin-bottom: 5px;  display: flex; justify-content: center; align-items: center;">
+			    <span id="step1" class="border border-primary rounded-circle d-inline-flex align-items-center justify-content-center bg-primary" style="height:125px; width:125px;">
+			        <strong style="color:white">강사선택</strong>
+			    </span>
+			    <span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
+			    <span id="step2" class="border border-4 rounded-circle d-inline-flex align-items-center justify-content-center" style="height:125px; width:125px;">
+			        <strong>상담양식 작성</strong>
+			    </span>
+			    <span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
+			    <span id="step3" class="border border-4 rounded-circle d-inline-flex align-items-center justify-content-center" style="height:125px; width:125px;">
+			        <strong>회원권 선택</strong>
+			    </span>
+			</div>
+
+		<div>
+			<a href="/personal-lesson/trainer-list" class="btn btn-primary" >상담내역 조회</a>
+		</div>
+		<hr></hr>
+		</div>
+	</div>
+   	<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s"  id="trainer-select">
+    	<div class="container">
 		 	<form class="" id="group-lesson-form" >
 		    	<div class="container-fluid wow fadeInUp d-flex justify-content-center" data-wow-delay="0.1s" >
 	        		<div class="container ">
@@ -110,7 +129,7 @@
 				            			<c:forEach var="career" items="${trainer.careers}">
 										    <h6 class="text-muted mb-3">
 										        <fmt:formatDate value="${career.careerStartDate}" pattern="yyyy-MM" /> ~ <fmt:formatDate value="${career.careerEndDate}" pattern="yyyy-MM" />
-										        <span><strong>${career.careerName}</strong></span>
+										        <span style="font-weight: bold; margin-left: 10px;">${career.careerName}</span>
 										    </h6>
 										</c:forEach>
 				            		</div>
@@ -229,8 +248,8 @@
             </form>
         </div>
     </div>
-	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
+	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
 
 
     <!-- JavaScript Libraries -->
@@ -262,8 +281,13 @@ $( function() {
 	});
 });
 
+
+
 $(document).ready(function() {
-    // trainer-select 내의 신청하기 버튼에 클릭 이벤트 리스너 추가
+    var step1 = $(".container-fluid .container div span:nth-child(1)");
+    var step2 = $(".container-fluid .container div span:nth-child(3)");
+    var step3 = $(".container-fluid .container div span:nth-child(5)");
+
     $('#trainer-select').on('click', '.btn-primary', function(event) {
         event.preventDefault();
         var trainerNo = $(this).data('trainer-no');
@@ -272,21 +296,25 @@ $(document).ready(function() {
         $('#registration-form').show();
 
         $('#registration-form input[name="trainerNumber"]').val(trainerNo);
+
+        step1.removeClass('bg-primary').find('strong').css('color', '');
+        step2.addClass('bg-primary').find('strong').css('color', 'white');
     });
 
-    //상담페이지 이전 버튼에 클릭 이벤트 리스너 추가
     $('#consultation-back').click(function(event) {
         event.preventDefault();
         $('#trainer-select').show();
         $('#registration-form').hide();
+
+        step2.removeClass('bg-primary').find('strong').css('color', '');
+        step1.addClass('bg-primary').find('strong').css('color', 'white');
     });
 
-    //상담페이지 다음 버튼에 클릭 이벤트 리스너 추가
     $('#next').click(function(event) {
         event.preventDefault();
         
         //공백값에 대한 jquery 처리
-       if (!$.trim($("#goal").val())) {
+        if (!$.trim($("#goal").val())) {
             alert("PT 목표를 입력해주세요.");
             $("#goal").focus();
             return;
@@ -308,8 +336,8 @@ $(document).ready(function() {
             alert("희망 상담시간을 입력해주세요.");
             $("#time").focus();
             return;
-        }  
-        
+        }
+
         $('#final-trainerNumber').val($('#trainerNumber').val());
         $('#final-goal').val($('#goal').val());
         $('#final-abnormalities').val($('#abnormalities').val());
@@ -317,22 +345,25 @@ $(document).ready(function() {
         $('#final-time').val($('#time').val());
         $('#registration-form').hide();
         $('#membership-list').show();
-    });
-    //회원권 선택 페이지 이전 버튼에 클릭 이벤트 리스너 추가
-    $('#membership-back').click(function(event) {
-        event.preventDefault();
-        $('#registration-form').show();
-        $('#membership-list').hide();
+
+        step2.removeClass('bg-primary').find('strong').css('color', '');
+        step3.addClass('bg-primary').find('strong').css('color', 'white');
     });
 
-    // registration-form의 제출 이벤트에 리스너 추가
+    $('#membership-back').click(function(event) {
+        event.preventDefault();
+
+        $('#registration-form').show();
+        $('#membership-list').hide();
+
+        step3.removeClass('bg-primary').find('strong').css('color', '');
+        step2.addClass('bg-primary').find('strong').css('color', 'white');
+    });
+
     $('#registration-form').submit(function(event) {
-        // 알림을 띄운다.
         alert('신청이 완료되었습니다.');
     });
-});
-//membershipNo를 input 박스로 전달
-$(document).ready(function(){
+
     $(".selectBtn").click(function(){
         var membershipNoValue = $(this).data("membership-no");
         
@@ -345,6 +376,7 @@ $(document).ready(function(){
         $("#mainForm").append(inputField).submit();
     });
 });
+
 </script>
     
     
