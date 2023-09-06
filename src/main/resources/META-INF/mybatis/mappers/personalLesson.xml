@@ -265,4 +265,57 @@
 		and user_id = #{id}
 		and lesson_consultation_status = '대기중'
 	</update>
+	<!-- 유저 ID, 트레이너 번호로 상담내역 조회하기  -->
+	<select id="getConsultationByUserId" parameterType="string" resultType="UserConsultations">
+		select a.lesson_consultation_no	as consultationNo,
+               a.lesson_consultation_application_date as applicationDate,
+               a.lesson_consultation_exercise_goal as goal,
+               a.lesson_consultation_physical_abnormalities as abnormalities,
+               a.lesson_consultation_request_date as requestDate,
+               a.lesson_consultation_request_time as requestTime,
+               b.user_id                           as "user.id",
+               c.trainer_no                       as  "trainer.trainerNo",
+			   a.lesson_consultation_status	as consultationStatus
+		from	helf_lesson_consultation a, helf_users b, helf_trainers c
+		where a.user_id = #{id}
+        and a.user_id = b.user_id
+        and a.trainer_no = c.trainer_no
+	</select>
+	<!-- 수강신청한 강사 조회  -->
+	<resultMap type="kr.co.helf.vo.Trainer" id="getTrainersWithCareerByUserId" >
+    	<id column="trainer_no" property="trainerNo"/>
+    	<result column="trainer_file" property="trainerFile"/>
+    	<association property="user" javaType="kr.co.helf.vo.User">
+    		<id column="user_id" property="id"/>
+    		<result column="name" property="name"/>
+    	</association>
+    	<collection property="careers" ofType="Career">
+        	<id column="career_no" property="careerNo"/>
+        	<result column="career_name" property="careerName"/>
+        	<result column="career_start_date" property="careerStartDate"/>
+        	<result column="career_end_date" property="careerEndDate"/>
+    	</collection>
+	</resultMap>
+	<select id="getTrainersWithCareerByUserId" resultMap="getAllTrainersWithCareer">
+		select
+			b.trainer_no,
+			a.user_name	as name,
+			b.trainer_file,
+			c.career_no,
+			c.career_name,
+			c.career_start_date,
+			c.career_end_date
+		from
+		    helf_users a, helf_trainers b, helf_trainer_career c
+		where
+			a.user_id = b.user_id
+        and c.trainer_no = b.trainer_no
+        and c.trainer_no  in (
+    								select trainer_no
+									from helf_lesson_consultation
+									where user_id = #{value}
+									)
+		order by
+			trainer_no
+	</select>
 </mapper>

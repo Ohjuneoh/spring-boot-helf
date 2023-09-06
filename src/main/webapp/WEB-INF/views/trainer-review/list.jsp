@@ -152,6 +152,7 @@
             <i class="bi bi-star"></i>
           </c:forEach>
         </h5>
+        
         <div class="d-flex align-items-center pt-1 pb-1 px-5">
           <h5 class="text-primary">${trainerReview.lesson.name }</h5>
         </div>
@@ -160,7 +161,11 @@
         <div class="d-flex align-items-center pt-1 pb-3 px-5 border-bottom mb-3">
           <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
           <div class="ps-4">
-            <h4 class="text-primary mb-1">${trainerReview.lessonApply.user.name }</h4>
+            <h4 class="text-primary mb-1">${trainerReview.lessonApply.user.name }
+            	<a class="bg-success text-white" style="font-size: 3px; border-radius: 50%; display: inline-block; padding: 5px;">
+			    	<span>그룹</span>
+				</a>
+            </h4>
             <small class="text-uppercase"><fmt:formatDate value="${trainerReview.createDate }" pattern="yyyy년 M월 d일" /></small>
           </div>
         </div>
@@ -208,7 +213,10 @@
         <div class="d-flex align-items-center pt-1 pb-3 px-5 border-bottom mb-3">
           <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
           <div class="ps-4">
-            <h4 class="text-primary mb-1">${trainerPersonalReview.personalLesson.user.name }</h4>
+            <h4 class="text-primary mb-1">${trainerPersonalReview.personalLesson.user.name }
+            	<a class="bg-info text-white" style="font-size: 3px; border-radius: 50%; display: inline-block; padding: 5px;">
+			    	<span>개인</span>
+				</a></h4>
             <small class="text-uppercase"><fmt:formatDate value="${trainerPersonalReview.createDate }" pattern="yyyy년 M월 d일" /></small>
           </div>
         </div>
