@@ -494,3 +494,4 @@ h6,
     z-index: 10000 !important; /* 높은 값을 부여하여 다른 요소 위에 나타나게 함 */
     position: relative; /* position이 static이 아님을 보장 */
 }
+

@@ -25,6 +25,7 @@ public class Lesson {
     private Date date;
     private User user;
     private Membership membership;
+    private int attendanceRate;
 
     public Lesson(int no){
         this.no = no;

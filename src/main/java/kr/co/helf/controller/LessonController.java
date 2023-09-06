@@ -1,5 +1,6 @@
 package kr.co.helf.controller;
 
+import kr.co.helf.dto.MyPersonalLessonDto;
 import kr.co.helf.service.LessonService;
 import kr.co.helf.vo.Consultation;
 import kr.co.helf.vo.Lesson;
@@ -29,7 +30,12 @@ public class LessonController {
     // 유저가 신청한 모든 수업 조회
     @GetMapping("/user-my-lesson")
     public String lessonList(@AuthenticationPrincipal User user, Model model) {
+    	//유저의 그룹수업 조회
         List<LessonApply> applyList = lessonService.getAllMyLessons(user.getId());
+        // 유저의 1:1 개인PT 조회
+        List<MyPersonalLessonDto> myPersonalLessonList = lessonService.getAllMyTrainers(user.getId());
+        
+        model.addAttribute("personalLessonList",myPersonalLessonList);
         model.addAttribute("applyList",applyList);
 
         return "lesson/myLesson";
@@ -82,5 +88,6 @@ public class LessonController {
     public void updatePersonalLessonAttendance(int lessonNo,String status){
         lessonService.updatePersonalLessonAttendance(lessonNo,status);
     }
+    
     
 }

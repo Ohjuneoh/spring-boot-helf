@@ -16,7 +16,7 @@
         from  helf_inquiries
     </select>
   
-  	<!-- 모든 문의 조회(페이징처리 포함) -->
+  <!-- 모든 문의 조회(페이징처리 포함) -->
     <select id="getAllInquiry" resultType="Inquiry" parameterType="map">
         select *
         from(select

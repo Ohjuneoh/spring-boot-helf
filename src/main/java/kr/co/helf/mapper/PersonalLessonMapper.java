@@ -41,6 +41,9 @@ public interface PersonalLessonMapper {
 	//상담상태 변경
 	void updatedConsultation(@Param("consultationNo") int consultationNo, @Param("status") String status);
 	void updateExpiredConsultation(@Param("id") String id, @Param("no") int no, @Param("status") String status);
+	//유저 아이디로 상담내역 조회
+	List<UserConsultations> getConsultationByUserId(String id);
+	List<Trainer> getTrainersWithCareerByUserId(String id);
 	
 
 }

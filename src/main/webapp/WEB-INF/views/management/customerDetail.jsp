@@ -96,29 +96,28 @@
   	 <div class="testimonial-item">
      	<div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
      		<c:choose>
-     			<c:when test="${detailDto.user.gender == 'MAN'}">
+     			<c:when test="${customerInfo.user.gender == 'MAN'}">
      				<img class="/resources/img-fluid rounded" src="/resources/img/남1.png" style="width: 150px; height: 150px;" >
      			</c:when>
-     			<c:when test="${detailDto.user.gender == 'WOMAN'}">
+     			<c:when test="${customerInfo.user.gender == 'WOMAN'}">
         			<img class="/resources/img-fluid rounded" src="/resources/img/여1_bg.png" style="width: 150px; height: 150px;" >
      			</c:when>
      		</c:choose>
             	<div class="ps-2">
-                	<h4 class="text-primary mb-1">${detailDto.user.name} 회원</h4>
-                      <div class="text-uppercase"><span class="badge bg-primary">${detailDto.user.rank.name }</span>
+                	<h4 class="text-primary mb-1">${customerInfo.user.name} 회원</h4>
+                      <div class="text-uppercase"><span class="badge bg-primary">${customerInfo.user.rank.name }</span>
                       <span class="badge bg-info">
                       	<c:choose>
-                      		<c:when test="${detailDto.user.gender == 'MAN'}">남성</c:when>
-                      		<c:when test="${detailDto.user.gender == 'WOMAN'}">여성</c:when>
+                      		<c:when test="${customerInfo.user.gender == 'MAN'}">남성</c:when>
+                      		<c:when test="${customerInfo.user.gender == 'WOMAN'}">여성</c:when>
                       	</c:choose>
                       </span>
-                      <span class="badge bg-secondary">${detailDto.user.tel }</span>
+                      <span class="badge bg-secondary">${customerInfo.user.tel }</span>
                       <span class="badge bg-success">
                       	<c:choose>
-                      		<c:when test="${detailDto.user.status == 'Y'}">유효회원</c:when>
-                      		<c:when test="${detailDto.user.status == 'N'}">탈퇴회원</c:when>
+                      		<c:when test="${customerInfo.user.status == 'Y'}">유효회원</c:when>
+                      		<c:when test="${customerInfo.user.status == 'N'}">탈퇴회원</c:when>
                       	</c:choose>
-                    
                       </span>
                       </div>
                 </div>
@@ -128,17 +127,17 @@
         		<tbody>
         			<tr>
         				<th style="width: 13%">회원아이디</th>
-        				<th style="width: 20%">${detailDto.user.id }</th>
+        				<th style="width: 20%">${customerInfo.user.id }</th>
         				<th style="width: 13%">이메일</th>
-        				<th style="width: 20%">${detailDto.user.email }</th>
+        				<th style="width: 20%">${customerInfo.user.email }</th>
         				<th style="width: 14%">최초 등록일</th>
-        				<th style="width: 20%"><fmt:formatDate value="${detailDto.user.createDate }" pattern="yyyy-MM-dd"/></th>
+        				<th style="width: 20%"><fmt:formatDate value="${customerInfo.user.createDate }" pattern="yyyy-MM-dd"/></th>
         			</tr>
         			<tr>
         				<th style="width: 13%">최근 방문일</th>
         				<c:choose>
-        					<c:when test="${detailDto.recentVisitDate !=null}">
-        				<th style="width: 20%"><fmt:formatDate value="${detailDto.recentVisitDate}" pattern="yyyy-MM-dd"/></th>
+        					<c:when test="${customerInfo.recentVisitDate !=null}">
+        				<th style="width: 20%"><fmt:formatDate value="${customerInfo.recentVisitDate}" pattern="yyyy-MM-dd"/></th>
         					</c:when>
         					<c:otherwise>
         				<th>-</th>
@@ -146,15 +145,15 @@
         				</c:choose>
         				<th style="width: 13%">누적 결제금액</th>
         				<c:choose>
-        					<c:when test="${detailDto.accumulatedOrderTotalPrice !=null}">
-        				<th style="width: 20%">${detailDto.accumulatedOrderTotalPrice }원</th>
+        					<c:when test="${customerInfo.accumulatedOrderTotalPrice !=null}">
+        				<th style="width: 20%">${customerInfo.accumulatedOrderTotalPrice }원</th>
         					</c:when>
         					<c:otherwise>
         				<th>0원</th>
         					</c:otherwise>
         				</c:choose>
         				<th style="width: 14%">적립 포인트</th>
-        				<th style="width: 20%">${detailDto.user.point }점</th>
+        				<th style="width: 20%">${customerInfo.user.point }점</th>
         			</tr>
         		</tbody>
         	</table>
@@ -184,8 +183,8 @@
 	               		<tbody>
 	               			<c:set var="rowCount" value="0"/>
 	               			<c:choose>
-	               				<c:when test="${not empty detailDto.lessonApply }">
-	               					<c:forEach var="la" items="${detailDto.lessonApply }" varStatus="loop">
+	               				<c:when test="${not empty lessonApply }">
+	               					<c:forEach var="la" items="${lessonApply }" varStatus="loop">
 	               						<c:if test="${loop.index <3 }">
 					               			<tr>
 					               				<td><fmt:formatDate value="${la.lesson.date}" pattern="yyyy년 MM월 dd일"></fmt:formatDate> ${la.lesson.time}</td>
@@ -208,7 +207,7 @@
 	               							<c:set var="rowCount" value="${rowCount +1 }"/>
 	               						</c:if>
 	               					</c:forEach>
-	               					<c:forEach begin="1" end="${3-rowCount }">
+	               					<%-- <c:forEach begin="1" end="${3-rowCount }">
 			               				<tr>
 				               				<td>-</td>
 				               				<td>-</td>
@@ -217,7 +216,7 @@
 				               				<td>-</td>
 				               				<td>-</td>
 			               				</tr>
-	               					</c:forEach>
+	               					</c:forEach> --%>
 	               				</c:when>
 	               				<c:otherwise>
 	               					<tr>
@@ -253,18 +252,18 @@
 	               		<tbody id="order-table-body">
 	               		<c:set var="rowCount" value="0"/>
 	               		<c:choose>
-	               			<c:when test="${not empty detailDto.order}">
-	               				<c:forEach var="order" items="${detailDto.order }" varStatus="loop">
+	               			<c:when test="${not empty customerOrderDto}">
+	               				<c:forEach var="od" items="${customerOrderDto}" varStatus="loop">
 	               					<c:if test="${loop.index <3 }">
 				               			<tr>
-				               				<td>${order.order.paymentDate }</td>
-				               				<td>${order.order.myMembership.membership.name }</td>
-				               				<td>${order.order.totalPrice }</td>
-				               				<td>${order.order.membershipPrice }</td>
-				               				<td>${order.order.state }</td>
+				               				<td>${od.order.paymentDate }</td>
+				               				<td>${od.order.myMembership.membership.name }</td>
+				               				<td>${od.order.totalPrice }</td>
+				               				<td>${od.order.membershipPrice }</td>
+				               				<td>${od.order.state }</td>
 				               				<c:choose>
-				               					<c:when test="${not empty order.myOption}">
-				               				<td>${order.myOption.optionDetail.option.name }</td>
+				               					<c:when test="${not empty od.myOption}">
+				               				<td>${od.myOption.optionDetail.option.name }</td>
 				               					</c:when>
 				               					<c:otherwise>	
 				               				<td>-</td>
@@ -275,14 +274,14 @@
 		               				</c:if>
 		               				<c:if test="${loop.index >=3 }">
 				               			<tr class="hidden-row">
-				               				<td>${order.paymentDate }</td>
-				               				<td>${order.myMembership.membership.name }</td>
-				               				<td>${order.totalPrice }</td>
-				               				<td>${order.membershipPrice }</td>
-				               				<td>${order.state }</td>
+				               				<td>${od.order.paymentDate }</td>
+				               				<td>${od.order.myMembership.membership.name }</td>
+				               				<td>${od.order.totalPrice }</td>
+				               				<td>${od.order.membershipPrice }</td>
+				               				<td>${od.order.state }</td>
 				               				<c:choose>
-				               					<c:when test="${not empty order.myMembership.myOption.optionDetail.option.name}">
-				               				<td>${order.myMembership.myOption.optionDetail.option.name }</td>
+				               					<c:when test="${not empty od.myOption.optionDetail.option.name}">
+				               				<td>${od.myOption.optionDetail.option.name }</td>
 				               					</c:when>
 				               					<c:otherwise>	
 				               				<td>-</td>
@@ -291,7 +290,7 @@
 				               			</tr>
 		               				</c:if>
 		               			</c:forEach>
-		               			<c:forEach begin="1" end="${3-rowCount }">
+		               			<%-- <c:forEach begin="1" end="${3-rowCount }">
 		               				<tr>
 		               					<td>-</td>
 		               					<td>-</td>
@@ -300,11 +299,14 @@
 		               					<td>-</td>
 		               					<td>-</td>
 		               				</tr>
-		               			</c:forEach>
+		               			</c:forEach> --%>
+		               			<tr id="see-more-orders">
+	               					<td colspan="6" style="cursor:pointer;" id="td-more-orders">더보기</td>
+	               				</tr>
 	               			</c:when>
 	               			<c:otherwise>
-	               				<tr id="see-more-orders">
-	               					<td colspan="6" style="cursor:pointer;" id="td-more-orders">최근 결제 내역이 없습니다.</td>
+	               				<tr>
+	               					<td colspan="6">최근 결제 내역이 없습니다.</td>
 	               				</tr>
 	               			</c:otherwise>
 	               		</c:choose>
@@ -337,8 +339,8 @@
 	               		<tbody id="membership-table-body">
 	               		<c:set var="rowCount" value="0"/>
 	               		<c:choose>
-	               			<c:when test="${not empty detailDto.myMembership }">
-	               				<c:forEach var="mm" items="${detailDto.myMembership}" varStatus="loop">
+	               			<c:when test="${not empty myMembershipList }">
+	               				<c:forEach var="mm" items="${myMembershipList}" varStatus="loop">
 	               					<c:if test="${loop.index <3 }">
 				               			<tr>
 				               				<td>${mm.membership.category.property }제</td>
@@ -353,7 +355,14 @@
 				               			</c:choose>
 				               				<td>${mm.startDate }</td>
 				               				<td>${mm.endDate }</td>
-				               				<td></td>
+				               			<c:choose>
+				               				<c:when test="${mm.remainPeriod() < 0}">
+				               					<td>-</td>
+				               				</c:when>
+				               				<c:otherwise>
+					               				<td>${mm.remainPeriod() }일</td>
+				               				</c:otherwise>
+				               			</c:choose>
 				               			<c:choose>
 					               			<c:when test="${mm.remainderCnt == -1 }">
 					               				<td>무제한</td>
@@ -426,7 +435,7 @@
             	<h3 class="mb-0 text-primary">최근 방문 내역 </h3>
             </div>
             <div class="col-sm wow zoomIn" data-wow-delay="0.2s">
-            	<p style="text-align: right;"><a href="customer-recent-visit?id=${detailDto.user.id }">자세히보기</a></p>
+            	<p style="text-align: right;"><a href="customer-recent-visit?id=${customerInfo.user.id }">자세히보기</a></p>
             	<table class="table table-bordered shadow-sm" style="text-align: center; vertical-align: middle;">
                			<thead>
 	               			<tr>
@@ -440,17 +449,17 @@
 	               		<tbody>
 	               		<c:set var="rowCount" value="0"/>
 	               		<c:choose>
-	               			<c:when test="${not empty detailDto.customerAttendance }">
-	               				<c:forEach var="attendance" items="${detailDto.customerAttendance }" varStatus="loop">
+	               			<c:when test="${not empty customerAttendance }">
+	               				<c:forEach var="att" items="${customerAttendance }" varStatus="loop">
 	               					<c:if test="${loop.index <3 }">
 				               			<tr>
-				               				<td>${attendance.no }</td>
-				               				<td><fmt:formatDate value="${attendance.date }" pattern="yyyy-MM-dd hh:mm:ss"></fmt:formatDate></td>
-				               				<td>${attendance.myMembership.membership.category.name }</td>
-				               				<td>${attendance.myMembership.membership.name }</td>
+				               				<td>${att.no }</td>
+				               				<td><fmt:formatDate value="${att.date }" pattern="yyyy-MM-dd hh:mm:ss"></fmt:formatDate></td>
+				               				<td>${att.myMembership.membership.category.name }</td>
+				               				<td>${att.myMembership.membership.name }</td>
 				               				<c:choose>
-				               					<c:when test="${not empty attendance.lessonName }">
-				               				<td>${attendance.lessonName }</td>
+				               					<c:when test="${not empty att.lessonName }">
+				               				<td>${att.lessonName }</td>
 				               					</c:when>
 				               					<c:otherwise>
 				               						<td>-</td>
@@ -538,7 +547,7 @@
     		$("#order-table-body tr.hidden-row").slice(0,3).removeClass("hidden-row").show();
     		
     		if($("#order-table-body tr.hidden-row").length == 0){
-    			$("see-more-orders").hide();
+    			$("#see-more-orders").hide();
     			alert("마지막 페이지입니다.");
     		}
     	});

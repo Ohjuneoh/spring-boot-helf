@@ -63,6 +63,14 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id            
+  
+  spring:
+  profiles:
+    active: oauth
+  
+  config:
+    name: application-oauth
+    location: C:/workspace/spring-workspace/spring-boot-helf/src/main/resources/
           
 # mybatis 관련 설정정보 저장하기
 mybatis:

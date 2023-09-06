@@ -1,12 +1,11 @@
 package kr.co.helf.controller;
 
-import static kr.co.helf.enums.MembershipEnum.*;
-
 import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,6 +23,7 @@ import kr.co.helf.kakaopay.KakaoPayReadyResponse;
 import kr.co.helf.kakaopay.KakaoPayService;
 import kr.co.helf.service.OrderService;
 import kr.co.helf.vo.Membership;
+import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.Option;
 import kr.co.helf.vo.Period;
 import kr.co.helf.vo.Rank;
@@ -47,13 +47,12 @@ public class OrderController {
 		return "order/membershipList";
 	}
 	
-	@GetMapping("/condition")
+	@PostMapping("/condition")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String condition(@RequestParam("no") int no, @AuthenticationPrincipal User user, Model model) {
 
-		try {
-			orderService.checkUseMyMembership(no, user.getId());
-		} catch (RuntimeException ex) {
+		MyMembership useMyMembership = orderService.checkUseMyMembership(no, user.getId());
+		if(useMyMembership != null) {
 			return "redirect:list?error=dup";
 		}
 		
@@ -70,7 +69,7 @@ public class OrderController {
 		return "order/step1";
 	}
 	
-	@GetMapping("/period")
+	@PostMapping("/period")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String period(@ModelAttribute("addOrderForm") AddOrderForm form, Model model,
 						 @AuthenticationPrincipal User user) {
@@ -81,7 +80,7 @@ public class OrderController {
 		
 		MembershipJoinCategory membershipJoinCat = orderService.getMembershipJoinCatByNo(form.getMembershipNo());
 
-		if(membershipJoinCat.getCatName().equals(ONE_DAY.getMembershiEnum())) {
+		if(membershipJoinCat.isOneDay()) {
 			orderService.setOneDay(membershipJoinCat, form, user);
 			
 			model.addAttribute("membershipJoinCat", membershipJoinCat);
@@ -116,7 +115,7 @@ public class OrderController {
 		form.setMembershipPrice(form.getMembershipDefaltPrice() + period.getAddPrice());
 		form.setPeriodDuration(period.getDuration());
 		
-		if(period.getType().equals(TIME.getMembershiEnum())) {
+		if(period.isTime()) {
 			form.setRemainderCnt(period.getProperty());
 		}
 
@@ -156,6 +155,7 @@ public class OrderController {
 	}
 	
 	@GetMapping("/kakaopay-progress")
+	@Transactional
 	public String order(@ModelAttribute("addOrderForm")  AddOrderForm form, @AuthenticationPrincipal User user, 
 						@ModelAttribute("tid")  String tid, @RequestParam("pg_token") String pgToken,
 						SessionStatus sessionStatus) {

@@ -72,5 +72,15 @@ public class PersonalLessonService {
 		personalLessonMapper.updateExpiredConsultation(personalLesson.getUser().getId(), personalLesson.getMyMembership().getNo(), "상담만료");
 		
 	}
+	//유저 id를 기준으로 상담테이블 조회
+	public List<UserConsultations> getUserConsultationsByUserId(String id) {
+		
+		List<UserConsultations> userConsultation = personalLessonMapper.getConsultationByUserId(id);
+		return userConsultation;
+	}
+
+	public List<Trainer> getTrainerByConsultationWithUserId(String id) {
+		return personalLessonMapper.getTrainersWithCareerByUserId(id);
+	}
 }
 

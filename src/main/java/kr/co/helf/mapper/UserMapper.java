@@ -12,7 +12,8 @@ import kr.co.helf.dto.CustomerListDto;
 import kr.co.helf.vo.CustomerAttendance;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.MyMembership;
-import kr.co.helf.vo.Order;
+import kr.co.helf.vo.MySalary;
+import kr.co.helf.vo.Rank;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.TrainerCareer;
 import kr.co.helf.vo.TrainerAttendance;
@@ -79,7 +80,6 @@ public interface UserMapper {
 	// 고객별 상세 조회 (5)방문내역 - 채경
 	List<CustomerAttendance> getCustomerAttendance(String id);
 
-
 	List<User> getAllCustomer();
 
 	// 고객별 상세 조회 - 최근 방문 내역 - 채경 
@@ -88,6 +88,12 @@ public interface UserMapper {
 	// 전체 직원 수 - 채경 
 	int getAllTrainerTotalRows(Map<String, Object> param);
 	
-	// 전체 직원 목록 조회 - 채경 
+	// 전체 트레이너 목록 조회 - 채경 
 	List<Trainer> getAllTrainers(Map<String, Object> param);
+	
+	// 트레이너 상세 조회 - 채경 
+	MySalary getTrainerDetailById(String id);
+	
+	Rank getNewRank(String id);
+	
 }

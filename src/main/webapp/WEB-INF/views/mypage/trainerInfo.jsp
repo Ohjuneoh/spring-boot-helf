@@ -96,15 +96,16 @@
     				<div class="card">
     					<div class="card-header">내 리뷰내역</div>
     					<div class="card-body">
-    						<p class="text-end"><a href="/user/moreReviews">더보기</a></p>
-							<table class="table">
-								<thead>
-								<tr>
-									<th>수업명</th>
-									<th>제목</th>
-									<th>작성일</th>
-								</tr>
-								</thead>
+    						<p class="text-end"><a href="/trainer-review/list?trainerNo=${trainer.trainerNo }">더보기</a></p>
+    						<table class="table">
+    							<thead>
+    								<tr>
+										<th>수업 명</th>
+										<th>리뷰 제목</th>
+										<th>작성일</th>
+										<th>작성자</th>
+									</tr>
+    							</thead>
 								<tbody>
 								<c:choose>
 									<c:when test="${empty reviews }">
@@ -115,21 +116,20 @@
 										</tr>
 									</c:when>
 								</c:choose>
-								<c:forEach var="reviews" items="${reviews}" varStatus="status">
+								<c:forEach var="reviews" items="${reviews }" varStatus="status">
 									<c:choose>
 										<c:when test="${status.index < 5}">
 											<tr>
 												<td>${reviews.lesson.name}</td>
 												<td>${reviews.title}</td>
 												<td><fmt:formatDate value="${reviews.createDate}" pattern="yyyy년 M월 d일" /></td>
+												<td>${reviews.lessonApply.user.name }</td>
 											</tr>
 										</c:when>
-										<c:otherwise>
-										</c:otherwise>
 									</c:choose>
 								</c:forEach>
 								</tbody>
-							</table>
+    						</table>
     					</div>
     				</div>
     			</div>

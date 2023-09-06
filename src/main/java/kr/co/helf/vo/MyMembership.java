@@ -5,11 +5,14 @@ import java.time.temporal.ChronoUnit;
 
 import org.apache.ibatis.type.Alias;
 
-import lombok.Data;
+import kr.co.helf.enums.MembershipEnum;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Alias("myMembership")
 public class MyMembership {
 
@@ -21,8 +24,32 @@ public class MyMembership {
 	private User user;					// 넣어야됨
 	private Period period;				// 넣어야됨
 	private Membership membership;		// 넣어야됨
+	
+	public void setWaitState() {
+		MembershipEnum en = MembershipEnum.WAITING;
+		this.state = en.getValue();
+	}
+	
+	public void setPossibility() {
+		MembershipEnum en = MembershipEnum.POSSIBILITY;
+		this.state = en.getValue();
+	}
+	
+	public void setImpossibility() {
+		MembershipEnum en = MembershipEnum.IMPOSSIBILITY;
+		this.state = en.getValue();
+	}
+	
+	public boolean isImpossibility() {
+		MembershipEnum en = MembershipEnum.IMPOSSIBILITY;
+		return this.state.equals(en.getValue());
+	}
 
 	public int remainPeriod() {
 		return (int) ChronoUnit.DAYS.between(LocalDate.now(), this.endDate);
+	}
+	
+	public boolean isUserId(String userId) {
+		return this.user.getId().equals(userId);
 	}
 }

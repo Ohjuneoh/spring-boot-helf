@@ -95,17 +95,32 @@
    <div class="container">
   	 <div class="testimonial-item">
      	<div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
-     		<img class="/resources/img-fluid rounded" src="/resources/img/남2.png" style="width: 150px; height: 150px;">
+     		<c:choose>
+     			<c:when test="${trainerInfo.user.gender == 'MAN' }">
+     				<img class="/resources/img-fluid rounded" src="/resources/img/남2.png" style="width: 150px; height: 150px;">     			
+     			</c:when>
+     			<c:when test="${trainerInfo.user.gender == 'WOMAN' }">
+     				<img class="/resources/img-fluid rounded" src="/resources/img/여2.png" style="width: 150px; height: 150px;">     			
+     			</c:when>
+     		</c:choose>
             	<div class="ps-2">
-                	<h4 class="text-primary mb-1">도민준 트레이너</h4>
-                      <div class="text-uppercase"><span class="badge bg-primary">점장</span>
-                      <span class="badge bg-info">
-                      	남성
-                      </span>
-                      <span class="badge bg-secondary">010-2039-3837</span>
-                      <span class="badge bg-success">
-                      	재직중
-                      </span>
+                	<h4 class="text-primary mb-1">${trainerInfo.user.name } 트레이너</h4>
+                      <div class="text-uppercase">
+	                      <span class="badge bg-primary">${trainerInfo.trainer.title }</span>
+	                      <span class="badge bg-info">
+		                      <c:choose>
+		                      	<c:when test="${trainerInfo.user.gender == 'MAN'}">남성</c:when>
+		                      	<c:when test="${trainerInfo.user.gender == 'WOMAN'}">여성</c:when>
+		                      </c:choose>
+	                      </span>
+	                      <span class="badge bg-secondary">${trainerInfo.user.tel }</span>
+	                      <span class="badge bg-success">
+	                      	<c:choose>
+		                      	<c:when test="${trainerInfo.user.status == 'R'}">승인대기</c:when>
+	                      		<c:when test="${trainerInfo.user.status == 'Y'}">재직</c:when>
+	                      		<c:when test="${trainerInfo.user.status == 'N'}">퇴사</c:when>
+	                      	</c:choose>
+	                      </span>
                       </div>
                 </div>
         </div>
@@ -114,19 +129,26 @@
         		<tbody>
         			<tr>
         				<th style="width: 13%">강사번호</th>
-        				<th style="width: 20%"></th>
+        				<th style="width: 20%">${trainerInfo.trainer.trainerNo }</th>
         				<th style="width: 13%">아이디</th>
-        				<th style="width: 20%"></th>
+        				<th style="width: 20%">${trainerInfo.user.id }</th>
         				<th style="width: 13%">이메일</th>
-        				<th style="width: 20%"></th>
+        				<th style="width: 20%">${trainerInfo.user.email }</th>
         			</tr>
         			<tr>
         				<th style="width: 13%">입사일</th>
-        				<th style="width: 20%"><fmt:formatDate value="" pattern="yyyy-MM-dd"/></th>
+        				<th style="width: 20%"><fmt:formatDate value="${trainerInfo.trainer.hiredDate }" pattern="yyyy-MM-dd"/></th>
         				<th style="width: 14%">퇴사일</th>
-        				<th style="width: 20%"><fmt:formatDate value="" pattern="yyyy-MM-dd"/></th>
+        				<c:choose>
+        					<c:when test="${not empty trainerInfo.trainer.resignationDate }">
+        						<th style="width: 20%"><fmt:formatDate value="${trainerInfo.trainer.resignationDate }" pattern="yyyy-MM-dd"/></th>        					
+        					</c:when>
+        					<c:otherwise>
+        						<th style="width: 20%">-</th>
+        					</c:otherwise>	
+        				</c:choose>
         				<th style="width: 14%">연봉</th>
-        				<th style="width: 20%"></th>
+        				<th style="width: 20%">${trainerInfo.annualSalary }원</th>
         			</tr>
         		</tbody>
         	</table>
@@ -176,26 +198,29 @@
             	<h3 class="mb-0 text-primary">최근 그룹 수업 내역 </h3>
             </div>
             <div class="col-sm wow zoomIn" data-wow-delay="0.2s">
+				<p style="text-align: right;"><a href="/management/moreGroupLesson?id=${param.id}">자세히보기</a></p>
               		<table class="table table-bordered shadow-sm" style="text-align: center; vertical-align: middle;" id="table-order-list">
                			<thead>
 	               			<tr>
-	               				<th>수업날짜</th>
-	               				<th>예약날짜</th>
 	               				<th>수업명</th>
-	               				<th>회원 수</th>
-	               				<th>출결상태</th>
-	               				<th>이용권명</th>
+								<th>수업날짜</th>
+	               				<th>이용권 명</th>
 	               			</tr>
 	               		</thead>
 	               		<tbody>
-	               			<tr>
-				               	<td>-</td>
-				       			<td>-</td>
-			    				<td>-</td>
-				   				<td>-</td>
-			      				<td>-</td>
-			     				<td>-</td>
-			               	</tr>
+						<c:forEach var="lesson" items="${lessons }" varStatus="status">
+							<c:choose>
+								<c:when test="${status.index < 5}">
+									<tr>
+										<td>${lesson.name }</td>
+										<td><fmt:formatDate value="${lesson.date }" pattern="yyyy년 M월 d일" /> ${lesson.time }시 </td>
+										<td>그룹 PT</td>
+									</tr>
+								</c:when>
+								<c:otherwise>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
 	               		</tbody>
 	               </table>
             	</div>
@@ -210,26 +235,34 @@
             	<h3 class="mb-0 text-primary">최근 출결 내역 </h3>
             </div>
             <div class="col-sm wow zoomIn" data-wow-delay="0.2s">
-            	<p style="text-align: right;"><a href="customer-recent-visit?id=">자세히보기</a></p>
+            	<p style="text-align: right;"><a href="trainer-attendance-list?id=${param.id }">자세히보기</a></p>
             	<table class="table table-bordered shadow-sm" style="text-align: center; vertical-align: middle;">
                			<thead>
 	               			<tr>
 	               				<th>번호</th>
-	               				<th>방문날짜</th>
-	               				<th>이용권 종류</th>
-	               				<th>이용권명</th>
-	               				<th>수업명</th>
+	               				<th>날짜 및 시간</th>
+	               				<th>상태</th>
+	               				<th>기타</th>
 	               			</tr>
 	               		</thead>
 	               		<tbody>
-		               		<tr>
-			               		<td>-</td>
-			               		<td>-</td>
-			              		<td>-</td>
-			               		<td>-</td>
-			               		<td>-</td>
-			               		<td>-</td>
-		               		</tr>
+	               		<c:choose>
+	               			<c:when test="${not empty attendances }">
+	               				<c:forEach var="att" items="${attendances }" varStatus="loop">
+		               				<tr>
+					               		<td>${loop.count }</td>
+					               		<td><fmt:formatDate value="${att.date }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
+					              		<td>${att.state }</td>
+					               		<td>${att.cause }</td>
+			               			</tr>
+	               				</c:forEach>
+	               			</c:when>
+	               			<c:otherwise>
+	               				<tr>
+				               		<td colspan="4">출결 내역이 없습니다.</td>
+		               			</tr>
+	               			</c:otherwise>
+	               		</c:choose>
 	               		</tbody>
 	               </table>
             	</div>
