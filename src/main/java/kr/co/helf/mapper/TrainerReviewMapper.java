@@ -1,7 +1,7 @@
 package kr.co.helf.mapper;
 
+import kr.co.helf.form.ModifyPersonalReviewForm;
 import kr.co.helf.form.ModifyReviewForm;
-import kr.co.helf.vo.PersonalLesson;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.TrainerPersonalReview;
 import kr.co.helf.vo.TrainerReview;
@@ -20,7 +20,7 @@ public interface TrainerReviewMapper {
     Trainer getTrainerById(String userId);
 
     // 한 트레이너에 대한 리뷰 목록 조회
-    List<TrainerReview> getReviewByTrainerNo(int trainerNo);
+    List<TrainerReview> getReviewByTrainerNo(@Param("trainerNo") int trainerNo);
 
     // 트레이너 번호로 트레이너 조회
     List<Trainer> getAllTrainers();
@@ -46,6 +46,9 @@ public interface TrainerReviewMapper {
     // 마이페이지 - 내 리뷰 보기
     List<TrainerReview> getMyReviews(String userId);
 
+    // 마이페이지 - 트레이너 (내 리뷰 보기)
+//    List<TrainerReview> getTrainerReviews(@Param("trainerNo") int trainerNo);
+
 	void insertPersonalReview(TrainerPersonalReview personalReview);
 
 	int getLessonNoByPersonalReviewCount(int personalLessonNo);
@@ -58,7 +61,11 @@ public interface TrainerReviewMapper {
 
 	Integer getCountPersonalReviews(int trainerNo);
 
-	TrainerPersonalReview getTrainerPersonalReviewByNo(int reviewNo);
+	TrainerPersonalReview getTrainerPersonalReviewByNo(int no);
+
+	void updatePersonalReview(ModifyPersonalReviewForm form);
+
+	void deletePersonalReview(TrainerPersonalReview personalReview);
 
 
 

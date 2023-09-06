@@ -2,6 +2,9 @@ package kr.co.helf.form;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +19,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class AddUserForm {
 
+	@NotBlank(message = "아이디는 필수")
 	private String id;
 	
 	private String password;

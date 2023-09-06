@@ -5,6 +5,7 @@ import kr.co.helf.dto.TrainerPersonalReviewDto;
 import kr.co.helf.dto.TrainerReviewDto;
 import kr.co.helf.form.AddPersonalReviewForm;
 import kr.co.helf.form.AddReviewForm;
+import kr.co.helf.form.ModifyPersonalReviewForm;
 import kr.co.helf.form.ModifyReviewForm;
 import kr.co.helf.mapper.GroupLessonMapper;
 import kr.co.helf.mapper.LessonMapper;
@@ -107,7 +108,8 @@ public class TrainerReviewService {
 
         return reviews;
     }
-
+    
+    //개인수업 리뷰 작성
 	public void createPersonalReview(AddPersonalReviewForm form) {
 	
 		TrainerPersonalReview personalReview = new TrainerPersonalReview();
@@ -142,7 +144,6 @@ public class TrainerReviewService {
 		trainerReviewMapper.insertPersonalReview(personalReview);
 	}
 
-
 	public TrainerPersonalReviewDto getPersonalReviewByTrainerNo(int trainerNo) {
 		
 		List<TrainerPersonalReview> personalReviews = trainerReviewMapper.getPersonalReviewsByMore(trainerNo, 1, 3);
@@ -158,6 +159,23 @@ public class TrainerReviewService {
         personalReviewDto.setCntReviews(cntPersonalReviews);
         
 		return personalReviewDto;
+	}
+
+	public void updatePersonalReview(ModifyPersonalReviewForm form) {
+		
+		TrainerPersonalReview trainerPersonalReview = trainerReviewMapper.getTrainerPersonalReviewByNo(form.getNo());
+		
+		BeanUtils.copyProperties(form, trainerPersonalReview);
+		
+	    trainerReviewMapper.updatePersonalReview(form);
+	}
+
+
+	public void deletePersonalReview(int reviewNo) {
+		TrainerPersonalReview personalReview = trainerReviewMapper.getTrainerPersonalReviewByNo(reviewNo);
+		personalReview.setStatus("N");
+		
+		trainerReviewMapper.deletePersonalReview(personalReview);
 	}
 
 

@@ -45,6 +45,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		user.setId(userInfo.getId());
 		user.setName(userInfo.getName());
 		user.setEmail(userInfo.getEmail());
+		user.setSocial("kakao");
 		user.setType("ROLE_USER");
 		user.setCreateDate(new Date());
 		user.setUpdateDate(new Date());

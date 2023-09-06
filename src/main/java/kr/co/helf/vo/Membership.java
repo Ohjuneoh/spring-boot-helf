@@ -2,11 +2,13 @@ package kr.co.helf.vo;
 
 import java.time.LocalDate;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Membership {
 
 	private int no;
@@ -17,4 +19,12 @@ public class Membership {
 	private int price;
 	private LocalDate createDate;
 	private LocalDate deleteDate;
+	
+	public boolean yesDeleted() {
+		return "Y".equals(this.deleted);
+	}
+
+	public boolean NoDeleted() {
+		return "N".equals(this.deleted);
+	}
 }

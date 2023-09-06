@@ -4,11 +4,14 @@ import java.time.LocalDate;
 
 import org.apache.ibatis.type.Alias;
 
-import lombok.Data;
+import kr.co.helf.enums.PointHistorySateEnum;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Alias("pointHistory")
 public class PointHistory {
 
@@ -18,4 +21,14 @@ public class PointHistory {
 	private User user;
 	private String type;
 	private Order order;
+	
+	public void setPaymentPoint() {
+		PointHistorySateEnum en = PointHistorySateEnum.PAYMENTPOINT;
+		this.type = en.getValue();
+	}
+	
+	public void setSavePoint() {
+		PointHistorySateEnum en = PointHistorySateEnum.SAVEPOINT;
+		this.type = en.getValue();
+	}
 }

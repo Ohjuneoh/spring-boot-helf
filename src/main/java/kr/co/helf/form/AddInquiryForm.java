@@ -13,6 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class AddInquiryForm {
 
+	private int no;
 	private String type;
 	private String title;
 	private String secret;

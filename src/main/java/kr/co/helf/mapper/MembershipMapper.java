@@ -6,31 +6,28 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.helf.dto.MembershipJoinCategory;
+import kr.co.helf.dto.MyMembershipJoinDto;
+import kr.co.helf.dto.MyOptionJoinDto;
 import kr.co.helf.dto.OrderJoin;
 import kr.co.helf.vo.Category;
 import kr.co.helf.vo.Membership;
 import kr.co.helf.vo.MyMembership;
-import kr.co.helf.vo.MyOption;
-import kr.co.helf.vo.Option;
 import kr.co.helf.vo.Order;
 import kr.co.helf.vo.PointHistory;
 import kr.co.helf.vo.Refund;
+import kr.co.helf.vo.RefundOrderPoint;
 
 @Mapper
 public interface MembershipMapper {
 
-	List<MyMembership> getMyMembershipsById(String id);
+	List<MyMembershipJoinDto> getMyMembershipsJoinById(String id);
 
-	List<MyOption> getMyOptions(int no);
-
-	Option getOptionByNo(int no);
+	List<MyOptionJoinDto> getMyOptionJoins(int no);
 
 	Order getOrderByMyMembershipNo(int no);
 
 	void updateOrder(Order order);
 
-	//MyMembership getUseMyMembershipByNo(int no);
-	
 	MyMembership getMyMembershipByNo(int no);
 
 	void updateMyMembership(MyMembership myMembership);
@@ -78,4 +75,14 @@ public interface MembershipMapper {
 	List<PointHistory> getPointHistoryByOrderNo(int no);
 
 	void updatePointHistory(PointHistory point);
+
+	List<RefundOrderPoint> getOrderByNoList(List<Integer> noList);
+
+	void updateRefundUserPoint(Map<String, Object> param);
+	
+	void updateRefundOrderState(List<Integer> orderIds);
+	
+	void updateRefundPointState(Map<String, Object> param);
+
+	void updateRefundState(List<Integer> refundNoList);
 }

@@ -5,6 +5,4 @@ public class PersonalLessonException extends RuntimeException{
 	public PersonalLessonException(String message) {
         super(message);
     }
-
-
 }

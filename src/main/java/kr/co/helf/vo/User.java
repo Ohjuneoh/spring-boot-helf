@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Data
 @Alias("User")
@@ -36,7 +35,7 @@ public class User implements UserDetails, OAuth2User {
 	private int point;
 	private String mobileCarrier;
 	private String authenticationNo;
-
+	private String social;
 	
 	private Map<String, Object> attributes;
 
