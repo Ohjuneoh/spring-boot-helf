@@ -111,26 +111,26 @@
         <input type="hidden"  name="no" value="${param.reviewNo }"/>
         <input type="hidden"  name="trainerNo" value="${review.trainer.trainerNo }"/>
         <div class="col-6">
-          <input type="text" class="form-control bg-light border-0" name="title" placeholder="제목" style="height: 55px;">
+          <input type="text" class="form-control bg-light border-0" name="title" placeholder="제목" style="height: 55px;" value="${review.title}">
         </div>
         <div class="col-6">
           <select  class="form-select bg-light border-0" name="rating" style="height: 55px;">
             <option value="">별점</option>
-            <option value="0" class="form-control bg-light border-0" >0</option>
-            <option value="0.5" class="form-control bg-light border-0" >0.5</option>
-            <option value="1" class="form-control bg-light border-0" >1</option>
-            <option value="1.5" class="form-control bg-light border-0" >1.5</option>
-            <option value="2" class="form-control bg-light border-0" >2</option>
-            <option value="2.5" class="form-control bg-light border-0" >2.5</option>
-            <option value="3" class="form-control bg-light border-0" >3</option>
-            <option value="3.5" class="form-control bg-light border-0" >3.5</option>
-            <option value="4" class="form-control bg-light border-0" >4</option>
-            <option value="4.5" class="form-control bg-light border-0" >4.5</option>
-            <option value="5" class="form-control bg-light border-0" >5</option>
+            <option value="0" class="form-control bg-light border-0" ${review.rating == 0 ? 'selected' : ''}>0</option>
+            <option value="0.5" class="form-control bg-light border-0" ${review.rating == 0.5 ? 'selected' : ''}>0.5</option>
+            <option value="1" class="form-control bg-light border-0" ${review.rating == 1 ? 'selected' : ''}>1</option>
+            <option value="1.5" class="form-control bg-light border-0" ${review.rating == 1.5 ? 'selected' : ''}>1.5</option>
+            <option value="2" class="form-control bg-light border-0" ${review.rating == 2 ? 'selected' : ''}>2</option>
+            <option value="2.5" class="form-control bg-light border-0" ${review.rating == 2.5 ? 'selected' : ''}>2.5</option>
+            <option value="3" class="form-control bg-light border-0" ${review.rating == 3 ? 'selected' : ''}>3</option>
+            <option value="3.5" class="form-control bg-light border-0" ${review.rating == 3.5 ? 'selected' : ''}>3.5</option>
+            <option value="4" class="form-control bg-light border-0" ${review.rating == 4 ? 'selected' : ''}>4</option>
+            <option value="4.5" class="form-control bg-light border-0" ${review.rating == 4.5 ? 'selected' : ''}>4.5</option>
+            <option value="5" class="form-control bg-light border-0" ${review.rating == 5 ? 'selected' : ''}>5</option>
           </select>
         </div>
         <div class="col-12">
-          <textarea class="form-control bg-light border-0" name="content" style="height: 300px;" placeholder="내용"></textarea>
+          <textarea class="form-control bg-light border-0" name="content" style="height: 300px;" placeholder="내용">${review.content }</textarea>
         </div>
       </div>
       <div>

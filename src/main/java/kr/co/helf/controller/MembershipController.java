@@ -1,7 +1,5 @@
 package kr.co.helf.controller;
 
-import static kr.co.helf.enums.OrderStateEnum.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +7,6 @@ import java.util.Map;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,18 +19,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import kr.co.helf.dto.MembershipJoinCategory;
 import kr.co.helf.dto.MembershipListDto;
 import kr.co.helf.dto.MyMembershipJoinDto;
-import kr.co.helf.dto.MyOptionJoinDto;
 import kr.co.helf.dto.OrderDetailDto;
 import kr.co.helf.dto.OrderJoin;
 import kr.co.helf.dto.OrderListDto;
+import kr.co.helf.exception.MembershipException;
 import kr.co.helf.form.AddMembershipForm;
 import kr.co.helf.form.ModifyMembershipForm;
 import kr.co.helf.form.SearchForm;
 import kr.co.helf.service.MembershipService;
 import kr.co.helf.service.OrderService;
 import kr.co.helf.vo.Category;
-import kr.co.helf.vo.MyMembership;
-import kr.co.helf.vo.Refund;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 
@@ -57,22 +52,13 @@ public class MembershipController {
 	
 	@PostMapping("/wait-refund")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	@Transactional
 	public String waitRefund(@RequestParam("no") int no, @AuthenticationPrincipal User user) {
 		
-		MyMembership myMembership = membershipService.getRefundMyMembershipByNo(no);
-		
-		if(myMembership.remainPeriod() <= 30) {
+		try {
+			membershipService.updateWaitRefund(no, user.getId());
+		} catch (MembershipException e) {
 			return "redirect:list?error=no-refund";
 		}
-		
-		if(!user.getId().equals(myMembership.getUser().getId())) {
-			return "redirect: list?error=no-authority";
-		}
-		
-		membershipService.updateRefundMyMembership(no);
-		membershipService.updateRefundOrder(no);
-		membershipService.insertRefund(no);
 		
 		return "redirect:list";
 	}
@@ -109,21 +95,9 @@ public class MembershipController {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public String orderDetail(@RequestParam("no") int no, Model model, @AuthenticationPrincipal User user) {
 		
-		OrderJoin orderJoin = membershipService.getOrderDetailByNo(no);
-
-		if(!user.getId().equals(orderJoin.getUser().getId())) {
-			return "redirect: list?error=no-authority";
-		}
-		
-		OrderDetailDto dto = new OrderDetailDto();
-		dto.setOrderJoin(orderJoin);
-		
-		List<MyOptionJoinDto> myOptions = membershipService.getMyOptions(orderJoin.getMyMembershipNo());
-		dto.setMyOptionJoins(myOptions);
-		
-		if(!PAYMENT.getValue().equals(orderJoin.getOrderState())) {
-			Refund refund = membershipService.getRefundByOrderNo(orderJoin.getNo());
-			dto.setRefund(refund);
+		OrderDetailDto dto = membershipService.getOrderDetailByNo(no);
+		if(!dto.getOrderJoin().isUserId(user.getId())) {
+			return "redirect:list?error=no-authority";
 		}
 		
 		model.addAttribute("dto", dto);
@@ -140,9 +114,14 @@ public class MembershipController {
 							   @RequestParam(name = "page", required = false, defaultValue = "1") int page,
 							   RedirectAttributes attributes) {
 		
-		membershipService.cancleRefund(no);
-		
 		attributes.addAttribute("no", no);
+
+		try {
+			membershipService.cancleRefund(no);
+		} catch (MembershipException e) {
+			return "redirect:order-detail?error=dup";
+		}
+		
 		attributes.addAttribute("state", state);
 		attributes.addAttribute("type", type);
 		attributes.addAttribute("keyword", keyword);

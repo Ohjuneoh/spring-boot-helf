@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.apache.ibatis.type.Alias;
 
+import kr.co.helf.enums.OrderStateEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,4 +23,20 @@ public class Order {
 	private String state;
 	private User user;						// 넣어야됨
 	private MyMembership myMembership;		// 넣어야됨
+	
+	public void setWaitRefund() {
+		OrderStateEnum en = OrderStateEnum.WAITREFUND;
+		this.state = en.getValue();
+	}
+	
+	public void setPayment() {
+		OrderStateEnum en = OrderStateEnum.PAYMENT;
+		this.state = en.getValue();
+	}
+	
+	public void setRefund() {
+		OrderStateEnum en = OrderStateEnum.REFUNDCOMPLETED;
+		this.state = en.getValue();
+	}
+	
 }

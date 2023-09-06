@@ -1,27 +1,21 @@
 package kr.co.helf.controller;
 
-import java.io.IOException;
-import java.util.List;
-
+import kr.co.helf.form.AddUserForm;
+import kr.co.helf.service.UserService;
+import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.TrainerReview;
+import kr.co.helf.vo.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import kr.co.helf.form.AddUserForm;
-import kr.co.helf.service.UserService;
-import kr.co.helf.vo.User;
-import lombok.RequiredArgsConstructor;
+import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -188,6 +182,7 @@ public class UserController {
 /* 마이페이지 시작 */
 	// 유저 마이페이지 화면 - 내 리뷰 보기(예광)
 	@GetMapping("/userMypage")
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public String userMypage(@AuthenticationPrincipal User user, Model model) {
 		List<TrainerReview>  reviews = userService.getMyReviews(user.getId());
 		model.addAttribute("reviews", reviews);
@@ -201,10 +196,14 @@ public class UserController {
 		return "/mypage/userModifyInfo";
 	}
 	
-	// 트레이너 마이페이지화면
+	// 트레이너 마이페이지화면 - 내 리뷰 보기 (예광)
 	@GetMapping("/trainerMypage")
-	public String trainerMypage() {
-		
+	public String trainerMypage(@AuthenticationPrincipal User user,Model model) {
+		List<TrainerReview> reviews = userService.getTrainerReviews(user);
+		Trainer trainer = userService.getTrainerById(user);
+
+		model.addAttribute("reviews", reviews);
+		model.addAttribute("trainer", trainer);
 		return "/mypage/trainerInfo";
 	}
 	
@@ -224,6 +223,14 @@ public class UserController {
 		return "/mypage/myMoreReviews";
 	}
 
+	// controller
+	@PostMapping("/withdrawal")
+	@PreAuthorize("hasRole('ROLE_USER', 'ROLE_TRAINER')")
+	public String withdrawalUser(@AuthenticationPrincipal User user) {
+		userService.withdrawalUser(user.getId());
+		
+		return "redirect:/";
+	}
 
 
 /* 마이페이지 끝 */

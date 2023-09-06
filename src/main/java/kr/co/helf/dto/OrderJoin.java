@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
+import kr.co.helf.enums.MembershipEnum;
+import kr.co.helf.enums.OrderStateEnum;
 import kr.co.helf.vo.Category;
 import kr.co.helf.vo.Period;
 import kr.co.helf.vo.PointHistory;
@@ -47,4 +49,13 @@ public class OrderJoin {
 	
 	private User user;					
 	private List<PointHistory> points;
+	
+	public boolean isUserId(String userId) {
+		return this.user.getId().equals(userId);
+	}
+	
+	public boolean isPayment() {
+		OrderStateEnum en = OrderStateEnum.PAYMENT;
+		return this.orderState.equals(en.getValue());
+	}
 }

@@ -120,17 +120,17 @@
 				    	<input type="text" class="form-control bg-light border-0"  id="date" name="date" value="<fmt:formatDate value="${lesson.date }" pattern="yyyy/MM/dd" />" style="height: 55px;" placeholder="수업날짜">
 				    </div>
 					<div class="col-6">
-					    <select  class="form-select bg-light border-0" name="time" value="${lesson.time }" style="height: 55px;">
+					    <select  class="form-select bg-light border-0" name="time" style="height: 55px;">
 					      <option value=""  >시간</option>
-					      <option value="10~12" class="form-control bg-light border-0" >10:00 ~ 12:00</option>
-					      <option value="13~15" class="form-control bg-light border-0" >13:00 ~ 15:00</option>
-					      <option value="15~17" class="form-control bg-light border-0" >15:00 ~ 17:00</option>
-					      <option value="17~19" class="form-control bg-light border-0" >17:00 ~ 19:00</option>
-					      <option value="20~22" class="form-control bg-light border-0" >20:00 ~ 22:00</option>
+					      <option value="10~12" class="form-control bg-light border-0" ${lesson.time == "10~12" ? 'selected' : ''} >10:00 ~ 12:00</option>
+					      <option value="13~15" class="form-control bg-light border-0" ${lesson.time == "13~15"  ? 'selected' : ''}>13:00 ~ 15:00</option>
+					      <option value="15~17" class="form-control bg-light border-0" ${lesson.time == "15~17" ? 'selected' : ''}>15:00 ~ 17:00</option>
+					      <option value="17~19" class="form-control bg-light border-0" ${lesson.time == "17~19" ? 'selected' : ''}>17:00 ~ 19:00</option>
+					      <option value="20~22" class="form-control bg-light border-0" ${lesson.time == "20~22" ? 'selected' : ''}>20:00 ~ 22:00</option>
 					    </select>
 					</div>
 					<div class="col-12">
-					  <textarea class="form-control bg-light border-0" name="description" value="${lesson.description }"style="height: 300px;" placeholder="내용"></textarea>
+					  <textarea class="form-control bg-light border-0" name="description" style="height: 300px;" placeholder="내용">${lesson.description }</textarea>
 					</div>
 				</div>
 				<!-- 그룹수업 수정 폼에서 모달창 -->

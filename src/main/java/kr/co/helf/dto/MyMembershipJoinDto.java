@@ -15,6 +15,7 @@ import lombok.Setter;
 public class MyMembershipJoinDto {
 
 	private int no;
+	private int membershipNo;
 	private String name;
 	private LocalDate startDate;		
 	private LocalDate endDate;			

@@ -32,8 +32,7 @@
             a.trainer_review_status as status,
             b.lesson_name as "lesson.name",
             c.user_id as "user.id",
-            d.user_name as "lessonApply.user.name",
-            d.user_name as "user.name"
+            d.user_name as "lessonApply.user.name"
         from
             helf_trainer_review a, helf_lesson b, helf_lesson_apply c, helf_users d
         where
@@ -42,6 +41,8 @@
           and c.user_id = d.user_id
           and a.trainer_no = #{trainerNo}
           and a.trainer_review_status = 'Y'
+        order by
+            a.trainer_review_no desc
     </select>
 
     <!-- 등록된 리뷰 수정  -->
@@ -175,7 +176,31 @@
         order by
             a.trainer_review_no desc
     </select>
-    
+
+    <!-- 마이페이지 - 트레이너 내 리뷰보기 -->
+    <select id="getTrainerReviews" parameterType="int" resultType="TrainerReview">
+        select
+               a.trainer_review_no as no,
+               b.lesson_name as "lesson.name",
+               a.trainer_review_title as title,
+               a.trainer_review_create_date as "createDate",
+               a.trainer_no as "trainer.trainerNo",
+               d.user_name as "lesson.user.name"
+        from
+            helf_trainer_review a, helf_lesson b, helf_lesson_apply c, helf_users d
+        where
+              a.lesson_no = b.lesson_no
+          and a.lesson_apply_no = c.lesson_apply_no
+          and b.user_id = d.user_id
+          and a.trainer_no = #{value}
+        order by
+            a.trainer_review_no desc
+    </select>
+
+
+
+
+
         <!-- 개인수업 리뷰 테이블 저장 -->
     <insert id="insertPersonalReview" parameterType="TrainerPersonalReview">
         insert into
