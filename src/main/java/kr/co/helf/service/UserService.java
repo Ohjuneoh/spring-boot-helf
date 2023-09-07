@@ -357,11 +357,7 @@ public class UserService {
 		}
 	}
 
-	// 마이페이지(유저) - 내 리뷰 보기(예광)
-	public List<TrainerReview> getMyReviews(String userId) {
-		List<TrainerReview> reviews = trainerReviewMapper.getMyReviews(userId);
-		return reviews;
-	}
+
 
 	// 마이페이지(트레이너) - 내 리뷰 보기(예광)
 	public List<TrainerReview> getTrainerReviews(User user) {
@@ -476,21 +472,21 @@ public class UserService {
 		return result;
 	}
 
-	// service
-	public void withdrawalUser(String id) {
-		User user = userMapper.getUserById(id);
-		
-		if(user == null) {
-			throw new RuntimeException("탈퇴처리를 진행할 회원이 존재하지 않습니다.");
-		}
-		
-		if("N".equals(user.getStatus())) {
-			throw new RuntimeException("이미 탈퇴처리가 완료된 회원입니다.");
-		}
-		
-		user.setStatus("N");
-		userMapper.updateUser(user);
-	}
+//	// service
+//	public void withdrawalUser(String id) {
+//		User user = userMapper.getUserById(id);
+//		
+//		if(user == null) {
+//			throw new RuntimeException("탈퇴처리를 진행할 회원이 존재하지 않습니다.");
+//		}
+//		
+//		if("N".equals(user.getStatus())) {
+//			throw new RuntimeException("이미 탈퇴처리가 완료된 회원입니다.");
+//		}
+//		
+//		user.setStatus("N");
+//		userMapper.updateUser(user);
+//	}
 }
 
 
