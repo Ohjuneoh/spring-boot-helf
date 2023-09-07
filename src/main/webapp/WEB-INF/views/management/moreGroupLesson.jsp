@@ -96,7 +96,12 @@
                                 <th style="width: 15%">수업 명</th>
                                 <th style="width: 20%">수업날짜</th>
                                 <th style="width: 20%">신청인원/모집총원</th>
-                                <th style="width: 20%">출석률</th>
+                                <th style="width: 20%">
+                                    출석률
+                                    <span data-toggle="tooltip" data-placement="top" title="출석률은 신청인원 중 실제로 출석한 인원에 한하여 산정">
+                                         <i class="fas fa-info-circle ml-2"></i>
+                                     </span>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -162,6 +167,7 @@
 <script src="/resources/js/main.js"></script>
 
 <script>
+
 </script>
 
 

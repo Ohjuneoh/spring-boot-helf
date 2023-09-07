@@ -70,7 +70,7 @@
     </div>
     
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
-    	<div class="container py-5">
+		<div class="container py-5">
     		<div class="row my-3">
     			<div class="col-4">
     				<div class="profile_pic">
@@ -113,37 +113,36 @@
     								</tr>
     							</thead>
     							<tbody>
-    							<c:choose>
-									<c:when test="${empty moreInquiries }">
-										<tr>
-											<td colspan="5" class="text-center">
-												등록된 리뷰가 없습니다.
-											</td>
-										</tr>
-									</c:when>
-								</c:choose>
-								<c:forEach var="moreInquiries" items="${moreInquiries}" varStatus="status">
-									<c:choose>
-										<c:when test="${status.index < 5}">
+	    							<c:choose>
+										<c:when test="${empty moreInquiries }">
 											<tr>
-												<td>${moreInquiries.title}</td>
-												<td><fmt:formatDate value="${moreInquiries.createDate}" pattern="yyyy년 M월 d일" /></td>
-												<td>
-													<c:choose>
-												        <c:when test="${moreInquiries.isAnswer eq 'N'}">
-												            미답변
-												        </c:when>
-												        <c:when test="${moreInquiries.isAnswer eq 'Y'}">
-												            답변완료
-												        </c:when>
-												    </c:choose>
+												<td colspan="5" class="text-center">
+													등록된 리뷰가 없습니다.
 												</td>
 											</tr>
 										</c:when>
-										<c:otherwise>
-										</c:otherwise>
 									</c:choose>
-								</c:forEach>
+									<c:forEach var="moreInquiries" items="${moreInquiries}" varStatus="status">
+										<c:choose>
+											<c:when test="${status.index < 5}">
+												<tr>
+													<td>${moreInquiries.title}</td>
+													<td><fmt:formatDate value="${moreInquiries.createDate}" pattern="yyyy년 M월 d일" /></td>
+													<td>
+														<c:choose>
+													        <c:when test="${moreInquiries.isAnswer eq 'N'}">
+													            미답변
+													        </c:when>
+													        <c:when test="${moreInquiries.isAnswer eq 'Y'}">
+													            답변완료
+													        </c:when>
+													    </c:choose>
+													</td>
+												</tr>
+											</c:when>
+											<c:otherwise></c:otherwise>
+										</c:choose>
+									</c:forEach>
     							</tbody>
     						</table>
     					</div>
@@ -173,114 +172,29 @@
 										</tr>
 									</c:when>
 								</c:choose>
-								<c:forEach var="reviews" items="${reviews}" varStatus="status">
-									<c:choose>
-										<c:when test="${status.index < 5}">
-											<tr>
-												<td>${reviews.lesson.name}</td>
-												<td>${reviews.title}</td>
-												<td><fmt:formatDate value="${reviews.createDate}" pattern="yyyy년 M월 d일" /></td>
-											</tr>
-										</c:when>
-										<c:otherwise>
-										</c:otherwise>
-									</c:choose>
-								</c:forEach>
+									<c:forEach var="reviews" items="${reviews}" varStatus="status">
+										<c:choose>
+											<c:when test="${status.index < 5}">
+												<tr>
+													<td>${reviews.lesson.name}</td>
+													<td>${reviews.title}</td>
+													<td><fmt:formatDate value="${reviews.createDate}" pattern="yyyy년 M월 d일" /></td>
+												</tr>
+											</c:when>
+											<c:otherwise></c:otherwise>
+										</c:choose>
+									</c:forEach>
 								</tbody>
 							</table>
     					</div>
     				</div>
     			</div>
-
     		</div>
     	</div>
     </div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
     <!-- Lesson Register Form End  -->
-	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
-	    <div class="container">
-	        <div class="row gx-5">
-	            <div class="col-lg-8 col-md-6">
-	                <div class="row gx-5">
-	                    <div class="col-lg-4 col-md-12 pt-5 mb-5">
-	                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
-	                            <h3 class="text-light mb-0">Get In Touch</h3>
-	                        </div>
-	                        <div class="d-flex mb-2">
-	                            <i class="bi bi-geo-alt text-primary me-2"></i>
-	                            <p class="mb-0">123 Street, New York, USA</p>
-	                        </div>
-	                        <div class="d-flex mb-2">
-	                            <i class="bi bi-envelope-open text-primary me-2"></i>
-	                            <p class="mb-0">info@example.com</p>
-	                        </div>
-	                        <div class="d-flex mb-2">
-	                            <i class="bi bi-telephone text-primary me-2"></i>
-	                            <p class="mb-0">+012 345 67890</p>
-	                        </div>
-	                        <div class="d-flex mt-4">
-	                            <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
-	                            <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
-	                            <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
-	                            <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram fw-normal"></i></a>
-	                        </div>
-	                    </div>
-	                    <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-	                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
-	                            <h3 class="text-light mb-0">Quick Links</h3>
-	                        </div>
-	                        <div class="link-animated d-flex flex-column justify-content-start">
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Meet The Team</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
-	                            <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
-	                        </div>
-	                    </div>
-	                    <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-	                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
-	                            <h3 class="text-light mb-0">Popular Links</h3>
-	                        </div>
-	                        <div class="link-animated d-flex flex-column justify-content-start">
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Meet The Team</a>
-	                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a>
-	                            <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</div>
-	<div class="container-fluid text-white" style="background: #061429;">
-	    <div class="container text-center">
-	        <div class="row justify-content-end">
-	            <div class="col-lg-8 col-md-6">
-	                <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
-	                    <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights Reserved. 
-			
-			<!--/*** This template is free as long as you keep the footer authorâs credit link/attribution link/backlink. If you'd like to use the template without the footer authorâs credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-			Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</div>
-    <!-- Footer End -->
-
+    
+	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>

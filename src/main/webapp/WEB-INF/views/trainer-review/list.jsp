@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -154,14 +155,26 @@
         </h5>
         
         <div class="d-flex align-items-center pt-1 pb-1 px-5">
-          <h5 class="text-primary">${trainerReview.lesson.name }</h5>
+
+          <h3 class="text-primary">${trainerReview.lesson.name }</h3>
         </div>
 
         <!-- 리뷰 내용 위의 작성자명, 작성일자 div -->
         <div class="d-flex align-items-center pt-1 pb-3 px-5 border-bottom mb-3">
           <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
           <div class="ps-4">
-            <h4 class="text-primary mb-1">${trainerReview.lessonApply.user.name }
+              <!-- 작성자명을 모두 노출하지 않고 중간글자를 x(익명) 처리 -->
+              <c:set var="userName" value="${trainerReview.lessonApply.user.name}" />
+              <c:choose>
+                  <c:when test="${fn:length(userName) <= 2}">
+                      <c:set var="maskedName" value="${fn:substring(userName, 0, 1)}xx" />
+                  </c:when>
+                  <c:otherwise>
+                      <c:set var="maskedName" value="${fn:substring(userName, 0, 1)}${fn:substring('xxxxxxxx', 0, fn:length(userName) - 2)}${fn:substring(userName, fn:length(userName) - 1, fn:length(userName))}" />
+                  </c:otherwise>
+              </c:choose>
+
+              <h4 class="text-primary mb-1">${maskedName}</h4>
             	<a class="bg-success text-white" style="font-size: 3px; border-radius: 50%; display: inline-block; padding: 5px;">
 			    	<span>그룹</span>
 				</a>

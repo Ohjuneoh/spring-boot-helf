@@ -67,6 +67,8 @@ public interface TrainerReviewMapper {
 
 	void deletePersonalReview(TrainerPersonalReview personalReview);
 
+    // 트레이너 번호로 트레이너 정보 조회(트레이너 파일)
+    Trainer getTrainerByNo(@Param("trainerNo") int trainerNo);
 
 
 }

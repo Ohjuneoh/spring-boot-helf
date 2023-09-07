@@ -27,6 +27,9 @@ public class Lesson {
     private Membership membership;
     private int attendanceRate;
 
+    // 홈페이지 개설된 수업을 위한 변수
+    private int allLessons;
+
     public Lesson(int no){
         this.no = no;
     }

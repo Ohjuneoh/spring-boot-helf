@@ -114,15 +114,6 @@ public class ManagementController {
 		return "management/customerRecentVisits";
 	}
 	
-	// 고객 상세 - 최근 수업 내역 페이지 요청과 매핑되는 요청핸들러 메소드
-	@GetMapping(value="customer-lesson")
-	@PreAuthorize("hasRole('ROLE_MANAGER')")
-	public String customerLessons(@RequestParam("id") String userId
-			){
-		
-		return "management/customerLessons";
-	}
-	
 	// 트레이너 목록 페이지 요청과 매핑되는 요청핸들러 메소드
 	@GetMapping(value="trainer-list")
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
@@ -156,7 +147,7 @@ public class ManagementController {
 		return "management/trainerList";
 	}
 	
-	// 트레이너 상세 페이지 - 채경
+	// 트레이너 상세 페이지 - 채경, 준오, 예광 
 	@GetMapping(value="trainer-detail")
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public String trainerDetail(@RequestParam("id") String userId, Model model) {
