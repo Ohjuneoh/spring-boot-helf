@@ -125,7 +125,7 @@
             and a.user_id = c.user_id
             and a.my_membership_state = '사용가능'
             and a.membership_no = b.membership_no
-            and b.category_no = 3
+            and b.category_no = 33
             and c.user_type = 'ROLE_USER'
     </select>
     <!-- 그룹 이용권에 해당되는 횟수권을 차감하기 위한 MyMembership 조회 -->
@@ -139,7 +139,7 @@
             helf_my_membership a, helf_membership b
         where
             a.membership_no = b.membership_no
-        and b.category_no = 3
+        and b.category_no = 33
         and a.user_id = #{value}
 
 

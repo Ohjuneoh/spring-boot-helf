@@ -1,6 +1,5 @@
 package kr.co.helf.service;
 
-import kr.co.helf.dto.*;
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.mapper.GroupLessonMapper;
 import kr.co.helf.mapper.OrderMapper;
@@ -21,12 +20,8 @@ import kr.co.helf.dto.CustomerDetailDto;
 import kr.co.helf.dto.CustomerListDto;
 import kr.co.helf.dto.CustomerOrderDto;
 import kr.co.helf.dto.Pagination;
-import kr.co.helf.enums.RankEnum;
-import kr.co.helf.form.AddUserForm;
 import kr.co.helf.form.UpdateUserForm;
 import kr.co.helf.mapper.InquiryMapper;
-import kr.co.helf.mapper.OrderMapper;
-import kr.co.helf.mapper.UserMapper;
 import java.io.*;
 import java.util.*;
 
@@ -357,12 +352,6 @@ public class UserService {
 		}
 	}
 
-	// 마이페이지(유저) - 내 리뷰 보기(예광)
-	public List<TrainerReview> getMyReviews(String userId) {
-		List<TrainerReview> reviews = trainerReviewMapper.getMyReviews(userId);
-		return reviews;
-	}
-
 	// 마이페이지(트레이너) - 내 리뷰 보기(예광)
 	public List<TrainerReview> getTrainerReviews(User user) {
 		Trainer trainer = trainerReviewMapper.getTrainerById(user.getId());
@@ -474,22 +463,6 @@ public class UserService {
 		result.put("pagination", pagination);
 
 		return result;
-	}
-
-	// service
-	public void withdrawalUser(String id) {
-		User user = userMapper.getUserById(id);
-		
-		if(user == null) {
-			throw new RuntimeException("탈퇴처리를 진행할 회원이 존재하지 않습니다.");
-		}
-		
-		if("N".equals(user.getStatus())) {
-			throw new RuntimeException("이미 탈퇴처리가 완료된 회원입니다.");
-		}
-		
-		user.setStatus("N");
-		userMapper.updateUser(user);
 	}
 }
 
