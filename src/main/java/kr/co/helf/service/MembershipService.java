@@ -356,8 +356,8 @@ public class MembershipService {
 					List<RefundOrderPoint> userPoints = pointMap.get(key);
 					
 					int point = userPoints.stream()
-					.mapToInt(this::convertPointByType)
-					.sum();
+							.mapToInt(this::convertPointByType)
+							.sum();
 					
 					int userRemainPoint = userPoints.get(0).getUserPoint();
 					int minusPoint = userRemainPoint + point;

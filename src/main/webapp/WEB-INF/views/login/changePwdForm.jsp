@@ -92,7 +92,6 @@
 	                                </div>
 	                            </div>
                         	</form>
-                        	
                         </div>
                     </div>
                 </div>
@@ -100,7 +99,7 @@
         </div>
     </div>
 
-
+	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>

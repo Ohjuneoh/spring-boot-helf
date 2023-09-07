@@ -1,5 +1,13 @@
 package kr.co.helf.controller;
 
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import kr.co.helf.vo.Inquires;
+
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.form.UpdateUserForm;
 import kr.co.helf.service.UserService;
@@ -17,11 +25,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.validation.Valid;
-import java.io.IOException;
-import java.util.List;
-
 
 @Controller
 @RequestMapping("/user")
