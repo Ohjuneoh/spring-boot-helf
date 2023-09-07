@@ -96,7 +96,12 @@
                                 <th style="width: 15%">수업 명</th>
                                 <th style="width: 20%">수업날짜</th>
                                 <th style="width: 20%">신청인원/모집총원</th>
-                                <th style="width: 20%">출석률</th>
+                                <th style="width: 20%">
+                                    출석률
+                                    <span data-toggle="tooltip" data-placement="top" title="출석률은 신청인원 중 실제로 출석한 인원에 한하여 산정">
+                                         <i class="fas fa-info-circle ml-2"></i>
+                                     </span>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -106,22 +111,11 @@
                                     <td><a href="/group-lesson/detail?no=${lesson.no }">${lesson.name }</a></td>
                                     <td><fmt:formatDate value="${lesson.date }" pattern="yyyy년 M월 d일" /> ${lesson.time }시 </td>
                                     <td>${lesson.reqCnt }/${lesson.quota }</td>
-                                    <td class="attendance-rate"><a href="#">${lesson.attendanceRate}%</a></td>
+                                    <td>${lesson.attendanceRate}%</td>
                                 </tr>
                             </c:forEach>
                             </tbody>
                         </table>
-                        <div class="toast-container p-3 bottom-0 end-0">
-                            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
-                                <div class="toast-header">
-                                    <strong class="me-auto">출석률 산정방식</strong>
-                                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                                </div>
-                                <div class="toast-body">
-                                    출석률은 신청인원에서 실제로 출석한 인원에 한해서 출석률이 산정됩니다.
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -173,23 +167,7 @@
 <script src="/resources/js/main.js"></script>
 
 <script>
-    $(document).ready(function() {
-        $(".attendance-rate a").click(function(event) {
-            event.preventDefault(); // Prevent the default behavior of the anchor tag
 
-            // Extract the attendance rate from the clicked table cell
-            let attendanceRate = $(this).text();
-
-            // Get the attendance rate calculation message from the toast body
-            let attendanceRateMessage = $(".toast-body").text();
-
-            // Update the toast content with the attendance rate and message
-            $(".toast-body").html("<br>" + attendanceRateMessage);
-
-            // Show the toast
-            $(".toast").toast("show");
-        });
-    });
 </script>
 
 
