@@ -1,5 +1,6 @@
 package kr.co.helf.service;
 
+import kr.co.helf.dto.*;
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.form.UpdateUserForm;
 import kr.co.helf.mapper.*;
@@ -272,7 +273,7 @@ public class UserService {
 		Map<String, Object> result = new HashMap<>();
 		
 		// 개인 정보 조회
-		CustomerDetailDto customerInfo =	userMapper.getCustomerInfoDetails(id); 
+		CustomerDetailDto customerInfo =	userMapper.getCustomerInfoDetails(id);
 		result.put("customerInfo", customerInfo);
 		// 수업 내역 조회
 		List<LessonApply> lessonApply = userMapper.getCustomerLessons(id);
