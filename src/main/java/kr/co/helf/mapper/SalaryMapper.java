@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.helf.dto.MonthlyPersonalLessonDto;
 import kr.co.helf.vo.MySalary;
 
 @Mapper
@@ -18,4 +19,6 @@ public interface SalaryMapper {
 	Optional<MySalary> getTrainerSalaryInfoById(String userId);
 
 	void updateSalaryInfoById(Map<String, Object> param);
+	
+	List<MonthlyPersonalLessonDto> getPersonalLessonsById(Map<String, Object> param);
 }

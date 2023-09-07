@@ -63,4 +63,28 @@
         where 
         	user_id = #{userId}
 	</update>
+	
+	<select id="getPersonalLessonsById" parameterType="map" resultType="kr.co.helf.dto.MonthlyPersonalLessonDto">
+	select *
+	from (
+		    select A.personal_lesson_date           as lessonDate,
+		           A.personal_lesson_time           as time,
+		           U.user_name                      as userName,
+		           C.membership_name                as membershipName,
+		           A.personal_lesson_status         as status,
+		           D.orders_membership_price        as membershipPrice,
+		           trunc(D.orders_membership_price/E.period_property) as unitPrice,
+		           trunc((D.orders_membership_price/E.period_property)*M.monthly_pcl_commission_pct)    as lessonPrice,
+		           M.monthly_pcl_commission_pct     as pclPct,
+		           row_number() over (order by a.personal_lesson_no desc) row_numbers
+		    from helf_personal_lesson A, helf_my_membership B, helf_membership C, helf_orders D, helf_users U, helf_my_salary M, helf_membership_period E
+		    where A.my_membership_no = B.my_membership_no
+		    and B.membership_no = c.membership_no 
+		    and B.my_membership_no = D.my_membership_no
+		    and u.user_id = A.user_id
+		    and A.trainer_no = M.trainer_no 
+		    and M.user_id = #{userId}
+		    and A.personal_lesson_date between #{startDate} and #{endDate})
+	where row_numbers between 1 and 10
+	</select>
 </mapper>

@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import kr.co.helf.dto.MonthlyPersonalLessonDto;
 import kr.co.helf.dto.Pagination;
 import kr.co.helf.mapper.SalaryMapper;
 import kr.co.helf.mapper.UserMapper;
@@ -58,5 +59,14 @@ public class SalaryService {
 	private boolean dataExistsForUserId(String userId) {
 		Optional<MySalary> result = salaryMapper.getTrainerSalaryInfoById(userId);
 		return result.isPresent();
+	}
+	
+	
+	public Map<String, Object> getPersonalLessonsById(Map<String, Object> param){
+		 List<MonthlyPersonalLessonDto> monthlyPclList = salaryMapper.getPersonalLessonsById(param);
+		 
+		 Map<String, Object> result = new HashMap<>();
+		 result.put("monthlyPclList", monthlyPclList);
+		 return result;
 	}
 }
