@@ -1,7 +1,11 @@
 package kr.co.helf.controller;
 
+import kr.co.helf.service.LessonService;
 import kr.co.helf.service.TrainerReviewService;
+import kr.co.helf.service.UserService;
+import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.Trainer;
+import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -18,6 +22,10 @@ import java.util.List;
 public class HomeController {
 
 	private final TrainerReviewService trainerReviewService;
+
+	private final UserService userService;
+
+	private final LessonService lessonService;
 	
 	// 로그인화면 요청을 처리
 	@GetMapping(value="login")
@@ -49,8 +57,13 @@ public class HomeController {
 	
 	
 	@GetMapping(value = "/")
-	public String home() {
-		
+	public String home(Model model) {
+		User user = userService.getUserAndTrainerCount();
+		Lesson lesson = lessonService.getAllLessonForHome();
+
+		model.addAttribute("users",user);
+		model.addAttribute("lessons",lesson);
 		return "home";	
 	}
+
 }

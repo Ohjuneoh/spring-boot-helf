@@ -117,7 +117,7 @@
                         </div>
                         <div class="ps-4">
                             <h5 class="text-white mb-0">총 회원</h5>
-                            <h1 class="text-white mb-0" data-toggle="counter-up">12345</h1>
+                            <h1 class="text-white mb-0" data-toggle="counter-up">${users.totalUsers}</h1>
                         </div>
                     </div>
                 </div>
@@ -127,8 +127,8 @@
                             <i class="fa fa-check text-white"></i>
                         </div>
                         <div class="ps-4">
-                            <h5 class="text-primary mb-0">재등록률</h5>
-                            <h1 class="mb-0" data-toggle="counter-up">12345</h1>
+                            <h5 class="text-primary mb-0">강사 수</h5>
+                            <h1 class="mb-0" data-toggle="counter-up">${users.totalTrainers}</h1>
                         </div>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
                         </div>
                         <div class="ps-4">
                             <h5 class="text-white mb-0">개설된 수업</h5>
-                            <h1 class="text-white mb-0" data-toggle="counter-up">12345</h1>
+                            <h1 class="text-white mb-0" data-toggle="counter-up">${lessons.allLessons }</h1>
                         </div>
                     </div>
                 </div>

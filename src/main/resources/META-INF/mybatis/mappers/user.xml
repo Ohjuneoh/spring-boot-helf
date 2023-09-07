@@ -488,4 +488,12 @@
 	and m.trainer_no(+) = t.trainer_no
 	and u.user_id = #{value}
 	</select>
+
+	<!-- 총 회원,강사 수 조회하는 쿼리 (예광)-->
+	<select id="getUserAndTrainerCount" resultType="User">
+		SELECT
+			COUNT(*) AS totalUsers,
+			SUM(CASE WHEN user_type = 'ROLE_TRAINER' THEN 1 ELSE 0 END) AS totalTrainers
+		FROM helf_users
+	</select>
 </mapper>

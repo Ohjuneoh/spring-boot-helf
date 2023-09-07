@@ -1,10 +1,8 @@
 package kr.co.helf.service;
 
 import kr.co.helf.form.AddUserForm;
-import kr.co.helf.mapper.GroupLessonMapper;
-import kr.co.helf.mapper.OrderMapper;
-import kr.co.helf.mapper.TrainerReviewMapper;
-import kr.co.helf.mapper.UserMapper;
+import kr.co.helf.form.UpdateUserForm;
+import kr.co.helf.mapper.*;
 import kr.co.helf.vo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
-import kr.co.helf.dto.AttendanceList;
-import kr.co.helf.dto.CustomerAttendanceListDto;
-import kr.co.helf.dto.CustomerDetailDto;
-import kr.co.helf.dto.CustomerListDto;
-import kr.co.helf.dto.CustomerOrderDto;
-import kr.co.helf.dto.Pagination;
-import kr.co.helf.form.UpdateUserForm;
-import kr.co.helf.mapper.InquiryMapper;
 import java.io.*;
 import java.util.*;
 
@@ -203,22 +193,6 @@ public class UserService {
 			  
 			  		userMapper.updateUser(user);
 		}
-	
-	// 마이페이지 - 유저 회원탈퇴
-		public void withdrawalUser(String id) {
-	      User user = userMapper.getUserById(id);
-	      
-	      if(user == null) {
-	         throw new RuntimeException("탈퇴처리를 진행할 회원이 존재하지 않습니다.");
-	      }
-	      
-	      if("N".equals(user.getStatus())) {
-	         throw new RuntimeException("이미 탈퇴처리가 완료된 회원입니다.");
-	      }
-	      
-	      user.setStatus("N");
-	      userMapper.updateUser(user);
-	   }
 		
 
 	public List<User> getUsersWithFourDigits(String fourDigits) {
@@ -464,6 +438,29 @@ public class UserService {
 
 		return result;
 	}
+
+	// service
+	public void withdrawalUser(String id) {
+		User user = userMapper.getUserById(id);
+		
+		if(user == null) {
+			throw new RuntimeException("탈퇴처리를 진행할 회원이 존재하지 않습니다.");
+		}
+		
+		if("N".equals(user.getStatus())) {
+			throw new RuntimeException("이미 탈퇴처리가 완료된 회원입니다.");
+		}
+		
+		user.setStatus("N");
+		userMapper.updateUser(user);
+	}
+
+	// 총 회원 수 및 강사 수 조회
+	public User getUserAndTrainerCount(){
+		User user = userMapper.getUserAndTrainerCount();
+		return user;
+	}
+
 }
 
 

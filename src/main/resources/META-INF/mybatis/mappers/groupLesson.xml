@@ -128,6 +128,11 @@
             and b.category_no = 33
             and c.user_type = 'ROLE_USER'
     </select>
+
+
+
+
+
     <!-- 그룹 이용권에 해당되는 횟수권을 차감하기 위한 MyMembership 조회 -->
     <select id="getMyMembershipByUserId" resultType="myMembership" parameterType="string">
         select

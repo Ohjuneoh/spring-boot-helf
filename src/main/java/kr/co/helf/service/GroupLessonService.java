@@ -3,6 +3,7 @@ package kr.co.helf.service;
 import kr.co.helf.dto.Pagination;
 import kr.co.helf.form.ModifyGroupLessonForm;
 import kr.co.helf.mapper.GroupLessonMapper;
+import kr.co.helf.mapper.LessonMapper;
 import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.MyMembership;
@@ -20,6 +21,8 @@ import java.util.Map;
 public class GroupLessonService {
 
     private final GroupLessonMapper groupLessonMapper;
+
+    private final LessonMapper lessonMapper;
 
     // 레슨 등록
     public void createLesson(Lesson lesson) {
@@ -90,4 +93,8 @@ public class GroupLessonService {
         groupLessonMapper.deleteLesson(lesson);
     }
 
+    // 관리자로 로그인 시(해당 수업번호에 해당하는 수강생 조회하기 -디테일에서(예광) )
+    public List<LessonApply> getAllDetailUsers(int lessonNo){
+        return lessonMapper.getAllUsersByNo(lessonNo);
+    }
 }

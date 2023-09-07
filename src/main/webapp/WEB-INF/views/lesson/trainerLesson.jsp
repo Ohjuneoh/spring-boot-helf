@@ -282,6 +282,7 @@
         });
         // 모달창에 출석버튼 클릭 시
         $("#table-users tbody").on('click', '.btn-primary', function(){
+            alert("출석처리가 완료되었습니다.");
             let $button1 = $(this);
             let $button2 = $(this).next();
             let lessonNo = $('#current-lesson-no').val();
@@ -293,6 +294,7 @@
         })
         // 모달창에 결석버튼 클릭 시
         $("#table-users tbody").on('click', '.btn-danger', function() {
+            alert("결석처리가 완료되었습니다.");
             let $button1 = $(this).next;
             let $button2 = $(this);
             let lessonNo = $('#current-lesson-no').val();

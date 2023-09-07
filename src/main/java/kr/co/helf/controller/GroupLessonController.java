@@ -3,17 +3,18 @@ package kr.co.helf.controller;
 import kr.co.helf.form.ModifyGroupLessonForm;
 import kr.co.helf.service.GroupLessonService;
 import kr.co.helf.vo.Lesson;
+import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -24,6 +25,7 @@ import java.util.Map;
 public class GroupLessonController {
 
     private final GroupLessonService groupLessonService;
+
     // 레슨 등록 화면
     @GetMapping("/registration")
     public String lessonForm() {
@@ -69,7 +71,10 @@ public class GroupLessonController {
     @GetMapping("/detail")
     public String lessonDetail(@RequestParam("no") int lessonNo, Model model){
         Lesson lesson = groupLessonService.getLessonByNo(lessonNo);
+        List<LessonApply> lessonApplies = groupLessonService.getAllDetailUsers(lessonNo);
+
         model.addAttribute("lesson", lesson);
+        model.addAttribute("lessonApplies", lessonApplies);
         return "group-lesson/detail";
     }
 

@@ -68,33 +68,66 @@
             </div>
         </div>
     </div>
-    
+ 	<div class="container my-5 ">
+        <div class="section-title position-relative pb-3 mb-3">
+	   		<h1 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">내 정보</h1>
+		</div>
+        <div class="d-flex align-items-center mb-3">
+        
+            <img src="/resources/img/트레이너.jpg" class="rounded-circle mr-2" style="width: 150px; height: 150px; ">
+            <div class="ml-4" style="margin-left: 40px;">
+                <h1 class="text-dark">홍길동 <span style="font-size: 30px; color: #b0b0b0;">강사님</span></h1></h1>
+                <div>
+        	<a href="/user/trainerModify" class="btn btn-primary btn-sm">수정하기</a>
+        	<a class="btn btn-danger btn-sm">회원탈퇴</a>
+        </div>
+            </div>
+        </div>
+        <hr>
+        <!-- Personal Information Section -->
+        <section class="mb-4">
+            <h2 class="mb-3 text-dark">개인 정보</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>연락처:</strong> 012-345-6789</p>
+                    <p><strong>이메일:</strong> trainer@example.com</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>경력:</strong> 5년</p>
+                    <p><strong>전문 분야:</strong> 요가, 피트니스</p>
+                </div>
+            </div>
+        </section>
+        <!-- Schedule Section -->
+        <section class="mb-4">
+            <h2 class="mb-3 text-dark	">수업일정</h2>
+            <p>트레이너의 수업 스케줄을 이쪽에 표시</p>
+            <hr>
+        </section>
+    </div>
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
     	<div class="container py-5">
-    		<div class="row my-3">
-    			<div class="col-4">
-    				<div class="profile_pic">
-						<img src="https://atimg.sonyunara.com/files/attrangs/mempic/me.png" class="profile-img" style=" top:48%; left:55%;  width:70%">
-					</div>
-    			</div>
-    			<div class="col-4 ">
-    				<h4 class="mb-5"><strong style="color: blue;">${userInfo.name }</strong>님 [트레이너]</h4>
-    				<p><strong>성별 : </strong> ${userInfo.gender }</p> 	
-    				<p><strong>전화번호 : </strong> ${userInfo.tel }</p>
-    				<p><strong>이메일 : </strong> ${userInfo.email }</p>
-    				<p><strong>등급 : </strong> <span>${userInfo.rank.name } </span></p>
-    				<p><strong>포인트 : </strong> <span>${userInfo.point } </span>점 </p>
-    			</div>
-    			<div class="col-4 text-end">
-    				<a class="btn btn-outline-light btn-sm mb-2" href="">수정</a>
-    				<a class="btn btn-outline-light btn-sm mb-2" href="/user/withdrawal" onclick="return confirmDelete();" >회원탈퇴</a>
-    			</div>
-    		</div>
-    		<hr>
     		<div class="row my-3 " >
     			<div class="col-6">
     				<div class="card">
-    					<div class="card-header">내 리뷰내역</div>
+    					<div class="card-header bg-light text-primary"><strong>내 문의내역</strong></div>
+    					<div class="card-body">
+    						<p class="text-end"><a href="">더보기</a></p>
+    						<table class="table">
+    							<thead>
+    								<tr>
+    									<th>제목</th>
+    									<th>등록일자</th>
+    									<th>답변여부</th>
+    								</tr>
+    							</thead>
+    						</table>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-6">
+    				<div class="card">
+    					<div class="card-header bg-light text-primary"><strong>내 리뷰내역</strong></div>
     					<div class="card-body">
     						<p class="text-end"><a href="/trainer-review/list?trainerNo=${trainer.trainerNo }">더보기</a></p>
     						<table class="table">
@@ -133,20 +166,9 @@
     					</div>
     				</div>
     			</div>
-
     		</div>
     	</div>
     </div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
     <!-- Lesson Register Form End  -->
 	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
 	    <div class="container">
@@ -250,10 +272,6 @@
 		faqModal.show();
 	});
 
-	function confirmDelete() {
-	    return confirm('정말로 탈퇴하시겠습니까? (되돌릴 수 없습니다.)');
-	}
-	
 
 </script>
 
