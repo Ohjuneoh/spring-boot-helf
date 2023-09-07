@@ -73,103 +73,101 @@
 	
 	
     <div class="p-3" style="max-width: 900px; margin: 0 auto;">
-                        
-    	<form action="/user/findPwd" method="post">
-	        <div class="row g-3">
-	            <div class="col-xl-12">
-	               <a style="display: flex; justify-content: center;">
-	               		<strong style="font-size: 30px;">내정보 수정하기</strong>
-	               </a>
-	             </div>
-	             <div class="border p-3 bg-light">
-		         	
-		         	<div class="row g-3">
-						<div class="mb-4"></div>
+	    	<form action="/user/trainerInfoChange" method="post" enctype="multipart/form-data">
+		        <div class="row g-3">
+		            <div class="col-xl-12">
+		               <a style="display: flex; justify-content: center;">
+		               		<strong style="font-size: 30px;">내정보 수정하기</strong>
+		               </a>
+		            </div>
+		        <div class="border p-3 bg-light">
+			         	
+			        	<div class="row g-3">
+							<div class="mb-4"></div>
+						
+						<div class="row">
+							<h5>아이디</h5>
+							    <div class="col-sm-6 input-wrapper">
+							         <input id="trainer-id" name="id" style="height: 55px; width: 620px;" type="text" 
+							         		class="form-control bg-light border-0" value="${userInfo.id }" readonly="readonly" disabled="disabled">
+							    </div>
+						</div>
 					
-					<div class="row">
-						<h5>아이디</h5>
-						    <div class="col-sm-6 input-wrapper">
-						         <input id="trainer-id" name="id" style="height: 55px; width: 620px;" placeholder="4-12자, 영어소문자를 입력하세요." type="text" class="form-control bg-light border-0" value="">
-						    	 <div class="check_font" id="trainer-id_check"></div>
-						    	<div class="id_input_re_1" style="color: green; display: none;">사용 가능한 아이디입니다.</div>
-						    	<div class="id_input_re_2" style="color: red; display: none;">아이디가 이미 존재합니다.</div>
-						    </div>
-					</div>
-				
-				    <div class="col-12">
-				    	<h5>비밀번호</h5>
-				        <input id="trainer-password" name="password" style="height: 55px;" placeholder="4-12자, 영문+숫자+특수문자를 꼭 포함하여 입력하세요." type="password" class="form-control bg-light border-0" value="">
-				   		<div class="check_font" id="trainer-password_check"></div>
-				    </div>
-				    
-				    <div class="col-12">
-					    <h5>이메일</h5> 
-					    <div class="row">
-						    <div class="col-md-6">
-						        <input id="trainer-email" name="email1" style="height: 55px;" placeholder="특수문자를 제외하고 입력하세요." type="text" class="form-control bg-light border-0" value="">
-						    	<div class="check_font" id="trainer-email-check"></div>
-							</div>
-							<div class="col-md-6">
-							    <select id="trainer-email-2" name="email2" style="height: 55px; width: 200px;" class="form-select bg-light border-0">
-						            <option selected="" value="@naver.com">@naver.com</option>
-						            <option value="@gamil.com">@gamil.com</option>
-								    <option value="@kakao.com">@kakao.com</option>
-								    <option value="@hanmail.net">@hanmail.net</option>
-								    <option value="@nate.com">@nate.com</option>
-								    <option value="@outlook.com">@outlook.com</option>
-								    <option value="@yahoo.com">@yahoo.com</option>
-							    </select>
+					    <div class="col-12">
+					    	<h5>비밀번호</h5>
+					        <input id="trainer-password" name="password" style="height: 55px;"
+					        	   type="text" class="form-control bg-light border-0"  placeholder="4-12자, 영문+숫자+특수문자를 꼭 포함하여 입력하세요.">
+					   		<div class="check_font" id="trainer-password_check"></div>
+					    </div>
+					    
+					    <div class="col-12">
+						    <h5>이메일</h5> 
+						    <div class="row">
+							    <div class="col-md-6">
+							        <input id="trainer-email" name="email1" style="height: 55px;" 
+							        	   type="text" class="form-control bg-light border-0" value="${userInfo.email }">
+							    	<div class="check_font" id="trainer-email-check"></div>
+								</div>
+								<div class="col-md-6">
+								    <select id="trainer-email-2" name="email2" style="height: 55px; width: 200px;" class="form-select bg-light border-0">
+							            <option selected="" value="@naver.com">@naver.com</option>
+							            <option value="@gamil.com">@gamil.com</option>
+									    <option value="@kakao.com">@kakao.com</option>
+									    <option value="@hanmail.net">@hanmail.net</option>
+									    <option value="@nate.com">@nate.com</option>
+									    <option value="@outlook.com">@outlook.com</option>
+									    <option value="@yahoo.com">@yahoo.com</option>
+								    </select>
+							    </div>
 						    </div>
 					    </div>
-				    </div>
-				    
-				    <div class="col-12">
-				    <h5>이름</h5>
-				    	<div class="row">
-				    		<div class="col-md-6">
-					        	<input id="trainer-name" name="name" style="height: 55px;" placeholder="홍길동 (한글만 입력하세요.)" type="text" class="form-control bg-light border-0" value="">
-					    			<div class="check_font" id="trainer-name_check">
-					    				
-					    			</div>
-				    		</div>
-						    <div class="col-md-3">
-						        <select id="trainer-gender" name="gender" style="height: 55px; width: 100px;" class="form-select bg-light border-0">
-						            <option selected="" disabled="">성별</option>
-						            <option value="MAN">남자</option>
-						            <option value="WOMAN">여자</option>
-						        </select>
-				    		</div>
-				    	</div>  
-				    </div>
-				    
-				    <div class="col-12">
-				    <h5>전화번호</h5>
-				    	<div class="row">
-				    		<div class="col-md-6">
-					        	<input id="trainer-tel" name="tel" style="height: 55px;" placeholder="010-1111-1234 (특수문자는 '-'만 입력가능합니다. )" type="text" class="form-control bg-light border-0" value="">
-				    			<div class="check_font" id="trainer-tel_check"></div>
-				    		</div>
-						    <div class="col-md-6">
-							    <select id="trainer-mobileCarrier" name="mobileCarrier" style="height: 55px; width: 100px;" class="form-select bg-light border-0">
-						            <option selected="" disabled="">통신사</option>
-						            <option value="SK">SK</option>
-						            <option value="LG">LG</option>
-								    <option value="KT">KT</option>
-								    <option value="MVNO">알뜰폰</option>
-							    </select>
-						    </div>
-				    	</div>  
-				    </div>
-                  </div>
-              </div>
-          </div>
-                            <div class="col-12 mt-3">
+					    
+					    <div class="col-12">
+					    <h5>이름</h5>
+					    	<div class="row">
+					    		<div class="col-md-6">
+						        	<input id="trainer-name" name="name" style="height: 55px;"  type="text" class="form-control bg-light border-0" value="${userInfo.name }" readonly="readonly" disabled="disabled">
+						    			<div class="check_font" id="trainer-name_check">
+						    				
+						    			</div>
+					    		</div>
+					    	</div>  
+					    </div>
+					    
+					    <div class="col-12">
+					    <h5>전화번호</h5>
+					    	<div class="row">
+					    		<div class="col-md-6">
+						        	<input id="trainer-tel" name="tel" style="height: 55px;" value="${userInfo.tel }" type="text" class="form-control bg-light border-0" >
+					    			<div class="check_font" id="trainer-tel_check"></div>
+					    		</div>
+							    <div class="col-md-6">
+								    <select id="trainer-mobileCarrier" name="mobileCarrier" style="height: 55px; width: 100px;" class="form-select bg-light border-0">
+							            <option selected="" disabled="">통신사</option>
+							            <option value="SK">SK</option>
+							            <option value="LG">LG</option>
+									    <option value="KT">KT</option>
+									    <option value="MVNO">알뜰폰</option>
+								    </select>
+							    </div>
+					    	</div>  
+					    </div>
+					    <div class="col-12">
+						    <div class="row">
+								<h5>사진</h5>
+								    <div class="col-sm-6 input-wrapper">
+								         <input type="file" name="photofile" style="margin-left: 20px;">
+								    </div>
+							</div>
+						</div>
+                  	</div>
+              	</div>
+          	</div>
+	                        <div class="col-12 mt-3">
 						    	<button type="submit" class="btn btn-dark w-100 py-3" id="changePwd-button" >회원정보 수정</button>
 							</div>
-      </form>
-                            
-                            
-      </div>                    
+	      </form>
+   </div>                    
                  
 	
 	

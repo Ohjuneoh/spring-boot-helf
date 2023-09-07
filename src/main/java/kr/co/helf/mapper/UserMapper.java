@@ -22,15 +22,23 @@ import kr.co.helf.vo.User;
 @Mapper
 public interface UserMapper {
 	
+	// 유저아이디로 유저정보 조회
 	User getUserById(String id);
 
+	// 유저 등록
 	void insertUser(User user);
 
+	// 트레이너 등록
 	void insertTrainer(User user);
-	
+
+	// 트레이너 테이블 등록
 	void insertTrainer2(Trainer trainer);
 	
+	// 트레이너 경력 등록
 	void insertTrainerCareer(TrainerCareer trainerCarrer);
+	
+	// 트레이너 테이블 업데이트
+	void updateTrainerById(Trainer trainer);
 	
 	// 아이디 찾기(ajax)
 	List<String> getIdByTel(String name, String tel);
@@ -41,6 +49,7 @@ public interface UserMapper {
 	// 아이디 중복검사
 	int idCheck (String userId);
 	
+	// 유저 업데이트
 	void updateUser(User user);
 	
 	// 입장시 회원 휴대폰 네 자리로 조회 - 채경 

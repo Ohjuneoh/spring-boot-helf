@@ -49,6 +49,20 @@
 			user_id = #{id}
 	</update>
 
+	<!-- 트레이너 테이블 업데이트  -->
+	<update id="updateTrainerById" parameterType="Trainer">
+		update
+			helf_trainers
+		set
+			trainer_file = #{trainerFile},
+			trainer_resignation_date = #{resignationDate},
+			trainer_title = #{title},
+			trainer_hired_date = #{hiredDate}
+		where 
+			trainer_no = #{trainerNo}
+	</update>
+	
+	<!-- 유저 등록 -->
 	<insert id="insertUser" parameterType="User">
 		insert into helf_users
 		(user_id, user_email, user_name, user_tel, user_encrypted_password,
@@ -137,9 +151,6 @@
 			user_id = #{id}
 	</select>
 	
-	<!-- 유저의 이용가능한 이용권 조회  // 추후 이용권 부분으로 옮길 예정 -->
-
-	<!-- 유저의 이용가능한 이용권 조회  -->
 
 	<select id="getMyMembership" resultType="kr.co.helf.vo.MyMembership" parameterType="string">
 		select
@@ -480,7 +491,7 @@
 	       u.user_email					as "user.email",
 	       t.trainer_no					as "trainer.trainerNo",
 	       t.trainer_title				as "trainer.title",
-	       t.trainer_hired_date			as "trainer.hiredDate",
+	       t.trainer_hired_date			as "trainer.hiredDate",77
 	       t.trainer_resignation_date	as "trainer.resignationDate",
 	       m.annual_salary				as "annualSalary"
 	from helf_users u, helf_trainers t, helf_my_salary m
