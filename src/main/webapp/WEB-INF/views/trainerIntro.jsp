@@ -275,9 +275,9 @@
 	      
 	      <div class="modal-body">
 	        <p>
-	        	자격<br>
-	        	경력<br>
-	        	수상이력<br>
+	        	자격: <br>
+	        	경력: <br>
+	        	수상이력: <br>
 	        </p>
 	      </div>
 	      

@@ -521,10 +521,12 @@
                 <h1 class="mb-0">Professional Stuffs Ready to Help Your Business</h1>
             </div>
             <div class="row g-5">
+
+                <c:forEach var="trainer" items="${trainers }">
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
                     <div class="team-item bg-light rounded overflow-hidden">
                         <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="/resources/img/team-1.jpg" alt="">
+                            <img class="img-fluid w-100" src="/resources/img/${trainer.trainerFile }" alt="">
                             <div class="team-social">
                                 <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
                                 <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
@@ -533,45 +535,53 @@
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <h4 class="text-primary">Full Name</h4>
-                            <p class="text-uppercase m-0">Designation</p>
+                            <h4 class="text-primary">${trainer.user.name }</h4>
+                            <p class="text-uppercase m-0">${trainer.title }</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
-                    <div class="team-item bg-light rounded overflow-hidden">
-                        <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="/resources/img/team-2.jpg" alt="">
-                            <div class="team-social">
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center py-4">
-                            <h4 class="text-primary">Full Name</h4>
-                            <p class="text-uppercase m-0">Designation</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
-                    <div class="team-item bg-light rounded overflow-hidden">
-                        <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="/resources/img/team-3.jpg" alt="">
-                            <div class="team-social">
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center py-4">
-                            <h4 class="text-primary">Full Name</h4>
-                            <p class="text-uppercase m-0">Designation</p>
-                        </div>
-                    </div>
-                </div>
+                </c:forEach>
+
+
+
+<%--                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">--%>
+<%--                    <div class="team-item bg-light rounded overflow-hidden">--%>
+<%--                        <div class="team-img position-relative overflow-hidden">--%>
+<%--                            <img class="img-fluid w-100" src="/resources/img/team-2.jpg" alt="">--%>
+<%--                            <div class="team-social">--%>
+<%--                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>--%>
+<%--                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>--%>
+<%--                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-instagram fw-normal"></i></a>--%>
+<%--                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                        <div class="text-center py-4">--%>
+<%--                            <h4 class="text-primary">Full Name</h4>--%>
+<%--                            <p class="text-uppercase m-0">Designation</p>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+
+
+<%--                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">--%>
+<%--                    <div class="team-item bg-light rounded overflow-hidden">--%>
+<%--                        <div class="team-img position-relative overflow-hidden">--%>
+<%--                            <img class="img-fluid w-100" src="/resources/img/team-3.jpg" alt="">--%>
+<%--                            <div class="team-social">--%>
+<%--                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>--%>
+<%--                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>--%>
+<%--                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-instagram fw-normal"></i></a>--%>
+<%--                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                        <div class="text-center py-4">--%>
+<%--                            <h4 class="text-primary">Full Name</h4>--%>
+<%--                            <p class="text-uppercase m-0">Designation</p>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+
+
             </div>
         </div>
     </div>
