@@ -115,7 +115,7 @@
 											</tr>
 											<tr>
 												<td colspan="5" class="text-center">
-													<a href="/membership/list" class="btn btn-primary btn-sm">이용권 구매</a>
+													<a href="/order/list" class="btn btn-primary btn-sm">이용권 구매</a>
 												</td>
 											</tr>
 										</c:when>
@@ -140,7 +140,7 @@
 	<div class="row mb-3" >
 		<div class="col-12">
 			<c:choose>
-				<c:when test="${not empty result }">
+				<c:when test="${result.pagination.totalRows gt 0 }">
 			<nav>
 				<ul class="pagination justify-content-center">
 					<li class="page-item ${result.pagination.first ? 'disabled' : '' }">

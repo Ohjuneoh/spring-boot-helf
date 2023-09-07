@@ -196,7 +196,7 @@
 	     			</c:choose>
 	     		</tbody>
 	     	</table>
-	     	<!--  페이지네이션 --> 
+	     	<!--  페이지네이션 -->  
 	     		<c:if test="${pagination.totalRows gt 0 }">
 	     			<c:set var="currentPage" value="${pagination.page }" />
 	               		<c:set var="first" value="${pagination.first }" />

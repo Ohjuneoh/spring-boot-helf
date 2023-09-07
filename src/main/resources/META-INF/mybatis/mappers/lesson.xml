@@ -170,4 +170,10 @@
 		order by l.personal_lesson_date asc
 	</select>
 
+    <!-- 모든 개설된 수업을 조회(예광) -->
+    <select id="getAllLessonForHome" resultType="Lesson">
+        select count(*) as allLessons
+        from helf_lesson
+    </select>
+
 </mapper>

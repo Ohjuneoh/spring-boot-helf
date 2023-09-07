@@ -6,6 +6,8 @@ import kr.co.helf.mapper.OrderMapper;
 import kr.co.helf.mapper.PersonalLessonMapper;
 import kr.co.helf.mapper.TrainerReviewMapper;
 import kr.co.helf.mapper.UserMapper;
+import kr.co.helf.form.UpdateUserForm;
+import kr.co.helf.mapper.*;
 import kr.co.helf.vo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -498,18 +500,10 @@ public class UserService {
       return result;
    }
 
+	// 총 회원 수 및 강사 수 조회
+	public User getUserAndTrainerCount(){
+		User user = userMapper.getUserAndTrainerCount();
+		return user;
+	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -109,16 +109,16 @@
 				</div>
 				<div class="row g-1">
 				    <div class="col-6">
-				        <input type="text" class="form-control bg-light border-0" name="name" placeholder="수업명" style="height: 55px;">
+				        <input type="text" class="form-control bg-light border-0" id="name" name="name" placeholder="수업명" style="height: 55px;">
 				    </div>
 					<div class="col-6">
-						<input type="text" class="form-control bg-light border-0" name="quota" placeholder="총 인원" style="height: 55px;">
+						<input type="text" class="form-control bg-light border-0" id="quota"  name="quota" placeholder="총 인원" style="height: 55px;">
 					</div>
 				    <div class="col-6">
 				    	<input type="text" class="form-control bg-light border-0"  id="date" name="date" style="height: 55px;" placeholder="수업날짜">
 				    </div>
 					<div class="col-6">
-					    <select  class="form-select bg-light border-0" name="time" style="height: 55px;">
+					    <select  class="form-select bg-light border-0"  id="time" name="time" style="height: 55px;">
 					      <option value=""  >시간</option>
 							<option value="10~12" class="form-control bg-light border-0" >10:00 ~ 12:00</option>
 							<option value="13~15" class="form-control bg-light border-0" >13:00 ~ 15:00</option>
@@ -128,7 +128,7 @@
 					    </select>
 					</div>
 					<div class="col-12">
-					  <textarea class="form-control bg-light border-0" name="description" style="height: 300px;" placeholder="내용"></textarea>
+					  <textarea class="form-control bg-light border-0" id ="description" name="description" style="height: 300px;" placeholder="내용"></textarea>
 					</div>
 				</div>
 				<div>
@@ -162,11 +162,63 @@
 <script>
 $( function() {
     $("#date").datepicker({
-   		dateFormat: 'yy/mm/dd'
+   		dateFormat: 'yy/mm/dd',
+        onSelect: function(selectedDate) {
+            let currentDate = new Date(); // 현재 날짜 가져오기
+            let selectedDateObj = $.datepicker.parseDate('yy/mm/dd', selectedDate); // 선택한 날짜 가져오기
+
+            if (selectedDateObj < currentDate) {
+                alert("올바른 날짜를 입력해주세요.");
+                $("#date").val(""); // 날짜 입력란 초기화
+            }
+        }
     });
 	$("#btn-cancel").click(function(event){
 		location.href = "/group-lesson/list";
 	});
+
+    // 유효성 체크 검사
+    $(document).ready(function(){
+        $("#group-lesson-form").submit(function (event){
+
+            let name =$("#name").val();
+            let quota =$("#quota").val();
+            let date =$("#date").val();
+            let time =$("#time").val();
+            let description =$("#description").val();
+
+            if(name === ""){
+                alert("수업명은 필수 입력값 입니다.");
+                return false;
+            }
+            if(quota === ""){
+                alert("총 인원은 필수 입력값 입니다.");
+                return false;
+            }
+            if(date === ""){
+                alert("날짜는 필수 입력값 입니다.");
+                return false;
+            }
+            if(time === ""){
+                alert("시간은 필수 입력값 입니다.");
+                return false;
+            }
+            if(description === ""){
+                alert("내용은 필수 입력값 입니다.");
+                return false;
+            }
+            if (name.length < 3) {
+                alert("수업명은 최소 3글자 이상 입력해야 합니다.");
+                return false;
+            }
+
+            if (description.length < 3) {
+                alert("내용은 최소 3글자 이상 입력해야 합니다.");
+                return false;
+            }
+            return true;
+        })
+    })
 });
 
 
