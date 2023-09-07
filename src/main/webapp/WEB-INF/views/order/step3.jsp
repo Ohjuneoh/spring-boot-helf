@@ -168,19 +168,31 @@
 				   						<td>
 				   							<fmt:formatNumber value="${form.membershipOptionPrice }" pattern="###,###"/>원
 				   							<br/><br/>
-				   							${form.savePoint }P
+				   							<fmt:formatNumber value="${form.savePoint }" pattern="###,###"/>P
 				   							<br/><br/>
 				   							+ <fmt:formatNumber value="${form.surtax }" pattern="###,###"/>P
 				   						</td>
 				   					</tr>
 				   					<tr>
 				   						<th>
-				   							포인트 할인
-				   							<br/><br/>
+				   							<p>
+				   								포인트 할인
+				   								<button style="background-color: transparent; border: none;"
+												        data-bs-toggle="tooltip" data-bs-placement="top"
+												        data-bs-custom-class="custom-tooltip"
+												        data-bs-title="4000P 이상부터 사용이 가능합니다.">
+					   								<i class="bi bi-exclamation-circle-fill"></i>
+				   								</button>
+				   							</p>
 				   						</th>
 										<td>
-				   							사용 가능 적립금<strong> <span id="user-point">${user.point }</span>P</strong>
-				   							<br/><br/>
+				   							<p>
+					   							사용 가능 적립금
+					   							<strong> <span id="user-point">${user.point }</span>P</strong>
+					   							<br/>
+				   							</p>
+				   							<c:if test="${user.point lt 4000 }">
+				   							</c:if>
 				   						</td>
 				   						<td>
 				   							<input name="usePoint" type="number" min="0" style="width: 100px;" value="0">
@@ -212,12 +224,20 @@
 					<div style="margin-top:100px;"></div>
 					<div class="offset-1" style="margin: 0 auto; width:900px;">
 						<h4 class="text-start">
-							<strong style="color:gray">시작일</strong>
+							<strong style="color:gray">시작일 설정</strong>
 						</h4>
 						<hr style="border: 2px solid gray; margin-bottom: 50px;"/>
 					</div>
 					<div class="offset-1" style="margin: 0 auto; width:800px;">
-						<div class="border border-black border-2 p-3 text-center" >
+						<div class="border border-black border-2 p-3 text-center">
+							<div style="margin-bottom: 10px;">
+								<span style="float: left;">
+									<span style="margin-left: 60px; size: 20px;" class="badge bg-primary">시작일</span>
+								</span>
+								<span>
+									<span class="badge bg-primary" style="size: 20px;">만기일</span>
+								</span>
+							</div>
 							<input name="startDate" type="date" style="width: 300px; height: 35px; " /> 
 							<span class="ps-3 pe-3">~</span>
 							<input name="endDateText" type="date" style="width: 300px; height: 35px; " disabled class="border-0"/>
@@ -234,7 +254,7 @@
 	    						</span>
     						</strong>
     					</span>
-					    <button type="button" id="btn-kakao-pay" class="border-0 bg-white">
+					    <button type="button" id="btn-kakao-pay" class="border-0 bg-white" disabled>
 					    	<img src="/resources/img/kakaopay/kakaopay button.png" style="height: 50px;">
 					    </button>
 					</div>
@@ -242,6 +262,8 @@
 			</div>
 		</div>
 	</div>
+	
+	
 	
 	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />    
     <!-- Back to Top -->
@@ -267,6 +289,19 @@
 </body>
 <script type="text/javascript">
 $(function() {
+	
+	// 툴팁 활성화
+	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+	
+	let userPointText = $("#user-point").text();
+	let userPoint = parseInt(userPointText);
+	if(userPoint < 4000) {
+		$("#btn-all").prop("disabled", true);
+		$("#btn-apply").prop("disabled", true);
+		$("input[name=usePoint]").prop("disabled", true);
+		$("#point-return").prop("disabled", true);
+	}
 	
 	$("#btn-kakao-pay").click(function() {
 		let usePoint = $("input[name=usePoint]").val();
@@ -343,7 +378,9 @@ $(function() {
 		
 		if(startDate < today) {
 			alert("시작일은 " + today + "이후부터 가능합니다.");
-			$(this).val();
+			$(this).val("");
+			$("#btn-kakao-pay").prop("disabled", true);
+			$("input[name=endDateText]").val("");
 			return;
 		}
 		
@@ -352,7 +389,7 @@ $(function() {
 		$("input[name=endDateText]").val(endDate);
 		$("input[name=endDate]").val(endDate);
 		
-		$("#btn-order").removeClass("disabled");
+		$("#btn-kakao-pay").removeAttr("disabled");
 	})
 })
 </script>

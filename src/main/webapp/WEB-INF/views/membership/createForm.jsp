@@ -94,7 +94,8 @@
 					</div>
 					<div class="offset-1" style="margin-top: 100px;">
 						<h5>이용권 가격</h5>
-						<input name="price" type="number" class="bg-light border-0" style="height: 50px; width: 1000px; font-size: 20px;"" value="0">
+						<input name="price" type="number" class="bg-light border-0" style="height: 50px; width: 980px; font-size: 20px;" value="0">
+						<strong style="font-size: 20px;">원</strong>
 						<p id="price-error-msg" style="color:red; display: none;">가격은 비워둘 수 없습니다.</p>
 					</div>
 					<div id="cat-div" class="offset-1" style="margin-top: 100px;">
@@ -158,7 +159,7 @@ $(function() {
 	const descriptionRegexp = /^[a-zA-Z가-힣0-9\s!@#$%^&*()\-_=+[\]{}|;:'",.<>/?\\]{10,200}$/;
 	
 	let nameValid = false;
-	let priceValid = false;
+	let priceValid = true;
 	let catValid = false;
 	let descriptionValid = false;
 	
@@ -191,6 +192,7 @@ $(function() {
 		if(!titleRegexp.test(nameText)) {
 			$("#title-error-msg").show();
 			nameValid = false;
+			check();
 			
 			return;
 		}
@@ -205,6 +207,7 @@ $(function() {
 		if(!descriptionRegexp.test(descriptionText)) {
 			$("#description-error-msg").show();
 			descriptionValid = false;
+			check();
 			
 			return;
 		}
