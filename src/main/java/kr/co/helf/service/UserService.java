@@ -59,7 +59,8 @@ public class UserService {
    private PersonalLessonMapper personalLessonMapper;
    
 
-   String directory = "C:\\Users\\drk25\\git\\spring-boot-helf\\src\\main\\webapp\\resources\\img\\photo";
+  // String directory = "C:\\Users\\drk25\\git\\spring-boot-helf\\src\\main\\webapp\\resources\\img\\photo";
+   String directory = "C:\\workspace\\spring-workspace\\spring-boot-helf\\src\\main\\webapp\\resources\\img\\photo";
    
    // 유저 회원가입
    public void createUser(AddUserForm form) {
@@ -116,10 +117,11 @@ public class UserService {
       }
       trainer.setUser(user);
       userMapper.insertTrainer(user);
+      userMapper.insertTrainer2(trainer);
       
       List<String> careerNames = form.getCareerNames();
-      List<String> startDatesStrings = form.getStartDates();
-      List<String> endDatesStrings = form.getEndDates();
+      List<String> startDatesStrings = form.getCareerStartDates();
+      List<String> endDatesStrings = form.getCareerEndDates();
 
       // String 타입의 날짜를 Date 타입으로 변환
       List<Date> startDates = new ArrayList<>();
@@ -154,7 +156,6 @@ public class UserService {
           userMapper.insertTrainerCareer(career);
       }
 
-      userMapper.insertTrainer2(trainer);
    }
 
 

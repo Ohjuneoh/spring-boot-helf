@@ -89,13 +89,13 @@ body {
 							</div>
 						</div>
 			            <div class="col-sm-6 input-wrapper">
-			                <input type="text" class="form-control bg-light border-0" id="trainer-career" name="careerName" placeholder="경력 이름을 입력하세요." style="height: 55px; width: 620px;" />
+			                <input type="text" class="form-control bg-light border-0" id="trainer-career" name="careerNames" placeholder="경력 이름을 입력하세요." style="height: 55px; width: 620px;" />
 			            </div>
 			            <div class="col-sm-6">
 			                <div class="d-flex">
-			                    <input type="text" class="form-control bg-light border-0 mr-2" id="datepicker1" name="careerStartDate" placeholder="경력 시작일" style="height: 55px; width: 250px;" />
+			                    <input type="text" class="form-control bg-light border-0 mr-2" id="datepicker1" name="careerStartDates" placeholder="경력 시작일" style="height: 55px; width: 250px;" />
 			                    <strong style="margin-left: 15px; margin-right: 20px; margin-top: 15px; font-size: 20px;">~</strong>
-			                    <input type="text" class="form-control bg-light border-0" id="datepicker2" name="careerEndDate" placeholder="경력 종료일" style="height: 55px; width: 250px;" />
+			                    <input type="text" class="form-control bg-light border-0" id="datepicker2" name="careerEndDates" placeholder="경력 종료일" style="height: 55px; width: 250px;" />
 			                </div>
 			            </div>
 			        </div>
@@ -283,13 +283,13 @@ $(function() {
         let content = 
             `<div class="row mt-4">
                 <div class="col-sm-6 input-wrapper">
-                    <input type="text" class="form-control bg-light border-0" name="careerName${careerCounter}" placeholder="경력 이름을 입력하세요." style="height: 55px; width: 620px;" />
+                    <input type="text" class="form-control bg-light border-0" name="careerNames${careerCounter}" placeholder="경력 이름을 입력하세요." style="height: 55px; width: 620px;" />
                 </div>
                 <div class="col-sm-6">
                     <div class="d-flex">
-                        <input type="text" class="form-control bg-light border-0 mr-2 datepicker-start" name="careerStartDate${careerCounter}" placeholder="경력 시작일" style="height: 55px; width: 250px;" />
+                        <input type="text" class="form-control bg-light border-0 mr-2 datepicker-start" name="careerStartDates${careerCounter}" placeholder="경력 시작일" style="height: 55px; width: 250px;" />
                         <strong style="margin-left: 15px; margin-right: 20px; margin-top: 15px; font-size: 20px;">~</strong>
-                        <input type="text" class="form-control bg-light border-0 datepicker-end" name="careerEndDate${careerCounter}" placeholder="경력 종료일" style="height: 55px; width: 250px;" />
+                        <input type="text" class="form-control bg-light border-0 datepicker-end" name="careerEndDates${careerCounter}" placeholder="경력 종료일" style="height: 55px; width: 250px;" />
                         <button class="btn btn-danger btn-sm ml-2" type="button" onclick="$(this).closest('.row').remove()" style="width: 30px; width: 80px;">삭제</button>
                     </div>
                 </div>
@@ -298,8 +298,8 @@ $(function() {
         $('#career-box').append(content);
 
         // 추가된 입력 필드에 datepicker 적용
-        $(`.datepicker-start[name="careerStartDate${careerCounter}"]`).datepicker();
-        $(`.datepicker-end[name="careerEndDate${careerCounter}"]`).datepicker();
+        $(`.datepicker-start[name="careerStartDates${careerCounter}"]`).datepicker();
+        $(`.datepicker-end[name="careerEndDates${careerCounter}"]`).datepicker();
 
         // Career counter 증가
         careerCounter++;
@@ -332,11 +332,11 @@ $(function() {
 
         // 경력 항목 검사
         $('.row.mt-4').each(function() {
-            const careerName = $(this).find('input[name^="careerName"]').val();
-            const careerStartDate = $(this).find('input[name^="careerStartDate"]').val();
-            const careerEndDate = $(this).find('input[name^="careerEndDate"]').val();
+            const careerNames = $(this).find('input[name^="careerNames"]').val();
+            const careerStartDates = $(this).find('input[name^="careerStartDates"]').val();
+            const careerEndDates = $(this).find('input[name^="careerEndDates"]').val();
 
-            if (careerName === '' || careerStartDate === '' || careerEndDate === '') {
+            if (careerNames === '' || careerStartDates === '' || careerEndDates === '') {
                 alert('모든 경력 항목을 입력해주세요.');
                 isValid = false;
             }
