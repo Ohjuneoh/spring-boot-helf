@@ -123,7 +123,7 @@
 					    <div class="col-12">
 						    <h5 class="text-primary mt-2">비밀번호</h5>
 						        <input id="trainer-password" name="password" 
-						        	   type="text" class="form-control bg-light border-0"  placeholder="4-12자, 영문+숫자+특수문자를 꼭 포함하여 입력하세요.">
+						        	   type="password" class="form-control bg-light border-0"  placeholder="4-12자, 영문+숫자+특수문자를 꼭 포함하여 입력하세요.">
 						   		<div class="check_font" id="trainer-password_check"></div>
 					    </div>
 					    <div class="col-12">
@@ -131,7 +131,6 @@
 					    
 					    	</div>  
 					    </div>
-					    
 					    <div class="col-12">
 					    <h5 class="text-primary">전화번호</h5>
 					    	<div class="row">
@@ -152,8 +151,13 @@
 					    	</div>  
 					    </div>
 					    <hr>
+					    <div>
+					    	
+					    </div>
                   	</div>
               	</div>
+          	</div>
+          	<div>
           	</div>
 			<div class="col-12 mt-3">
 				<button type="submit" class="btn btn-dark w-100 py-3" id="changePwd-button" >회원정보 수정</button>
@@ -186,7 +190,7 @@ $(document).ready(function(){
     // 비밀번호 입력 필드에서 포커스가 벗어났을 때 새 div 추가
     $("#trainer-password").blur(function(){
         if(!$("#password_confirmation").length) {
-            $(this).after('<div id="password_confirmation"><input type="text" class="form-control bg-light border-0 mt-3" placeholder="비밀번호를 한 번 더 입력해주세요"></div>');
+            $(this).after('<div id="password_confirmation"><input type="password" class="form-control bg-light border-0 mt-3" placeholder="비밀번호를 한 번 더 입력해주세요"></div>');
             addPasswordMatchCheck();
         }
     });
