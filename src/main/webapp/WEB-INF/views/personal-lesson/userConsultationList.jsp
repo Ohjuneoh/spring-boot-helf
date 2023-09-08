@@ -86,78 +86,92 @@
         </div>
     </div>
     <div class="container-fluid mt-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container ">
-            <div class="section-title text-start position-relative pb-3 mb-5" style="max-width: 600px;">
-                <h1 class="fw-bold text-primary text-uppercase">상담신청 내역</h1>
-                <h5 class="mb-0">상담을 신청한 강사를 확인하세요</h5>
-            </div>
-            <c:choose>
-	            <c:when test="${empty consultations}">
-	        		<div><strong>조회된 회원이 없습니다.</strong></div>
-	    		</c:when>
-	    		<c:otherwise>
-		            <div class="row g-0">
-			            <c:forEach var="trainer" items="${trainers}">
-			                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
-			                    <div class="bg-white rounded shadow position-relative m-2" style="z-index: 1;">
-			                        <div class="border-bottom mb-4">
-									    <h5 class="text-primary mb-2"></h5>
-									    <c:choose>
-									        <c:when test="${consultation.consultations.consultationStatus eq '대기중'}">
-									            <div class="text-success"><strong>신규회원</strong></div>
-									        </c:when>
-									        <c:when test="${consultation.consultations.consultationStatus eq '수강중'}">
-									            <div class="text-primary"><strong>예약회원</strong></div>
-									        </c:when>
-									    </c:choose>
-									    <div class="col d-flex flex-row align-items-center justify-content-start ml-0 bg-light" >
-									        <img src="/resources/img/${trainer.trainerFile}" style="width: 30%; margin-right: 20px;" class="img-fluid"/>
-									        <h4 class="text-uppercase text-primary">${trainer.user.name} 강사</h4>
-									    </div>
-									</div>
-			                        <div class="p-5 pt-0 ">
-										<div class="d-flex justify-content-between mb-3 text-primary" style="font-size: 20px;"><strong>주요경력</strong></div>
-											<c:forEach var="career" items="${trainer.careers}">
-											    <div class="d-flex justify-content-start mb-3">
-											        <fmt:formatDate value="${career.careerStartDate}" pattern="yyyy-MM" /> ~ <fmt:formatDate value="${career.careerEndDate}" pattern="yyyy-MM" />
-											        <span style="font-weight: bold; margin-left: 10px;">${career.careerName}</span>
-											    </div>
-											</c:forEach>
-			                            <div class="d-flex justify-content-center">
-			                            	<button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#myModal" >신청내역 조회</button>
-			                            </div>
-			                        </div>
-			                    </div>
-			                </div>
-			            </c:forEach>
-		            </div>
-            	</c:otherwise>
-            </c:choose>
-        </div>
-    </div>
+    <div class="container">
+	        <div class="section-title text-start position-relative pb-3 mb-5" style="max-width: 600px;">
+	            <h1 class="fw-bold text-primary text-uppercase">상담신청 내역</h1>
+	            <h5 class="mb-0">상담을 신청한 강사를 확인하세요</h5>
+	        </div>
+	        <div class="row g-0">
+	            <c:choose>
+	                <c:when test="${not empty trainers}">
+	                    <c:forEach var="trainer" items="${trainers}">
+	                        <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+	                            <div class="bg-white rounded shadow position-relative m-2" style="z-index: 1;">
+	                                <div class="border-bottom mb-4">
+	                                    <h5 class="text-primary mb-2"></h5>
+	                                    <c:choose>
+	                                        <c:when test="${consultation.consultations.consultationStatus eq '대기중'}">
+	                                            <div class="text-success"><strong>신규회원</strong></div>
+	                                        </c:when>
+	                                        <c:when test="${consultation.consultations.consultationStatus eq '수강중'}">
+	                                            <div class="text-primary"><strong>예약회원</strong></div>
+	                                        </c:when>
+	                                    </c:choose>
+	                                    <div class="col d-flex flex-row align-items-center justify-content-start ml-0 bg-light">
+	                                        <img src="/resources/img/${trainer.trainerFile}" style="width: 30%; margin-right: 20px;" class="img-fluid"/>
+	                                        <h4 class="text-uppercase text-primary">${trainer.user.name} 강사</h4>
+	                                    </div>
+	                                </div>
+	                                <div class="p-5 pt-0 ">
+	                                    <div class="d-flex justify-content-between mb-3 text-primary" style="font-size: 20px;"><strong>주요경력</strong></div>
+	                                    <c:forEach var="career" items="${trainer.careers}">
+	                                        <div class="d-flex justify-content-start mb-3">
+	                                            <fmt:formatDate value="${career.careerStartDate}" pattern="yyyy-MM" /> ~ <fmt:formatDate value="${career.careerEndDate}" pattern="yyyy-MM" />
+	                                            <span style="font-weight: bold; margin-left: 10px;">${career.careerName}</span>
+	                                        </div>
+	                                    </c:forEach>
+	                                    <div class="d-flex justify-content-center">
+	                                        <button type="button" class="btn btn-primary mt-2 registration-button" data-bs-toggle="modal" data-bs-target="#myModal" data-trainer-no="${trainer.trainerNo}">신청내역 조회</button>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </c:forEach>
+	                </c:when>
+	                <c:otherwise>
+	                    <div class="col-lg-12">
+	                        <div class="text-primary">
+	                            <strong>조회된 강사가 없습니다.</strong>
+	                        </div>
+	                    </div>
+	                </c:otherwise>
+	            </c:choose>
+	        </div>
+	    </div>
+	</div>
     <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"> 
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"> 
  			<div class="modal-content">
 				<div class="modal-header bg-light">
-	        		<h5 class="modal-title text-primary" id="staticBackdropLabel"></h5>
+	        		<h5 class="modal-title text-primary" id="staticBackdropLabel">상담신청 정보 </h5>
+	        		<strong style="margin-left: 10px;" class="text-success">대기중</strong>
 			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		      	</div>
 		      	<div class="modal-body">
-		      		<table class="table" id="table-personal-lessons" >
-						<thead>
-                        	<tr class="text-center">
-	                            <th style="width:10%">번호</th>
-	                            <th style="width:30%">요청날짜</th>
-	                            <th style="width:20%">요청시간</th>
-	                            <th style="width:20%">상태</th>
-	                            <th style="width:20%"></th>
-							</tr>
-						</thead>
-						<tbody></tbody>
-					</table>
+		      		<div class="m-2">
+		      			<h5 class="label-goal">운동목표</h5>
+		      			<p class="data-goal" id="goal" ></p>
+		      			<hr>
+		      		</div>
+		      		<div class="m-2">
+		      		<h5 class="label-abnormalities">신체이상유무</h5>
+		      		<p class="data-abnormalities" id="abnormalities"></p>
+		      		<hr>
+		      		</div>
+		      		<div class="row">
+					    <div class="col-6 d-flex align-items-centerm m-2">
+					        <strong class="mb-0 d-inline-block label-requestDate text-dark">상담 날짜 :</strong>
+					        <p class="mb-0 d-inline-block ml-2 data-requestDate" id="requestDate" ></p>
+					    </div>
+					    <div class="col-6 d-flex align-items-center m-2">
+					        <strong class="mb-0 d-inline-block ml-2 label-requestTime text-dark" id="requestTime">상담 시간 : </strong>
+					        <p class="mb-0 d-inline-block ml-2 data-requestTime"></p>
+					    </div>
+					</div>
 				</div>
 				<div class="modal-footer">
-				  	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				  	<button type="button" class="btn btn-danger btn-sm delete-button" >삭제</button>
+				  	<button type="button" class="btn btn-secondary btn-sm close-button" data-bs-dismiss="modal">닫기</button>
 				</div>
 			</div>
 		</div>
@@ -187,7 +201,55 @@
     
 <script>
 
+//내가 트레이너에게 신청한 상담목록 조회
+$(document).ready(function(){
+    var consultationNo; // 전역 변수로 consultationNo 선언
+    var trainerNo; // 전역 변수로 trainerNo 선언
 
+    $(".registration-button").on("click", function(){
+        trainerNo = $(this).data("trainer-no");
+
+        $.ajax({
+            url: "/personal-lesson/consultation-list",
+            method: "GET",
+            data: { trainerNo: trainerNo },
+            success: function(consultation) {
+                consultationNo = consultation.consultationNo; // consultationNo 값을 저장
+
+                var date = new Date(consultation.requestDate);
+                var formattedDate = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0');
+                
+                $("#myModal .modal-body .data-goal").text(consultation.goal);
+                $("#myModal .modal-body .data-abnormalities").text(consultation.abnormalities);
+                $("#myModal .modal-body .data-requestDate").text(formattedDate);
+                $("#myModal .modal-body .data-requestTime").text(consultation.requestTime);
+                
+                // Display the modal
+                $("#myModal").modal('show');
+            }
+        });
+    });
+
+    $("#myModal .delete-button").on("click", function(){
+        if(confirm("정말로 삭제하시겠습니까?")) {
+            $.ajax({
+                url: "/personal-lesson/consultation-delete",
+                method: "POST",
+                data: { 
+                    consultationNo: consultationNo, // consultationNo 값을 전송
+                    trainerNo: trainerNo // trainerNo 값을 전송
+                },
+                success: function(response) {
+                    alert('삭제가 완료되었습니다');
+                    // 필요한 경우 여기에 추가적인 작업을 수행
+                    $("#myModal").modal('hide'); // 모달 창 닫기
+                    
+                    window.location.href = "/personal-lesson/trainer-list?trainerNo=" + trainerNo;
+                }
+            });
+        }
+    });
+});
 </script>
 
     
