@@ -12,7 +12,6 @@ import kr.co.helf.form.AddUserForm;
 import kr.co.helf.form.UpdateUserForm;
 import kr.co.helf.service.PersonalLessonService;
 import kr.co.helf.service.UserService;
-import kr.co.helf.vo.Inquires;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.TrainerReview;
 import kr.co.helf.vo.User;

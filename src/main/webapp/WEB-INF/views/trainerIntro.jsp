@@ -81,7 +81,6 @@
     </div>
     <!-- Full Screen Search End -->
 
-
     <!-- Team Start -->
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
     	<div class="container py-5">
@@ -90,12 +89,11 @@
                 <h1 class="mb-0">HELF 헬스장의<br> 트레이너를 소개합니다.</h1>
             </div>
             <div class="row g-5" id="box-trainer">
-
 	            <c:forEach var="trainer" items="${trainers }">
 	                <div class="col-lg-3 wow slideInUp" data-wow-delay="0.3s">
 	                    <div class="team-item bg-light rounded overflow-hidden">
 	                        <div class="team-img position-relative overflow-hidden">
-	                            <img class="img-fluid w-100" src="/resources/img/team-1.jpg" alt="" data-trainer-no="${trainer.trainerNo}" >
+	                            <img class="img-fluid w-100" src="/resources/img/photo/${trainer.trainerFile }" alt="" data-trainer-no="${trainer.trainerNo}" >
 	                        </div>
 	                        <div class="text-center py-4">
 	                            <h4 class="text-primary">${trainer.user.name }</h4>
@@ -104,31 +102,13 @@
 	                    </div>
 	                </div>
 	            </c:forEach>
-
-            <c:forEach var="trainer" items="${trainers }">
-                <div class="col-lg-3 wow slideInUp" data-wow-delay="0.3s">
-                    <div class="team-item bg-light rounded overflow-hidden">
-                        <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="/resources/img/${trainer.trainerFile}" alt="" data-trainer-no="${trainer.trainerNo }" >
-                        </div>
-                        <div class="text-center py-4">
-                            <h4 class="text-primary">${trainer.user.name }</h4>
-                            <p class="text-uppercase m-0">${trainer.title }</p>
-                        </div>
-                    </div>
-                </div>
-            </c:forEach>
-            </div>
             </div>
         </div>
     </div>
     <!-- Team End -->
 
 
-            </div>
-    	</div>
-	</div>   
-    <!-- Team End -->
+
     
     <!-- 강사 모달창  -->
     <div class="modal" tabindex="-1" id="modal-teacher">
@@ -144,7 +124,6 @@
 	        <p>
 	        	자격: <br>
 	        	경력: <br>
-	        	수상이력: <br>
 	        </p>
 	      </div>
 	      
