@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 
@@ -103,13 +104,14 @@ public class PersonalLessonController {
 	//유저가 상담 신청한 신청내역 조회
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping("/consultation-list")
-	public String userConsultationList(@AuthenticationPrincipal User user,@RequestParam("trainerNo") int trainerNo, Model model) {
+	@ResponseBody
+	public Consultation userConsultationList(@AuthenticationPrincipal User user,@RequestParam("trainerNo") int trainerNo, Model model) {
 		
-		List<UserConsultations> consultations = personalLessonService.getUserConsultationsByUserId(user.getId());
+		Consultation consultation = personalLessonService.getConsultationByUserId(user.getId(), trainerNo);
 		
-		model.addAttribute("consultations",consultations);
+		model.addAttribute("consultation",consultation);
 		
-		return "personal-lesson/userConsultationList";
+		return consultation;
 	}
 	
 	
@@ -154,6 +156,16 @@ public class PersonalLessonController {
 		
 		return "redirect:/personal-lesson/list";
 	}
+	
+	//상담요청 삭제
+	@PostMapping("/consultation-delete")
+	public String consultationDelete(@AuthenticationPrincipal User user, Model model, int consultationNo, int trainerNo) {
+		personalLessonService.updateConsultationStatus(user.getId(), consultationNo);
+		
+		return "redirect:/personal-lesson/trainer-list?trainerNo=" + trainerNo;
+		
+	}
+	
 	
 	
 }

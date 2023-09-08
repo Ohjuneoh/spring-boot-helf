@@ -491,7 +491,7 @@
 	       u.user_email					as "user.email",
 	       t.trainer_no					as "trainer.trainerNo",
 	       t.trainer_title				as "trainer.title",
-	       t.trainer_hired_date			as "trainer.hiredDate",77
+	       t.trainer_hired_date			as "trainer.hiredDate",
 	       t.trainer_resignation_date	as "trainer.resignationDate",
 	       m.annual_salary				as "annualSalary"
 	from helf_users u, helf_trainers t, helf_my_salary m

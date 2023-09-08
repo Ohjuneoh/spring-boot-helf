@@ -87,5 +87,16 @@ public class PersonalLessonService {
 	public List<Trainer> getTrainerByConsultationWithUserId(String id) {
 		return personalLessonMapper.getTrainersWithCareerByUserId(id);
 	}
+
+	public Consultation getConsultationByUserId(String id, int trainerNo) {
+		
+		return personalLessonMapper.getConsultationByTrainerNo(id, trainerNo);
+	}
+	//상담번호를 기준으로 상담번호 조회
+	public void updateConsultationStatus(String id, int consultationNo) {
+		personalLessonMapper.updatedConsultation(consultationNo,"상담만료");
+		
+	}
+
 }
 
