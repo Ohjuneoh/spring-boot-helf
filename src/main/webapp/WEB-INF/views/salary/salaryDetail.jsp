@@ -9,7 +9,6 @@
 .nav-item {
     margin-right: 20px; /* Increase this value if you want more spacing between tabs */
 }
-
 </style>
 <head>
     <meta charset="utf-8">
@@ -134,23 +133,29 @@
         </div>
     </div>
     <!-- 임직원 급여 부분 Start -->
-    	<div class="card-body">
-    		<ul class="nav nav-tabs">
-				<li class="nav-item">	
-					<a class="nav-link active" aria-current="page" href="">급여 확정 내역</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="">급여 정산 명세서</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="">개인 레슨 수당 내역</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="">그룹 레슨 수당 내역</a>
-				</li>
-    		</ul>
-    	</div>
-    <!-- 임직원 급여 부분 End -->
+	<div class="card-body">
+	    <ul class="nav nav-tabs">
+	        <li class="nav-item">    
+	            <a class="nav-link active" aria-current="page" href="">급여 확정 내역</a>
+	        </li>
+	        <li class="nav-item">
+	            <a class="nav-link" href="/salary/tab2Content">급여 정산 명세서</a>
+	        </li>
+	        <li class="nav-item">
+	            <a class="nav-link" href="/salary/tab3Content">개인 레슨 수당 내역</a>
+	        </li>
+	        <li class="nav-item">
+	            <a class="nav-link" href="/salary/tab4Content">그룹 레슨 수당 내역</a>
+	        </li>
+	    </ul>
+	    
+	    <!-- Content Area for the Tabs -->
+	    <div id="tabContent" class="tab-content mt-3">
+	        <!-- This is where the content from the AJAX request will be placed -->
+	    </div>
+	</div>
+<!-- 임직원 급여 부분 End -->
+
    </div>
 	<!--  임직원 급여 상세 form End -->
 	
@@ -178,9 +183,40 @@
 
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script type="text/javascript">
-	
+    var userId = "${param.id}"
+    let startDate = moment().startOf('month').format('YYYY-MM-DD');
+    let endDate = moment().endOf('month').format('YYYY-MM-DD');
+    console.log(startDate);
+    
+    	$(document).ready(function() {
+    	    $('.nav-link').click(function(e) {
+    	        e.preventDefault(); 
+    	        
+    	        let contentURL = $(this).attr('href');
+
+    	        $('.nav-link').removeClass('active');
+    	        $(this).addClass('active');
+    	       
+    	        $.ajax({
+    	            url: contentURL,
+    	            type: 'GET',
+    	            data: {
+    	                userId: userId,
+    	                startDate: startDate,
+    	                endDate:endDate
+    	            },
+    	            success: function(response) {
+    	                $('#tabContent').html(response);
+    	            },
+    	            error: function() {
+    	                alert('데이터를 불러오는데 에러가 발생했습니다.');
+    	            }
+    	        });
+    	    });
+    	});
+
 	</script>
 </body>
 
