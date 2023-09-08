@@ -7,7 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import kr.co.helf.vo.Inquires;
-
+import kr.co.helf.dto.TrainerDto;
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.form.UpdateUserForm;
 import kr.co.helf.service.PersonalLessonService;
@@ -310,6 +310,19 @@ public class UserController {
    
    
 /* 마이페이지 끝 */
+   
+/* 강사소개 */
+   // 강사소개 - 자격 & 개설 수업수 
+   @GetMapping("/trainerIntroLesson")
+   @ResponseBody
+   public TrainerDto trainerLessonCount(@RequestParam("userId") String userId,
+		   @RequestParam("trainerNo") int trainerNo) {
+	  
+	   TrainerDto dto = userService.getTrainerInfo(userId, trainerNo);
+	   return dto;
+   }
+
+   
    
    
 }

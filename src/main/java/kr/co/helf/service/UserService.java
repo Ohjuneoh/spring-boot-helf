@@ -7,7 +7,6 @@ import kr.co.helf.mapper.PersonalLessonMapper;
 import kr.co.helf.mapper.TrainerReviewMapper;
 import kr.co.helf.mapper.UserMapper;
 import kr.co.helf.form.UpdateUserForm;
-import kr.co.helf.mapper.*;
 import kr.co.helf.vo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ import kr.co.helf.dto.CustomerDetailDto;
 import kr.co.helf.dto.CustomerListDto;
 import kr.co.helf.dto.CustomerOrderDto;
 import kr.co.helf.dto.Pagination;
-import kr.co.helf.form.UpdateUserForm;
+import kr.co.helf.dto.TrainerDto;
 import kr.co.helf.mapper.InquiryMapper;
 import java.io.*;
 import java.text.ParseException;
@@ -531,10 +530,29 @@ public class UserService {
       return result;
    }
 
-	// 총 회원 수 및 강사 수 조회
-	public User getUserAndTrainerCount(){
+	// 총 회원 수 및 강사 수 조회(예광)
+	public User getUserAndTrainerCount() {
 		User user = userMapper.getUserAndTrainerCount();
 		return user;
+	}
+	
+	// 강사소개 - 특정 트레이너의 개인+그룹 수업 수 조회(유리)
+	public TrainerDto getTrainerInfo(String userId, int trainerNo) {
+		
+		TrainerDto dto = new TrainerDto();
+		
+		int personalLessonCount = userMapper.getPersonalLesson(userId);
+		int groupLessonCount = userMapper.getGroupLesson(userId);
+
+		dto.setLessonCount(personalLessonCount + groupLessonCount);
+
+		Trainer trainer = personalLessonMapper.getTrainerAndCareer(userId);
+		List<Career> careers = trainer.getCareers();
+
+		dto.setCareers(careers);
+	   
+		return dto;
+
 	}
 
 }
