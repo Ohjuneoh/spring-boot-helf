@@ -13,6 +13,7 @@ public class RefundOrderPoint {
 
 	private int orderId;
 	private int refundNo;
+	private int refundAmount;
 	private int pointNo;
 	private String pointType;
 	private int pointUse;

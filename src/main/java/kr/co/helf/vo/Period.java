@@ -15,7 +15,7 @@ public class Period {
 	private int addPrice;
 	
 	public boolean isPeriod() {
-		return MembershipEnum.PERIOD.equals(this.type);
+		return MembershipEnum.PERIOD.getValue().equals(this.type);
 	}
 	
 	public boolean isTime() {

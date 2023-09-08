@@ -1,5 +1,11 @@
 package kr.co.helf.service;
 
+import kr.co.helf.dto.AttendanceList;
+import kr.co.helf.dto.CustomerAttendanceListDto;
+import kr.co.helf.dto.CustomerDetailDto;
+import kr.co.helf.dto.CustomerListDto;
+import kr.co.helf.dto.CustomerOrderDto;
+import kr.co.helf.dto.Pagination;
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.form.UpdateUserForm;
 import kr.co.helf.mapper.*;
@@ -339,7 +345,6 @@ public class UserService {
 		return trainer;
 	}
 
-
 	// 관리자 고객상세조회 - 최근 방문 내역 조회 - 채경
 	public Map<String, Object> getCustomerAttendances(Map<String, Object> param) {
 		// 총 행의 갯수
@@ -439,7 +444,7 @@ public class UserService {
 		return result;
 	}
 
-	// service
+	// 회원 탈퇴처리 - 은정
 	public void withdrawalUser(String id) {
 		User user = userMapper.getUserById(id);
 		
