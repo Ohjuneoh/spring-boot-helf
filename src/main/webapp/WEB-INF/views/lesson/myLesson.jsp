@@ -181,7 +181,6 @@
 						</div>
                     </div>
                 </div>
-                
                 <!-- PersonalLesson end  -->
                 <!-- GroupLesson start  -->
                 <div class="card"  id="group-lesson" style="display: none;">
