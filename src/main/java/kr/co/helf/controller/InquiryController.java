@@ -73,7 +73,7 @@ public class InquiryController {
 		}
 
 		
-		// 1:1문의 수정
+	// 1:1문의 수정
 		@PostMapping(value="/inquiryUpdate")
 		public String updateInquiry(@AuthenticationPrincipal User user, AddInquiryForm form) throws IOException {
 		
@@ -83,7 +83,7 @@ public class InquiryController {
 		}
 		
 		
-		// 1:1문의 상세보기 화면
+	// 1:1문의 상세보기 화면
 		@GetMapping(value="/inquiryDetail")
 		public String detail(@RequestParam("no") int no, @AuthenticationPrincipal User user, Model model) {
 			Inquires inquiry = inquiryService.getinquiryByNo(no);
@@ -114,7 +114,7 @@ public class InquiryController {
 			return "inquiry/detail";
 		}
 		
-		// 1:1 문의 답변
+	// 1:1 문의 답변
 		@PostMapping("/addReply")
 		@ResponseBody
 		public List<Answer> addReply(@AuthenticationPrincipal User user, 
@@ -131,7 +131,7 @@ public class InquiryController {
 		}
 		
 	
-		// 문의 답변 삭제 
+	// 문의 답변 삭제 
 		@GetMapping("/deleteAnswer")
 		public String deleteAnswer(@RequestParam("inquiryNo") int inquiryNo,
 								   @RequestParam("answerNo") int answerNo) {

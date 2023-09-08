@@ -1,36 +1,35 @@
 package kr.co.helf.mapper;
 
+import kr.co.helf.dto.CustomerAttendanceListDto;
+import kr.co.helf.dto.CustomerDetailDto;
+import kr.co.helf.dto.CustomerListDto;
+import kr.co.helf.vo.*;
+import org.apache.ibatis.annotations.Mapper;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.apache.ibatis.annotations.Mapper;
-
-import kr.co.helf.dto.CustomerAttendanceListDto;
-import kr.co.helf.dto.CustomerDetailDto;
-import kr.co.helf.dto.CustomerListDto;
-import kr.co.helf.vo.CustomerAttendance;
-import kr.co.helf.vo.LessonApply;
-import kr.co.helf.vo.MyMembership;
-import kr.co.helf.vo.MySalary;
-import kr.co.helf.vo.Rank;
-import kr.co.helf.vo.Trainer;
-import kr.co.helf.vo.TrainerCareer;
-import kr.co.helf.vo.TrainerAttendance;
-import kr.co.helf.vo.User;
-
 @Mapper
 public interface UserMapper {
 	
+	// 유저아이디로 유저정보 조회
 	User getUserById(String id);
 
+	// 유저 등록
 	void insertUser(User user);
 
+	// 트레이너 등록
 	void insertTrainer(User user);
-	
+
+	// 트레이너 테이블 등록
 	void insertTrainer2(Trainer trainer);
 	
+	// 트레이너 경력 등록
 	void insertTrainerCareer(TrainerCareer trainerCarrer);
+	
+	// 트레이너 테이블 업데이트
+	void updateTrainerById(Trainer trainer);
 	
 	// 아이디 찾기(ajax)
 	List<String> getIdByTel(String name, String tel);
@@ -41,6 +40,7 @@ public interface UserMapper {
 	// 아이디 중복검사
 	int idCheck (String userId);
 	
+	// 유저 업데이트
 	void updateUser(User user);
 	
 	// 입장시 회원 휴대폰 네 자리로 조회 - 채경 
@@ -95,5 +95,7 @@ public interface UserMapper {
 	MySalary getTrainerDetailById(String id);
 	
 	Rank getNewRank(String id);
-	
+
+	// 총 이용자 수 및 강사 수 조회하는 쿼리(예광)
+	User getUserAndTrainerCount();
 }

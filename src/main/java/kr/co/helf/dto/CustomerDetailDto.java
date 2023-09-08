@@ -14,11 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CustomerDetailDto {
-	
-//	private List<LessonApply> lessonApply;
-//	private List<CustomerOrderDto> order;
-//	private List<MyMembership> myMembership;
-//	private List<CustomerAttendance> customerAttendance;
+
 	private User user;
 	private Date recentVisitDate;
 	private int accumulatedOrderTotalPrice;

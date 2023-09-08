@@ -1,6 +1,5 @@
 package kr.co.helf.service;
 
-import kr.co.helf.dto.ReviewIntegrationDto;
 import kr.co.helf.dto.TrainerPersonalReviewDto;
 import kr.co.helf.dto.TrainerReviewDto;
 import kr.co.helf.form.AddPersonalReviewForm;
@@ -16,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -177,6 +175,12 @@ public class TrainerReviewService {
 		
 		trainerReviewMapper.deletePersonalReview(personalReview);
 	}
+
+    // 트레이너 번호로 트레이너 정보 조회(파일이름)
+    public Trainer getTrainerByNo(int trainerNo){
+        Trainer trainer = trainerReviewMapper.getTrainerByNo(trainerNo);
+        return trainer;
+    }
 
 
 

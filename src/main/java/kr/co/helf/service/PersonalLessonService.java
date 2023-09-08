@@ -26,6 +26,11 @@ public class PersonalLessonService {
 		return personalLessonMapper.getAllTrainersWithCareer(userId);
 	}
 	
+	// 트레이너 상세 조회 (유리)
+	public Trainer getTrainerById(String userId) {
+		return personalLessonMapper.getTrainerAndCareer(userId);
+	}
+	
 	//1대1 PT 예약 추가
 	public void createConsultation(Consultation consultation) {
 		personalLessonMapper.insertConsultation(consultation);

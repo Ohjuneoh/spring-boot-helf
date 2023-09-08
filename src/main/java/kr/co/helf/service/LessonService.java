@@ -2,12 +2,7 @@ package kr.co.helf.service;
 
 import kr.co.helf.dto.MyPersonalLessonDto;
 import kr.co.helf.mapper.LessonMapper;
-import kr.co.helf.mapper.PersonalLessonMapper;
-import kr.co.helf.vo.Consultation;
-import kr.co.helf.vo.Lesson;
-import kr.co.helf.vo.LessonApply;
-import kr.co.helf.vo.PersonalLesson;
-import kr.co.helf.vo.Trainer;
+import kr.co.helf.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +56,12 @@ public class LessonService {
 	public List<MyPersonalLessonDto> getAllMyTrainers(String id) {
 		
 		return lessonMapper.getAllMyTrainerByUserId(id);
+	}
+
+	// 홈페이지 모든 개설된 수업 조회(예광)
+	public Lesson getAllLessonForHome(){
+		Lesson lesson = lessonMapper.getAllLessonForHome();
+		return lesson;
 	}
 
 

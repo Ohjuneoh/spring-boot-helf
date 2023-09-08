@@ -1,9 +1,12 @@
 package kr.co.helf.controller;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.helf.dto.MonthlyPersonalLessonDto;
 import kr.co.helf.service.SalaryService;
 import kr.co.helf.service.UserService;
 import kr.co.helf.vo.MySalary;
@@ -87,4 +91,39 @@ public class SalaryController {
 		
 		return "salary/salaryDetail";
 	}
+	
+	@GetMapping(value="tab3Content")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
+	public String tab3Content(@RequestParam("userId") String userId,
+			@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+			@RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd")Date endDate,
+			Model model){
+		Map<String, Object> param = new HashMap<>();
+		param.put("userId", userId);
+		param.put("startDate", startDate);
+		param.put("endDate", endDate);
+		
+		Map<String, Object> result = salaryService.getPersonalLessonsById(param);
+		model.addAttribute("monthlyPclList", result.get("monthlyPclList"));
+		return "salary/tap3SalaryDetailFragment";
+	}
+	
+//	@PostMapping(value="tab3ContentDetail")
+//	@PreAuthorize("hasRole('ROLE_MANAGER')")
+//	public String tab3ContentDetail(@RequestParam("userId") String userId,
+//			@RequestParam("startDate") Date startDate,
+//			@RequestParam("endDate") Date endDate,
+//			Model model) {
+//		Map<String, Object> param = new HashMap<>();
+//		param.put("userId", userId);
+//		param.put("startDate", startDate);
+//		param.put("endDate", endDate);
+//		
+//		Map<String, Object> result = salaryService.getPersonalLessonsById(param);
+//		model.addAttribute("monthlyPclList", result.get("monthlyPclList"));
+//		return "salary/tap3SalaryDetailFragment";
+//		
+//	}
+//		
+	
 }
