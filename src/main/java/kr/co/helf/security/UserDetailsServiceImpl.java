@@ -25,8 +25,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			
 		}
 		
-		if (!"ROLE_TRAINER".equals(user.getType()) && !"ROLE_USER".equals(user.getType()) && !"Y".equals(user.getStatus())) {
+		if (!"ROLE_USER".equals(user.getType()) && !"Y".equals(user.getStatus())) {
 		    throw new UsernameNotFoundException("로그인 가능 상태가 아닙니다.");
+		} else if(!"ROLE_TRAINER".equals(user.getType()) && !"Y".equals(user.getStatus())) {
+			throw new UsernameNotFoundException("로그인 가능 상태가 아닙니다.");
 		}
 		
 		return user;
