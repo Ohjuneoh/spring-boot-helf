@@ -5,7 +5,6 @@ import java.util.Date;
 import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
-import lombok.ToString;
 
 @Data
 @Alias("TrainerCareer")
