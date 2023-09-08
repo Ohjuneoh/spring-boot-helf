@@ -26,6 +26,8 @@ import kr.co.helf.dto.Pagination;
 import kr.co.helf.form.UpdateUserForm;
 import kr.co.helf.mapper.InquiryMapper;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -113,17 +115,46 @@ public class UserService {
          FileCopyUtils.copy(in, out);
       }
       trainer.setUser(user);
-
-      //(2단계)트레이너 경력객체에 담기
-      TrainerCareer trainerCareer = new TrainerCareer();
-      trainerCareer.setTrainer(trainer);
-      trainerCareer.setName(form.getName());
-      trainerCareer.setStartDate(form.getCareerStartDate());
-      trainerCareer.setEndDate(form.getCareerEndDate());
-
       userMapper.insertTrainer(user);
+      
+      List<String> careerNames = form.getCareerNames();
+      List<String> startDatesStrings = form.getStartDates();
+      List<String> endDatesStrings = form.getEndDates();
+
+      // String 타입의 날짜를 Date 타입으로 변환
+      List<Date> startDates = new ArrayList<>();
+      List<Date> endDates = new ArrayList<>();
+      
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+      for(String startDateString : startDatesStrings) {
+          try {
+              startDates.add(formatter.parse(startDateString));
+          } catch (ParseException e) {
+        	  throw new RuntimeException("유효하지 않은 날짜 형식입니다.");
+          }
+      }
+
+      for(String endDateString : endDatesStrings) {
+          try {
+              endDates.add(formatter.parse(endDateString));
+          } catch (ParseException e) {
+        	  throw new RuntimeException("유효하지 않은 날짜 형식입니다.");
+          }
+      }
+      
+      for (int i = 0; i < careerNames.size(); i++) {
+          TrainerCareer career = new TrainerCareer();
+
+          career.setName(careerNames.get(i));
+          career.setStartDate(startDates.get(i));
+          career.setEndDate(endDates.get(i));
+          career.setTrainer(trainer);
+
+          userMapper.insertTrainerCareer(career);
+      }
+
       userMapper.insertTrainer2(trainer);
-      userMapper.insertTrainerCareer(trainerCareer);
    }
 
 
