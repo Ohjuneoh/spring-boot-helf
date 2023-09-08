@@ -93,6 +93,7 @@ public class InquiryService {
 			
 			result.put("inquiries", inquiries);
 			result.put("pagination", pagination);
+			System.out.println(result);
 
 			return result;
 		}
