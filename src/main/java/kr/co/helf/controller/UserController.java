@@ -77,7 +77,7 @@ public class UserController {
    // 회원가입 두번째 화면(트레이너)
    @PostMapping(value="/register/trainer") 
    public String registerTrainer(@ModelAttribute("addUserForm") AddUserForm form) {
-      
+	   
       return "register/trainerRegisterform2";
    }
 
@@ -85,6 +85,7 @@ public class UserController {
    // 회원가입 완료화면 (트레이너)
    @PostMapping(value="/register/trainer2")
    public String registerTrainer2(@ModelAttribute("addUserForm") AddUserForm form) throws IOException {
+	   
       System.out.println(form);
       userService.createTrainer(form);
       

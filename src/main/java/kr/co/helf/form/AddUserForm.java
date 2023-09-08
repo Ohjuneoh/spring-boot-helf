@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
@@ -22,8 +23,8 @@ public class AddUserForm {
 
 	//트레이너 가입 2단계 파라미터 값
 	List<String> careerNames;
-	List<String> startDates;
-	List<String> endDates;
+	List<String> careerStartDates;
+	List<String> careerEndDates;
 	private MultipartFile photofile;
 	
 	
