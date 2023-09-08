@@ -178,7 +178,7 @@ function validUser(){
 					<table class="inquiry_row">
 						<colgroup>
 							<col>
-							<col style="width:7.7%;">
+							<col style="width:8%;">
 						</colgroup>
 						<tbody>
 							<tr>
@@ -188,12 +188,14 @@ function validUser(){
 							</tr>
 						</tbody>
 					</table>
-					<c:if test="${inquiry.filename != null}">
-					<img src="/resources/img/photo/${inquiry.filename }">
-					</c:if>
 					<div class="boxview">
 						${inquiry.content }
 					</div>
+					<c:if test="${inquiry.filename != null}">
+						<div class="mb-3">
+							<img src="/resources/img/photo/${inquiry.filename }" class="img-thumbnail">
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
