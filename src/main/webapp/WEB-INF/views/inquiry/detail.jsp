@@ -169,7 +169,6 @@ function validUser(){
 				<a href="/inquiry/inquiries" class=" btn btn-primary mt-1 btn-sm">목록</a>
 			</div>  
         </div>
-      		
     </div>
     <div class="row mb-3">
         <div class="col-12">
@@ -179,23 +178,24 @@ function validUser(){
 					<table class="inquiry_row">
 						<colgroup>
 							<col>
-							<col style="width:7.7%;">
+							<col style="width:8%;">
 						</colgroup>
 						<tbody>
 							<tr>
 								<th class="tal">${inquiry.title }</th>
-								<td>작성일: <fmt:formatDate value="${inquiry.createDate }" pattern="yyyy-MM-dd" /></td>
+								<td><fmt:formatDate value="${inquiry.createDate }" pattern="yyyy-MM-dd" /></td>
     							 <td></td>
-  								 <td>수정일: <fmt:formatDate value="${inquiry.updateDate}" pattern="yyyy-MM-dd" /></td>
 							</tr>
 						</tbody>
 					</table>
-					<c:if test="${inquiry.filename != null}">
-					<img src="/resources/img/photo/${inquiry.filename }">
-					</c:if>
 					<div class="boxview">
 						${inquiry.content }
 					</div>
+					<c:if test="${inquiry.filename != null}">
+						<div class="mb-3">
+							<img src="/resources/img/photo/${inquiry.filename }" class="img-thumbnail">
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>

@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="kr">
+
 <head>
     <meta charset="utf-8">
     <title>HELF</title>
@@ -102,18 +103,25 @@
 	                                    </select>
 	                                </div>
 	                                <div class="col-xl-12">
-	                                    <input type="text" class="form-control bg-light border-0" name="title" placeholder="제목" style="height: 55px;">
+	                                    <input type="text" class="form-control bg-light border-0" name="title" placeholder="제목을 입력하세요." style="height: 55px;">
 	                                </div>
 	                                <div>
 	                                	<label class="attr-value-option"><input type="checkbox" name="secret" value="Y" onchange="kboard_toggle_password_field(this)" checked> 비밀글</label>
 										<input type='file' name="photofile" style="margin-left: 20px;"/>
 	                                </div>
 	                        			<textarea id="summernote" name="content">
-	                        				1. 성함 : <br>
-											2. 연락처 : <br>
-											3. 상담내용 : <br>
-											위 내용을 작성해 주시면 답변 후 회원님의 연락처로 답변 알림을 드리겠습니다. <br>
-											(개인정보는 상담관련 내용 이외에 사용하지 않습니다.) <br>
+	                        				<p>다음 내용을 작성해 주시면 답변 후 회원님의 연락처로 답변 알림을 드리겠습니다.<br>
+	                        				(개인정보는 상담관련 내용 이외에 사용하지 않습니다.) </p>
+	                        				
+	                        				<p style="color:blue;">
+		                        				1. 성함 <br>
+		                        				<br>
+												2. 연락처 <br>
+												<br>
+												3. 상담내용  <br>
+												<br>
+												4. 파일
+											</p>
 	                        			</textarea>
 	                                <div class="col-12">
 	                                    <button class="btn btn-dark w-100 py-3" type="submit">문의하기</button>

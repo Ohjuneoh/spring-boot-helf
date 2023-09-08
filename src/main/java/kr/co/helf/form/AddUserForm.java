@@ -1,11 +1,13 @@
 package kr.co.helf.form;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
@@ -19,6 +21,13 @@ import lombok.ToString;
 @NoArgsConstructor
 public class AddUserForm {
 
+	//트레이너 가입 2단계 파라미터 값
+	List<String> careerNames;
+	List<String> careerStartDates;
+	List<String> careerEndDates;
+	private MultipartFile photofile;
+	
+	
 	@NotBlank(message = "아이디는 필수")
 	private String id;
 	
@@ -42,9 +51,4 @@ public class AddUserForm {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date updateDate;
 	
-	// 트레이너 두번째 폼
-	private MultipartFile photofile;
-	private String careerName;
-	private Date careerStartDate;
-	private Date careerEndDate;
 }

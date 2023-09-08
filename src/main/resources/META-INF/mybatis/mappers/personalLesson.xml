@@ -36,6 +36,7 @@
 			helf_users
 		where 
 			trainer_no = #{value}
+			
 	</select>
 	<resultMap type="kr.co.helf.vo.Trainer" id="getAllTrainersWithCareer" >
     	<id column="trainer_no" property="trainerNo"/>
@@ -74,6 +75,43 @@
 			trainer_no
 	</select>
 
+	<!-- 트레이너 상세조회 (유리) -->
+	<resultMap type="kr.co.helf.vo.Trainer" id="TrainerAndCareerResultMap" >
+    	<id column="trainer_no" property="trainerNo"/>
+    	<result column="trainer_file" property="trainerFile"/>
+    	<result column="trainer_title" property="title"/>
+    	<result column="trainer_resignation_date" property="resignationDate"/>
+    	<result column="trainer_hired_date" property="hiredDate"/>
+    	<association property="user" javaType="kr.co.helf.vo.User">
+    		<id column="user_id" property="id"/>
+    		<result column="name" property="name"/>
+    	</association>
+    	<collection property="careers" ofType="Career">
+        	<id column="career_no" property="careerNo"/>
+        	<result column="career_name" property="careerName"/>
+        	<result column="career_start_date" property="careerStartDate"/>
+        	<result column="career_end_date" property="careerEndDate"/>
+    	</collection>
+	</resultMap>
+	<select id="getTrainerAndCareer" parameterType="string" resultMap="TrainerAndCareerResultMap">
+		select
+			t.trainer_no,
+			t.trainer_file,
+			t.trainer_title,
+			t.trainer_resignation_date,
+			t.trainer_hired_date,
+			u.user_name	as name,
+			tc.career_no,
+			tc.career_name,
+			tc.career_start_date,
+			tc.career_end_date
+		from
+		    helf_users u, helf_trainers t, helf_trainer_career tc
+		where
+        	u.user_id = t.user_id
+        and	t.trainer_no = tc.trainer_no
+        and u.user_id =#{value}
+	</select>
 	
 	<!--입장 form - 오늘 수업 조회 written by 채경 -->
 	<select id="getMyTodayLessonsByUserId" resultType="kr.co.helf.vo.LessonApply">
@@ -306,10 +344,12 @@
 			c.career_start_date,
 			c.career_end_date
 		from
-		    helf_users a, helf_trainers b, helf_trainer_career c
+		    helf_users a, helf_trainers b, helf_trainer_career c, helf_lesson_consultation d
 		where
 			a.user_id = b.user_id
         and c.trainer_no = b.trainer_no
+        and c.trainer_no = d.trainer_no
+        and d.lesson_consultation_status = '대기중'
         and c.trainer_no  in (
     								select trainer_no
 									from helf_lesson_consultation
@@ -317,5 +357,18 @@
 									)
 		order by
 			trainer_no
+	</select>
+	<select id="getConsultationByTrainerNo" resultType="Consultation">
+		select lesson_consultation_no   as consultationNo,
+        lesson_consultation_status  as consultationStatus,
+        lesson_consultation_application_date as applicationDate,
+        lesson_consultation_exercise_goal as goal,
+        lesson_consultation_physical_abnormalities as abnormalities,
+        lesson_consultation_request_date as requestDate,
+        lesson_consultation_request_time as requestTime
+		from helf_lesson_consultation
+		where trainer_no = #{trainerNo}
+		and   user_id = #{id}
+		and   lesson_consultation_status = '대기중'
 	</select>
 </mapper>

@@ -20,7 +20,7 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
@@ -73,59 +73,50 @@
 	   		<h1 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">내 정보</h1>
 		</div>
         <div class="d-flex align-items-center mb-3">
-        
-            <img src="/resources/img/트레이너.jpg" class="rounded-circle mr-2" style="width: 150px; height: 150px; ">
+            <img src="/resources/img/photo/${trainerInfo.trainerFile }" class="rounded-circle mr-2" style="width: 150px; height: 150px; ">
             <div class="ml-4" style="margin-left: 40px;">
-                <h1 class="text-dark">홍길동 <span style="font-size: 30px; color: #b0b0b0;">강사님</span></h1></h1>
-                <div>
-        	<a href="/user/trainerModify" class="btn btn-primary btn-sm">수정하기</a>
-        	<a class="btn btn-danger btn-sm">회원탈퇴</a>
-        </div>
+                <h1 class="text-dark">${userInfo.name } <span style="font-size: 30px; color: #b0b0b0;">강사님</span></h1></h1>
+		        <div>
+		        	<a href="/user/trainerModify" class="btn btn-primary btn-sm">수정하기</a>
+		        	<a class="btn btn-danger btn-sm">회원탈퇴</a>
+		        </div>
             </div>
         </div>
         <hr>
         <!-- Personal Information Section -->
         <section class="mb-4">
-            <h2 class="mb-3 text-dark">개인 정보</h2>
             <div class="row">
                 <div class="col-md-6">
-                    <p><strong>연락처:</strong> 012-345-6789</p>
-                    <p><strong>이메일:</strong> trainer@example.com</p>
+		            <h2 class="mb-3 text-dark">개인 정보</h2>
+                    <p><strong>연락처 : </strong>${userInfo.tel }</p>
+                    <p><strong>이메일 : </strong>${userInfo.email }</p>
+	                <div>
+		                <p><strong>직급 : </strong> ${trainerInfo.title }</p>
+	                </div>
                 </div>
                 <div class="col-md-6">
-                    <p><strong>경력:</strong> 5년</p>
-                    <p><strong>전문 분야:</strong> 요가, 피트니스</p>
+		            <h2 class="mb-3 text-dark">경력 내역</h2>
+                    <c:forEach var="career" items="${trainerInfo.careers }">
+		                <div class="col-md-6">
+		                    <p><strong>경력 : </strong><fmt:formatDate value="${career.careerStartDate }" pattern="yyyy년 M월 d일" /><fmt:formatDate value="${career.careerEndDate }" pattern=" ~ yyyy년 M월 d일" /> </p>
+		                </div>
+	                </c:forEach>
                 </div>
             </div>
         </section>
+        
         <!-- Schedule Section -->
         <section class="mb-4">
-            <h2 class="mb-3 text-dark	">수업일정</h2>
+            <h2 class="mb-3 text-dark">수업일정</h2>
             <p>트레이너의 수업 스케줄을 이쪽에 표시</p>
             <hr>
         </section>
     </div>
+    
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
     	<div class="container py-5">
     		<div class="row my-3 " >
-    			<div class="col-6">
-    				<div class="card">
-    					<div class="card-header bg-light text-primary"><strong>내 문의내역</strong></div>
-    					<div class="card-body">
-    						<p class="text-end"><a href="">더보기</a></p>
-    						<table class="table">
-    							<thead>
-    								<tr>
-    									<th>제목</th>
-    									<th>등록일자</th>
-    									<th>답변여부</th>
-    								</tr>
-    							</thead>
-    						</table>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-6">
+    			<div class="col-12">
     				<div class="card">
     					<div class="card-header bg-light text-primary"><strong>내 리뷰내역</strong></div>
     					<div class="card-body">

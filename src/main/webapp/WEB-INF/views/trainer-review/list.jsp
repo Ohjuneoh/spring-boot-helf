@@ -164,17 +164,7 @@
           <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
           <div class="ps-4">
               <!-- 작성자명을 모두 노출하지 않고 중간글자를 x(익명) 처리 -->
-              <c:set var="userName" value="${trainerReview.lessonApply.user.name}" />
-              <c:choose>
-                  <c:when test="${fn:length(userName) <= 2}">
-                      <c:set var="maskedName" value="${fn:substring(userName, 0, 1)}xx" />
-                  </c:when>
-                  <c:otherwise>
-                      <c:set var="maskedName" value="${fn:substring(userName, 0, 1)}${fn:substring('xxxxxxxx', 0, fn:length(userName) - 2)}${fn:substring(userName, fn:length(userName) - 1, fn:length(userName))}" />
-                  </c:otherwise>
-              </c:choose>
-
-              <h4 class="text-primary mb-1">${maskedName}</h4>
+              <h4 class="text-primary">${trainerReview.lessonApply.user.hiddenName}</h4>
             	<a class="bg-success text-white" style="font-size: 3px; border-radius: 50%; display: inline-block; padding: 5px;">
 			    	<span>그룹</span>
 				</a>
@@ -315,6 +305,9 @@
 <script src="/resources/js/main.js"></script>
 
 <script>
+      let userName = "${trainerReview.lessonApply.user.name}";
+      let maskedName = "";
+
       let currentPage = 1;
       let more = true;
       $("#btn-more").click(function() {
@@ -346,7 +339,11 @@
               <div class="d-flex align-items-center pt-1 pb-3 px-5 border-bottom mb-3">
                 <img class="img-fluid rounded" src="/resources/img/testimonial-1.jpg" style="width: 60px; height: 60px;" >
               <div class="ps-4">
-                <h4 class="text-primary mb-1">\${r.lessonApply.user.name }</h4>
+
+                <h4 class="text-primary mb-1">\${r.lessonApply.user.hiddenName }</h4>
+                    <a class="bg-success text-white" style="font-size: 3px; border-radius: 50%; display: inline-block; padding: 5px;">
+			    	<span>그룹</span>
+				    </a>
                   <small class="text-uppercase">\${r.createDate }</small>
               </div>
              </div>

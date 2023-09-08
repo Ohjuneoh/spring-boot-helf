@@ -109,7 +109,7 @@
       </div>
       <div class="row g-1">
         <input type="hidden"  name="no" value="${param.reviewNo }"/>
-        <input type="hidden"  name="trainerNo" value="${review.trainer.trainerNo }"/>
+        <input type="hidden" id="trainerNo" name="trainerNo" value="${review.trainer.trainerNo }"/>
         <div class="col-6">
           <input type="text" class="form-control bg-light border-0" name="title" placeholder="제목" style="height: 55px;" value="${review.title}">
         </div>
@@ -134,7 +134,7 @@
         </div>
       </div>
       <div>
-        <button type="button" id="btn-cancel" class=" btn btn-danger mt-1 float-end" style="margin-left: 5px;">취소</button>
+        <button type="button" id="btn-cancel" class="btn btn-danger mt-1 float-end" style="margin-left: 5px;">취소</button>
         <button type="submit" class="btn btn-primary mt-1 float-end">등록</button>
       </div>
     </form>
@@ -160,12 +160,11 @@
 
 <!-- Template Javascript -->
 <script src="/resources/js/main.js"></script>
-
 <script>
-
-
-
-
+  let trainerNo = $("#trainerNo").val();
+  $('#btn-cancel').on('click',function(){
+    window.location.href = '/trainer-review/list?trainerNo='+ trainerNo;
+  })
 </script>
 
 

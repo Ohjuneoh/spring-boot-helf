@@ -44,6 +44,7 @@ public class HomeController {
 	// 강사소개 화면 요청을 처리
 	@GetMapping(value="trainerIntro")
 	public String trainerIntro(Model model) {
+		// 트레이너를 조회하는 로직
 		List<Trainer> trainers = trainerReviewService.getAllTrainers();
 		model.addAttribute("trainers",trainers);
 		return "trainerIntro";
@@ -58,11 +59,16 @@ public class HomeController {
 	
 	@GetMapping(value = "/")
 	public String home(Model model) {
+		// 총 유저 수를 조회하는 로직
 		User user = userService.getUserAndTrainerCount();
+		// 총 개설된 수업을 조회하는 로직
 		Lesson lesson = lessonService.getAllLessonForHome();
+		// 강사 정보(강사사진포함)을 조회하는 로직
+		List<Trainer> trainers = trainerReviewService.getAllTrainers();
 
 		model.addAttribute("users",user);
 		model.addAttribute("lessons",lesson);
+		model.addAttribute("trainers", trainers);
 		return "home";	
 	}
 
