@@ -59,8 +59,7 @@ public class UserService {
    private PersonalLessonMapper personalLessonMapper;
    
 
-  // String directory = "C:\\Users\\drk25\\git\\spring-boot-helf\\src\\main\\webapp\\resources\\img\\photo";
-   String directory = "C:\\workspace\\spring-workspace\\spring-boot-helf\\src\\main\\webapp\\resources\\img\\photo";
+  String directory = "C:\\Users\\drk25\\git\\spring-boot-helf\\src\\main\\webapp\\resources\\img\\photo";
    
    // 유저 회원가입
    public void createUser(AddUserForm form) {
