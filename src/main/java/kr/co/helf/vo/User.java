@@ -2,6 +2,9 @@ package kr.co.helf.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.apache.ibatis.type.Alias;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 @Data
+@Getter
+@Setter
 @Alias("User")
 public class User implements UserDetails, OAuth2User {
 
@@ -38,7 +43,7 @@ public class User implements UserDetails, OAuth2User {
 	
 	private Map<String, Object> attributes;
 
-	// 총 회원 수, 강사수을 위한 변수
+	// 총 회원 수, 강사수를 위한 변수
 	private int totalUsers;
 	private int totalTrainers;
 

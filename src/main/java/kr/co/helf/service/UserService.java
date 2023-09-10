@@ -552,7 +552,19 @@ public class UserService {
 		dto.setCareers(careers);
 	   
 		return dto;
-
+	}
+	// 직급부여 - 유저상태, 트레이너 직급 변경
+	public void updateTrainerStatus(String userId, String position) {
+		
+		// 유저 상태 변경
+		User user = userMapper.getUserById(userId);
+		user.setStatus("Y");
+		
+		// 트레이너 직급 변경
+		Trainer trainer = personalLessonMapper.getTrainerAndCareer(userId);
+		trainer.setTitle(position);
+		
+		userMapper.updateTrainerStatus(user,trainer);
 	}
 
 }

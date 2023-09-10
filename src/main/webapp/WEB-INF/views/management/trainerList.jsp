@@ -199,7 +199,14 @@
 	    									<td>퇴사</td>
 	    								</c:when>
 	    							</c:choose>
-	    							<td>${trainer.title }</td>
+	    							<c:choose>
+									    <c:when test="${trainer.user.status == 'R'}">
+									        <td><a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#myModal" data-userid="${trainerInfo.user.id}">직급부여</a></td>
+									    </c:when>
+									    <c:otherwise>
+									        <td>${trainer.title}</td>
+									    </c:otherwise>
+									</c:choose>
 	    							<td><fmt:formatDate value="${trainer.hiredDate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 	    							<c:choose>
 	    								<c:when test="${trainer.resignationDate != null}">
@@ -252,6 +259,35 @@
      </div>
 	<!-- 전체 강사 목록 form End -->
 	
+	<!-- 직급부여 모달 by 유리 -->
+	<div id="myModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">직급 부여하기</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	      <div class="modal-body">
+		    <div>
+		     	<input type="hidden" id="userId" name="userId" value="${trainer.user.id}">
+		    </div>
+		    <div class="form-check form-check-inline">
+		    	<input class="form-check-input" type="radio" name="position" id="managerRadio" value="점장">
+		   		<label class="form-check-label" for="managerRadio">점장</label>
+		  	</div>
+		    <div class="form-check form-check-inline">
+		   		<input class="form-check-input" type="radio" name="position" id="employeeRadio" value="직원">
+		    	<label class="form-check-label" for="employeeRadio">직원</label>
+		  	</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
 	
     <!-- Footer Start -->
 	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
@@ -271,6 +307,8 @@
     <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
     
@@ -305,6 +343,26 @@
 			inputBox.placeholder = "";
 		}
 	});
+	
+	// 직급부여
+	var selectedPosition = $("input[name='position']:checked").val();
+	var userId = $("#userId").val();
+	
+	$.ajax({
+	    type: "POST",
+	    url: "/management/givePosition",
+	    data: { userId: userId, position: selectedPosition },
+	    success: function(success) {
+	    	// 성공적으로 처리된 경우
+            // 화면 업데이트 등 필요한 작업 수행
+            // 예: 직급 버튼 감추기, 직급 표시 업데이트, 상태 업데이트 등
+	    },
+	    error: function(fail) {
+	    	// 서버에서 성공 여부가 false로 반환된 경우
+            // 예: 에러 메시지 표시, 사용자에게 알림 등
+	    }
+	});
+	
 	</script>
 </body>
 

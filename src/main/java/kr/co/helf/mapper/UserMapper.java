@@ -108,4 +108,8 @@ public interface UserMapper {
 	// 특정 트레이너의 경력사항 조회(유리)
 	List<TrainerCareer> getTrainerCareerByNo(int trainerNo);
 	
+	// 트레이너의 유저 상태/트레이너 직급 업데이트 (유리)
+	void updateTrainerStatus(User user, Trainer trainer);
+	
+	
 }
