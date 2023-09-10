@@ -2,6 +2,7 @@ package kr.co.helf.vo;
 
 import org.apache.ibatis.type.Alias;
 
+import kr.co.helf.enums.OrderStateEnum;
 import kr.co.helf.enums.PointHistorySateEnum;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import lombok.Setter;
 public class RefundOrderPoint {
 
 	private int orderId;
+	private String state;
 	private int refundNo;
 	private int refundAmount;
 	private int pointNo;
@@ -28,5 +30,10 @@ public class RefundOrderPoint {
 	public boolean isSavePoint() {
 		PointHistorySateEnum pse = PointHistorySateEnum.SAVEPOINT;
 		return this.pointType.equals(pse.getValue());
+	}
+	
+	public boolean isRefundCompleted() {
+		OrderStateEnum oen = OrderStateEnum.REFUNDCOMPLETED;
+		return this.state.equals(oen.getValue());
 	}
 }

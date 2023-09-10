@@ -181,10 +181,14 @@ public class MembershipService {
 		Membership membership = orderMapper.getMembershipByNo(form.getNo());
 		membership.setName(form.getName());
 		membership.setDeleted(form.getDeleted());
+		if(form.isDeleted()) {
+			membership.setDeleteDate(LocalDate.now());
+		}
 		membership.setPrice(form.getPrice());
 		Category cat = membershipMapper.getcategoryByNo(form.getCatNo());
 		membership.setCategory(cat);
 		membership.setDescription(form.getDescription());
+		
 		
 		membershipMapper.updateMembership(membership);
 	}
@@ -210,7 +214,7 @@ public class MembershipService {
 
 	@Transactional
 	public void insertRefund(int no) {
-		Refund check = membershipMapper.getRefundByOrderNo(no);
+		Refund check = membershipMapper.getRefundMyMembershipNo(no);
 		if(check != null) {
 			throw new RuntimeException("해당 이용권은 이미 환불처리가 완료된 이용권입니다.");
 		}
@@ -335,6 +339,12 @@ public class MembershipService {
 	}
 
 	private void updateRefundOrder(List<RefundOrderPoint> orderList) {
+		for(RefundOrderPoint order : orderList) {
+			if(order.isRefundCompleted()) {
+				throw new MembershipException("이미 환불이 완료된 상품입니다.");
+			}
+		}
+
 		List<Integer> orderIds = orderList.stream()
 				.map(RefundOrderPoint::getOrderId)
 				.distinct()

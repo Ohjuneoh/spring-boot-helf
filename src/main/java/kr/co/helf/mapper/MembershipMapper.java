@@ -87,4 +87,6 @@ public interface MembershipMapper {
 	void updateRefundState(List<Integer> refundNoList);
 	
 	void updateRefundAmount(Map<String, Integer> map);
+
+	Refund getRefundMyMembershipNo(int no);
 }
