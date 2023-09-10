@@ -542,5 +542,21 @@
 			trainer_no = #{value}
 	</select>
 	
+	<!-- 트레이너의 유저아이디 받아서 유저상태,트레이너 직급 변경 -->
+	<update id="updateTrainerStatus" parameterType="map">
+		update
+		    HELF_TRAINERS T
+		set
+		    T.TRAINER_TITLE = #{title}
+		WHERE
+			T.USER_ID = 
+		    (SELECT T.USER_ID FROM HELF_TRAINERS T
+		    LEFT OUTER JOIN HELF_USERS U
+		    ON T.USER_ID = U.USER_ID
+		    WHERE T.TRAINER_TITLE IS NULL 
+		    AND U.USER_STATUS = #{status}
+		    AND T.USER_ID = #{id});
+	</update>
+	
 	
 </mapper>

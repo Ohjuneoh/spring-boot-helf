@@ -2,6 +2,7 @@ package kr.co.helf.controller;
 
 import kr.co.helf.dto.AttendanceList;
 import kr.co.helf.dto.CustomerDetailDto;
+import kr.co.helf.mapper.UserMapper;
 import kr.co.helf.service.UserService;
 import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.MySalary;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -213,4 +215,19 @@ public class ManagementController {
 		return "management/trainerAttendances";
 	}
 	
+	// 직급 부여 - 유저상태/트레이너 직급 변경 ajax (유리)
+	@PostMapping("/givePosition")
+	public String givePosition(@RequestParam("userId") String userId,
+							   @RequestParam("title") String position) {
+		
+		 try {
+			 userService.updateTrainerStatus(userId, position);
+	         return "success";   
+
+	      } catch (RuntimeException ex) {
+	         ex.printStackTrace();
+	         return "fail";   
+	      }
+		
+	}	
 }
