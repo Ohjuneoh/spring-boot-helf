@@ -1,5 +1,7 @@
 package kr.co.helf.form;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
@@ -25,5 +27,13 @@ public class UpdateUserForm {
 	private String mobileCarrier;
 	
 	private MultipartFile photofile;
+	
+	private List<String> updateCareerNames;
+	
+	private List<String> updateCareerStartDates;
+	
+	private List<String> updateCareerEndDates;
+	
+	private List<String> updateCareerNo;
 	
 }
