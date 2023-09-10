@@ -569,6 +569,10 @@
 		    AND U.USER_STATUS = #{status}
 		    AND T.USER_ID = #{id});
 	</update>
-	
+	<!-- 경력삭제 ajax  -->
+	<delete id="deleteCareer" parameterType="int">
+	    DELETE FROM HELF_TRAINER_CAREER
+	    WHERE CAREER_NO = #{value}
+	</delete>
 	
 </mapper>

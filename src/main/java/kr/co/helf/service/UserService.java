@@ -692,4 +692,9 @@ public class UserService {
 		
 	}
 
+	public void deleteCareer(int careerNo) {
+		userMapper.deleteCareer(careerNo);
+		
+	}
+
 }

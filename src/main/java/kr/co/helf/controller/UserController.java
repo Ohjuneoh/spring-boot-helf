@@ -277,8 +277,15 @@ public class UserController {
 	// 트레이너 마이페이지 정보수정
 	@PostMapping("/trainerInfoChange")
 	public String userInfoChangeTrainer(@AuthenticationPrincipal User user, @ModelAttribute("updateForm") UpdateUserForm updateForm, @ModelAttribute("insertForm") AddUserForm insertForm) throws IOException {
-		userService.updateTrainer(user.getId(), updateForm);
-		userService.insertTrainer(user.getId(), insertForm);
+	    userService.updateTrainer(user.getId(), updateForm);
+	    
+	    if (insertForm != null && 
+	        insertForm.getCareerNames() != null && 
+	        insertForm.getCareerStartDates() != null && 
+	        insertForm.getCareerEndDates() != null) {
+	        
+	        userService.insertTrainer(user.getId(), insertForm);
+	    }
 		
 		return "redirect:/user/trainerMypage";
 	}
@@ -326,6 +333,15 @@ public class UserController {
 	   TrainerDto dto = userService.getTrainerInfo(userId, trainerNo);
 	   return dto;
    }
+   
+	// 경력삭제
+	@PostMapping("/delete-career")
+	public String deleteByCareerNo(int careerNo)  {
+	    userService.deleteCareer(careerNo);
+	    
+
+	    return "redirect:/user/trainerMypage";
+	}
 
    
    

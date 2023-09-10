@@ -169,7 +169,7 @@
 						                    <input type="text" class="form-control bg-light border-0 m-1" id="datepicker1-${status.index}" name="updateCareerStartDates" placeholder="경력 시작일" value="<fmt:formatDate value='${career.careerStartDate}' pattern='yyyy-M-d' />" />
 						                    <strong style="margin-left: 15px; margin-right: 20px; font-size: 20px;">~</strong>
 						                    <input type="text" class="form-control bg-light border-0 m-1" id="datepicker2-${status.index}" name="updateCareerEndDates" placeholder="경력 종료일"  value="<fmt:formatDate value='${career.careerEndDate}' pattern='yyyy-M-d' />" />
-						                <button type="button" class="btn btn-danger btn-sm m-1 career-delete" >삭제</button>
+						                <button type="button" class="btn btn-danger btn-sm m-1 career-delete" data-career="${career.careerNo}" >삭제</button>
 						                </div>
 						            </div>
 						        </div>
@@ -246,11 +246,29 @@ $(document).ready(function(){
         initializeDatepicker(`#datepicker-start-${careerCounter}`, `#datepicker-end-${careerCounter}`);
         careerCounter++;
     });
-
+  //삭제 버튼 눌렀을 때 이벤트
     $(document).on('click', '.career-delete', function () {
-        $(this).closest('.row').remove();
-    });
+        var careerNo = $(this).data('career'); // 버튼에서 career 번호를 가져옴
+        var self = this;  // 'this' 참조를 'self' 변수에 저장
 
+        if (careerNo) {
+            $.ajax({
+                url: '/user/delete-career',
+                type: 'POST',
+                data: { careerNo: careerNo },
+                success: function(response) {
+                    // 서버에서 성공적인 응답을 받으면
+                    alert('경력이 성공적으로 삭제되었습니다.');
+                    // 삭제된 경력 항목을 DOM에서 제거
+                    $(self).closest('.row').remove();  // '.d-flex' 대신 '.row'를 사용하여 전체 행을 제거
+                },
+                error: function(error) {
+                    // 에러 처리
+                    alert('경력 삭제에 실패했습니다. 다시 시도해 주세요.');
+                }
+            });
+        }
+    });
     // 기존에 있는 datepicker 요소를 찾아 초기화
     $("input[id^='datepicker1-']").datepicker({ dateFormat: 'yy-mm-dd' });
     $("input[id^='datepicker2-']").datepicker({ dateFormat: 'yy-mm-dd' });
