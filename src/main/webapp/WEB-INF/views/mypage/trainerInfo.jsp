@@ -68,6 +68,7 @@
             </div>
         </div>
     </div>
+    
  	<div class="container my-5 ">
         <div class="section-title position-relative pb-3 mb-3">
 	   		<h1 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">내 정보</h1>
@@ -75,7 +76,7 @@
         <div class="d-flex align-items-center mb-3">
             <img src="/resources/img/photo/${trainerInfo.trainerFile }" class="rounded-circle mr-2" style="width: 150px; height: 150px; ">
             <div class="ml-4" style="margin-left: 40px;">
-                <h1 class="text-dark">${userInfo.name } <span style="font-size: 30px; color: #b0b0b0;">강사님</span></h1></h1>
+                <h1 class="text-dark">${userInfo.name } <span style="font-size: 30px; color: #b0b0b0;">강사님</span></h1>
 		        <div>
 		        	<a href="/user/trainerModify" class="btn btn-primary btn-sm">수정하기</a>
 		        	<a class="btn btn-danger btn-sm">회원탈퇴</a>
@@ -255,14 +256,7 @@
 	<script src="/resources/js/main.js"></script>
 
 
-	<script type="text/javascript">
-	let faqModal = new bootstrap.Modal("#modal-faq");
-	
-	$(".service-item").click(function() {
-	
-		faqModal.show();
-	});
-
+<script type="text/javascript">
 
 </script>
 

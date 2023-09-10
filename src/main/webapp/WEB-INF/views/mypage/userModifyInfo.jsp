@@ -177,12 +177,7 @@
 
 
 	<script type="text/javascript">
-	let faqModal = new bootstrap.Modal("#modal-faq");
-	
-	$(".service-item").click(function() {
-	
-		faqModal.show();
-	});
+
 
 
 </script>
