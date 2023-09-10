@@ -507,4 +507,56 @@
 			SUM(CASE WHEN user_type = 'ROLE_TRAINER' THEN 1 ELSE 0 END) AS totalTrainers
 		FROM helf_users
 	</select>
+	
+	<!-- 특정 트레이너의 개인수업 수 조회(유리)-->
+	<select id="getPersonalLesson" resultType="int" parameterType="string">
+		select
+			count(*) 
+		from 
+			helf_personal_lesson
+		where
+		 	user_id = #{value}
+	</select>
+	
+	<!-- 특정 트레이너의 그룹수업 수 조회(유리)-->
+	<select id="getGroupLesson" resultType="int" parameterType="string">
+		select
+			count(*) 
+		from
+			 helf_lesson
+		where
+			 user_id = #{value}
+	</select>
+	
+	<!-- 특정 트레이너의 경력 조회(유리) -->
+	<select id="getTrainerCareerByNo" parameterType="int" resultType="TrainerCareer">
+		select
+			career_no,
+			career_name,
+			career_start_date,
+			career_end_date,
+			trainer_no
+		from 
+			helf_trainer_career
+		where
+			trainer_no = #{value}
+	</select>
+	
+	<!-- 트레이너의 유저아이디 받아서 유저상태,트레이너 직급 변경 -->
+	<update id="updateTrainerStatus" parameterType="map">
+		update
+		    HELF_TRAINERS T
+		set
+		    T.TRAINER_TITLE = #{title}
+		WHERE
+			T.USER_ID = 
+		    (SELECT T.USER_ID FROM HELF_TRAINERS T
+		    LEFT OUTER JOIN HELF_USERS U
+		    ON T.USER_ID = U.USER_ID
+		    WHERE T.TRAINER_TITLE IS NULL 
+		    AND U.USER_STATUS = #{status}
+		    AND T.USER_ID = #{id});
+	</update>
+	
+	
 </mapper>

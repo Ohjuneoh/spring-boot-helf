@@ -22,6 +22,7 @@ import kr.co.helf.dto.CustomerDetailDto;
 import kr.co.helf.dto.CustomerListDto;
 import kr.co.helf.dto.CustomerOrderDto;
 import kr.co.helf.dto.Pagination;
+import kr.co.helf.dto.TrainerDto;
 import kr.co.helf.mapper.InquiryMapper;
 import java.io.*;
 import java.text.ParseException;
@@ -529,10 +530,41 @@ public class UserService {
       return result;
    }
 
-	// 총 회원 수 및 강사 수 조회
-	public User getUserAndTrainerCount(){
+	// 총 회원 수 및 강사 수 조회(예광)
+	public User getUserAndTrainerCount() {
 		User user = userMapper.getUserAndTrainerCount();
 		return user;
+	}
+	
+	// 강사소개 - 특정 트레이너의 개인+그룹 수업 수 조회(유리)
+	public TrainerDto getTrainerInfo(String userId, int trainerNo) {
+		
+		TrainerDto dto = new TrainerDto();
+		
+		int personalLessonCount = userMapper.getPersonalLesson(userId);
+		int groupLessonCount = userMapper.getGroupLesson(userId);
+
+		dto.setLessonCount(personalLessonCount + groupLessonCount);
+
+		Trainer trainer = personalLessonMapper.getTrainerAndCareer(userId);
+		List<Career> careers = trainer.getCareers();
+
+		dto.setCareers(careers);
+	   
+		return dto;
+	}
+	// 직급부여 - 유저상태, 트레이너 직급 변경
+	public void updateTrainerStatus(String userId, String title) {
+		
+		// 유저 상태 변경
+		User user = userMapper.getUserById(userId);
+		user.setStatus("Y");
+		
+		// 트레이너 직급 변경
+		Trainer trainer = personalLessonMapper.getTrainerAndCareer(userId);
+		trainer.setTitle(title);
+		
+		userMapper.updateTrainerStatus(user,trainer);
 	}
 
 }

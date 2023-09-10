@@ -93,7 +93,8 @@
 	                <div class="col-lg-3 wow slideInUp" data-wow-delay="0.3s">
 	                    <div class="team-item bg-light rounded overflow-hidden">
 	                        <div class="team-img position-relative overflow-hidden">
-	                            <img class="img-fluid w-100" src="/resources/img/photo/${trainer.trainerFile }" alt="" data-trainer-no="${trainer.trainerNo}" >
+	                            <img class="img-fluid w-100" src="/resources/img/photo/${trainer.trainerFile }" alt="" 
+	                            	data-trainer-no="${trainer.trainerNo}" data-user-id="${trainer.user.id }">
 	                        </div>
 	                        <div class="text-center py-4">
 	                            <h4 class="text-primary">${trainer.user.name }</h4>
@@ -112,7 +113,7 @@
     
     <!-- 강사 모달창  -->
     <div class="modal" tabindex="-1" id="modal-teacher">
-	  <div class="modal-dialog">
+	  <div class="modal-dialog modal-lg">
 	    <div class="modal-content">
 	    
 	      <div class="modal-header">
@@ -121,10 +122,25 @@
 	      </div>
 	      
 	      <div class="modal-body">
-	        <p>
-	        	자격: <br>
-	        	경력: <br>
-	        </p>
+	      		
+	      		<table class="table table-bordered">
+	      			<tbody>
+	      				<tr>
+	      					<th style="width:70%;">총수업 갯수</th>
+	      					<td style="width:30%;"><span id="lesson-cnt"></span>개</td>
+	      				</tr>
+	      			</tbody>	
+	      		</table>
+	      		<table class="table table-bordered" id="table-careers">
+	      			<thead>
+	      				<tr>
+	      					<th style="width:40%;">경력명</th>
+	      					<th style="width:30%;">시작일자</th>
+	      					<th style="width:30%;">종료일자</th>
+	      				</tr>
+	      			</thead>
+	      			<tbody></tbody>
+	      		</table>
 	      </div>
 	      
 	      <div class="modal-footer">
@@ -164,10 +180,33 @@
     $("#box-trainer img").click(function() {
         // 클릭시 속성값이 "data-trainer-no"인 것을 찾아서 trainerNo에 저장
         let trainerNo = $(this).attr("data-trainer-no");
-        // id가 modalteacher 안 a 태그에 속성이 "href"인 것에 Url을  대입
+        let userId = $(this).attr("data-user-id");
+        
+        // 트레이너가 개설한 총 수업 수 + 경력
+        $.get("/user/trainerIntroLesson", {userId: userId, trainerNo:trainerNo}, function(result) {
+           let cnt = result.lessonCount;
+           let careers = result.careers;
+
+           $("#lesson-cnt").text(cnt);
+           
+           let $tbody = $("#table-careers tbody").empty();
+           careers.forEach(function(career) {
+              let content = `
+                 <tr>
+              		<td>\${career.careerName }</td>
+              		<td>\${career.careerStartDate}</td>
+              		<td>\${career.careerEndDate}</td>
+              	</tr>
+              `
+              $tbody.append(content);
+        })
+       	teacherModal.show();
+        
+        // id가 modalteacher 안 a 태그에 속성이 "href"인 것에 Url을 대입
         $("#modal-teacher a").attr("href", "/trainer-review/list?trainerNo=" + trainerNo);
-       teacherModal.show();
-    });
+      
+      })
+ });
 
 
     </script>
