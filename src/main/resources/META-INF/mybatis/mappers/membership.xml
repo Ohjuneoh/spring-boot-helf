@@ -411,6 +411,16 @@
 		from helf_membership_refund
 		where orders_no = #{value}
 	</select>
+
+	<select id="getRefundMyMembershipNo" parameterType="int" resultType="refund">
+		select A.refund_no		as no,
+			   A.refund_state		as state,
+			   A.refund_amount	as amount,
+			   A.orders_no		as "order.no",
+			   A.refund_date		as refundDate
+		from helf_membership_refund A join helf_orders B on A.orders_no = B.orders_no
+		where B.my_membership_no = #{value}
+	</select>
 	
 	<update id="updateRefund" parameterType="refund">
 		update helf_membership_refund
@@ -433,6 +443,7 @@
 	<select id="getOrderByNoList" parameterType="List" resultType="refundOrderPoint">
 		select
 			A.orders_no				as orderId,
+			A.orders_payment_state	as state,
 			B.point_history_no 		as pointNo,
 			B.point_history_type 	as pointType, 
 			B.point_history_use 	as pointUse, 

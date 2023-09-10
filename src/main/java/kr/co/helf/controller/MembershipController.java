@@ -285,11 +285,11 @@ public class MembershipController {
 			return "redirect:/membership/refund-manager?error=no-subject";
 		}
 		
-//		try {
+		try {
 			membershipService.refundApproved(noList);
-//		} catch (RuntimeException e) {
-//			return "redirect:refund-manager?error=refunded";
-//		}
+		} catch (MembershipException e) {
+			return "redirect:refund-manager?error=refunded";
+		}
 		
 		redirectAttributes.addAttribute("state", state);
 		redirectAttributes.addAttribute("type", type);
