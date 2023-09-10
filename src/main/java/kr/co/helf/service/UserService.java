@@ -554,7 +554,7 @@ public class UserService {
 		return dto;
 	}
 	// 직급부여 - 유저상태, 트레이너 직급 변경
-	public void updateTrainerStatus(String userId, String position) {
+	public void updateTrainerStatus(String userId, String title) {
 		
 		// 유저 상태 변경
 		User user = userMapper.getUserById(userId);
@@ -562,7 +562,7 @@ public class UserService {
 		
 		// 트레이너 직급 변경
 		Trainer trainer = personalLessonMapper.getTrainerAndCareer(userId);
-		trainer.setTitle(position);
+		trainer.setTitle(title);
 		
 		userMapper.updateTrainerStatus(user,trainer);
 	}

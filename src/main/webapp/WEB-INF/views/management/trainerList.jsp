@@ -351,7 +351,7 @@
 	$.ajax({
 	    type: "POST",
 	    url: "/management/givePosition",
-	    data: { userId: userId, position: selectedPosition },
+	    data: { userId: userId, title: selectedPosition },
 	    success: function(success) {
 	    	// 성공적으로 처리된 경우
             // 화면 업데이트 등 필요한 작업 수행

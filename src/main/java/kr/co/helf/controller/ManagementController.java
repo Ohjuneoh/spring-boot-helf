@@ -218,7 +218,7 @@ public class ManagementController {
 	// 직급 부여 - 유저상태/트레이너 직급 변경 ajax (유리)
 	@PostMapping("/givePosition")
 	public String givePosition(@RequestParam("userId") String userId,
-							   @RequestParam("position") String position) {
+							   @RequestParam("title") String position) {
 		
 		 try {
 			 userService.updateTrainerStatus(userId, position);
