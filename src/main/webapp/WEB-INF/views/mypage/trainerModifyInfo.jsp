@@ -71,7 +71,7 @@
         </div>
     </div>
     <div class=" p-3" style="max-width: 900px; margin: 0 auto;">
-	    	<form action="/user/trainerInfoChange" method="post" enctype="multipart/form-data">
+	    	<form id="update-trainer" action="/user/trainerInfoChange" method="post" enctype="multipart/form-data">
 		        <div class="row g-3">
 		            <div class="row" >
 						<div class="col-12 section-title text-start position-relative pb-3 mb-1 mt-4" style="max-width: 600px;">
@@ -151,14 +151,40 @@
 					    	</div>  
 					    </div>
 					    <hr>
+					    <!-- Career Start  -->
 					    <div>
-					    	
-					    </div>
+						    <div>
+						        <div class="col-sm-6 m-1">
+						            <h3 class="text-primary" style="display: inline-block;">경력</h3>
+						        </div>
+						    </div>
+						    <c:forEach var="career" items="${trainerInfo.careers}" varStatus="status">
+						        <div class="row">
+						            <div class="col-sm-4 input-wrapper">
+						                <input type="text" class="form-control bg-light border-0 mt-1" id="trainer-career-${status.index}" name="updateCareerNames" placeholder="경력명을 입력하세요." style="height: 45px;" value="${career.careerName}" />
+						                <input type="text" class="form-control bg-light border-0 mt-1" id="career-no-${status.index}" name="updateCareerNo" style="height: 45px; display : none;" value="${career.careerNo}"  />
+						            </div>
+						            <div class="col-sm-8">
+						                <div class="d-flex">
+						                    <input type="text" class="form-control bg-light border-0 m-1" id="datepicker1-${status.index}" name="updateCareerStartDates" placeholder="경력 시작일" value="<fmt:formatDate value='${career.careerStartDate}' pattern='yyyy-M-d' />" />
+						                    <strong style="margin-left: 15px; margin-right: 20px; font-size: 20px;">~</strong>
+						                    <input type="text" class="form-control bg-light border-0 m-1" id="datepicker2-${status.index}" name="updateCareerEndDates" placeholder="경력 종료일"  value="<fmt:formatDate value='${career.careerEndDate}' pattern='yyyy-M-d' />" />
+						                <button type="button" class="btn btn-danger btn-sm m-1 career-delete" >삭제</button>
+						                </div>
+						            </div>
+						        </div>
+						    </c:forEach>
+						    <div id="career-box">
+						        <!-- 추가된 경력 정보가 여기 표시됨. -->
+						    </div>
+						    <div>
+						        <button class="btn btn-primary m-3 btn-sm" type="button" id="btn-add-field">경력 추가</button>
+						    </div>
+						</div>
                   	</div>
               	</div>
           	</div>
-          	<div>
-          	</div>
+          	<hr>
 			<div class="col-12 mt-3">
 				<button type="submit" class="btn btn-dark w-100 py-3" id="changePwd-button" >회원정보 수정</button>
 			</div>
@@ -187,7 +213,8 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-    // 비밀번호 입력 필드에서 포커스가 벗어났을 때 새 div 추가
+    let careerCounter = 0;
+
     $("#trainer-password").blur(function(){
         if(!$("#password_confirmation").length) {
             $(this).after('<div id="password_confirmation"><input type="password" class="form-control bg-light border-0 mt-3" placeholder="비밀번호를 한 번 더 입력해주세요"></div>');
@@ -199,11 +226,40 @@ $(document).ready(function(){
         faqModal.show();
     });
 
-    // 프로필 사진 업로드 트리거 함수
-    function triggerFileInput() {
-        document.getElementById('fileInput').click();
-    }
+    $('#btn-add-field').click(function () {
+        let content = 
+                `<div class="row mt-4" id="career-row-${careerCounter}">
+                    <div class="col-sm-6 input-wrapper">
+                        <input type="text" class="form-control bg-light border-0" id="trainer-career-${careerCounter}" name="careerNames${careerCounter}" placeholder="경력명을 입력하세요." style="height: 45px;" />
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex">
+                            <input type="text" class="form-control bg-light border-0 mr-2 datepicker-start" id="datepicker-start-${careerCounter}" name="careerStartDates${careerCounter}" placeholder="경력 시작일" style="height: 45px;"/>
+                            <strong style="margin-left: 15px; margin-right: 20px; margin-top: 10px; font-size: 20px;">~</strong>
+                            <input type="text" class="form-control bg-light border-0 datepicker-end" id="datepicker-end-${careerCounter}" name="careerEndDates${careerCounter}" placeholder="경력 종료일" style="height: 45px;"/>
+                            <button class="btn btn-danger btn-sm" type="button" onclick="$('#career-row-${careerCounter}').remove()" style="margin-left: 15px;">삭제</button>
+                        </div>
+                    </div>
+                </div>`;
+
+        $('#career-box').append(content);
+        initializeDatepicker(`#datepicker-start-${careerCounter}`, `#datepicker-end-${careerCounter}`);
+        careerCounter++;
+    });
+
+    $(document).on('click', '.career-delete', function () {
+        $(this).closest('.row').remove();
+    });
+
+    // 기존에 있는 datepicker 요소를 찾아 초기화
+    $("input[id^='datepicker1-']").datepicker({ dateFormat: 'yy-mm-dd' });
+    $("input[id^='datepicker2-']").datepicker({ dateFormat: 'yy-mm-dd' });
 });
+
+function initializeDatepicker(startDateSelector, endDateSelector) {
+    $(startDateSelector).removeClass('hasDatepicker').datepicker({ dateFormat: 'yy-mm-dd' });
+    $(endDateSelector).removeClass('hasDatepicker').datepicker({ dateFormat: 'yy-mm-dd' });
+}
 
 function addPasswordMatchCheck() {
     $("#password_confirmation input").on('input', function() {
@@ -234,7 +290,15 @@ function checkPasswordMatch() {
     }
 }
 
-    
+$("#update-trainer").submit(function(e){
+    var password = $("#trainer-password").val();
+    var confirmPassword = $("#password_confirmation input").val();
+
+    if(password !== confirmPassword) {
+        alert('비밀번호를 확인해주세요');
+        e.preventDefault();
+    }
+});
 </script>
 
 

@@ -107,5 +107,7 @@ public interface UserMapper {
 	
 	// 특정 트레이너의 경력사항 조회(유리)
 	List<TrainerCareer> getTrainerCareerByNo(int trainerNo);
+	//트레이너 경력정보 merge
+	void updateTrainerCareer(TrainerCareer career);
 	
 }
