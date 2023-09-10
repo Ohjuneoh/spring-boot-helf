@@ -95,8 +95,8 @@
 					  			세부설정
 				  			</strong>
 				  		</span>
-			  			<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
 					</c:if>
+		  			<span class="mx-4"><i class="bi bi-chevron-double-right"></i></span>
 			  		<span class="border border-4 rounded-circle d-inline-block" style="height:125px; width:125px; 
 			  			  padding-top:46px; padding-left:-2px;">
 			  			<strong>

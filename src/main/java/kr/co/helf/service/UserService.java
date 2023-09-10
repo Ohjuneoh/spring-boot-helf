@@ -607,7 +607,19 @@ public class UserService {
 		dto.setCareers(careers);
 	   
 		return dto;
-
+	}
+	// 직급부여 - 유저상태, 트레이너 직급 변경
+	public void updateTrainerStatus(String userId, String title) {
+		
+		// 유저 상태 변경
+		User user = userMapper.getUserById(userId);
+		user.setStatus("Y");
+		
+		// 트레이너 직급 변경
+		Trainer trainer = personalLessonMapper.getTrainerAndCareer(userId);
+		trainer.setTitle(title);
+		
+		userMapper.updateTrainerStatus(user,trainer);
 	}
 	//신규 경력정보 insert
 	public void insertTrainer(String userId, AddUserForm insertForm) throws IOException {

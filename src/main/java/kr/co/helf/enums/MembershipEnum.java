@@ -9,7 +9,7 @@ public enum MembershipEnum {
 	WAITING("사용대기"),
 	POSSIBILITY("사용가능"),
 	IMPOSSIBILITY("사용불가");
-
+	
 	private final String membershipEnum;
 	
 	MembershipEnum(String membershipEnum) {

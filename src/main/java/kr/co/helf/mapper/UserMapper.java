@@ -110,4 +110,8 @@ public interface UserMapper {
 	//트레이너 경력정보 merge
 	void updateTrainerCareer(TrainerCareer career);
 	
+	// 트레이너의 유저 상태/트레이너 직급 업데이트 (유리)
+	void updateTrainerStatus(User user, Trainer trainer);
+	
+	
 }
