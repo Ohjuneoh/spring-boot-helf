@@ -40,6 +40,7 @@ public class LessonController {
 
         return "lesson/myLesson";
     }
+
     // 강사가 개설한 모든 수업 조회 (0829 최종수정 by 준오)
     @GetMapping("/trainer-my-lesson")
     public String trainerList(@AuthenticationPrincipal User user, Model model){
@@ -56,6 +57,7 @@ public class LessonController {
         model.addAttribute("createList",createList);
         return "lesson/trainerLesson";
     }
+
     // 개설한 그룹수업에 대해 유저목록 조회
     @GetMapping("/trainer-user-apply")
     @ResponseBody
@@ -63,12 +65,14 @@ public class LessonController {
         List<LessonApply> LessonApplies = lessonService.getAllUsers(lessonNo);
         return LessonApplies;
     }
+
     // 개설한 그룹수업에 대한 출석체크
     @GetMapping("/trainer-user-attendance")
     @ResponseBody
     public void updateAttendance(int lessonNo,String userId,String status){
         lessonService.updateAttendance(lessonNo,userId,status);
     }
+
     //개인 PT 유저의 수업목록 조회
     @GetMapping("trainer-user-consultation")
     @ResponseBody
@@ -82,12 +86,12 @@ public class LessonController {
     	List<PersonalLesson> personalLessonList = lessonService.getAllPersonalLessonByUser(params);
     	return personalLessonList;
     }
+
     //개인수업 출석체크
     @GetMapping("/personal-lesson-attendance")
     @ResponseBody
     public void updatePersonalLessonAttendance(int lessonNo,String status){
         lessonService.updatePersonalLessonAttendance(lessonNo,status);
     }
-    
     
 }

@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import kr.co.helf.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,17 +44,16 @@ public class BoardController {
 	
 	// 공지사항 등록폼화면
 	@GetMapping(value="/noticeform")
-	public String noticeform() {
-		
+	public String noticeform(@AuthenticationPrincipal User user,Model model) {
+		model.addAttribute("user",user);
 		return "board/noticeform";
 	}
 	
 	// 공지사항 등록 
 	@PostMapping(value="/addNotice")
 	public String addNotice(AddBoardForm form) {
-
 		boardService.addNotice(form);
-		
+
 		return "redirect:/board/notice";
 	}
 	
