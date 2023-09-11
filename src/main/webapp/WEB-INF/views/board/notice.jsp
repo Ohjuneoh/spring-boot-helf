@@ -127,25 +127,26 @@
     		</div>
         </div>
     
-	<div class="row mb-3" >
+		<div class="row mb-3" >
+	
 		<div class="col-12" style="text-align: center;">
 			<c:choose>
-				<c:when test="${result.pagination.totalRows lt 0 }">
-					<nav>
-						<ul class="pagination justify-content-center">
-							<li class="page-item ${result.pagination.first ? 'disabled' : '' }">
-								<a class="page-link"  href="notice?page=${result.pagination.prePage }" >이전</a>
-							</li>
-						<c:forEach var="num" begin="${result.pagination.beginPage }" end="${result.pagination.endPage }">
-							<li class="page-item ${result.pagination.page eq num ? 'active' : '' }">
-								<a class="page-link" href="notice?page=${num }" >${num }</a>
-							</li>
-						</c:forEach>
-							<li class="page-item ${result.pagination.last ? 'disabled' : '' }">
-								<a class="page-link" href="notice?page=${result.pagination.nextPage }" >다음</a>
-							</li>
-						</ul>
-					</nav>
+				<c:when test="${result.pagination.totalRows gt 0 }">
+			<nav>
+				<ul class="pagination justify-content-center">
+					<li class="page-item ${result.pagination.first ? 'disabled' : '' }">
+						<a class="page-link"  href="notice?page=${result.pagination.prePage }" >이전</a>
+					</li>
+				<c:forEach var="num" begin="${result.pagination.beginPage }" end="${result.pagination.endPage }">
+					<li class="page-item ${result.pagination.page eq num ? 'active' : '' }">
+						<a class="page-link" href="notice?page=${num }" >${num }</a>
+					</li>
+				</c:forEach>
+					<li class="page-item ${result.pagination.last ? 'disabled' : '' }">
+						<a class="page-link" href="notice?page=${result.pagination.nextPage }" >다음</a>
+					</li>
+				</ul>
+			</nav>
 				</c:when>
 			</c:choose>
 		</div>
