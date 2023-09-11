@@ -377,6 +377,21 @@ $(document).ready(function() {
     });
 });
 
+$(".selectBtn").click(function(){
+    var membershipNoValue = $(this).data("membership-no");
+    
+    var inputField = $("<input>").attr({
+        type: "hidden",
+        name: "membershipNo",
+        value: membershipNoValue
+    });
+
+    $("#mainForm").append(inputField).submit();
+
+    // 회원권 선택 버튼 클릭 후 메시지를 띄우기
+    alert('신청이 완료되었습니다.');
+});
+
 </script>
     
     
