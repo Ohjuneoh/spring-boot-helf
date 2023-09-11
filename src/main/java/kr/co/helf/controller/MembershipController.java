@@ -287,8 +287,7 @@ public class MembershipController {
 		
 		try {
 			membershipService.refundApproved(noList);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
+		} catch (MembershipException e) {
 			return "redirect:refund-manager?error=refunded";
 		}
 		

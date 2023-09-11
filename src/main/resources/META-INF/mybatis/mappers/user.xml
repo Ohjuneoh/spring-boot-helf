@@ -49,6 +49,20 @@
 			user_id = #{id}
 	</update>
 
+	<!-- 트레이너 테이블 업데이트  -->
+	<update id="updateTrainerById" parameterType="Trainer">
+		update
+			helf_trainers
+		set
+			trainer_file = #{trainerFile},
+			trainer_resignation_date = #{resignationDate},
+			trainer_title = #{title},
+			trainer_hired_date = #{hiredDate}
+		where 
+			trainer_no = #{trainerNo}
+	</update>
+	
+	<!-- 유저 등록 -->
 	<insert id="insertUser" parameterType="User">
 		insert into helf_users
 		(user_id, user_email, user_name, user_tel, user_encrypted_password,
@@ -56,7 +70,7 @@
 		 user_social)
 		values
 		(#{id}, #{email}, #{name}, #{tel}, #{encryptedPassword}, 
-		 #{gender}, #{type}, 1, 0, #{mobileCarrier},
+		 #{gender}, #{type}, 1, #{point}, #{mobileCarrier},
 		 #{social})
 	</insert>
 	
@@ -137,9 +151,6 @@
 			user_id = #{id}
 	</select>
 	
-	<!-- 유저의 이용가능한 이용권 조회  // 추후 이용권 부분으로 옮길 예정 -->
-
-	<!-- 유저의 이용가능한 이용권 조회  -->
 
 	<select id="getMyMembership" resultType="kr.co.helf.vo.MyMembership" parameterType="string">
 		select
@@ -496,5 +507,92 @@
 			COUNT(*) AS totalUsers,
 			SUM(CASE WHEN user_type = 'ROLE_TRAINER' THEN 1 ELSE 0 END) AS totalTrainers
 		FROM helf_users
+	</select>
+	
+	<!-- 특정 트레이너의 개인수업 수 조회(유리)-->
+	<select id="getPersonalLesson" resultType="int" parameterType="string">
+		select
+			count(*) 
+		from 
+			helf_personal_lesson
+		where
+		 	user_id = #{value}
+	</select>
+	
+	<!-- 특정 트레이너의 그룹수업 수 조회(유리)-->
+	<select id="getGroupLesson" resultType="int" parameterType="string">
+		select
+			count(*) 
+		from
+			 helf_lesson
+		where
+			 user_id = #{value}
+	</select>
+	
+	<!-- 특정 트레이너의 경력 조회(유리) -->
+	<select id="getTrainerCareerByNo" parameterType="int" resultType="TrainerCareer">
+		select
+			career_no,
+			career_name,
+			career_start_date,
+			career_end_date,
+			trainer_no
+		from 
+			helf_trainer_career
+		where
+			trainer_no = #{value}
+	</select>
+  
+	<!-- 트레이너 번호로 유저 조회 -->
+	<select id="getTrainerByNo" parameterType="int" resultType="Trainer">
+		select trainer_no					as trainerNo,
+				trainer_file				as trainerFile,
+				trainer_resignation_date	as resignationDate,
+				trainer_title				as title,
+				user_id						as "user.id",
+				trainer_hired_date			as hiredDate
+		from helf_trainers
+		where trainer_no = #{value}
+	</select>
+
+		<!-- 트레이너 경력정보 수정(트레이너 경력객체에 등록) -->
+	<update id="updateTrainerCareer" parameterType="TrainerCareer">
+	    UPDATE helf_trainer_career
+	    SET 
+	        career_name = #{name},
+	        career_start_date = #{startDate},
+	        career_end_date = #{endDate}
+	    WHERE
+	        trainer_no = #{trainer.trainerNo}
+	        AND career_no = #{no} 
+	</update>
+
+	<!-- 경력삭제 ajax  -->
+	<delete id="deleteCareer" parameterType="int">
+	    DELETE FROM HELF_TRAINER_CAREER
+	    WHERE CAREER_NO = #{value}
+	</delete>
+	
+	<select id="getTrainerUserById" parameterType="string" resultType="User">
+		select
+			user_id					as id,
+			user_email				as email,
+			user_name					as name,
+			user_tel					as tel,
+			user_encrypted_password 	as encryptedPassword,
+			user_gender				as gender,
+			user_status				as status,
+			user_mobile_carrier		as mobileCarrier,
+			user_create_date			as createDate, 
+			user_update_date			as updateDate,
+			user_point				as point,
+			rank_no					as "rank.no",
+			user_type					as type,
+			user_authentication_no	as authenticationNo,
+			user_social				as social
+		from
+			helf_users 
+		where 
+			user_id = #{value}
 	</select>
 </mapper>

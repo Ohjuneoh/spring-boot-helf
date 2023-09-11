@@ -62,7 +62,7 @@ public class InquiryService {
 		BeanUtils.copyProperties(form, inquiry);
 		inquiry.setUser(user);
 		
-		// 사진파일 담기
+		// 사진파일 
 		MultipartFile photofile = form.getPhotofile();
 		if (!photofile.isEmpty()) {
 			String filename = photofile.getOriginalFilename();
@@ -93,6 +93,7 @@ public class InquiryService {
 			
 			result.put("inquiries", inquiries);
 			result.put("pagination", pagination);
+			System.out.println(result);
 
 			return result;
 		}

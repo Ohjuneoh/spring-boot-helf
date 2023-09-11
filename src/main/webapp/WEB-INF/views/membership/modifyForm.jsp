@@ -85,7 +85,6 @@
 				<h1 class="mb-0">이용권 수정</h1>
 			</div>
 			<div class="offset-1" style="margin: 50px;">
-				
 				<form action="modify?state=${param.state }&keyword=${param.keyword }&type=${param.type }&page=${param.page}" method="post">
 					<div class="offset-1" style="margin-top: 100px;">
 						<h5>이용권 이름</h5>
@@ -134,7 +133,7 @@
 						<p id="description-error-msg" style="color:red; display: none;">10-200자의 형식만 가능합니다.</p>
 					</div>
 					<div class="offset-10" style="margin-top: 150px;">
-						<a href="deleted?no=${membership.no }&state=${param.state }&keyword=${param.keyword }&type=${param.type }&page=${param.page }" class="btn btn-danger btn-lg">취소</a>
+						<a href="detail-manager?no=${membership.no }&state=${param.state }&keyword=${param.keyword }&type=${param.type }&page=${param.page }" class="btn btn-danger btn-lg">취소</a>
 						<button id="btn-submit" type="submit" class="btn btn-primary btn-lg" >완료</button>
 						<input name="no" type="hidden" value="${membership.no }">
 						<input name="catNo" type="hidden" value="${membership.catNo }">

@@ -199,7 +199,16 @@
 	    									<td>퇴사</td>
 	    								</c:when>
 	    							</c:choose>
-	    							<td>${trainer.title }</td>
+	    							<c:choose>
+									    <c:when test="${trainer.user.status == 'R'}">
+									        <td>
+									        	<button  class="btn btn-outline-primary" data-trainer-no="${trainer.trainerNo }" >직급부여</button>
+									        </td>
+									    </c:when>
+									    <c:otherwise>
+									        <td>${trainer.title}</td>
+									    </c:otherwise>
+									</c:choose>
 	    							<td><fmt:formatDate value="${trainer.hiredDate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 	    							<c:choose>
 	    								<c:when test="${trainer.resignationDate != null}">
@@ -211,6 +220,7 @@
 	    							</c:choose>
 	   								<td><a href="/management/trainer-detail?id=${trainer.user.id }" class="btn btn-outline-primary">상세</a></td>
 	    						</tr>
+	    							
 	    					</c:forEach>
     					</c:when>
     					<c:otherwise>
@@ -250,8 +260,40 @@
      	</div>
      </div>
      </div>
+     
+     <!-- 직급부여 모달 by 유리 -->
+	<div id="myModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+		<form id="form-change-position" action="give-position" method="post" >
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">직급 부여하기</h4>
+	        <button id="btn-close" type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+			  	<div class="modal-body">
+					<input type="hidden" name="trainerNo" value="" >
+					<input type="hidden" name="trainerStatus" value="${param.trainerStatus}">
+					<input type="hidden" name="trainerTitle" value="${param.trainerTitle}">
+					<input type="hidden" name="opt" value="${param.opt}">
+					<input type="hidden" name="keyword" value="${param.keyword}">
+					<input type="hidden" name="rows" value="${param.rows}">
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="position" value="점장">
+						<label class="form-check-label" for="managerRadio">점장</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="position" value="직원">
+						<label class="form-check-label" for="employeeRadio">직원</label>
+					</div>
+				 </div>
+				 <div class="modal-footer">
+					<button id="btn-submit" type="submit" class="btn btn-primary"  disabled>확인</button>
+				</div>
+	    </div>
+    	</form>
+	  </div>
+	</div>
 	<!-- 전체 강사 목록 form End -->
-	
 	
     <!-- Footer Start -->
 	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
@@ -271,10 +313,29 @@
     <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
     
     <script type="text/javascript">
+    
+    let myModal = new bootstrap.Modal(document.getElementById("myModal"))
+    $("#table-trainers tbody button.btn-outline-primary").click(function() {
+    	let trainerNo = $(this).attr("data-trainer-no");
+    	$("input[name=trainerNo]").val(trainerNo);
+    	myModal.show()
+    });
+	
+	$("[name=position]").on('click', function() {
+		$("#btn-submit").removeAttr('disabled');
+	})
+	
+	$("#btn-close").on('click', function () {
+		$("[name=position]").prop("checked", false);
+		$("#btn-submit").attr('disabled', true);
+	})
+    
 	function changeRows(){
 		let rows = document.querySelector("select[name=rows]").value;
 		document.querySelector("input[name=rows]").value= rows;

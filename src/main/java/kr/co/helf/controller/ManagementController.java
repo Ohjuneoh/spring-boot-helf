@@ -17,8 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -284,4 +286,28 @@ public class ManagementController {
 		return "management/trainerAttendances";
 	}
 	
+	// 직급 부여 - 유저상태/트레이너 직급 변경 ajax (유리)
+	@PostMapping("/give-position")
+	public String givePosition(@RequestParam(name="rows", required=false, defaultValue="10") int rows,
+								@RequestParam(name="page", required=false, defaultValue="1") int page,
+								@RequestParam(name="opt", required=false) String opt, 
+								@RequestParam(name="keyword", required=false) String keyword,
+								@RequestParam(name="trainerStatus", required=false, defaultValue="전체") String trainerStatus,
+								@RequestParam(name="trainerTitle", required=false, defaultValue="전체") String trainerTitle,
+								@RequestParam("position") String position, 
+								@RequestParam("trainerNo") int trainerNo,
+								RedirectAttributes redirectAttributes,
+								Model model) {
+		
+		userService.updateTrainerStatus(trainerNo, position);
+		
+		redirectAttributes.addAttribute("rows", rows);
+		redirectAttributes.addAttribute("page", page);
+		redirectAttributes.addAttribute("opt", opt);
+		redirectAttributes.addAttribute("keyword", keyword);
+		redirectAttributes.addAttribute("trainerStatus", trainerStatus);
+		redirectAttributes.addAttribute("trainerTitle", trainerTitle);
+
+		return "redirect:trainer-list";
+	}	
 }

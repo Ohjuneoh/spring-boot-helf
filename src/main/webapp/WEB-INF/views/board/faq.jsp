@@ -87,19 +87,15 @@
 					      <p>
 							<div class="row g-5">
 				                <c:forEach var="faq" items="${faqs}">
-				                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.3s">
-				                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center" data-faq-no="${faq.no }">
-				                        <div class="service-icon">
-				                            <i class="bi bi-search"></i>
-				                        </div>
-				                        
-				                     
-				                        <h4 class="mb-3">${faq.title }</h4>
-				                        <a class="btn btn-lg btn-primary rounded" href="">
-				                            <i class="bi bi-arrow-right"></i>
-				                        </a>
-				                    </div>
-				                </div>
+					                <div class="col-lg-3 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+					                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center" data-faq-no="${faq.no }">
+					                        <div class="service-icon">
+					                            <i class="bi bi-search"></i>
+					                        </div>
+					                     
+					                        <h5 class="mb-3">${faq.title }</h5>
+					                    </div>
+					                </div>
 				                </c:forEach>
 				            </div>
 				   		</div>
@@ -119,9 +115,10 @@
 			      <c:forEach var="faq" items="${faqs}">
 					<div id="faq-${faq.no }">
 				      	<h4>Q. ${faq.title }</h4>
-					     <div class="boarder">
-					      	A. ${faq.content }
-					     </div>
+				      	<hr/>
+					    <div class="boarder d-flex justify-content-start" >
+					      	<span>A.</span> <span>${faq.content }</span>
+					    </div>
 					</div>
 			      </c:forEach>
 			      </div>

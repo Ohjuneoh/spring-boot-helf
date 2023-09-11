@@ -13,15 +13,23 @@ import java.util.Optional;
 @Mapper
 public interface UserMapper {
 	
+	// 유저아이디로 유저정보 조회
 	User getUserById(String id);
 
+	// 유저 등록
 	void insertUser(User user);
 
+	// 트레이너 등록
 	void insertTrainer(User user);
-	
+
+	// 트레이너 테이블 등록
 	void insertTrainer2(Trainer trainer);
 	
+	// 트레이너 경력 등록
 	void insertTrainerCareer(TrainerCareer trainerCarrer);
+	
+	// 트레이너 테이블 업데이트
+	void updateTrainerById(Trainer trainer);
 	
 	// 아이디 찾기(ajax)
 	List<String> getIdByTel(String name, String tel);
@@ -32,6 +40,7 @@ public interface UserMapper {
 	// 아이디 중복검사
 	int idCheck (String userId);
 	
+	// 유저 업데이트
 	void updateUser(User user);
 	
 	// 입장시 회원 휴대폰 네 자리로 조회 - 채경 
@@ -89,4 +98,25 @@ public interface UserMapper {
 
 	// 총 이용자 수 및 강사 수 조회하는 쿼리(예광)
 	User getUserAndTrainerCount();
+	
+	// 특정 트레이너의 개인수업 수 조회(유리)
+	int getPersonalLesson(String userId);
+	
+	// 특정 트레이너의 그룹수업 수 조회(유리) 
+	int getGroupLesson(String userId);
+	
+	// 특정 트레이너의 경력사항 조회(유리)
+	List<TrainerCareer> getTrainerCareerByNo(int trainerNo);
+
+	Trainer getTrainerByNo(int trainerNo);
+
+	User getTrainerUserById(String id);
+
+	//트레이너 경력정보 merge
+	void updateTrainerCareer(TrainerCareer career);
+
+	void deleteCareer(int careerNo);
+
+	
+	
 }

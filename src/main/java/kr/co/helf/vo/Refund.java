@@ -19,16 +19,15 @@ public class Refund {
 	private Order order;
 	private LocalDate refundDate;
 	
-	public int periodAmount(LocalDate start, LocalDate end, int totalPrice, int surtax) {
+	public void periodAmount(LocalDate start, LocalDate end, int totalPrice, int surtax) {
 		Period use = Period.between(start, LocalDate.now());
 		int useDay = use.getDays();
 		int useMonth = use.getMonths();
 		int useYear = use.getYears();
 		int useDays = useDay + (useMonth*30) + (useYear*365);
-		System.out.println(useDays);
 		if(useDays <= 7) {
-			int amount = this.amount = totalPrice;
-			return amount;
+			this.amount = totalPrice;
+			return;
 		}
 		
 		Period total = Period.between(start, end);
@@ -36,26 +35,20 @@ public class Refund {
 		int totalMonth = total.getMonths();
 		int totalYear = total.getYears();
 		int totalDays = totalDay + (totalMonth*30) + (totalYear*365);
-		
-		int amount = (totalPrice - surtax)*(useDays/totalDays);
+		int amount = (int) ((totalPrice - surtax)*((double)useDays/totalDays));
 		this.amount = amount;
-		
-		return amount;
 	}
 	
-	public int timeAmount(int totalPrice, int surtax, int remainCnt, int totalCnt) {
+	public void timeAmount(int totalPrice, int surtax, int remainCnt, int totalCnt) {
 		// (총 결제금액 - 위약금) * (이용횟수 / 총 이용횟수)
-		double percentage = totalCnt/0.003;
+		double percentage = totalCnt*0.1;
 		int cnt = totalCnt - remainCnt;
 		
 		if(percentage >= cnt) {
-			int amount = this.amount = totalPrice;
-			return amount;
+			this.amount = totalPrice;
+			return;
 		}
 		
-		int amount = (totalPrice - surtax)*(remainCnt/totalCnt);
-		this.amount = amount;
-		
-		return amount;
+		this.amount = (totalPrice - surtax)*(remainCnt/totalCnt);
 	}
 }

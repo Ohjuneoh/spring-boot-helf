@@ -108,8 +108,11 @@
 										<th class="bg-primary" style="color:white;">기간</th>
 										<td>${orderJoin.startDate } ~ ${orderJoin.endDate }</td>
 										<th class="bg-primary" style="color:white;">남은 횟수</th>
-										<c:if test="${orderJoin.remainderCnt ne 0 }">
+										<c:if test="${orderJoin.remainderCnt eq 0 }">
 											<td>${orderJoin.remainderCnt }회</td>
+										</c:if>
+										<c:if test="${orderJoin.remainderCnt ne 0 }">
+											<td>기간제</td>
 										</c:if>
 									</tr>
 									<tr>

@@ -14,4 +14,8 @@ public class ModifyMembershipForm {
 	private int price;
 	private int catNo;
 	private String description;
+	
+	public boolean isDeleted() {
+		return "Y".equals(this.deleted);
+	}
 }

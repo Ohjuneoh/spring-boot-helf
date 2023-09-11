@@ -194,15 +194,15 @@
 				<nav>
 					<ul class="pagination justify-content-center">
 						<li class="page-item ${first ? 'disabled' : '' }">
-							<a href="order-list?page=${prePage }" class="page-link" >이전</a>
+							<a href="refund-manager?page=${prePage }" class="page-link" >이전</a>
 						</li>
 						<c:forEach var="num" begin="${beginPage }" end="${endPage }" >
 							<li class="page-item ${num eq currentPage ? 'active' : '' }">
-								<a class="page-link" href="order-list?page=${num }" >${num }</a>
+								<a class="page-link" href="refund-manager?page=${num }" >${num }</a>
 							</li>
 						</c:forEach>
 						<li class="page-item ${last ? 'disabled' : '' }">
-							<a href="order-list?page=${nextPage }" class="page-link" >다음</a>
+							<a href="refund-manager?page=${nextPage }" class="page-link" >다음</a>
 						</li>
 					</ul>
 				</nav>

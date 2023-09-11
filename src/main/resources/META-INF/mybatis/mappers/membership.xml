@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.helf.mapper.MembershipMapper">
-
 	<select id="getMyMembershipsJoinById" parameterType="string" resultType="myMembershipJoin">
 		select A.my_membership_no					as no,
 			   A.my_membership_startdate			as startDate,
@@ -91,41 +90,41 @@
 	</update>
 	
 	<select id="getOrdersById" parameterType="map" resultType="orderJoin">
-		select A.orders_no						as no,
-			   A.orders_total_price				as totalPrice,
-			   A.orders_payment_date			as paymentDate,
-			   A.orders_payment_state			as orderState,
-			   A.user_id						as "user.id",
-			   B.my_membership_no				as membershipNo,
-			   C.membership_no					as membershipNo,
-			   C.membership_name				as name
-		from (select row_number() over (orders_no) as rownumber,
-					 orders_no,
-					 orders_total_price,
-					 orders_payment_date,
-					 orders_payment_state,
-					 my_membership_no,
-					 user_id
-			  from helf_orders) A join helf_my_membership B 
-			  	on A.my_membership_no = B.my_membership_no
-			  join helf_membership C
-				on B.membership_no = C.membership_no
-		and A.user_id = #{userId}
-		and A.rownumber between #{begin} and #{end}
-		<if test="state != null">
-			and A.orders_payment_state = #{state}
-		</if>
-		<if test="type != null">
-			<choose>
-				<when test="type == 'name'">
-					and C.membership_name like '%' || #{keyword} || '%'
-				</when>
-				<when test="type == 'no'">
-					and A.orders_no like '%' || #{keyword} || '%'
-				</when>
-			</choose>
-		</if>
-		order by A.orders_no desc
+		select X.orders_no						as no,
+			   X.orders_total_price				as totalPrice,
+			   X.orders_payment_date				as paymentDate,
+			   X.orders_payment_state				as orderState,
+			   X.user_id							as "user.id",
+			   X.my_membership_no					as myMembershipNo,
+			   X.membership_no					as membershipNo,
+			   X.membership_name					as name
+		from (select row_number() over (order by A.orders_no) as rownumber,
+					 A.orders_no,
+					 A.orders_total_price,
+					 A.orders_payment_date,
+					 A.orders_payment_state,
+					 A.user_id,
+					 B.my_membership_no,
+					 C.membership_no,
+					 C.membership_name
+			  from helf_orders A join helf_my_membership B on A.my_membership_no = B.my_membership_no
+			  		join helf_membership C on B.membership_no = C.membership_no
+			  where A.user_id = #{userId}
+			 <if test="state != null">
+					and A.orders_payment_state = #{state}
+			 </if>
+			 <if test="type != null">
+			 	<choose>
+						<when test="type == 'name'">
+							and C.membership_name like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'no'">
+							and A.orders_no like '%' || #{keyword} || '%'
+						</when>
+				</choose>
+			 </if>
+		) X
+		where X.rownumber between #{begin} and #{end}
 	</select>
 	
 	<select id="getOrderByIdTotalRow" parameterType="map" resultType="int">
@@ -134,7 +133,7 @@
 			on A.my_membership_no = B.my_membership_no
 		join helf_membership C
 			on B.membership_no = C.membership_no
-		and A.user_id = #{userId}
+		where A.user_id = #{userId}
 		<if test="type != null">
 			<choose>
 				<when test="type == 'name'">
@@ -146,7 +145,7 @@
 			</choose>
 		</if>
 		<if test="state != null">
-			and B.my_membership_state = #{state}
+			and A.orders_payment_state = #{state}
 		</if>
 	</select>
 	
@@ -220,43 +219,44 @@
 	</insert>
 	
 	<select id="getMemberships" parameterType="map" resultType="membershipJoinCat">
-		select A.membership_no				as no,
-			   A.membership_name			as name,
-			   A.membership_description		as description,
-			   A.membership_delete			as deleted,
-			   A.membership_price			as price,
-			   A.membership_create_date		as createDate,
-			   A.membership_delete_date		as deleteDate,
-			   B.category_no				as catNo,
-			   B.category_name				as catName,
-			   B.category_property			as catProperty,
-			   B.category_use_option		as useOption
-		from (select row_number() over (membership_no) as rownumber,
-					 membership_no,
-					 membership_name,
-					 membership_description,
-					 membership_delete,
-					 category_no,
-					 membership_price,
-					 membership_create_date,
-					 membership_delete_date
-			  from helf_membership) A join helf_membership_category B
-			on A.category_no = B.category_no
-		and A.rownumber between #{begin} and #{end}
-		<if test="state != null">
-			and A.membership_delete = #{state}
-		</if>
-		<if test="type != null">
-			<choose>
-				<when test="type == 'name'">
-					and A.membership_name like '%' || #{keyword} || '%'
-				</when>
-				<when test="type == 'no'">
-					and A.membership_no like '%' || #{keyword} || '%'
-				</when>
-			</choose>
-		</if>
-		order by A.membership_no desc
+		select X.membership_no				as no,
+			   X.membership_name			as name,
+			   X.membership_description		as description,
+			   X.membership_delete			as deleted,
+			   X.membership_price			as price,
+			   X.membership_create_date		as createDate,
+			   X.membership_delete_date		as deleteDate,
+			   X.category_no				as catNo,
+			   X.category_name				as catName,
+			   X.category_property			as catProperty,
+			   X.category_use_option		as useOption
+		from (select row_number() over (order by A.membership_no) as rownumber,
+				A.membership_no,        
+         		A.membership_name ,        
+         		A.membership_description,         
+		        A.membership_delete,         
+		        A.membership_price,         
+		        A.membership_create_date,         
+		        A.membership_delete_date,         
+		        B.category_no,         
+		        B.category_name,        
+		        B.category_property,         
+		        B.category_use_option  
+			  from helf_membership A join helf_membership_category B on A.category_no = B.category_no
+			  <if test="state != null">
+			  	where A.membership_delete = #{state}
+			  </if>
+			  <if test="type != null">
+				  <choose>
+						<when test="type == 'name'">
+							and A.membership_name like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'no'">
+							and A.membership_no like '%' || #{keyword} || '%'
+						</when>
+				  </choose>
+			  </if>) X
+		where X.rownumber between #{begin} and #{end}
 	</select>
 	
 	<select id="getMembershipTotalRow" parameterType="map" resultType="int">
@@ -292,45 +292,39 @@
 	</update>
 	
 	<select id="getOrders" parameterType="map" resultType="orderJoin">
-		select A.orders_no						as no,
-			   A.orders_payment_state			as orderState,
-			   A.user_id						as "user.id",
-			   C.refund_no						as refundNo,
-			   D.membership_name				as name
-		from (select row_number() over (orders_no) as rownumber,
-					 orders_no,
-					 orders_total_price,
-					 orders_payment_date,
-					 orders_payment_state,
-					 user_id,
-					 orders_membership_price,
-					 my_membership_no,
-					 orders_surtax
-			  from helf_orders) A 
-		join helf_my_membership B 
-			on A.my_membership_no = B.my_membership_no
-		join helf_membership_refund C 
-			on A.orders_no = C.orders_no
-		join helf_membership D
-			on B.membership_no = D.membership_no
-		and A.rownumber between #{begin} and #{end}
-		<if test="state != null">
-			and A.orders_payment_state = #{state}
-		</if>
-		<if test="id != null">
-			and user_id = #{id}
-		</if>
-		<if test="type != null">
-			<choose>
-				<when test="type == 'refundNo'">
-					and C.refund_no = #{keyword}
-				</when>
-				<when test="type == 'name'">
-					and D.membership_name like '%' || #{keyword} || '%'
-				</when>
-			</choose>
-		</if>
-		order by A.orders_no desc
+		select X.orders_no						as no,
+			   X.orders_payment_state			as orderState,
+			   X.user_id						as "user.id",
+			   X.refund_no						as refundNo,
+			   X.membership_name				as name
+		from (select row_number() over (order by A.orders_no) as rownumber,
+				A.orders_no,
+				A.orders_payment_state,
+				A.user_id,
+				C.refund_no,
+				D.membership_name
+			  from helf_orders A join helf_my_membership B on A.my_membership_no = B.my_membership_no
+		join helf_membership_refund C on A.orders_no = C.orders_no
+		join helf_membership D on B.membership_no = D.membership_no
+		<where>
+			<if test="state != null">
+				and A.orders_payment_state = #{state}
+			</if>
+			<if test="id != null">
+				and user_id = #{id}
+			</if>
+			<if test="type != null">
+				<choose>
+					<when test="type == 'refundNo'">
+						and C.refund_no = #{keyword}
+					</when>
+					<when test="type == 'name'">
+						and D.membership_name like '%' || #{keyword} || '%'
+					</when>
+				</choose>
+			</if>
+		</where>) X
+		where X.rownumber between #{begin} and #{end}
 	</select>
 	
 	<select id="getOrderTotalRow" parameterType="map" resultType="int">
@@ -417,6 +411,16 @@
 		from helf_membership_refund
 		where orders_no = #{value}
 	</select>
+
+	<select id="getRefundMyMembershipNo" parameterType="int" resultType="refund">
+		select A.refund_no		as no,
+			   A.refund_state		as state,
+			   A.refund_amount	as amount,
+			   A.orders_no		as "order.no",
+			   A.refund_date		as refundDate
+		from helf_membership_refund A join helf_orders B on A.orders_no = B.orders_no
+		where B.my_membership_no = #{value}
+	</select>
 	
 	<update id="updateRefund" parameterType="refund">
 		update helf_membership_refund
@@ -436,27 +440,17 @@
 		where point_history_no = #{no}
 	</update>
 	
-<!-- 	<select id="getOrderByNoList" parameterType="List" resultType="order">
-		select *
-		from helf_orders
-		where 1=1
-		<if test="noList != null and !noList.isEmpty()">
-			and orders_no in 
-			<foreach collection="noList" item="no" open="(" close=")" separator=",">
-				#{no}
-			</foreach>
-		</if> 
-	</select> -->
-	
 	<select id="getOrderByNoList" parameterType="List" resultType="refundOrderPoint">
 		select
-			A.orders_no	as orderId,
-			B.point_history_no as pointNo,
-			B.point_history_type as pointType, 
-			B.point_history_use as pointUse, 
-			C.user_point as userPoint, 
-			C.user_id as userId,
-            D.refund_no as refundNo
+			A.orders_no				as orderId,
+			A.orders_payment_state	as state,
+			B.point_history_no 		as pointNo,
+			B.point_history_type 	as pointType, 
+			B.point_history_use 	as pointUse, 
+			C.user_point 			as userPoint, 
+			C.user_id	 			as userId,
+            D.refund_no 			as refundNo,
+            D.refund_amount			as refundAmount
         from helf_orders A join helf_point_history B
 		    on A.orders_no = B.orders_no
 		join helf_users C
@@ -469,7 +463,8 @@
 			<foreach collection="noList" item="no" open="(" close=")" separator=",">
 				#{no}
 			</foreach>
-		</if> 
+		</if>
+		order by A.orders_no desc
 	</select>
 	
 	<update id="updateRefundUserPoint" parameterType="map">
@@ -479,20 +474,20 @@
 	</update>
 	
 	<update id="updateRefundOrderState" parameterType="list">
-	update helf_orders
-	set ORDERS_PAYMENT_STATE = '환불완료'
-	where ORDERS_NO in 
-	<foreach collection="orderIds" item="id" open="(" close=")" separator=",">
-				#{id}
-	</foreach>
+		update helf_orders
+		set ORDERS_PAYMENT_STATE = '환불완료'
+		where ORDERS_NO in 
+		<foreach collection="orderIds" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
 	</update>
 	
 	<update id="updateRefundPointState" parameterType="map">
 		update helf_point_history
 		set point_history_type = #{type}
-		where point_history_no in 
-		<foreach collection="pointIds" item="id" open="(" close=")" separator=",">
-			#{id}
+		where point_history_no in
+		<foreach collection="pointNoList" item="no" open="(" close=")" separator=",">
+			#{no}
 		</foreach>
 	</update>
 
@@ -503,5 +498,11 @@
 		<foreach collection="refundNoList" item="no" open="(" close=")" separator=",">
 			#{no}
 		</foreach>
+	</update>
+
+	<update id="updateRefundAmount" parameterType="map">
+	    update helf_membership_refund
+	    set refund_amount = #{newRefundAmount}
+	    where refund_no = #{refundNo}
 	</update>
 </mapper>

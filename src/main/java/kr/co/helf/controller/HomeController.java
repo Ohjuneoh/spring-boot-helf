@@ -1,9 +1,12 @@
 package kr.co.helf.controller;
 
+import kr.co.helf.dto.TrainerDto;
+import kr.co.helf.mapper.PersonalLessonMapper;
 import kr.co.helf.service.LessonService;
 import kr.co.helf.service.TrainerReviewService;
 import kr.co.helf.service.UserService;
 import kr.co.helf.vo.Lesson;
+import kr.co.helf.vo.PersonalLesson;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
@@ -56,18 +59,19 @@ public class HomeController {
 		return "branch";
 	}	
 	
-	
+
+	//홈 화면에 총 유저 수 , 개설 수업 수 , 강사정보 출력
 	@GetMapping(value = "/")
 	public String home(Model model) {
 		// 총 유저 수를 조회하는 로직
 		User user = userService.getUserAndTrainerCount();
-		// 총 개설된 수업을 조회하는 로직
-		Lesson lesson = lessonService.getAllLessonForHome();
+		// 총 개설된 수업 수
+		TrainerDto getAllCountLessons = lessonService.getAllCountLessons();
 		// 강사 정보(강사사진포함)을 조회하는 로직
 		List<Trainer> trainers = trainerReviewService.getAllTrainers();
 
 		model.addAttribute("users",user);
-		model.addAttribute("lessons",lesson);
+		model.addAttribute("getAllCountLessons", getAllCountLessons);
 		model.addAttribute("trainers", trainers);
 		return "home";	
 	}

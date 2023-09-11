@@ -181,10 +181,14 @@ public class MembershipService {
 		Membership membership = orderMapper.getMembershipByNo(form.getNo());
 		membership.setName(form.getName());
 		membership.setDeleted(form.getDeleted());
+		if(form.isDeleted()) {
+			membership.setDeleteDate(LocalDate.now());
+		}
 		membership.setPrice(form.getPrice());
 		Category cat = membershipMapper.getcategoryByNo(form.getCatNo());
 		membership.setCategory(cat);
 		membership.setDescription(form.getDescription());
+		
 		
 		membershipMapper.updateMembership(membership);
 	}
@@ -210,7 +214,7 @@ public class MembershipService {
 
 	@Transactional
 	public void insertRefund(int no) {
-		Refund check = membershipMapper.getRefundByOrderNo(no);
+		Refund check = membershipMapper.getRefundMyMembershipNo(no);
 		if(check != null) {
 			throw new RuntimeException("해당 이용권은 이미 환불처리가 완료된 이용권입니다.");
 		}
@@ -227,18 +231,14 @@ public class MembershipService {
 			LocalDate start = orderJoin.getStartDate();
 			LocalDate end = orderJoin.getEndDate();
 			
-			int amount = refund.periodAmount(start, end, totalPrice, surtax);
-			refund.setAmount(amount);
-			System.out.println(amount);
+			refund.periodAmount(start, end, totalPrice, surtax);
 		}
 		
 		if(period.isTime()) {
 			int remainCnt = orderJoin.getRemainderCnt();
 			int totalCnt = period.getProperty();
 			
-			int amount = refund.timeAmount(totalPrice, surtax, remainCnt, totalCnt);
-			refund.setAmount(amount);
-			System.out.println(amount);
+			refund.timeAmount(totalPrice, surtax, remainCnt, totalCnt);
 		}
 		refund.setOrder(order);
 		membershipMapper.insertRefundByNo(refund);
@@ -273,13 +273,11 @@ public class MembershipService {
 		
 		myMembership.setPossibility();
 		membershipMapper.updateMyMembership(myMembership);
-		System.out.println("cancel-refund에서 deleteRefund()실행");
 		membershipMapper.deleteRefund(order.getNo());
 		
 	}
 
 	public void deleteRefund(int no) {
-		System.out.println("delete-refund에서 deleteRefund()실행");
 		membershipMapper.deleteRefund(no);
 	}
 
@@ -309,25 +307,27 @@ public class MembershipService {
 		updateRefundState(orderList);
 		
 		// 포인트 상태 변경 시작
-		List<Integer> paymentPointIds = orderList.stream()
+		List<Integer> paymentPointNoList = orderList.stream()
 				.filter(order -> order.isPaymentPoint())
 				.map(RefundOrderPoint::getPointNo)
 				.collect(Collectors.toList());
-		updatePointHistoryState(paymentPointIds, REFUNDPOINT.getValue());
+		if(!paymentPointNoList.isEmpty()) {
+			updatePointHistoryState(paymentPointNoList, REFUNDPOINT.getValue());
+		}
 		
-		List<Integer> getbackPointIds = orderList.stream()
+		List<Integer> getbackPointNoList = orderList.stream()
 				.filter(order -> order.isSavePoint())
 				.map(RefundOrderPoint::getPointNo)
 				.collect(Collectors.toList());
-		updatePointHistoryState(getbackPointIds, GETBACKPOINT.getValue());
+		System.out.println(getbackPointNoList);
+		updatePointHistoryState(getbackPointNoList, GETBACKPOINT.getValue());
 	}
 	
-	private void updatePointHistoryState(List<Integer> ids, String value) {
-		Map<String, Object> paymentMap = new HashMap<>();
-		paymentMap.put("type", value);
-		paymentMap.put("pointIds", ids);
-		membershipMapper.updateRefundPointState(paymentMap);
-		
+	private void updatePointHistoryState(List<Integer> pointNoList, String type) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("type", type);
+		map.put("pointNoList", pointNoList);
+		membershipMapper.updateRefundPointState(map);
 	}
 
 	private void updateRefundState(List<RefundOrderPoint> orderList) {
@@ -339,6 +339,12 @@ public class MembershipService {
 	}
 
 	private void updateRefundOrder(List<RefundOrderPoint> orderList) {
+		for(RefundOrderPoint order : orderList) {
+			if(order.isRefundCompleted()) {
+				throw new MembershipException("이미 환불이 완료된 상품입니다.");
+			}
+		}
+
 		List<Integer> orderIds = orderList.stream()
 				.map(RefundOrderPoint::getOrderId)
 				.distinct()
@@ -353,8 +359,10 @@ public class MembershipService {
 				
 				Map<String, Integer> userRefundPoints = new HashMap<>();
 				for(String key : pointMap.keySet()) {
+					// 환불 요청을 한 회원에 대한 RefundOrderPoint 객체
 					List<RefundOrderPoint> userPoints = pointMap.get(key);
 					
+					// 회수할 포인트 + 돌려줄 포인트
 					int point = userPoints.stream()
 							.mapToInt(this::convertPointByType)
 							.sum();
@@ -363,7 +371,8 @@ public class MembershipService {
 					int minusPoint = userRemainPoint + point;
 					if(minusPoint < 0) {
 						minusPoint = 0;
-					}	
+						changeRefundAmount(userPoints, point);
+					}
 					
 					userRefundPoints.put(key, minusPoint);
 				}
@@ -376,6 +385,17 @@ public class MembershipService {
 					membershipMapper.updateRefundUserPoint(param);
 				});
 		
+	}
+	
+	private void changeRefundAmount(List<RefundOrderPoint> userList, int point) {
+		for(RefundOrderPoint user : userList) {
+			int newRefundAmount = user.getRefundAmount() + point;
+			
+			Map<String, Integer> map = new HashMap<>();
+			map.put("refundNo", user.getRefundNo());
+			map.put("newRefundAmount", newRefundAmount);
+			membershipMapper.updateRefundAmount(map);
+		}
 	}
 
 	private int convertPointByType(RefundOrderPoint orderPoint) {

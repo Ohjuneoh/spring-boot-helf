@@ -17,7 +17,7 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
@@ -99,11 +99,11 @@
 					</p>
                     <div class="row g-0 mb-3">
                         <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
-                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>24시간 365일 연중무휴로 원하는 시간에 언제든지</h5>
-                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>전지점 프리패스 통합 회원권으로 원하는 지역 어디든지</h5>
+                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>24시간 365일 연중무휴로 <br> &nbsp; &nbsp; &nbsp; 원하는 시간에 언제든지</h5>
+                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>전지점 프리패스 통합 회원권으로<br> &nbsp; &nbsp; &nbsp; &nbsp;원하는 지역 어디든지</h5>
                         </div>
                         <div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
-                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>합리적인 회원권 금액으로 최상의 혜택 제공</h5>
+                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>합리적인 회원권 금액으로<br> &nbsp; &nbsp; &nbsp; &nbsp; 최상의 혜택 제공</h5>
                             <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>야간에도 안전한 보안경비 시스템</h5>
                         </div>
                     </div>
@@ -132,8 +132,8 @@
 					</p>
                     <div class="row g-0 mb-3">
                         <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
-                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>운동에 집중할 수 있도록 낮은 조도의 조명 설치</h5>
-                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>운동을 즐길 수 있도록 고급스럽고 세련된 공간 연출</h5>
+                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>운동에 집중할 수 있도록<br> &nbsp; &nbsp; &nbsp; 낮은 조도의 조명 설치</h5>
+                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>운동을 즐길 수 있도록<br> &nbsp; &nbsp; &nbsp; 고급스럽고 세련된 공간 연출</h5>
                         </div>
                         <div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
                             <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>최고급 음향 시설, 트렌디한 인테리어</h5>
@@ -165,11 +165,11 @@
 					</p>
                     <div class="row g-0 mb-3">
                         <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
-                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>최신 트레이닝 장비들로 운동 퀄리티 상승</h5>
+                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>최신 트레이닝 장비들로<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 운동 퀄리티 상승</h5>
                             <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>전문성을 갖춘 체계화된 운동 가능</h5>
                         </div>
                         <div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
-                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>Matrix, Lifefitness, Hammer strength, Technogym.</h5>
+                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>Matrix, Lifefitness, Hammer <br>&nbsp; &nbsp; &nbsp; &nbsp; strength, Technogym.</h5>
                             <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>전세계 최고급 장비 세팅</h5>
                         </div>
                     </div>
@@ -198,12 +198,12 @@
                 </p>
                 <div class="row g-0 mb-3">
                     <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
-                        <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>월 100회 이상의 다양한 수업 컨텐츠 제공</h5>
-                        <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>초보자도 쉽게 운동에 참여할 수 있는 컨텐츠</h5>
+                        <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>월 100회 이상의 다양한 <br> &nbsp; &nbsp; &nbsp; 수업 컨텐츠 제공</h5>
+                        <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>초보자도 운동에 쉽게<br> &nbsp; &nbsp; &nbsp; 참여할 수 있는 컨텐츠 제공</h5>
                     </div>
                     <div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
-                        <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>반복적인 학습 시스템으로 효과적인 운동</h5>
-                        <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>혼자 하는 운동이 아닌 함께 즐기는 그룹 운동</h5>
+                        <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>반복적인 학습 시스템으로<br> &nbsp; &nbsp; &nbsp; 효과적인 운동</h5>
+                        <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>혼자 하는 운동이 아닌 함께<br> &nbsp; &nbsp; &nbsp; 즐기는 그룹 운동</h5>
                     </div>
                 </div>
             </div>

@@ -6,9 +6,12 @@ import java.util.List;
 import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
+@Getter
+@Setter
 @Alias("Trainer")
 public class Trainer {
 	

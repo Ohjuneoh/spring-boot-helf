@@ -171,8 +171,8 @@
 	</select>
 
     <!-- 모든 개설된 수업을 조회(예광) -->
-    <select id="getAllLessonForHome" resultType="Lesson">
-        select count(*) as allLessons
+    <select id="getAllLessonForHome" resultType="Integer">
+        select count(*) as allGroupLessons
         from helf_lesson
     </select>
 

@@ -89,10 +89,9 @@
 			               <table class="table">
 			               		<thead>
 									<tr>
-			                        	<th style="width: 20%;">글번호</th>
-			                        	<th style="width: 30%;">제목</th>
-			                        	<th style="width: 40%;">작성일</th>
-			                        	<th style="width: 10%;">조회수</th>
+			                        	<th style="width: 30%;">글번호</th>
+			                        	<th style="width: 40%;">제목</th>
+			                        	<th style="width: 30%;">작성일</th>
 			                     	</tr>
 								</thead>
 							   <tbody>
@@ -108,7 +107,6 @@
 				                        	</c:choose>
 											<td><a href="/board/detail?no=${board.no }">${board.title }</a></td>
 				                        	<td><fmt:formatDate value="${board.createDate }" pattern="yyyy년 M월 d일" /></td>
-											<td>${board.readCount }</td>
 		                    		 	</tr>
 							   </c:forEach>
 						  	
@@ -129,10 +127,11 @@
     		</div>
         </div>
     
-	<div class="row mb-3" >
+		<div class="row mb-3" >
+	
 		<div class="col-12" style="text-align: center;">
 			<c:choose>
-				<c:when test="${not empty result }">
+				<c:when test="${result.pagination.totalRows gt 0 }">
 			<nav>
 				<ul class="pagination justify-content-center">
 					<li class="page-item ${result.pagination.first ? 'disabled' : '' }">

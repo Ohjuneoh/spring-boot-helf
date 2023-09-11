@@ -30,6 +30,11 @@ public class PersonalLessonService {
 		return personalLessonMapper.getAllTrainersWithCareer(userId);
 	}
 	
+	// 트레이너 상세 조회 (유리)
+	public Trainer getTrainerById(String userId) {
+		return personalLessonMapper.getTrainerAndCareer(userId);
+	}
+	
 	//1대1 PT 예약 추가
 	public void createConsultation(Consultation consultation) {
 		personalLessonMapper.insertConsultation(consultation);
@@ -132,5 +137,16 @@ public class PersonalLessonService {
 		List<PersonalLesson> result = personalLessonMapper.getThreePersonalLessonById(userId);
 		return result;
 	}
+
+	public Consultation getConsultationByUserId(String id, int trainerNo) {
+		
+		return personalLessonMapper.getConsultationByTrainerNo(id, trainerNo);
+	}
+	//상담번호를 기준으로 상담번호 조회
+	public void updateConsultationStatus(String id, int consultationNo) {
+		personalLessonMapper.updatedConsultation(consultationNo,"상담만료");
+		
+	}
+
 }
 

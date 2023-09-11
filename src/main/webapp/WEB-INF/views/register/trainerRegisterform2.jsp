@@ -73,37 +73,48 @@ body {
             </div>
         </div>
     </div>
-
-
-
 	<div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
 		<div class="container">
 			<form method="post" enctype="multipart/form-data" action="trainer2">
 				<div class="row" >
-					<div class="mb-4">
-						<h3>트레이너 회원가입</h3>
-					</div>
-					<h5>사진업로드</h5>
-					    <div class="col-sm-6">
-							<input type='file' name="photofile" />
+					<div class="section-title text-start position-relative pb-3 mb-1" style="max-width: 600px;">
+		                <h1 class="fw-bold text-primary text-uppercase">트레이너 회원가입</h1>
+		            </div>
+				</div>
+				<div>
+			        <div class="row mt-4">
+			            <div>
+						    <div class="col-sm-6 m-1">
+								<h3 class="text-primary" style="display: inline-block;">경력</h3>
+							</div>
 						</div>
-				</div>
-				
+			            <div class="col-sm-6 input-wrapper">
+			                <input type="text" class="form-control bg-light border-0" id="trainer-career" name="careerNames" placeholder="경력 이름을 입력하세요." style="height: 55px; width: 620px;" />
+			            </div>
+			            <div class="col-sm-6">
+			                <div class="d-flex">
+			                    <input type="text" class="form-control bg-light border-0 mr-2" id="datepicker1" name="careerStartDates" placeholder="경력 시작일" style="height: 55px; width: 250px;" />
+			                    <strong style="margin-left: 15px; margin-right: 20px; margin-top: 15px; font-size: 20px;">~</strong>
+			                    <input type="text" class="form-control bg-light border-0" id="datepicker2" name="careerEndDates" placeholder="경력 종료일" style="height: 55px; width: 250px;" />
+			                </div>
+			            </div>
+			        </div>
+			        <div id="career-box">
+			            <!-- 추가된 경력 정보가 여기 표시됨. -->
+			        </div>
+			        <div>
+			            <button class="btn btn-primary m-3 btn-sm" type="button" id="btn-add-field">경력 추가</button>
+			        </div>
+			    </div>
+				<hr>
 				<div class="row mt-4" >
-					<h5>경력</h5>
-				    	<div class="col-sm-6 input-wrapper">
-				        	 <input type="text" class="form-control bg-light border-0" id="trainer-career" name="careerName" placeholder="경력 이름을 입력하세요." style="height: 55px; width: 620px;" />
-				    	</div>
-				    	<div class="col-sm-6">
-					    	<div class="d-flex">
-						         <input type="text" class="form-control bg-light border-0 mr-2" id="datepicker1" name="careerStartDate" placeholder="경력 시작일" style="height: 55px; width: 305px;" />
-						         <input type="text" class="form-control bg-light border-0" id="datepicker2" name="careerEndDate" placeholder="경력 종료일" style="height: 55px; width: 305px;" />
-				    		</div>
-				    	</div>
-				</div>
-				
-				<div class="row mt-4" >
-					<h5>자기소개</h5>
+					<div>
+					    <div class="col-sm-6 m-1">
+							<h3 class="text-primary" style="display: inline-block;">자기소개</h3>
+							<input type='file' id="photofile" name="photofile" style="display: none;"/>
+							 <button style="margin-left: 30px;" class="btn btn-primary text-white mb-3 btn-sm" type="button" id="customFileButton" class="your-custom-styles">프로필사진 업로드</button>
+						</div>
+					</div>
 					    <div class="col-sm-6 input-wrapper">
 					         <input type="text" class="form-control bg-light border-0" id=""  placeholder="자기소개를 입력하세요." style="height: 300px; width: 1280px;" />
 					    	 <div class="check_font" id="user-id_check"></div>
@@ -247,6 +258,7 @@ body {
    	// 데이트피커 한글적용
     $(document).ready(function(){               
 	    $.datepicker.setDefaults({
+	   	dateFormat: "yy-mm-dd",
 	    closeText: "닫기",
 	    currentText: "오늘",
 	    prevText: '이전 달',
@@ -260,6 +272,83 @@ body {
 	    yearSuffix: '년'
 	    });    
 	 });
+	
+	/* 경력 추가 js  */
+$(function() {
+    let careerCounter = 0;
+
+    // 경력 추가 버튼에 이벤트 핸들러 등록하기
+    $('#btn-add-field').click(function () {
+        // 추가할 HTML 컨텐츠를 정의한다.
+        let content = 
+            `<div class="row mt-4">
+                <div class="col-sm-6 input-wrapper">
+                    <input type="text" class="form-control bg-light border-0" name="careerNames${careerCounter}" placeholder="경력 이름을 입력하세요." style="height: 55px; width: 620px;" />
+                </div>
+                <div class="col-sm-6">
+                    <div class="d-flex">
+                        <input type="text" class="form-control bg-light border-0 mr-2 datepicker-start" name="careerStartDates${careerCounter}" placeholder="경력 시작일" style="height: 55px; width: 250px;" />
+                        <strong style="margin-left: 15px; margin-right: 20px; margin-top: 15px; font-size: 20px;">~</strong>
+                        <input type="text" class="form-control bg-light border-0 datepicker-end" name="careerEndDates${careerCounter}" placeholder="경력 종료일" style="height: 55px; width: 250px;" />
+                        <button class="btn btn-danger btn-sm ml-2" type="button" onclick="$(this).closest('.row').remove()" style="width: 30px; width: 80px;">삭제</button>
+                    </div>
+                </div>
+            </div>`;
+        // html 컨텐츠가 추가될 부모 엘리먼트를 검색한다.
+        $('#career-box').append(content);
+
+        // 추가된 입력 필드에 datepicker 적용
+        $(`.datepicker-start[name="careerStartDates${careerCounter}"]`).datepicker();
+        $(`.datepicker-end[name="careerEndDates${careerCounter}"]`).datepicker();
+
+        // Career counter 증가
+        careerCounter++;
+    });
+
+    // 사진 업로드 버튼 이벤트 핸들러
+    $('#customFileButton').click(function () {
+        $('#photofile').click();
+    });
+
+    $('#photofile').change(function() {
+        var fileName = $(this).val().split('\\').pop();
+        $('#customFileButton').text(fileName ? fileName : '파일 추가');
+    });
+
+    // form 제출 시 유효성 검사
+    $('form').submit(function(event) {
+        let isValid = true;
+
+        // 자기소개, 프로필 사진 업로드 항목 검사 
+        if ($('#selfIntroduction').val() === '') {
+            alert('자기소개를 입력해주세요.');
+            isValid = false;
+        }
+
+        if ($('#photofile').val() === '') {
+            alert('프로필 사진을 업로드해주세요.');
+            isValid = false;
+        }
+
+        // 경력 항목 검사
+        $('.row.mt-4').each(function() {
+            const careerNames = $(this).find('input[name^="careerNames"]').val();
+            const careerStartDates = $(this).find('input[name^="careerStartDates"]').val();
+            const careerEndDates = $(this).find('input[name^="careerEndDates"]').val();
+
+            if (careerNames === '' || careerStartDates === '' || careerEndDates === '') {
+                alert('모든 경력 항목을 입력해주세요.');
+                isValid = false;
+            }
+        });
+
+        // 유효성 검사 실패 시 form 제출 방지
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+});      
+
 	
 	
 </script>
