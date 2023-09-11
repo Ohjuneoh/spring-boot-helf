@@ -8,7 +8,7 @@
 </style>
 <head>
     <meta charset="utf-8">
-    <title>고객 상세 정보_그룹수업 내역</title>
+    <title>고객 상세 정보_개인수업 내역</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -146,7 +146,7 @@
 	   	</div>
 	   	<div class="col-10">
 	   	<div class="row mb-3">
-	   		<h3 class="mb-0 text-primary">최근 그룹 수업 내역 </h3>
+	   		<h3 class="mb-0 text-primary">최근 개인 수업 내역 </h3>
 	   			<form id="form-specific-dates" method="get" action="customer-recent-visit">
 	   				<div class="card-body p-4 d-flex justify-content-center align-items-center">
 	   					<div>
@@ -166,7 +166,7 @@
                			<thead class="text-dark fs-4">
 	               			<tr>
 	               				<th class="border-bottom-0"><h6>수업날짜</h6></th>
-	               				<th class="border-bottom-0"><h6>예약날짜</h6></th>
+	               				<th class="border-bottom-0"><h6>신청날짜</h6></th>
 	               				<th class="border-bottom-0"><h6>수업명</h6></th>
 	               				<th class="border-bottom-0"><h6>담당강사</h6></th>
 	               				<th class="border-bottom-0"><h6>출결상태</h6></th>
@@ -175,21 +175,21 @@
 	               		</thead>
 	               		<tbody>
 	               		<c:choose>
-	               			<c:when test="${not empty groupLessonList }">
-	               				<c:forEach var="gcl" items="${ groupLessonList}">
+	               			<c:when test="${not empty personalLessonList }">
+	               				<c:forEach var="pcl" items="${ personalLessonList}">
 	               					<tr>
-		               					<td><fmt:formatDate value="${gcl.lesson.date}" pattern="yyyy-MM-dd" /> ${gcl.lesson.time }</td>
-		               					<td><fmt:formatDate value="${gcl.applyDate}" pattern="yyyy-MM-dd"/></td>
-		               					<td>${gcl.lesson.name}</td>
-		               					<td>${gcl.lesson.user.name }</td>
-		               					<td>${gcl.attendanceStatus}</td>
-		               					<td>${gcl.myMembership.membership.name}</td>
+		               					<td><fmt:formatDate value="${pcl.date}" pattern="yyyy-MM-dd" /> ${pcl.time }</td>
+		               					<td><fmt:formatDate value="${pcl.createDate}" pattern="yyyy-MM-dd"/></td>
+		               					<td>${pcl.name}</td>
+		               					<td>${pcl.trainer.user.name }</td>
+		               					<td>${pcl.status}</td>
+		               					<td>${pcl.myMembership.membership.name}</td>
 	               					</tr>
 	               				</c:forEach>
 	               			</c:when>
 		               		<c:otherwise>
 		               			<tr>
-		               				<td colspan="5">참여한 그룹수업 이력이 없습니다.</td>
+		               				<td colspan="5">참여한 개인수업 이력이 없습니다.</td>
 		               			</tr>
 		               		</c:otherwise>
 		               	</c:choose>

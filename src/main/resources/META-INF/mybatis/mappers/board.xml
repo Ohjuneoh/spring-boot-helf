@@ -14,6 +14,8 @@
     <select id="getTotalRows" parameterType="map" resultType="int">
         select count(*)
         from  helf_boards
+        where board_deleted = 'N'
+        and board_type='notice'
     </select>
     
     <!-- 모든 공지사항 조회(페이징처리 포함) -->

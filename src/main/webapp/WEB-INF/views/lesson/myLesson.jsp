@@ -213,7 +213,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="lessonApply" items="${applyList }">
+                            <c:choose>
+                                <c:when test="${not empty applyList}">
+                                    <c:forEach var="lessonApply" items="${applyList }">
                                 <tr>
                                     <td class="text-center">${lessonApply.lesson.no }</td>
                                     <td class="text-center"><a href="/group-lesson/detail?no=${lessonApply.lesson.no }">${lessonApply.lesson.name }</a></td>
@@ -223,7 +225,14 @@
                                     <!-- 위의 <td>에서 attendanceStatus가 Y일때만 리뷰작성 버튼이 활성화 되게하는 코드 -->
                                     <td class="text-center"><a href="/trainer-review/registration?applyNo=${lessonApply.no}&lessonNo=${lessonApply.lesson.no}" class="btn btn-primary btn-sm ${lessonApply.attendanceStatus eq 'Y' ? '' : 'disabled'}">리뷰작성</a></td>
                                 </tr>
-                            </c:forEach>
+                                </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <tr>
+                                        <td colspan="5" class="text-center text-primary"><strong>조회된 수업이 없습니다.</strong></td>
+                                    </tr>
+                                </c:otherwise>
+                            </c:choose>
                             </tbody>
                         </table>
                     </div>

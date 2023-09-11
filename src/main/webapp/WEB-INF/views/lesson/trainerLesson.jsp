@@ -165,7 +165,7 @@
                                     <td class="text-center">${consultation.consultationNo } </td>
                                     <td class="text-center">${consultation.user.name } </td>
                                     <td class="text-center"><fmt:formatDate value="${consultation.applicationDate }" pattern="yyyy년 M월 d일" /></td>
-                                    <td class="text-center">${consultation.myMembership.remainderCnt }  </td>
+                                    <td class="text-center">${consultation.myMembership.remainderCnt } 회 </td>
                                     <td class="text-center">
                                     	<button type="button" class="btn btn-primary attendance-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" 
 									        data-membership-no="${consultation.myMembership.no}" 
@@ -332,24 +332,36 @@
         $("#modal-trainerNo").val(trainerNo);
         $("#modal-userId").val(userId);
         $.getJSON("trainer-user-consultation", {membershipNo:membershipNo, trainerNo:trainerNo, userId:userId}, function(Consultation) {
-            Consultation.forEach(function(lessonList, index) {
-                console.log(lessonList);
-                var date = new Date(lessonList.date);
-                var formattedDate = date.toLocaleDateString();
-                let tr = `
-                <tr>
-                    <td class="text-center">\${lessonList.no }</td>
-                    <td class="text-center">\${formattedDate }</td>
-                    <td class="text-center">\${lessonList.time }</td>
-                    <td class="text-center"  id="status-\${lessonList.no }">\${lessonList.status }</td>
-                    <td class="text-center">
-                    	<button type="button" class="btn btn-primary btn-sm" data-select="\${lessonList.no }">출석</button>
-                    	<button type="button" class="btn btn-danger btn-sm" data-select="\${lessonList.no }">결석</button>
-                    </td>
-                </tr>
-            `;
-                $tbody.append(tr);
-            });
+        	Consultation.forEach(function(lessonList, index) {
+        	    console.log(lessonList);
+        	    var date = new Date(lessonList.date);
+        	    var formattedDate = date.toLocaleDateString();
+        	    let statusText;
+        	    
+        	    if (lessonList.status === 'Y') {
+        	        statusText = '출석';
+        	    } else if (lessonList.status === 'N') {
+        	        statusText = '결석';
+        	    } else if (lessonList.status === 'W') {
+        	        statusText = '대기중';
+        	    } else {
+        	        statusText = '알 수 없는 상태'; // 만약 미리 정의되지 않은 상태 값이 있으면
+        	    }
+
+        	    let tr = `
+        	    <tr>
+        	        <td class="text-center">\${lessonList.no }</td>
+        	        <td class="text-center">\${formattedDate }</td>
+        	        <td class="text-center">\${lessonList.time }</td>
+        	        <td class="text-center"  id="status-\${lessonList.no }">\${statusText }</td>
+        	        <td class="text-center">
+        	            <button type="button" class="btn btn-primary btn-sm" data-select="\${lessonList.no }">출석</button>
+        	            <button type="button" class="btn btn-danger btn-sm" data-select="\${lessonList.no }">결석</button>
+        	        </td>
+        	    </tr>
+        	    `;
+        	    $tbody.append(tr);
+        	});
         });
     });
 });
