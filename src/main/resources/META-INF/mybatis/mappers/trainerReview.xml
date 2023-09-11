@@ -75,11 +75,13 @@
             a.trainer_title as title,
             b.user_id as "user.id",
             b.user_name as "user.name",
-            b.user_type as "user.type"
+            b.user_type as "user.type",
+            b.user_status as status
         from
             helf_trainers a, helf_users b
         where
             a.user_id = b.user_id
+          and b.user_status = 'Y'
     </select>
 
     <!-- 트레이너 리뷰 번호에 해당하는 리뷰 번호 조회 -->
