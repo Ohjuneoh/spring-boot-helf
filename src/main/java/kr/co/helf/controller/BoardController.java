@@ -6,6 +6,7 @@ import java.util.Map;
 
 import kr.co.helf.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ import kr.co.helf.form.AddBoardForm;
 import kr.co.helf.form.BoardModifyForm;
 import kr.co.helf.service.BoardService;
 import kr.co.helf.vo.Board;
+import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -49,12 +51,15 @@ public class BoardController {
 	}
 	
 	// 공지사항 등록 
-	@PostMapping(value="/addNotice")
-	public String addNotice(AddBoardForm form) {
-		boardService.addNotice(form);
-
-		return "redirect:/board/notice";
-	}
+	   @PostMapping(value="/addNotice")
+	   @PreAuthorize("hasRole('ROLE_MANAGER')")
+	   public String addNotice(AddBoardForm form, @AuthenticationPrincipal User user) {
+	      
+	      boardService.addNotice(form, user);
+	      
+	      return "redirect:/board/notice";
+	   }
+=
 	
 	
 	// 공지사항 상세정보 & 이전글/다음글
