@@ -23,7 +23,7 @@ public class MySalary {
 	private double pclPct;
 	private double gclPct;
 	private User user;
-	private Trainer trainer;
-	
+	private Trainer trainer; 
+	private int unitPrice; 
 
 }

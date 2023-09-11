@@ -164,7 +164,7 @@
 		Join
 			helf_membership_category C on B.category_no = C.category_no	
 		where A.user_id = #{value}
-        and A.my_membership_state = 'Y'
+        and A.my_membership_state = '사용중'
         and C.category_no IN (1, 2)
 	</select>
 	
@@ -326,6 +326,7 @@
 			l.lesson_name						as "lesson.name", 
 			u.user_name							as "lesson.user.name", 
 			la.lesson_apply_attendance_status	as attendanceStatus,
+			la.lesson_apply_date				as applyDate,
 			m.membership_name		as "myMembership.membership.name"
 	from helf_lesson_apply la, helf_lesson l, helf_users u, helf_my_membership mm, helf_membership m
 	where la.lesson_no = l.lesson_no

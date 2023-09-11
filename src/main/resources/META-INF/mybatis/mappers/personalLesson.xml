@@ -103,6 +103,31 @@
 		order by
 			A.lesson_time
 	</select>
+	<!--  오늘 personal lesson 수업 조회  -->
+	<select id="getMyTodayPcl" parameterType="String" resultType="kr.co.helf.vo.PersonalLesson">
+	select l.personal_lesson_no			as no,
+	        l.personal_lesson_name		as name,
+	        l.personal_lesson_date		as "date",
+	        l.personal_lesson_time		as time,
+	        l.personal_lesson_status	as status,
+	        l.my_membership_no			as "myMembership.no",
+	        l.trainer_no				as "trainer.no",
+	        l.user_id					as "user.id",
+	        u.user_name					as "user.name",
+	        tu.user_id					as "trainer.user.id",
+	        tu.user_name				as "trainer.user.name",
+            m.category_no				as "myMembership.membership.category.no",               
+            mm.my_membership_remainder_cnt	as "myMembership.remainderCnt",
+            mm.my_membership_enddate		as "myMembership.endDate"
+	from helf_personal_lesson l, helf_users u, helf_trainers t, helf_users tu, helf_my_membership mm, helf_membership m
+	where l.user_id = u.user_id 
+	and l.trainer_no = t.trainer_no 
+	and t.user_id = tu.user_id
+	and l.my_membership_no = mm.my_membership_no
+    and mm.membership_no = m.membership_no(+)
+	and l.user_id = #{userId}
+	and l.personal_lesson_date = trunc(sysdate)
+	</select>
 	
   
 	<insert id="insertConsultation" parameterType="Consultation">
@@ -317,5 +342,122 @@
 									)
 		order by
 			trainer_no
+	</select>
+	
+	<select id="getGroupLessonsById" parameterType="map" resultType="kr.co.helf.vo.LessonApply">
+	select *
+	from (select l.lesson_date							as "lesson.date",
+	                l.lesson_time						as "lesson.time",
+	                la.lesson_apply_attendance_status	as attendanceStatus,
+	                l.lesson_name						as "lesson.name",
+	                tu.user_name						as "lesson.user.name",
+	                la.lesson_apply_date				as "applyDate",
+	                m.membership_name					as "myMembership.membership.name",
+	                row_number() over (order by l.lesson_date desc) rownumber
+	        from helf_lesson_apply la, helf_lesson l, helf_users tu, helf_my_membership mm, helf_membership m
+	        where la.lesson_no = l.lesson_no
+	        and la.user_id = tu.user_id
+	        and la.my_membership_no = mm.my_membership_no 
+	        and mm.membership_no = m.membership_no 
+	        and la.user_id = #{userId}
+	        <choose>
+	            <when test="specificDate1 != null and specificDate2 !=null">
+	        and l.lesson_date between #{specificDate1} and #{specificDate2}
+	            </when>
+	        </choose>
+	        )
+	where rownumber between #{begin} and #{end}
+	</select>
+	
+	<select id="getGclTotalRowsById" parameterType="map" resultType="int">
+	select count(*)
+	from (select l.lesson_date,
+	                l.lesson_time,
+	                la.lesson_apply_attendance_status,
+	                l.lesson_name,
+	                tu.user_name,
+	                la.lesson_apply_date,
+	                m.membership_name,
+	                row_number() over (order by l.lesson_date desc) rownumber
+	        from helf_lesson_apply la, helf_lesson l, helf_users tu, helf_my_membership mm, helf_membership m
+	        where la.lesson_no = l.lesson_no
+	        and la.user_id = tu.user_id
+	        and la.my_membership_no = mm.my_membership_no 
+	        and mm.membership_no = m.membership_no 
+	        and la.user_id = #{userId}
+	        <choose>
+	            <when test="specificDate1 != null and specificDate2 !=null">
+	        and l.lesson_date between #{specificDate1} and #{specificDate2}
+	            </when>
+	        </choose>
+	        )
+	where rownumber between #{begin} and #{end}
+	</select>
+	
+	<select id="getPersonalLessonById" parameterType="map" resultType="kr.co.helf.vo.PersonalLesson">
+	select * 
+	from (select l.personal_lesson_date				as "date",
+	        l.personal_lesson_time					as time,
+	        l.personal_lesson_create_date			as "createDate",
+	        l.personal_lesson_name					as name,
+	        tu.user_name							as "trainer.user.name",
+	        l.personal_lesson_status				as status,
+	        m.membership_name						as "myMembership.membership.name",
+	        row_number() over (order by l.personal_lesson_date desc) rownumber
+	from helf_personal_lesson l, helf_trainers t, helf_users tu,  helf_membership m, helf_my_membership mm
+	where l.trainer_no = t.trainer_no 
+	and t.user_id = tu.user_id
+	and l.my_membership_no = mm.my_membership_no 
+	and mm.membership_no = m.membership_no 
+	and l.user_id = #{userId}
+	<choose>
+	    <when test="specificDate1 != null and specificDate2 !=null">
+	    and l.lesson_date between #{specificDate1} and #{specificDate2}
+	    </when>
+	</choose>
+	)
+	where rownumber between #{begin} and #{end}
+	</select>
+	
+	<select id="getPclTotalRowsById" parameterType="map" resultType="int">
+	select count(*) 
+	from (select l.personal_lesson_date,
+	        l.personal_lesson_time,
+	        l.personal_lesson_create_date,
+	        l.personal_lesson_name,
+	        tu.user_name,
+	        l.personal_lesson_status,
+	        m.membership_name,
+	        row_number() over (order by l.personal_lesson_date desc) rownumber
+	from helf_personal_lesson l, helf_trainers t, helf_users tu,  helf_membership m, helf_my_membership mm
+	where l.trainer_no = t.trainer_no 
+	and t.user_id = tu.user_id
+	and l.my_membership_no = mm.my_membership_no 
+	and mm.membership_no = m.membership_no 
+	and l.user_id = #{userId}
+	<choose>
+	    <when test="specificDate1 != null and specificDate2 !=null">
+	    and l.lesson_date between #{specificDate1} and #{specificDate2}
+	    </when>
+	</choose>
+	)
+	where rownumber between #{begin} and #{end}
+	</select>
+	
+	<select id="getThreePersonalLessonById" parameterType="String" resultType="kr.co.helf.vo.PersonalLesson">
+	select l.personal_lesson_date					as "date",
+	        l.personal_lesson_time					as time,
+	        l.personal_lesson_create_date			as "createDate",
+	        l.personal_lesson_name					as name,
+	        tu.user_name							as "trainer.user.name",
+	        l.personal_lesson_status				as status,
+	        m.membership_name						as "myMembership.membership.name",
+	        row_number() over (order by l.personal_lesson_date desc) rownumber
+	from helf_personal_lesson l, helf_trainers t, helf_users tu,  helf_membership m, helf_my_membership mm
+	where l.trainer_no = t.trainer_no 
+	and t.user_id = tu.user_id
+	and l.my_membership_no = mm.my_membership_no 
+	and mm.membership_no = m.membership_no 
+	and l.user_id = #{userId}
 	</select>
 </mapper>

@@ -5,12 +5,31 @@
 <!DOCTYPE html>
 <html lang="kr">
 <style>
+/* Ensuring the cards are aligned */
 .nav-item {
     margin-right: 20px; /* Increase this value if you want more spacing between tabs */
 }
-.overflow-x-auto {
-    overflow-x: auto;
-}
+
+ .header {
+            font-weight: bold;
+            color: #292929;
+            font-size: 1.2rem;
+            padding-bottom: 15px;
+        }
+ .normal {
+            color: grey;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+ .line {
+            background-color: #ededed;
+            color: 	#d3d3d3;
+            height: 1px;
+            margin: 5px;
+        }
+  .small-space {
+            height: 15px;
+        }
 </style>
 <head>
     <meta charset="utf-8">
@@ -138,10 +157,10 @@
 	<div class="card-body">
 	    <ul class="nav nav-tabs">
 	        <li class="nav-item">    
-	            <a class="nav-link active" aria-current="page" href="/salary/salary-detail?id=${param.id }">급여 확정 내역</a>
+	            <a class="nav-link" aria-current="page" href="/salary/salary-detail?id=${param.id} ">급여 확정 내역</a>
 	        </li>
-	        <li class="nav-item">
-	            <a class="nav-link" href="/salary/tab2Content?id=${param.id }">실시간 급여 정산 명세서</a>
+	        <li class="nav-item"> 
+	            <a class="nav-link active" href="/salary/tab2Content?id=${param.id} ">실시간 급여 정산 명세서</a>
 	        </li>
 	        <li class="nav-item">
 	            <a class="nav-link" href="/salary/tab3Content?id=${param.id }">개인 레슨 수당 내역</a>
@@ -150,99 +169,109 @@
 	            <a class="nav-link" href="/salary/tab4Content?id=${param.id }">그룹 레슨 수당 내역</a>
 	        </li>
 	    </ul>
-	</div>
-	<!-- 임직원 급여 부분 End -->
+	<!-- 이번 달 급여 정산 명세서 form Start  --> 
+ 	<div class="content-section">
 	<div class="container">
-		<div class="row" style="margin: 10px;">
-		<form method="get" action="/salary/salary-detail" id="form-salary-detail">
-			<input type="hidden" name="page" value="${empty parm.page ? 1 : pagination.page  }"/>
-    		<input type="hidden" name="id" value="${param.id}"/>
-			<table class="table" style="text-align: left;">
-				<thead>
-					<tr>
-						<th colspan="2">내역정보</th>
-						<th colspan="9">급여정보</th>
-					</tr>
-					<tr>	
-						<th>확정상태</th>
-						<th>내역발송일</th>
-						<th>지급 월</th>
-						<th>월 급여 지급액</th>
-						<th>기본급</th>
-						<th>개인레슨 수당</th>
-						<th>커미션비율</th>
-						<th>그룹레슨 수당</th>
-						<th>커미션비율</th>
-						<th>공제액</th>
-						<th>공제비율</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:choose>
-						<c:when test="${not empty salaryRecords }">
-							<c:forEach var="salaryRecords" items="${salaryRecords }">
-								<tr>
-									<c:choose>
-										<c:when test="${salaryRecords.status == 'Y' }">
-											<td><span class="badge bg-primary">확정완료</span></td>		
-										</c:when>
-										<c:otherwise>
-											<td><span class="badge text-bg-info">확정대기</span></td>
-										</c:otherwise>
-									</c:choose>
-									<td><fmt:formatDate value="${salaryRecords.insertedDate }" pattern="yyyy-MM-dd"/></td>
-									<td><fmt:formatDate value="${salaryRecords.salaryDate }" pattern="yyyy년 MM월"/></td>
-									<td><fmt:formatNumber value="${salaryRecords.actualMonthlysalary }" groupingUsed="true"/>원</td>
-									<td><fmt:formatNumber value="${salaryRecords.mySalary.regularPay}" groupingUsed="true"/>원</td>
-									<td><fmt:formatNumber value="${salaryRecords.monthlyPclPayRecords.pclPay }" groupingUsed="true"/>원</td>
-									<td><fmt:formatNumber value="${salaryRecords.mySalary.pclPct*100}" groupingUsed="true"/>%</td>
-									<td><fmt:formatNumber value="${salaryRecords.monthlyGclPayRecords.gclPay }" groupingUsed="true"/>원</td>
-									<td><fmt:formatNumber value="${salaryRecords.mySalary.gclPct*100}" groupingUsed="true"/>%</td>
-									<td><fmt:formatNumber value="${salaryRecords.tax }" groupingUsed="true"/>원</td>
-									<td><fmt:formatNumber value="${salaryRecords.mySalary.taxRate *100}" groupingUsed="true"/>%</td>
-								</tr>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<tr>
-								<td colspan="11" style="text-align:center">조회 내역이 없습니다.</td>
-							</tr>
-						</c:otherwise>	
-					</c:choose>
-				</tbody>
-			</table>
-			<c:if test="${pagination.totalRows gt 0 }">
-	     			<c:set var="currentPage" value="${pagination.page }" />
-	               		<c:set var="first" value="${pagination.first }" />
-	               		<c:set var="last" value="${pagination.last }" />
-	               		<c:set var="prePage" value="${pagination.prePage }" />
-	               		<c:set var="nextPage" value="${pagination.nextPage }" />
-	               		<c:set var="beginPage" value="${pagination.beginPage }" />
-	               		<c:set var="endPage" value="${pagination.endPage }" />
-	               		<nav>
-	               			<ul class="pagination justify-content-center">
-	               				<li class="page-item ${first ? 'disabled' : '' }">
-	               					<a href="salary-list?page=${prePage }" class="page-link" onclick="changePage(event, ${prePage})">이전</a>
-	               				</li>
-	               				<c:forEach var="num" begin="${beginPage }" end="${endPage }">
-	               					<li class="page-item ${currentPage eq num ? 'active' : '' }">
-	               						<a href="" class="page-link" onclick="changePage(event, ${num})">${num }</a>
-	               					</li>
-	               				</c:forEach>
-	               				<li class="page-item ${last ? 'disabled' : '' }">
-	               					<a href="salary-list?page=${nextPage }" class="page-link" onclick="changePage(event, ${nextPage})">다음</a>
-	               				</li>
-	               			</ul>
-	               		</nav> 
-	     		</c:if>
-		</form>
+	<div class="align-items-center border-bottom pt-5 pb-4 px-5">
+		<h3>실시간 급여 정산 명세서</h3>
+		<div class="card" style="background-color: #f0f8ff; padding: 20px;"> 
+			<div style="display: flex; justify-content: space-between; align-items: center;">
+				<div>
+					<p style="margin-bottom: 5px; font-weight:bold;">수당정산하기<span class="badge text-bg-primary" style="background-color: #007bff; margin-left:10px;">실시간</span></p>
+					<h3 id="totalPayment" style="color: #007bff; margin-bottom: 20px;">
+						<fmt:formatNumber value="${salaryInfo.totalPayment}" groupingUsed="true"/>원
+					</h3>
+				</div>
+				<sec:authorize access="hasRole('ROLE_MANAGER')">
+					<button type="button" id="saveDataBtn" onclick="saveData()" style="color: white; background-color: #007bff; padding: 10px 15px; border: none; border-radius: 5px; font-weight: bold;">급여 정산 확정하기</button>
+				</sec:authorize>
+			</div>
+			<div style="display: flex; justify-content: space-between; align-items: center;">
+				<span id="dateRange">
+					<span id="start-date"></span> ~ <span id="end-date"></span>
+				</span>
+			</div>
 		</div>
+		<div class="card" style="border:none; padding:10px;"></div>
+		<!-- 이번달 실시간 급여 내역 Start -->
+		<div class="card" style="padding:20px;">
+			<c:choose>
+			<c:when test="${not empty salaryInfo.mySalary.regularPay }">
+				<c:choose>
+					<c:when test="${not empty salaryInfo.pcl.pclPay && not empty salaryInfo.gcl.gclPay}">
+				<div class="header">기본급
+					<span style="float: right;">
+						<c:choose>
+							<c:when test="${not empty salaryInfo.mySalary.regularPay }">
+						<fmt:formatNumber value="${salaryInfo.mySalary.regularPay }" groupingUsed="true"/>원
+							</c:when>
+							<c:otherwise>0원</c:otherwise>
+						</c:choose>
+					</span>
+				</div>
+			    <div class="line"></div>
+			    <div class="header">수당 내역
+			    	<span style="float: right;" id="totalLessonFee">
+			    		<fmt:formatNumber value="${salaryInfo.totalLessonFee }" groupingUsed="true" />원
+			    	</span>
+			    </div>
+			    <div class="normal">개인레슨 
+			    	<span style="float: right;">
+			    		<fmt:formatNumber value="${salaryInfo.pcl.pclPay }" groupingUsed="true"/> 원
+			    	</span>
+			    </div>
+			    <div class="normal">레슨횟수 <span style="float: right;">${salaryInfo.pcl.cnt } 회</span></div>
+			    <div class="small-space"></div>
+			    <div class="normal">그룹레슨
+			    	<span style="float: right;">
+			    		<fmt:formatNumber value="${salaryInfo.gcl.gclPay }" groupingUsed="true" /> 원
+			    	</span>
+			    </div>
+			    <div class="normal">레슨횟수 <span style="float: right;">${salaryInfo.gcl.cnt } 회</span></div>
+			    <div class="small-space"></div>
+			    <div class="line"></div>
+			    <div class="header">공제내역
+					<span style="float: right;" id="totalTax">
+						- <fmt:formatNumber value="${salaryInfo.totalTax }" groupingUsed="true"/>원
+					</span>
+				</div>
+			    <div class="normal">공제율
+			    	<span style="float: right;">
+			    		<fmt:formatNumber value="${salaryInfo.mySalary.taxRate * 100}" pattern="#.#"/> %
+			    	</span></div>
+			    <div class="normal">공제액
+			    	<span style="float: right;">
+			    		<fmt:formatNumber value="${salaryInfo.totalTax }" groupingUsed="true"/> 원
+			    	</span>
+			    </div>
+			    	</c:when>
+			    	<c:otherwise>
+			    		<div>
+				    		<p style="text-align:center">조회된 내역이 없습니다. 개인/그룹레슨 수당 정산 후에 급여 정산을 확정할 수 있습니다.</p>
+				    	</div>
+			    	</c:otherwise>
+			    	</c:choose>
+			    </c:when>
+			    <c:otherwise>
+			    	<div>
+			    		<p style="text-align:center">조회 내역이 없습니다. 기본급을 설정하세요.</p>
+			    	</div>
+			    </c:otherwise>
+			   </c:choose>	
+		</div>
+		<input type="hidden" name="pclNo" id="pclNo" value="${salaryInfo.pcl.no }"/>
+		<input type="hidden" name="gclNo" id="gclNo" value="${salaryInfo.gcl.no }"/>
+		<input type="hidden" name="id" value="${param.id }"/>
+		<!-- 이번달 실시간 급여 내역 End -->
 	</div>
 	</div>
+	</div>
+	<!-- 이번 달 급여 정산 명세서 form End -->
+	<!-- 임직원 급여 부분 End -->
+	</div>
+  </div>
 	<!--  임직원 급여 상세 form End -->
-	
-	
-	
+
     <!-- Footer Start -->
 	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
     <!-- Footer End -->
@@ -265,12 +294,53 @@
     <script src="/resources/js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script type="text/javascript">
-    function changePage(event, page){
-		event.preventDefault();
-		document.querySelector("input[name=page]").value=page;
-		document.querySelector("#form-salary-detail").submit();
-		
-	}
+    // 이번 달의 첫째일, 마지막일 보여주기 
+    window.onload = function() {
+        var startDate = moment().startOf('month').format('YYYY-MM-DD');
+        var endDate = moment().endOf('month').format('YYYY-MM-DD');
+        
+        document.getElementById("start-date").innerText = startDate;
+        document.getElementById("end-date").innerText = endDate;
+    };
+    
+    
+   function saveData(){
+	   let userId = document.querySelector("input[name=id]").value;
+	   let startDate = document.getElementById('start-date').textContent;
+	   let pclNo = document.querySelector("input[name=pclNo]").value;
+	   let gclNo = document.querySelector("input[name=gclNo]").value; 
+	   var totalPaymentElement = document.getElementById("totalPayment").textContent;
+	   var totalPayment = totalPaymentElement.replace(/원/g, '').replace(/,/g, '').trim();
+
+	   var totalLessonFeeElement = document.getElementById("totalLessonFee").textContent;
+	   var totalLessonFee = totalLessonFeeElement.replace(/원/g, '').replace(/,/g, '').trim();
+	   
+	   var totalTaxElement = document.getElementById("totalTax").textContent;
+	   var totalTax = totalTaxElement.replace(/원/g, '').replace(/,/g, '').replace(/-/g, '').trim();
+	   
+	   
+	   alert("저장하시겠습니까? 한 번 저장한 정보는 되돌릴 수 없습니다.");
+	   $.ajax({
+		   type:"POST",
+		   url:"/salary/save-monthly-salary",
+		   data: {
+			   userId: userId,
+			   startDate: startDate,
+			   pclNo: pclNo,
+			   gclNo: gclNo,
+			   totalPayment: totalPayment,
+			   totalLessonFee: totalLessonFee,
+			   totalTax: totalTax
+		   }
+		}).done(function(response) {
+		    alert(response);
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+		    alert(jqXHR.responseText); 
+		});
+
+  } 
+
+    
     </script>
 </body>
 

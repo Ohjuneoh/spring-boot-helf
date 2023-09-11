@@ -2,12 +2,15 @@ package kr.co.helf.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import kr.co.helf.dto.Pagination;
 import kr.co.helf.dto.UserConsultations;
 import kr.co.helf.dto.UserMyMemberships;
 import kr.co.helf.mapper.PersonalLessonMapper;
+import kr.co.helf.mapper.UserMapper;
 import kr.co.helf.vo.Consultation;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.MyMembership;
@@ -20,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class PersonalLessonService {
 	
 	private final PersonalLessonMapper personalLessonMapper;
+	private final UserMapper userMapper; // 채경 추가 
 
 	//전체 트레이너 조회
 	public List<Trainer> getTrainers(String userId){
@@ -36,10 +40,16 @@ public class PersonalLessonService {
 	}
 	
 	
-	// 나의 오늘 수업 리스트 조회(개a인+그룹) - 채경 작성
+	// 나의 오늘 수업 리스트 조회(그룹수업) - 채경 작성
 	public List<LessonApply> getMyTodayLessons(String userId){
 		return personalLessonMapper.getMyTodayLessonsByUserId(userId);
 	}
+	
+	// 나의 오늘 수업 리스트 조회(개인수업) - 채경 작성 on September 10th
+	public List<PersonalLesson> getMyTodayPcl(String userId){
+		return personalLessonMapper.getMyTodayPcl(userId);
+	}
+	
 	// 트레이너 Id로 신청 유저조회
 	public List<UserConsultations> getUserConsultationsByTrainerNo(String userId) {
 		//트레이너 ID로 트레이너 조회
@@ -81,6 +91,46 @@ public class PersonalLessonService {
 
 	public List<Trainer> getTrainerByConsultationWithUserId(String id) {
 		return personalLessonMapper.getTrainersWithCareerByUserId(id);
+	}
+	
+	// 고객별 그룹 수업 조회 
+	public List<LessonApply> getGroupLessonsById(Map<String, Object> param){
+		// 총 행의 갯수
+		int totalRows = personalLessonMapper.getGclTotalRowsById(param);
+		int page = (int) param.get("page");
+		int rows = 10;
+		Pagination pagination = new Pagination(rows, page, totalRows);
+
+		int begin = pagination.getBegin();
+		int end = pagination.getEnd();
+		param.put("begin", begin);
+		param.put("end", end);
+		
+		List<LessonApply> result = personalLessonMapper.getGroupLessonsById(param);
+		return result;
+	}
+	
+	// 고객별 개인 수업 조회
+	public List<PersonalLesson> getPersonalLessonById(Map<String, Object> param){
+		// 총 행의 갯수
+				int totalRows = personalLessonMapper.getPclTotalRowsById(param);
+				int page = (int) param.get("page");
+				int rows = 10;
+				Pagination pagination = new Pagination(rows, page, totalRows);
+
+				int begin = pagination.getBegin();
+				int end = pagination.getEnd();
+				param.put("begin", begin);
+				param.put("end", end);
+		
+		List<PersonalLesson> result = personalLessonMapper.getPersonalLessonById(param);
+		return result;
+	}
+	
+	// 고객별 개인 수업 3개 조회 
+	public List<PersonalLesson> getThreePersonalLessonById(String userId){
+		List<PersonalLesson> result = personalLessonMapper.getThreePersonalLessonById(userId);
+		return result;
 	}
 }
 
