@@ -14,6 +14,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import kr.co.helf.dto.AttendanceList;
@@ -554,17 +555,29 @@ public class UserService {
 		return dto;
 	}
 	// 직급부여 - 유저상태, 트레이너 직급 변경
-	public void updateTrainerStatus(String userId, String title) {
-		
-		// 유저 상태 변경
-		User user = userMapper.getUserById(userId);
-		user.setStatus("Y");
+	@Transactional
+	public void updateTrainerStatus(int trainerNo, String position) {
 		
 		// 트레이너 직급 변경
-		Trainer trainer = personalLessonMapper.getTrainerAndCareer(userId);
-		trainer.setTitle(title);
+		Trainer trainer = userMapper.getTrainerByNo(trainerNo);
+		if(trainer == null) {
+			throw new RuntimeException("트레이너 번호에 해당하는 트레이너 데이터가 없습니다.");
+		}
+		System.out.println(trainer.getUser().getId());
+		trainer.setTitle(position);
+		trainer.setHiredDate(new Date());
 		
-		userMapper.updateTrainerStatus(user,trainer);
+		// 유저 상태 변경
+		User user = userMapper.getTrainerUserById(trainer.getUser().getId());
+		if(user == null) {
+			throw new RuntimeException("아이디에 해당하는 회원 데이터가 없습니다.");
+		}
+		System.out.println(user.getId());
+		user.setStatus("Y");
+		
+		// 업데이트
+		userMapper.updateTrainerById(trainer);
+		userMapper.updateUser(user);
 	}
 
 }
