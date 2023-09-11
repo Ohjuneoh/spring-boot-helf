@@ -1,9 +1,13 @@
 package kr.co.helf.service;
 
 import kr.co.helf.dto.MyPersonalLessonDto;
+import kr.co.helf.dto.TrainerDto;
 import kr.co.helf.mapper.LessonMapper;
+import kr.co.helf.mapper.PersonalLessonMapper;
+import kr.co.helf.mapper.UserMapper;
 import kr.co.helf.vo.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +16,14 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class LessonService {
 
     private final LessonMapper lessonMapper;
+
+	private final UserMapper userMapper;
+
+	private final PersonalLessonMapper personalLessonMapper;
 
     // 내가 신청한 모든 수업 조회(유저)
     public List<LessonApply> getAllMyLessons(String userId){
@@ -58,11 +67,17 @@ public class LessonService {
 		return lessonMapper.getAllMyTrainerByUserId(id);
 	}
 
-	// 홈페이지 모든 개설된 수업 조회(예광)
-	public Lesson getAllLessonForHome(){
-		Lesson lesson = lessonMapper.getAllLessonForHome();
-		return lesson;
-	}
 
+	// 모든 개설된 수업 수 확인하는 로직
+	public TrainerDto getAllCountLessons(){
+		TrainerDto dto = new TrainerDto();
+
+		Integer personalLessonCount = personalLessonMapper.getAllPersonalLesson();
+		Integer groupLessonCount = lessonMapper.getAllLessonForHome();
+
+		dto.setLessonCount(personalLessonCount + groupLessonCount);
+
+		return dto;
+	}
 
 }

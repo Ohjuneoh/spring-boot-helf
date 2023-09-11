@@ -201,7 +201,9 @@
 	    							</c:choose>
 	    							<c:choose>
 									    <c:when test="${trainer.user.status == 'R'}">
-									        <td><a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#myModal" data-userid="${trainerInfo.user.id}">직급부여</a></td>
+									        <td>
+									        	<button  class="btn btn-outline-primary" data-trainer-no="${trainer.trainerNo }" >직급부여</button>
+									        </td>
 									    </c:when>
 									    <c:otherwise>
 									        <td>${trainer.title}</td>
@@ -218,6 +220,7 @@
 	    							</c:choose>
 	   								<td><a href="/management/trainer-detail?id=${trainer.user.id }" class="btn btn-outline-primary">상세</a></td>
 	    						</tr>
+	    							
 	    					</c:forEach>
     					</c:when>
     					<c:otherwise>
@@ -257,37 +260,40 @@
      	</div>
      </div>
      </div>
-	<!-- 전체 강사 목록 form End -->
-	
-	<!-- 직급부여 모달 by 유리 -->
+     
+     <!-- 직급부여 모달 by 유리 -->
 	<div id="myModal" class="modal fade" role="dialog">
 	  <div class="modal-dialog">
+		<form id="form-change-position" action="give-position" method="post" >
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h4 class="modal-title">직급 부여하기</h4>
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <button id="btn-close" type="button" class="close" data-dismiss="modal">&times;</button>
 	      </div>
-	      <div class="modal-body">
-		    <div>
-		     	<input type="hidden" id="userId" name="userId" value="${trainer.user.id}">
-		    </div>
-		    <div class="form-check form-check-inline">
-		    	<input class="form-check-input" type="radio" name="position" id="managerRadio" value="점장">
-		   		<label class="form-check-label" for="managerRadio">점장</label>
-		  	</div>
-		    <div class="form-check form-check-inline">
-		   		<input class="form-check-input" type="radio" name="position" id="employeeRadio" value="직원">
-		    	<label class="form-check-label" for="employeeRadio">직원</label>
-		  	</div>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
-	      </div>
+			  	<div class="modal-body">
+					<input type="hidden" name="trainerNo" value="" >
+					<input type="hidden" name="trainerStatus" value="${param.trainerStatus}">
+					<input type="hidden" name="trainerTitle" value="${param.trainerTitle}">
+					<input type="hidden" name="opt" value="${param.opt}">
+					<input type="hidden" name="keyword" value="${param.keyword}">
+					<input type="hidden" name="rows" value="${param.rows}">
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="position" value="점장">
+						<label class="form-check-label" for="managerRadio">점장</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="position" value="직원">
+						<label class="form-check-label" for="employeeRadio">직원</label>
+					</div>
+				 </div>
+				 <div class="modal-footer">
+					<button id="btn-submit" type="submit" class="btn btn-primary"  disabled>확인</button>
+				</div>
 	    </div>
+    	</form>
 	  </div>
 	</div>
-	
-	
+	<!-- 전체 강사 목록 form End -->
 	
     <!-- Footer Start -->
 	<jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
@@ -313,6 +319,23 @@
     <script src="/resources/js/main.js"></script>
     
     <script type="text/javascript">
+    
+    let myModal = new bootstrap.Modal(document.getElementById("myModal"))
+    $("#table-trainers tbody button.btn-outline-primary").click(function() {
+    	let trainerNo = $(this).attr("data-trainer-no");
+    	$("input[name=trainerNo]").val(trainerNo);
+    	myModal.show()
+    });
+	
+	$("[name=position]").on('click', function() {
+		$("#btn-submit").removeAttr('disabled');
+	})
+	
+	$("#btn-close").on('click', function () {
+		$("[name=position]").prop("checked", false);
+		$("#btn-submit").attr('disabled', true);
+	})
+    
 	function changeRows(){
 		let rows = document.querySelector("select[name=rows]").value;
 		document.querySelector("input[name=rows]").value= rows;
@@ -343,26 +366,6 @@
 			inputBox.placeholder = "";
 		}
 	});
-	
-	// 직급부여
-	var selectedPosition = $("input[name='position']:checked").val();
-	var userId = $("#userId").val();
-	
-	$.ajax({
-	    type: "POST",
-	    url: "/management/givePosition",
-	    data: { userId: userId, title: selectedPosition },
-	    success: function(success) {
-	    	// 성공적으로 처리된 경우
-            // 화면 업데이트 등 필요한 작업 수행
-            // 예: 직급 버튼 감추기, 직급 표시 업데이트, 상태 업데이트 등
-	    },
-	    error: function(fail) {
-	    	// 서버에서 성공 여부가 false로 반환된 경우
-            // 예: 에러 메시지 표시, 사용자에게 알림 등
-	    }
-	});
-	
 	</script>
 </body>
 

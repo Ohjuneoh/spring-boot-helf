@@ -2,7 +2,6 @@ package kr.co.helf.controller;
 
 import kr.co.helf.dto.AttendanceList;
 import kr.co.helf.dto.CustomerDetailDto;
-import kr.co.helf.mapper.UserMapper;
 import kr.co.helf.service.UserService;
 import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.MySalary;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -216,18 +216,27 @@ public class ManagementController {
 	}
 	
 	// 직급 부여 - 유저상태/트레이너 직급 변경 ajax (유리)
-	@PostMapping("/givePosition")
-	public String givePosition(@RequestParam("userId") String userId,
-							   @RequestParam("title") String position) {
+	@PostMapping("/give-position")
+	public String givePosition(@RequestParam(name="rows", required=false, defaultValue="10") int rows,
+								@RequestParam(name="page", required=false, defaultValue="1") int page,
+								@RequestParam(name="opt", required=false) String opt, 
+								@RequestParam(name="keyword", required=false) String keyword,
+								@RequestParam(name="trainerStatus", required=false, defaultValue="전체") String trainerStatus,
+								@RequestParam(name="trainerTitle", required=false, defaultValue="전체") String trainerTitle,
+								@RequestParam("position") String position, 
+								@RequestParam("trainerNo") int trainerNo,
+								RedirectAttributes redirectAttributes,
+								Model model) {
 		
-		 try {
-			 userService.updateTrainerStatus(userId, position);
-	         return "success";   
+		userService.updateTrainerStatus(trainerNo, position);
+		
+		redirectAttributes.addAttribute("rows", rows);
+		redirectAttributes.addAttribute("page", page);
+		redirectAttributes.addAttribute("opt", opt);
+		redirectAttributes.addAttribute("keyword", keyword);
+		redirectAttributes.addAttribute("trainerStatus", trainerStatus);
+		redirectAttributes.addAttribute("trainerTitle", trainerTitle);
 
-	      } catch (RuntimeException ex) {
-	         ex.printStackTrace();
-	         return "fail";   
-	      }
-		
+		return "redirect:trainer-list";
 	}	
 }
