@@ -94,6 +94,7 @@
 	                        <form method="post" action="/board/addNotice">
 	                            <div class="row g-3">
 	                                <div class="col-12" >
+                                        <input type="hidden" value="${user.id }">
 	                                    <select class="form-select bg-light border-0" name="main" style="height: 55px;">
 	                                        <option value="0">주요 공지사항</option>
 	                                        <option value="1">일반 공지사항</option>

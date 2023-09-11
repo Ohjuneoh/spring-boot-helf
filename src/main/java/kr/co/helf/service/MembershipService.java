@@ -455,7 +455,6 @@ public class MembershipService {
 		if(refund == null) {
 			throw new RuntimeException("주문내역에 해당하는 환불정보가 존재하지 않습니다.");
 		}
-		
 		return refund;
 	}
 }

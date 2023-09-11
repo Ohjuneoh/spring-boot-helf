@@ -23,25 +23,21 @@ public class BoardService {
 	private BoardMapper boardMapper;
 	
 	// 공지사항 등록
-	public void addNotice(AddBoardForm form) {
-		Board board = new Board();
-		
-		BeanUtils.copyProperties(form, board);
-		
-		User user = new User();
-		user.setId("man");
-		board.setUser(user);
-		
-		board.setType("notice");
-		
-		if(form.getMain().equals("0")) {
-			board.setMain(0);
-		} else {
-			board.setMain(1);
-		}
-		
-		boardMapper.insertNotice(board);
-	}
+	   public void addNotice(AddBoardForm form, User user) {
+	      Board board = new Board();
+	      BeanUtils.copyProperties(form, board);
+	      
+	      board.setUser(user);
+	      board.setType("notice");
+	      
+	      if(form.getMain().equals("0")) {
+	         board.setMain(0);
+	      } else {
+	         board.setMain(1);
+	      }
+	      
+	      boardMapper.insertNotice(board);
+	   }
 	
 	// 공지사항 전체조회(페이징처리)
 	public Map<String, Object> getAllNotice(Map<String, Object> param) {

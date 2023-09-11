@@ -4,10 +4,8 @@ import kr.co.helf.dto.MyPersonalLessonDto;
 import kr.co.helf.dto.TrainerDto;
 import kr.co.helf.mapper.LessonMapper;
 import kr.co.helf.mapper.PersonalLessonMapper;
-import kr.co.helf.mapper.UserMapper;
 import kr.co.helf.vo.*;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,12 +14,9 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class LessonService {
 
     private final LessonMapper lessonMapper;
-
-	private final UserMapper userMapper;
 
 	private final PersonalLessonMapper personalLessonMapper;
 

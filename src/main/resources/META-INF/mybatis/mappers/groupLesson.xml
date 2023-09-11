@@ -125,7 +125,7 @@
             and a.user_id = c.user_id
             and a.my_membership_state = '사용가능'
             and a.membership_no = b.membership_no
-            and b.category_no = 33
+            and b.category_no = 3
             and c.user_type = 'ROLE_USER'
     </select>
 
@@ -144,7 +144,7 @@
             helf_my_membership a, helf_membership b
         where
             a.membership_no = b.membership_no
-        and b.category_no = 33
+        and b.category_no = 3
         and a.user_id = #{value}
 
 

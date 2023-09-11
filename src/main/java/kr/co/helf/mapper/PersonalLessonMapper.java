@@ -29,9 +29,10 @@ public interface PersonalLessonMapper {
 	void insertConsultation(Consultation consultation);
 	
 	List<UserMyMemberships> getUserMyMembershipById(String userId);
-
-	//나의 오늘 수업 리스트 조회(개인+그룹) - 채경 작성
+	 //나의 오늘 수업 리스트 조회(그룹) - 채경 작성
 	List<LessonApply> getMyTodayLessonsByUserId(String userId);
+	 //나의 오늘 수업 리스트 조회(개인) - 채경 작성
+	List<PersonalLesson> getMyTodayPcl(String userId);
 	 
 	//트레이너 번호로 상담내역 조회
 	List<UserConsultations> getAllConsultationByTrainerNo(int trainerNo);
@@ -58,6 +59,18 @@ public interface PersonalLessonMapper {
 	//유저 아이디로 상담내역 조회
 	List<UserConsultations> getConsultationByUserId(String id);
 	List<Trainer> getTrainersWithCareerByUserId(String id);
+
+	// 고객관리 - 그룹 수업 totalRows 조회 - 채경 
+	int getGclTotalRowsById(Map<String, Object> param);
+	// 고객관리 - 그룹 수업 조회 -  채경 
+	List<LessonApply> getGroupLessonsById(Map<String, Object> param);
+	
+	// 고객관리 - 개인 수업 totalRows 조회 - 채경
+	int getPclTotalRowsById(Map<String, Object> param);
+	// 고객관리 - 개인 수업 조회 - 채경
+	List<PersonalLesson> getPersonalLessonById(Map<String, Object> param);
+	// 고객관리 개인수업 3개 조회 - 채경
+	List<PersonalLesson> getThreePersonalLessonById(String userId);
 	//트레이너 번호와 유저 아이디로 상담내역 찾기
 	Consultation getConsultationByTrainerNo(@Param("id") String id, @Param("trainerNo") int trainerNo);
 
