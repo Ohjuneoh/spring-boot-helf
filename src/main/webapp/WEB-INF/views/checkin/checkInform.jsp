@@ -14,6 +14,7 @@
     vertical-align: middle;
     font-size: 1.5em;
 }	
+
 </style>
 <head>
     <title>HELF 입장하기</title>
@@ -102,7 +103,7 @@
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-12">
-                <div class="section-title position-relative pb-3 mb-5">
+                <div class="section-title position-relative pb-3 mb-5 mt-5">
                     <div class="align-items-center justify-content-center text-center h-100 bg-primary p-4">
                         <a href="index.html" class="navbar-brand">
                              <h1 class="m-0 text-white"><i class="fa fa-user-tie me-2"></i>입장하기</h1>
@@ -112,7 +113,7 @@
                         					 3. 1:1 수업 혹은 그룹 수업은 ‘수업’ 버튼을 눌러주세요. <br>
                         					 4. 시설이용은 ‘시설이용’ 버튼을 눌러주세요. </p>
                         <form id="checkinForm" method="get" action="customer-verification">
-                            <div class="input-group">
+                            <div class="input-group" >
                                 <input type="text" class="form-control border-white p-3" placeholder="휴대폰 뒷번호 네 자리" id="fourDigits" name="fourDigits">
                                 <button type="button" class="btn btn-dark btn-lg"  id="btn-open-modal">입장</button>
                             </div>

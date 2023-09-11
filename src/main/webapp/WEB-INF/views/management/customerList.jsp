@@ -96,24 +96,24 @@
      	<form id="form-customer-search" class="" method="get" action="customer-list">
      		<!-- 검색 기능 -->
      		<input type="hidden" name="page" value="${param.page }"/>
-     		<div class="row mb-3 align-items-center">
-     		<div class="col-2 pl-1">
-     			<select class="form-select" name="opt" id="selectOpt">
-     				<option value="name" ${param.opt eq 'name' ? 'selected' : ''}>이름</option>
-     				<option value="tel" ${param.opt eq 'tel' ? 'selected' : '' }>연락처</option>
-     			</select>
-     		</div>
-     			<div class="col-md-5 pr-1">
-     				<input type="text" class="form-control" name="keyword" value="${param.keyword}" style="width: 80%; margin:0 auto;" id="inputKeyword"/>
-     			</div>
-     			<div class="col-2 pl-1">
-     				<button type="button" class="btn btn-primary" onclick="searchCustomer()">
-                		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  							<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
-						</svg>
-                		검색
-              		</button>
-     			</div>
+     		<div class="row mb-3 align-items-center justify-content-center">
+	     		<div class="col-3">
+	     			<select class="form-select" name="opt" id="selectOpt">
+	     				<option value="name" ${param.opt eq 'name' ? 'selected' : ''}>이름</option>
+	     				<option value="tel" ${param.opt eq 'tel' ? 'selected' : '' }>연락처</option>
+	     			</select>
+	     		</div>
+	     		<div class="col-6">
+	     			<input type="text" class="form-control" name="keyword" value="${param.keyword}" style="width: 80%; margin:0 auto;" id="inputKeyword"/>
+	     		</div>
+	     		<div class="col-3">
+	     			<button type="button" class="btn btn-primary" onclick="searchCustomer()">
+	                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+	  				<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+					</svg>
+	                검색
+	              </button>
+	     		</div>
      		</div>
      		<br>
      		<div class="row">
@@ -159,15 +159,15 @@
      		<h4 class="mb-3 mr-4">전체 회원 수 ${totalRows}명 </h4> 
      		<div class="d-flex justify-content-start mb-3">
      			<select class="form-select" style="width: 150px;" name="rows" onchange="changeRows()">
+     				<option value="10" ${param.rows eq 10 ? 'selected' : '' }>10개씩</option>
      				<option value="20" ${param.rows eq 20 ? 'selected' : '' }>20개씩</option>
      				<option value="30" ${param.rows eq 30 ? 'selected' : '' }>30개씩</option>
-     				<option value="50" ${param.rows eq 50 ? 'selected' : '' }>50개씩</option>
      			</select>
      		</div>
     	</div>
     	<div class="row mb-3">
      		<div class="col-12">
-     			<table class="table" id="table-customers">
+     			<table class="table" id="table-customers" style="text-align:center">
      				<thead>
      					<tr>
      						<th>No</th>
@@ -212,7 +212,7 @@
     									</c:otherwise>
     								</c:choose>
     								<td>${not empty cus.membershipName ? cus.membershipName : '-'}</td>
-    								<td>${cus.myMembershipState == 'Y' ? '유효' : (cus.myMembershipState == 'N' ? '만료' : '-') }</td>
+    								<td>${cus.myMembershipState}</td>
   									<td>${not empty cus.myMembershipEndDate ? cus.myMembershipEndDate : '-'}</td>
     								<c:choose>
     									<c:when test="${cus.myMembershipRemainderCnt == -1 }">

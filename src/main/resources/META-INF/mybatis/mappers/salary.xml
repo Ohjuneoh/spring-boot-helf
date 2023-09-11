@@ -2,24 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.helf.mapper.SalaryMapper">
 
-	<select id="getAllTrainerSalary" parameterType="int" resultType="kr.co.helf.vo.MySalary">
-		select * 
-		from (select u.user_id					as "user.id",
-		        u.user_name						as "user.name",
-		        u.user_gender					as "user.gender",
-		        u.user_status					as "user.status",
-		        t.trainer_no					as "trainer.trainerNo",
-		        t.trainer_title					as "trainer.title",
-		        t.trainer_hired_date			as "trainer.hiredDate",
-		        m.salary_regular_pay			as regularPay,
-		        m.monthly_pcl_commission_pct	as pclPct,
-		        m.monthly_gcl_commission_pct	as gclPct,
-		        m.salary_tax_rate				as taxRate,
-		        row_number() over (order by user_name) rownumber
-		        from helf_users u, helf_my_salary m, helf_trainers t
-		        where u.user_id = m.user_id(+)
-		        and u.user_id = t.user_id)
-	where rownumber between #{begin} and #{end}	
+	<select id="getAllTrainerSalary" parameterType="int" resultType="kr.co.helf.vo.SalaryRecords">
+		SELECT * 
+		FROM (
+		    SELECT u.user_id                    AS "user.id",
+		           u.user_name                  AS "user.name",
+		           u.user_gender                AS "user.gender",
+		           u.user_status                AS "user.status",
+		           t.trainer_no                 AS "mySalary.trainer.trainerNo",
+		           t.trainer_title              AS "mySalary.trainer.title",
+		           t.trainer_hired_date         AS "mySalary.trainer.hiredDate",
+		           m.salary_regular_pay         AS "mySalary.regularPay",
+		           m.monthly_pcl_commission_pct AS "mySalary.pclPct",
+		           m.monthly_gcl_commission_pct AS "mySalary.gclPct",
+		           m.salary_tax_rate            AS "mySalary.taxRate",
+		           s.salary_records_actual_monthly_salary		as actualMonthlysalary,
+		           s.salary_records_month						as salaryDate,
+		           s.salary_records_status						as status,
+		           s.salary_records_date						as insertedDate,
+		           ROW_NUMBER() OVER (ORDER BY u.user_name) rownumber
+		    FROM helf_users u
+		    LEFT JOIN helf_my_salary m ON u.user_id = m.user_id
+		    LEFT JOIN helf_trainers t ON u.user_id = t.user_id
+		    LEFT JOIN (
+		        SELECT user_id, 
+		               salary_records_actual_monthly_salary, 
+		               salary_records_month,
+		               salary_records_status,
+		               salary_records_date,
+		               ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY salary_records_month DESC) AS rn
+		        FROM HELF_SALARY_RECORDS
+		    ) s ON u.user_id = s.user_id AND s.rn = 1
+		    where u.user_type = 'ROLE_TRAINER'
+		)
+		WHERE rownumber BETWEEN #{begin} AND #{end}
 	</select>
 	
 	<insert id="insertSalaryInfoById" parameterType="map">
@@ -29,14 +45,16 @@
                        monthly_pcl_commission_pct,
                        monthly_gcl_commission_pct,
                        user_id,
-                       trainer_no)
+                       trainer_no,
+                       monthly_gcl_unit_price)
        values(helf_my_salary_seq.nextval,
               #{regularPay},
               #{taxRate},
               #{pclCommissionPct},
               #{gclCommissionPct},
               #{userId},
-              #{trainerNo})
+              #{trainerNo},
+              #{gclLessonFee})
 	</insert>
 	
 	<select id="getTrainerSalaryInfoById" parameterType="String" resultType="kr.co.helf.vo.MySalary">
@@ -59,7 +77,8 @@
         	salary_regular_pay			= #{regularPay},
         	salary_tax_rate				= #{taxRate},
        	 	monthly_pcl_commission_pct	= #{pclCommissionPct},
-        	monthly_gcl_commission_pct	= #{gclCommissionPct}
+        	monthly_gcl_commission_pct	= #{gclCommissionPct},
+        	monthly_gcl_unit_price = #{gclLessonFee}
         where 
         	user_id = #{userId}
 	</update>
@@ -67,24 +86,260 @@
 	<select id="getPersonalLessonsById" parameterType="map" resultType="kr.co.helf.dto.MonthlyPersonalLessonDto">
 	select *
 	from (
-		    select A.personal_lesson_date           as lessonDate,
-		           A.personal_lesson_time           as time,
-		           U.user_name                      as userName,
-		           C.membership_name                as membershipName,
-		           A.personal_lesson_status         as status,
-		           D.orders_membership_price        as membershipPrice,
-		           trunc(D.orders_membership_price/E.period_property) as unitPrice,
-		           trunc((D.orders_membership_price/E.period_property)*M.monthly_pcl_commission_pct)    as lessonPrice,
-		           M.monthly_pcl_commission_pct     as pclPct,
-		           row_number() over (order by a.personal_lesson_no desc) row_numbers
-		    from helf_personal_lesson A, helf_my_membership B, helf_membership C, helf_orders D, helf_users U, helf_my_salary M, helf_membership_period E
-		    where A.my_membership_no = B.my_membership_no
-		    and B.membership_no = c.membership_no 
-		    and B.my_membership_no = D.my_membership_no
-		    and u.user_id = A.user_id
-		    and A.trainer_no = M.trainer_no 
-		    and M.user_id = #{userId}
-		    and A.personal_lesson_date between #{startDate} and #{endDate})
-	where row_numbers between 1 and 10
+	    select 
+	        A.personal_lesson_date as lessonDate,
+	        A.personal_lesson_time as time,
+	        U.user_name as userName,
+	        C.membership_name as membershipName,
+	        A.personal_lesson_status as status,
+	        D.orders_membership_price as membershipPrice,
+	        trunc(D.orders_membership_price/E.period_property) as unitPrice,
+	        trunc((D.orders_membership_price/E.period_property)*M.monthly_pcl_commission_pct) as lessonPrice,
+	        M.monthly_pcl_commission_pct as pclPct,
+	        row_number() over (order by A.personal_lesson_date desc) row_numbers
+	    from 
+	        helf_personal_lesson A 
+	        join helf_my_membership B on A.my_membership_no = B.my_membership_no
+	        join helf_membership C on B.membership_no = C.membership_no 
+	        join helf_orders D on B.my_membership_no = D.my_membership_no
+	        join helf_users U on u.user_id = A.user_id
+	        join helf_my_salary M on A.trainer_no = M.trainer_no 
+	        join helf_membership_period E on B.period_no = E.period_no
+	    where 
+	        M.user_id = #{userId}
+	        and A.personal_lesson_date between #{startDate} and #{endDate})
+	where 
+	    row_numbers between #{begin} and #{end}
 	</select>
+	
+	<select id="getPclTotalRowsById" parameterType="map" resultType="int">
+	select count(*)
+	from 
+	        helf_personal_lesson A 
+	        join helf_my_membership B on A.my_membership_no = B.my_membership_no
+	        join helf_membership C on B.membership_no = C.membership_no 
+	        join helf_orders D on B.my_membership_no = D.my_membership_no
+	        join helf_users U on u.user_id = A.user_id
+	        join helf_my_salary M on A.trainer_no = M.trainer_no 
+	        join helf_membership_period E on B.period_no = E.period_no
+	    where 
+	        M.user_id = #{userId}
+	        and A.personal_lesson_date between #{startDate} and #{endDate}
+	</select>
+	
+	<insert id="savePclData" parameterType="map">
+	insert into helf_monthly_pcl_pay_records(
+                                        monthly_pcl_pay_records_no,
+                                        monthly_pcl_cnt,
+                                        monthly_pcl_pay,
+                                        user_id,
+                                        monthly_pcl_month)
+            values(
+            	helf_monthly_pcl_pay_records_seq.nextval,
+                 #{lessonCnt},
+                 #{totalLessonPrice},
+                 #{userId},
+                 #{startDate})
+	</insert>
+	
+	<select id="getGroupLessonById" parameterType="map" resultType="kr.co.helf.dto.MonthlyGroupLessonDto">
+	select *
+	from (
+			select l.lesson_no																			as lessonNo,
+			       l.lesson_name																		as lessonName, 
+			       l.lesson_date																		as lessonDate, 
+			       l.lesson_time																		as lessonTime, 
+			       l.lesson_req_cnt																		as reqCnt, 
+			       l.lesson_quota																		as quota, 
+			       l.user_id																			as "user.id", 
+			       m.monthly_gcl_commission_pct															as "mySalary.gclPct",
+			       m.monthly_gcl_unit_price																as "mySalary.unitPrice",
+			       cnt.attendanceCnt																	as attendanceCnt,
+			       (m.monthly_gcl_unit_price*m.monthly_gcl_commission_pct*cnt.attendanceCnt) 			as lessonFee,
+			       row_number() over (order by l.lesson_date desc) 			row_numbers
+			from 	helf_lesson l, helf_my_salary m, (select l.lesson_no       as lessonNo,
+			                                              		  count(la.user_id) as attendanceCnt
+					                                  from helf_lesson l
+					                                  join helf_lesson_apply la on l.lesson_no = la.lesson_no 
+					                                  where la.lesson_apply_attendance_status = 'Y'
+					                                  group by l.lesson_no) cnt
+			where l.user_id = m.user_id(+) 
+				  and l.lesson_no = cnt.lessonNo
+			      and l.user_id = #{userId}
+				  and l.lesson_date between #{startDate} and #{endDate})
+	where 
+	    row_numbers between #{begin} and #{end}
+	</select>
+	
+	<select id="getGclTotalRowsById" parameterType="map" resultType="int">
+	select count(l.lesson_no) as lessonCnt
+	from   helf_lesson l, helf_my_salary m, (select l.lesson_no       as lessonNo,
+			                                         count(la.user_id) as attendanceCnt
+					                         from helf_lesson l
+					                         join helf_lesson_apply la on l.lesson_no = la.lesson_no 
+					                         where la.lesson_apply_attendance_status = 'Y'
+					                         group by l.lesson_no) cnt
+	where l.user_id = m.user_id(+) 
+		  and l.lesson_no = cnt.lessonNo
+		  and l.user_id = #{userId}
+		  and l.lesson_date between #{startDate} and #{endDate}
+	</select>
+	
+	<insert id="saveGclData" parameterType="map">
+	insert into helf_monthly_gcl_pay_records
+										(monthly_gcl_pay_records_no, 
+										 monthly_gcl_cnt, 
+										 monthly_gcl_pay, 
+										 user_id, 
+										 monthly_gcl_month)
+	values
+		(helf_monthly_gcl_pay_records_seq.nextval, 
+		 #{lessonCnt}, 
+		 #{totalLessonPrice}, 
+		 #{userId}, 
+		 #{startDate})
+	</insert>
+	
+	<select id="getTrainerGclDataByInfo" parameterType="map" resultType="kr.co.helf.vo.MonthlyGclPayRecords">
+	select user_id						as "user.id", 
+		   monthly_gcl_month			as "gclMonth"
+	from helf_monthly_gcl_pay_records
+	where user_id = #{userId}
+	and TRUNC(monthly_gcl_month) = #{startDate}
+	</select>
+	
+	<select id="getTrainerPclDataByInfo" parameterType="map" resultType="kr.co.helf.vo.MonthlyPclPayRecords">
+	select user_id 						as "user.id",
+		   monthly_pcl_month			as "pclMonth"
+	from helf_monthly_pcl_pay_records
+	where user_id = #{userId}
+	and TRUNC(monthly_pcl_month) = #{startDate}
+	</select>
+	
+	<select id="getTotalMonthlySalary" parameterType="map" resultType="kr.co.helf.dto.MonthlyTotalSalaryDto">
+	SELECT 
+	    m.user_id								as "mySalary.user.id",
+	    m.salary_regular_pay					as "mySalary.regularPay",
+	    m.salary_tax_rate						as "mySalary.taxRate",
+	    pcl.monthly_pcl_pay_records_no			as "pcl.no",
+	    pcl.monthly_pcl_cnt						as "pcl.cnt",
+	    pcl.monthly_pcl_pay						as "pcl.pclPay",
+	    pcl.monthly_pcl_status					as "pcl.status",
+	    pcl.monthly_pcl_month					as "pcl.pclMonth",
+	    gcl.monthly_gcl_pay_records_no			as "gcl.no",
+	    gcl.monthly_gcl_cnt						as "gcl.cnt",
+	    gcl.monthly_gcl_pay						as "gcl.gclPay",
+	    gcl.monthly_gcl_status					as "gcl.status",
+	    gcl.monthly_gcl_month					as "gcl.gclMonth",
+	    (pcl.monthly_pcl_pay + gcl.monthly_gcl_pay) as totalLessonFee,
+	    (pcl.monthly_pcl_pay + gcl.monthly_gcl_pay + m.salary_regular_pay)*m.salary_tax_rate as totalTax,
+	    (pcl.monthly_pcl_pay + gcl.monthly_gcl_pay + m.salary_regular_pay)*(1-m.salary_tax_rate) as totalPayment
+	FROM 
+	    helf_my_salary m
+	JOIN 
+	    helf_monthly_pcl_pay_records pcl ON m.user_id = pcl.user_id
+	JOIN 
+	    helf_monthly_gcl_pay_records gcl ON m.user_id = gcl.user_id 
+	WHERE 
+	    m.user_id = #{userId}
+	    AND pcl.monthly_pcl_month = #{startDate}
+	    AND gcl.monthly_gcl_month = #{startDate}
+	</select>
+	
+	
+	<select id="getTrainerMonthlySalaryRecordsByInfo" parameterType="map" resultType="kr.co.helf.vo.SalaryRecords">
+	select salary_records_no 		as no,
+       salary_records_date			as insertedDate, 
+       user_id						as "user.id",
+       salary_records_month			as "salaryDate"
+	from helf_salary_records
+	where user_id = #{userId}
+	and salary_records_month = #{startDate}
+	</select>
+	
+	<insert id="insertMonthlySalaryData" parameterType="map">
+	insert into helf_salary_records(salary_records_no, 
+                                salary_records_actual_monthly_salary,
+                                salary_records_tax,
+                                salary_records_monthly_salary,
+                                user_id,
+                                pcl_pay_records_no,
+                                gcl_pay_records_no,
+                                salary_records_month)
+	values(helf_salary_records_seq.nextval,
+		   #{totalPayment},
+		   #{totalTax},
+		   #{totalLessonFee},
+		   #{userId},
+		   #{pclNo},
+		   #{gclNo},
+		   #{startDate})
+	</insert>
+	
+	<select id="getTotalRowsByUserId" parameterType="map" resultType="int">
+	SELECT count(r.salary_records_no)
+	FROM helf_my_salary m
+	LEFT OUTER JOIN helf_salary_records r ON m.user_id = r.user_id
+	JOIN helf_monthly_gcl_pay_records gcl ON r.gcl_pay_records_no = gcl.monthly_gcl_pay_records_no
+	JOIN helf_monthly_pcl_pay_records pcl ON r.pcl_pay_records_no = pcl.monthly_pcl_pay_records_no
+	WHERE r.user_id = #{userId}
+	</select>
+	
+	<select id="getTrainerSalaryRecords" parameterType="map" resultType="kr.co.helf.vo.SalaryRecords"> 
+	select * 
+    from (select r.salary_records_no						as no,
+                   r.salary_records_date					as insertedDate,
+                   r.salary_records_actual_monthly_salary	as actualMonthlysalary,
+                   r.salary_records_tax						as tax,
+                   r.salary_records_monthly_salary			as monthlySalary,
+                   r.salary_records_status					as status,
+                   r.salary_records_month					as salaryDate,
+                   m.user_id								as "user.id",
+                   m.my_salary_no							as "mySalary.no",
+                   m.salary_regular_pay						as "mySalary.regularPay",
+                   m.salary_tax_rate						as "mySalary.taxRate",
+                   m.monthly_pcl_commission_pct				as "mySalary.pclPct",
+                   m.monthly_gcl_commission_pct				as "mySalary.gclPct",
+                   m.monthly_gcl_unit_price					as "mySalary.unitPrice",
+                   pcl.monthly_pcl_pay						as "monthlyPclPayRecords.pclPay",
+                   gcl.monthly_gcl_pay						as "monthlyGclPayRecords.gclPay",
+                   row_number() over (order by r.salary_records_month  desc) row_numbers
+            from helf_my_salary m, helf_salary_records r, helf_monthly_gcl_pay_records gcl, helf_monthly_pcl_pay_records pcl
+            where m.user_id(+) = r.user_id 
+            and r.pcl_pay_records_no = pcl.monthly_pcl_pay_records_no
+            and r.gcl_pay_records_no = gcl.monthly_gcl_pay_records_no 
+            and r.user_id = #{userId})
+	where row_numbers between #{begin} and #{end}
+	</select>
+	
+	<select id="getPclMonthlyPayById" parameterType="String" resultType="kr.co.helf.vo.MonthlyPclPayRecords">
+	SELECT monthly_pcl_pay				as pclPay, 
+		   monthly_pcl_month			as pclMonth
+	FROM helf_monthly_pcl_pay_records
+	WHERE user_id = #{userId}
+	ORDER BY monthly_pcl_month DESC
+	FETCH FIRST 5 ROWS ONLY
+	</select>
+	
+	<select id="getGclMonthlyPayById" parameterType="String" resultType="kr.co.helf.vo.MonthlyGclPayRecords">
+	SELECT monthly_gcl_pay				as gclPay, 
+        	monthly_gcl_month			as gclMonth
+	FROM helf_monthly_gcl_pay_records
+	WHERE user_id = #{userId}
+	ORDER BY monthly_gcl_month DESC
+	FETCH FIRST 5 ROWS ONLY
+	</select>
+	
+	<select id="getPreviousMonthlyTrainerSalary" resultType="kr.co.helf.vo.SalaryRecords">
+	SELECT s.salary_records_no							as no, 
+	       s.salary_records_actual_monthly_salary		as actualMonthlysalary,
+	       s.salary_records_month						as salaryDate,
+	       u.user_id									as "user.id",
+	       u.user_name									as "user.name"
+	FROM helf_salary_records s
+	JOIN helf_users u ON s.user_id = u.user_id
+	WHERE s.salary_records_month = TRUNC(SYSDATE, 'MM')
+	order by u.user_name
+	</select>
+	
 </mapper>

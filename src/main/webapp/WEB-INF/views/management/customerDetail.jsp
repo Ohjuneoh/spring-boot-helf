@@ -160,12 +160,72 @@
      	</div>
     </div> 
   </div> 
-  <!-- 최근 수업 내역  -->	
+   <!-- 최근 개인 수업 내역  -->	
   <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
    	<div class="container py-5">
     	<div class="col-12">
         	<div class="section-title position-relative pb-3">
-            	<h3 class="mb-0 text-primary">최근 수업 내역 </h3>
+            	<h3 class="mb-0 text-primary">최근 개인수업 내역 </h3>
+            </div>
+            <div class="col-sm wow zoomIn" data-wow-delay="0.2s">
+            	<p style="text-align: right;"><a href="customer-personal-lesson?id=${customerInfo.user.id }">자세히보기</a></p>
+              		<table class="table table-bordered shadow-sm" style="text-align: center; vertical-align: middle;">
+               			<thead>
+	               			<tr>
+	               				<th>수업날짜</th>
+	               				<th>예약날짜</th>
+	               				<th>수업명</th>
+	               				<th>담당강사</th>
+	               				<th>출결상태</th>
+	               				<th>이용권명</th>
+	               			</tr>
+	               		</thead>
+	               		<tbody>
+	               			<c:set var="rowCount" value="0"/>
+	               			<c:choose>
+	               				<c:when test="${not empty personalLesson }">
+	               					<c:forEach var="pl" items="${personalLesson }" varStatus="loop">
+	               						<c:if test="${loop.index <3 }">
+					               			<tr>
+					               				<td><fmt:formatDate value="${pl.date}" pattern="yyyy년 MM월 dd일"></fmt:formatDate> ${pl.time}시</td>
+					               				<td><fmt:formatDate value="${pl.createDate }" pattern="yyyy년 MM월 dd일"></fmt:formatDate></td>
+					               				<td>${pl.name}</td>
+					               				<td>${pl.trainer.user.name }</td>
+					               		<c:choose>
+					               			<c:when test="${pl.status == 'W'}">
+					               				<td>예약완료</td>
+					               			</c:when>
+					               			<c:when test="${pl.status == 'Y'}">
+					               				<td>출석</td>
+					               			</c:when>
+					               			<c:otherwise>	
+					               				<td>결석</td>
+					               			</c:otherwise>
+					               		</c:choose>
+					               				<td>${pl.myMembership.membership.name }</td>
+				               				</tr>
+	               							<c:set var="rowCount" value="${rowCount +1 }"/>
+	               						</c:if>
+	               					</c:forEach>
+	               				</c:when>
+	               				<c:otherwise>
+	               					<tr>
+		               					<td colspan="6">수업 신청 내역이 없습니다.</td>
+	               					</tr>
+	               				</c:otherwise>
+	               			</c:choose>
+	               		</tbody>
+	               </table>
+            	</div>
+        	</div>
+     	</div>
+   	</div>
+  <!-- 최근 그룹 수업 내역  -->	
+  <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+   	<div class="container py-5">
+    	<div class="col-12">
+        	<div class="section-title position-relative pb-3">
+            	<h3 class="mb-0 text-primary">최근 그룹수업 내역 </h3>
             </div>
             <div class="col-sm wow zoomIn" data-wow-delay="0.2s">
             	<p style="text-align: right;"><a href="customer-lesson?id=${customerInfo.user.id }">자세히보기</a></p>
@@ -188,7 +248,7 @@
 	               						<c:if test="${loop.index <3 }">
 					               			<tr>
 					               				<td><fmt:formatDate value="${la.lesson.date}" pattern="yyyy년 MM월 dd일"></fmt:formatDate> ${la.lesson.time}</td>
-					               				<td></td>
+					               				<td><fmt:formatDate value="${la.applyDate}" pattern="yyyy년 MM월 dd일"></fmt:formatDate></td>
 					               				<td>${la.lesson.name}</td>
 					               				<td>${la.lesson.user.name }</td>
 					               		<c:choose>
@@ -207,16 +267,6 @@
 	               							<c:set var="rowCount" value="${rowCount +1 }"/>
 	               						</c:if>
 	               					</c:forEach>
-	               					<%-- <c:forEach begin="1" end="${3-rowCount }">
-			               				<tr>
-				               				<td>-</td>
-				               				<td>-</td>
-				               				<td>-</td>
-				               				<td>-</td>
-				               				<td>-</td>
-				               				<td>-</td>
-			               				</tr>
-	               					</c:forEach> --%>
 	               				</c:when>
 	               				<c:otherwise>
 	               					<tr>
@@ -290,19 +340,13 @@
 				               			</tr>
 		               				</c:if>
 		               			</c:forEach>
-		               			<%-- <c:forEach begin="1" end="${3-rowCount }">
-		               				<tr>
-		               					<td>-</td>
-		               					<td>-</td>
-		               					<td>-</td>
-		               					<td>-</td>
-		               					<td>-</td>
-		               					<td>-</td>
-		               				</tr>
-		               			</c:forEach> --%>
-		               			<tr id="see-more-orders">
-	               					<td colspan="6" style="cursor:pointer;" id="td-more-orders">더보기</td>
-	               				</tr>
+		               			<c:choose>
+	               					<c:when test="${rowCount >=3 }">
+			               				<tr id="see-more-myMemberships">
+			               					<td colspan="7" style="cursor:pointer;" id="td-more-myMemberships">더보기</td>
+			               				</tr>
+	               					</c:when>
+	               				</c:choose>
 	               			</c:when>
 	               			<c:otherwise>
 	               				<tr>
@@ -400,20 +444,13 @@
 			               				</tr>
 			               			</c:if>
 		               			</c:forEach>
-		               			<c:forEach begin="1" end="${3-rowCount }">
-			               			<tr class="hidden-row">
-			               				<td>-</td>
-			               				<td>-</td>
-			               				<td>-</td>
-			               				<td>-</td>
-			               				<td>-</td>
-			               				<td>-</td>
-			               				<td>-</td>
-			               			</tr>
-	               				</c:forEach>
-	               				<tr id="see-more-myMemberships">
-	               					<td colspan="7" style="cursor:pointer;" id="td-more-myMemberships">더보기</td>
-	               				</tr>
+	               				<c:choose>
+	               					<c:when test="${rowCount >=3 }">
+			               				<tr id="see-more-myMemberships">
+			               					<td colspan="7" style="cursor:pointer;" id="td-more-myMemberships">더보기</td>
+			               				</tr>
+	               					</c:when>
+	               				</c:choose>
 	               			</c:when>
 	               			<c:otherwise>
 	               				<tr>
