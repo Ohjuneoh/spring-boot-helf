@@ -200,22 +200,22 @@ function validUser(){
 			</div>
 		</div>
 	</div>
-	<sec:authorize access="hasRole('ROLE_MANAGER')">
 	<div class="row mb-3">
-		<h1>답변</h1>
 		<div id="replyList">
+		<h1>답변</h1>
 			<c:forEach var="answer" items="${answers }">
 				<p>${answer.content }</p>
 				<a href="/inquiry/deleteAnswer?inquiryNo=${inquiry.no}&answerNo=${answer.no}" class=" btn btn-danger mt-1 float-end btn-sm"  style=" margin-right: 7px;" onclick="return confirmDelete();">삭제</a>
 			</c:forEach>
 		</div>
+	<sec:authorize access="hasRole('ROLE_MANAGER')">
 		<c:if test="${inquiry.isAnswer eq 'N' }">
 			
 				<textarea id="reply"></textarea>
 				<button type="button" id="replyBtn">작성</button>
 		</c:if>
-	</div>
 	</sec:authorize>
+	</div>
 </div>
 
 <script type="text/javascript">
