@@ -14,7 +14,7 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
@@ -93,7 +93,7 @@
 	                <div class="col-lg-3 wow slideInUp" data-wow-delay="0.3s">
 	                    <div class="team-item bg-light rounded overflow-hidden">
 	                        <div class="team-img position-relative overflow-hidden">
-	                            <img class="img-fluid w-100" src="/resources/img/photo/${trainer.trainerFile }" alt="" 
+	                            <img class="img-fluid w-100" src="/resources/img/photo/${trainer.trainerFile }" alt=""  style="width:200px; height: 210px;"
 	                            	data-trainer-no="${trainer.trainerNo}" data-user-id="${trainer.user.id }">
 	                        </div>
 	                        <div class="text-center py-4">
