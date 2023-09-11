@@ -163,6 +163,17 @@ $(document).ready(function() {
         lang: "ko-KR"
     });
 });
+
+$(document).ready(function() {
+    $('form').submit(function(e) {
+        var title = $('input[name="title"]').val();
+        
+        if (title.trim() === '') {
+            e.preventDefault(); 
+            alert('제목을 입력하세요.');
+        }
+    });
+});
 </script>
 
 </body>

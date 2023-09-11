@@ -49,6 +49,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		user.setType("ROLE_USER");
 		user.setCreateDate(new Date());
 		user.setUpdateDate(new Date());
+		user.setPoint(1000);
 		
 		Rank rank = new Rank();
 		rank.setNo(1);

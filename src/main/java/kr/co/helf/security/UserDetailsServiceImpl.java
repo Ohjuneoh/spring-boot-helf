@@ -21,14 +21,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		User user = userDao.getUserById(id);
 		if(user == null) {
-			throw new UsernameNotFoundException("고객 정보가 존재하지 않습니다.");
-			
+			throw new UsernameNotFoundException("사용자 혹은 트레이너 정보가 존재하지 않습니다.");
 		}
 		
-		if (!"ROLE_USER".equals(user.getType()) && !"Y".equals(user.getStatus())) {
-		    throw new UsernameNotFoundException("로그인 가능 상태가 아닙니다.");
-		} else if(!"ROLE_TRAINER".equals(user.getType()) && !"Y".equals(user.getStatus())) {
-			throw new UsernameNotFoundException("로그인 가능 상태가 아닙니다.");
+		if ("N".equals(user.getStatus())) {
+		    throw new UsernameNotFoundException("탈퇴한 사용자 혹은 트레이너는 로그인할 수 없습니다.");
+		} else if("ROLE_TRAINER".equals(user.getType()) && "R".equals(user.getStatus())) {
+			throw new UsernameNotFoundException("승인 대기중인 트레이너는 로그인할 수 없습니다.");
 		}
 		
 		return user;
