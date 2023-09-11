@@ -139,7 +139,7 @@
                         </div>
                         <div class="ps-4">
                             <h5 class="text-white mb-0">개설된 수업</h5>
-                            <h1 class="text-white mb-0" data-toggle="counter-up">${lessons.allLessons }</h1>
+                            <h1 class="text-white mb-0" data-toggle="counter-up">${getAllCountLessons.lessonCount }</h1>
                         </div>
                     </div>
                 </div>
@@ -184,7 +184,7 @@
         <div class="container py-5">
             <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
                 <h5 class="fw-bold text-primary text-uppercase">Team Members</h5>
-                <h1 class="mb-0">Professional Stuffs Ready to Help Your Business</h1>
+                <h1 class="mb-0">강사 소개</h1>
             </div>
             <div class="row g-5">
 				<c:forEach var="trainer" items="${trainers }">
@@ -192,12 +192,6 @@
 	                    <div class="team-item bg-light rounded overflow-hidden">
 	                        <div class="team-img position-relative overflow-hidden">
 	                            <img class="img-fluid w-100" src="/resources/img/${trainer.trainerFile }" alt="">
-	                            <div class="team-social">
-	                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
-	                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-	                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-instagram fw-normal"></i></a>
-	                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-	                            </div>
 	                        </div>
 	                        <div class="text-center py-4">
 	                            <h4 class="text-primary">${trainer.user.name }</h4>
