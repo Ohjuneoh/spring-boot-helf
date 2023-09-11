@@ -58,6 +58,9 @@ public interface PersonalLessonMapper {
 	List<Trainer> getTrainersWithCareerByUserId(String id);
 	//트레이너 번호와 유저 아이디로 상담내역 찾기
 	Consultation getConsultationByTrainerNo(@Param("id") String id, @Param("trainerNo") int trainerNo);
-	
+
+
+	// 모든 개설된 총 개인수업 갯수
+	Integer getAllPersonalLesson();
 
 }

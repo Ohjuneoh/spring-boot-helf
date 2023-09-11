@@ -158,7 +158,7 @@ function validUser(){
 	        	<c:if test="${inquiry.isAnswer eq 'N' }">
 		        	<div class="button-container">
 						<input type="hidden" name="no" value="${inquiry.no }" />
-						<a href="/inquiry/delete?no=${inquiry.no }" class=" btn btn-danger mt-1 float-end btn-sm"  style=" margin-right: 7px;" onclick="return confirmDelete();">삭제</a>
+						<a href="/inquiry/delete?no=${inquiry.no }" class="btn btn-danger mt-1 float-end btn-sm"  style=" margin-right: 7px;" onclick="return confirmDelete();">삭제</a>
 					</div>  
 					<div class="button-container">
 						<a href="#" class=" btn btn-warning mt-1 float-end btn-sm" style=" margin-right: 7px;" data-bs-toggle="modal" data-bs-target="#modifyModal">수정</a>
@@ -200,22 +200,45 @@ function validUser(){
 			</div>
 		</div>
 	</div>
-	<sec:authorize access="hasRole('ROLE_MANAGER')">
+	
 	<div class="row mb-3">
-		<h1>답변</h1>
-		<div id="replyList">
-			<c:forEach var="answer" items="${answers }">
-				<p>${answer.content }</p>
-				<a href="/inquiry/deleteAnswer?inquiryNo=${inquiry.no}&answerNo=${answer.no}" class=" btn btn-danger mt-1 float-end btn-sm"  style=" margin-right: 7px;" onclick="return confirmDelete();">삭제</a>
-			</c:forEach>
+		<div class="col-12">
+			<div class="button-container">
+			</div>  
 		</div>
-		<c:if test="${inquiry.isAnswer eq 'N' }">
+		<div class="col-12">
 			
-				<textarea id="reply"></textarea>
-				<button type="button" id="replyBtn">작성</button>
-		</c:if>
+			<div id="boardview" class="wrap_inner">
+				<h3>답변</h3>
+				
+				<div id="replyList">
+					<c:forEach var="answer" items="${answers }">
+						<div class="tablelayer p-3">
+							<p>${answer.content }</p>
+						</div>
+						<sec:authorize access="hasRole('ROLE_MANAGER')">
+						<div class="text-end">
+							<a href="/inquiry/deleteAnswer?inquiryNo=${inquiry.no}&answerNo=${answer.no}" class=" btn btn-danger mt-1  btn-sm"  style=" margin-right: 7px;" onclick="return confirmDelete();">삭제</a>
+						</div>
+						</sec:authorize>						
+					</c:forEach>
+				</div>
+				
+				<c:if test="${inquiry.isAnswer eq 'N' }">
+					<sec:authorize access="hasRole('ROLE_MANAGER')">
+						<div id="answer-box">
+							<div class="tablelayer p-3 mb-3">
+								<textarea id="reply" class="form-control"></textarea>
+							</div>	
+							<div class="text-end">
+								<button type="button" id="replyBtn" class="btn btn-primary mt-1 btn-sm">작성</button>
+							</div>
+						</div>
+					</sec:authorize>
+				</c:if>
+			</div>
+		</div>
 	</div>
-	</sec:authorize>
 </div>
 
 <script type="text/javascript">
@@ -230,6 +253,7 @@ document.querySelector("#replyBtn").addEventListener("click", function(){
         url: "addReply?no=${inquiry.no}",
         data:  data,
         success: function(result) {
+        	$("#answer-box").remove();
         	console.log("success")
             console.log(result);
         	
@@ -238,16 +262,18 @@ document.querySelector("#replyBtn").addEventListener("click", function(){
         	
         	for(let i = 0; i < result.length; i++){
         		let reply = `
-        			<p>\${result[i].content}</p>
-        			<a href="/inquiry/deleteAnswer?inquiryNo=${inquiry.no}&answerNo=\${result[i].no}" 
-        					class=" btn btn-danger mt-1 float-end btn-sm"  
-        					style=" margin-right: 7px;" onclick="return confirmDelete();">삭제</a>
+        			<div class="tablelayer p-3">
+	        			<p>\${result[i].content}</p>
+	        		</div>
+        			<div class="text-end">
+	        			<a href="/inquiry/deleteAnswer?inquiryNo=${inquiry.no}&answerNo=\${result[i].no}" 
+	        					class=" btn btn-danger mt-1 float-end btn-sm"  
+	        					style=" margin-right: 7px;" onclick="return confirmDelete();">삭제</a>
+        			</div>
         		`
         		replyArea.innerHTML += reply
         	}
         	
-        	$("#reply").hide();
-        	$("#replyBtn").hide();
         }
     });
 })
