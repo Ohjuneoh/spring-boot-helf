@@ -16,15 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.helf.dto.AttendanceList;
 import kr.co.helf.service.PersonalLessonService;
 import kr.co.helf.service.UserService;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.MyMembership;
+import kr.co.helf.vo.PersonalLesson;
 import kr.co.helf.vo.User;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -75,16 +74,31 @@ public class CheckInController {
 		return optional;  
 	}
 	
+//	//회원 수업 출석 정보 요청과 매핑되는 요청핸들러 메소드 
+//	@GetMapping("/lesson")
+//	@ResponseBody
+//	public List<LessonApply> getMyLessons(@RequestParam("id") String id){
+//			List<LessonApply> myLessonLists = personalLessonService.getMyTodayLessons(id);
+//			return myLessonLists;
+//	}
+	
 	// 회원 수업 출석 정보 요청과 매핑되는 요청핸들러 메소드 
 	@GetMapping("/lesson")
 	@ResponseBody
-	public List<LessonApply> getMyLessons(@RequestParam("id") String id){
-			List<LessonApply> myLessonLists = personalLessonService.getMyTodayLessons(id);
-			return myLessonLists;
-	}
+	public Map<String, Object> getMyLessons(@RequestParam("id") String id){
+			List<LessonApply> myLessonLists = personalLessonService.getMyTodayLessons(id); // 그룹수업 
+			List<PersonalLesson> personalLists = personalLessonService.getMyTodayPcl(id); // 개인수업 
+			Map<String, Object> result = new HashMap<>();
+			result.put("myLessonLists", myLessonLists);
+			result.put("personalLists", personalLists);
+			
+			return result;
+		}
+		
 	
+	// 출석정보 저장 
 	@PostMapping("/check-lesson-attendance")
-	public String checkAttendance(@RequestParam("userId")String userId, @RequestParam("membershipNo") int myMembershipNo) {
+	public String checkAttendance(@RequestParam("userId")String userId, @RequestParam("myMembershipNo") int myMembershipNo) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("userId", userId);
 		param.put("myMembershipNo", myMembershipNo);

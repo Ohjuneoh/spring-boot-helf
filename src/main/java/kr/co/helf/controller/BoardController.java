@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import kr.co.helf.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.helf.dto.BoardPrevNextDto;
 import kr.co.helf.form.AddBoardForm;
-import kr.co.helf.form.AddUserForm;
 import kr.co.helf.form.BoardModifyForm;
 import kr.co.helf.service.BoardService;
 import kr.co.helf.vo.Board;
@@ -45,8 +45,8 @@ public class BoardController {
 	
 	// 공지사항 등록폼화면
 	@GetMapping(value="/noticeform")
-	public String noticeform() {
-		
+	public String noticeform(@AuthenticationPrincipal User user,Model model) {
+		model.addAttribute("user",user);
 		return "board/noticeform";
 	}
 	
@@ -59,6 +59,7 @@ public class BoardController {
 	      
 	      return "redirect:/board/notice";
 	   }
+=
 	
 	
 	// 공지사항 상세정보 & 이전글/다음글

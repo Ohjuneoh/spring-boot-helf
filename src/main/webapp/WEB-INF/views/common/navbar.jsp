@@ -109,6 +109,7 @@
 		                        <a href="/user/trainerMypage" class="dropdown-item">내 정보 조회</a>
 		                        <a href="/lesson/trainer-my-lesson" class="dropdown-item">내 수업 조회</a>
 		                        <a href="/checkin/attendance" class="dropdown-item">출퇴근 내역</a>
+		                        <a href="/salary/salary-detail?id=<sec:authentication property="principal.id" />" class="dropdown-item">급여 내역</a>
 	                    	</sec:authorize>
 	                	</div>
 	            	</div>
@@ -120,7 +121,7 @@
 	                    <a href="/management/customer-list" class="dropdown-item">고객관리</a>
 	                    <a href="/management/trainer-list" class="dropdown-item">인사관리</a>
 	                    <a href="/salary/salary-list" class="dropdown-item">급여관리</a>
-	                    <a href="/checkin/check-in" class="dropdown-item">입장 화면</a>
+	                    <a href="/checkin/check-in" class="dropdown-item">입장화면</a>
 	                </div>
 	            </div>
             </sec:authorize>
