@@ -9,7 +9,6 @@ import kr.co.helf.form.ModifyReviewForm;
 import kr.co.helf.service.TrainerReviewService;
 import kr.co.helf.vo.TrainerReview;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,6 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/trainer-review")
 @RequiredArgsConstructor
-@Slf4j
 public class TrainerReviewController {
 
     private final TrainerReviewService trainerReviewService;

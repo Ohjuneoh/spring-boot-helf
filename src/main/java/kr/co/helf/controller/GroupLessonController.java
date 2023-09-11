@@ -6,7 +6,6 @@ import kr.co.helf.vo.Lesson;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@Slf4j
 @RequestMapping("/group-lesson")
 @RequiredArgsConstructor
 @ControllerAdvice

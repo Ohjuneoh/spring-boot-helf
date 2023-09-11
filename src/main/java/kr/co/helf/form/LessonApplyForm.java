@@ -1,6 +1,5 @@
 package kr.co.helf.form;
 
-import kr.co.helf.vo.Lesson;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

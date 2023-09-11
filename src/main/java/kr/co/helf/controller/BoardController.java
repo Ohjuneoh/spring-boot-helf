@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.helf.dto.BoardPrevNextDto;
 import kr.co.helf.form.AddBoardForm;
-import kr.co.helf.form.AddUserForm;
 import kr.co.helf.form.BoardModifyForm;
 import kr.co.helf.service.BoardService;
 import kr.co.helf.vo.Board;
