@@ -89,7 +89,7 @@ public class InquiryController {
 			Inquires inquiry = inquiryService.getinquiryByNo(no);
 			model.addAttribute("inquiry", inquiry);
 			
-			if(inquiry.getSecret().equals("N")) {
+			if("N".equals(inquiry.getSecret())) {
 				return "inquiry/detail";
 			}
 			

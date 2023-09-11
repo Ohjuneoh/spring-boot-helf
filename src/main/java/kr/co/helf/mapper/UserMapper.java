@@ -111,6 +111,12 @@ public interface UserMapper {
 	Trainer getTrainerByNo(int trainerNo);
 
 	User getTrainerUserById(String id);
+
+	//트레이너 경력정보 merge
+	void updateTrainerCareer(TrainerCareer career);
+
+	void deleteCareer(int careerNo);
+
 	
 	
 }

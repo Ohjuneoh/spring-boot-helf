@@ -371,4 +371,11 @@
 		and   user_id = #{id}
 		and   lesson_consultation_status = '대기중'
 	</select>
+
+	<!-- 개설된 총 개인수업 갯수 -->
+	<select id="getAllPersonalLesson" resultType="Integer">
+		select count(*) as allPersonalLessons
+		from helf_personal_lesson
+	</select>
+
 </mapper>

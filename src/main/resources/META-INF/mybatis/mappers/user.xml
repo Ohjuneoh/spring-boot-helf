@@ -541,7 +541,7 @@
 		where
 			trainer_no = #{value}
 	</select>
-	
+  
 	<!-- 트레이너 번호로 유저 조회 -->
 	<select id="getTrainerByNo" parameterType="int" resultType="Trainer">
 		select trainer_no					as trainerNo,
@@ -553,6 +553,24 @@
 		from helf_trainers
 		where trainer_no = #{value}
 	</select>
+
+		<!-- 트레이너 경력정보 수정(트레이너 경력객체에 등록) -->
+	<update id="updateTrainerCareer" parameterType="TrainerCareer">
+	    UPDATE helf_trainer_career
+	    SET 
+	        career_name = #{name},
+	        career_start_date = #{startDate},
+	        career_end_date = #{endDate}
+	    WHERE
+	        trainer_no = #{trainer.trainerNo}
+	        AND career_no = #{no} 
+	</update>
+
+	<!-- 경력삭제 ajax  -->
+	<delete id="deleteCareer" parameterType="int">
+	    DELETE FROM HELF_TRAINER_CAREER
+	    WHERE CAREER_NO = #{value}
+	</delete>
 	
 	<select id="getTrainerUserById" parameterType="string" resultType="User">
 		select

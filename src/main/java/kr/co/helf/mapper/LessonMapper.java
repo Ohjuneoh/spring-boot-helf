@@ -37,5 +37,5 @@ public interface LessonMapper {
 	List<MyPersonalLessonDto> getAllMyTrainerByUserId(String id);
 
     // 홈페이지 모든 개설된 수업 조회(예광)
-    Lesson getAllLessonForHome();
+    Integer getAllLessonForHome();
 }
