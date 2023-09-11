@@ -519,5 +519,88 @@
 		select count(*) as allPersonalLessons
 		from helf_personal_lesson
 	</select>
+	
+	<select id="getRecentPersonalLessons" parameterType="string" resultType="PersonalLesson">
+		SELECT 
+		    p.personal_lesson_date AS "date",
+		    p.personal_lesson_create_date AS createDate,
+		    p.personal_lesson_name AS name,
+		    student_user.user_name AS "user.name",
+		    p.personal_lesson_status AS status,
+		    p.my_membership_no AS "myMembership.no",
+		    m.membership_name AS "myMembership.membership.name"
+		FROM 
+		    helf_personal_lesson p, helf_users trainer_user, helf_users student_user, helf_trainers t, helf_membership m
+		WHERE 
+		    t.user_id = 'june'
+		AND 
+		    t.trainer_no = p.trainer_no
+		AND 
+		    t.user_id = trainer_user.user_id
+		AND 
+		    p.user_id = student_user.user_id
+		AND 
+		    p.my_membership_no = m.membership_no(+)
+		ORDER BY 
+		    p.personal_lesson_create_date DESC
+		FETCH FIRST 5 ROWS ONLY
+	</select>
+	<select id="getMembershipNoByMyMembershipNo" parameterType="int" resultType="int">
+	    SELECT 
+	        MEMBERSHIP_NO
+	    FROM 
+	        HELF_MY_MEMBERSHIP 
+	    WHERE 
+	        MY_MEMBERSHIP_NO = #{myMembershipNo}
+	</select>
+	
+	<select id="getMembershipNameByNo" parameterType="int" resultType="String">
+	    SELECT 
+	        MEMBERSHIP_NAME
+	    FROM 
+	        HELF_MEMBERSHIP
+	    WHERE 
+	        MEMBERSHIP_NO = #{membershipNo}
+	</select>	
+    <!-- 모든 행 조회(페이징처리) -->
+    <select id="getTotalRows" parameterType="map" resultType="int">
+        select count(*)
+        from helf_personal_lesson
+    </select>
+    
+	<select id="trainerMyAllPersonalLessons" parameterType="map" resultType="PersonalLesson">
+		 select *
+		    from(
+		        select
+		            p.personal_lesson_no as no,
+		            p.personal_lesson_name as name,
+		            p.personal_lesson_date as "date",
+		            p.personal_lesson_create_date as createDate,
+		            p.personal_lesson_time	as time,
+		            student_user.user_name as "user.name",
+		            p.personal_lesson_status as status,
+		            p.my_membership_no as "myMembership.no",
+		            m.membership_name as "myMembership.membership.name",
+		            row_number() over (order by p.personal_lesson_no asc) rownumber
+		        from 
+		            helf_personal_lesson p, 
+		            helf_users trainer_user, 
+		            helf_users student_user, 
+		            helf_trainers t, 
+		            helf_membership m
+		       WHERE 
+			        t.user_id = #{userId}
+			    AND 
+			        t.trainer_no = p.trainer_no
+			    AND 
+			        t.user_id = trainer_user.user_id
+			    AND 
+			        p.user_id = student_user.user_id
+			    AND 
+			        p.my_membership_no = m.membership_no(+)
+		
+		        )
+		    where rownumber between #{begin} and #{end}
+	</select>
 
 </mapper>
