@@ -1,12 +1,14 @@
 package kr.co.helf.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 
 import kr.co.helf.vo.LessonApply;
+import kr.co.helf.vo.Membership;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.PersonalLesson;
 import kr.co.helf.dto.UserConsultations;
@@ -62,5 +64,16 @@ public interface PersonalLessonMapper {
 
 	// 모든 개설된 총 개인수업 갯수
 	Integer getAllPersonalLesson();
+
+	//강사 ID로 최근 수업내역 5개 조회
+	List<PersonalLesson> getRecentPersonalLessons(String userId);
+	//마이 멤버십 번호로 멤버십 번호찾기
+	Integer getMembershipNoByMyMembershipNo(int membershipNo);
+	//멤버십 번호로 멤버십 이름 찾기
+	String getMembershipNameByNo(int myMembershipNo);
+
+	int getTotalRows(Map<String, Object> param);
+
+	List<PersonalLesson> trainerMyAllPersonalLessons(Map<String, Object> param);
 
 }
