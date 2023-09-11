@@ -11,7 +11,6 @@ import kr.co.helf.mapper.LessonMapper;
 import kr.co.helf.mapper.TrainerReviewMapper;
 import kr.co.helf.vo.*;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class TrainerReviewService {
 
     private final TrainerReviewMapper trainerReviewMapper;

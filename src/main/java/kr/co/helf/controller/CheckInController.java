@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.helf.dto.AttendanceList;
 import kr.co.helf.service.PersonalLessonService;
@@ -24,7 +23,6 @@ import kr.co.helf.service.UserService;
 import kr.co.helf.vo.LessonApply;
 import kr.co.helf.vo.MyMembership;
 import kr.co.helf.vo.User;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller

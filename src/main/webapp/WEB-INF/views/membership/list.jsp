@@ -239,25 +239,9 @@ $(function () {
 			.hide();	
 		
 		myModal.show();
-		
-		/* $("#deleted-check-Modal")
-			.addClass("show")
-			.attr("aria-modal", "true")
-			.attr("role", "dialog")
-			.removeAttr("aria-hidden")
-			.modal().show(); */
 	});
 	
-	$("#btn-cancell").on('click', function () {
-		/*  $('#deleted-check-Modal')
-		 	.removeClass("show")
-			.removeClass("fade")
-			.removeAttr("aria-modal")
-			.removeAttr("role")
-			.attr("aria-hidden", "true")
-			.removeClass("transform")
-			.modal().hide(); */
-			
+	$("#btn-cancell").on('click', function () {			
 		 location.reload()
 	})
 })
