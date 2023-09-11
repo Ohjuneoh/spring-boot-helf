@@ -541,7 +541,18 @@
 		where
 			trainer_no = #{value}
 	</select>
-	
+  
+	<!-- 트레이너 번호로 유저 조회 -->
+	<select id="getTrainerByNo" parameterType="int" resultType="Trainer">
+		select trainer_no					as trainerNo,
+				trainer_file				as trainerFile,
+				trainer_resignation_date	as resignationDate,
+				trainer_title				as title,
+				user_id						as "user.id",
+				trainer_hired_date			as hiredDate
+		from helf_trainers
+		where trainer_no = #{value}
+	</select>
 
 		<!-- 트레이너 경력정보 수정(트레이너 경력객체에 등록) -->
 	<update id="updateTrainerCareer" parameterType="TrainerCareer">
@@ -554,25 +565,33 @@
 	        trainer_no = #{trainer.trainerNo}
 	        AND career_no = #{no} 
 	</update>
-	<!-- 트레이너의 유저아이디 받아서 유저상태,트레이너 직급 변경 -->
-	<update id="updateTrainerStatus" parameterType="map">
-		update
-		    HELF_TRAINERS T
-		set
-		    T.TRAINER_TITLE = #{title}
-		WHERE
-			T.USER_ID = 
-		    (SELECT T.USER_ID FROM HELF_TRAINERS T
-		    LEFT OUTER JOIN HELF_USERS U
-		    ON T.USER_ID = U.USER_ID
-		    WHERE T.TRAINER_TITLE IS NULL 
-		    AND U.USER_STATUS = #{status}
-		    AND T.USER_ID = #{id});
-	</update>
+
 	<!-- 경력삭제 ajax  -->
 	<delete id="deleteCareer" parameterType="int">
 	    DELETE FROM HELF_TRAINER_CAREER
 	    WHERE CAREER_NO = #{value}
 	</delete>
 	
+	<select id="getTrainerUserById" parameterType="string" resultType="User">
+		select
+			user_id					as id,
+			user_email				as email,
+			user_name					as name,
+			user_tel					as tel,
+			user_encrypted_password 	as encryptedPassword,
+			user_gender				as gender,
+			user_status				as status,
+			user_mobile_carrier		as mobileCarrier,
+			user_create_date			as createDate, 
+			user_update_date			as updateDate,
+			user_point				as point,
+			rank_no					as "rank.no",
+			user_type					as type,
+			user_authentication_no	as authenticationNo,
+			user_social				as social
+		from
+			helf_users 
+		where 
+			user_id = #{value}
+	</select>
 </mapper>

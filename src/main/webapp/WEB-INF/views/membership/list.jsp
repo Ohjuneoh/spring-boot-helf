@@ -120,7 +120,8 @@
 			</div>
 			
 			<!-- 상세정보 모달 -->
-			<div class="modal" id="detail-modal-${myMembership.no }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal" id="detail-modal-${myMembership.no }" tabindex="-1" aria-labelledby="exampleModalLabel" 
+				 aria-hidden="true">
 		  		<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -169,35 +170,35 @@
 		                    </div>
 						</div>
 						<div class="align-items-end justify-content-end text-end" style="margin: 15px;">
-							<button id="btn-refund-${myMembership.no }" class="btn btn-danger" data-membership-no="${myMembership.no }">환불하기</button>
+							<button id="btn-refund-${myMembership.no }" class="btn btn-danger" 
+									data-membership-no="${myMembership.no }">환불하기</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			
-			<!-- 삭제확인 모달 -->
-			<div class="modal" id="deleted-check-Modal-${myMembership.no }" tabindex="-1" aria-labelledby="deletedCheckModalLabel" 
-    			 aria-hidden="true">
-			    <div class="modal-dialog">
-			        <div class="modal-content">
-			            <div class="modal-header">
-			                <h5>삭제확인</h5>
-			                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			            </div>
-			            <div class="modal-body">
-			                <strong>해당 이용권을 정말 환불하시겠습니까?</strong>
-			            </div>
-			            <div class="modal-footer">
-			                <button id="btn-cancell-${myMembership.no }" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-			                <form action="wait-refund" method="post">
-			                    <button type="submit" class="btn btn-danger">확인</button>
-			                    <input type="hidden" name="no" value="${myMembership.no }">
-			                </form>
-			            </div>
-			        </div>
-			    </div>
-			</div>
 		</c:forEach>
+		<!-- 삭제확인 모달 -->
+		<div class="modal" id="deleted-check-Modal" tabindex="-1" aria-labelledby="deletedCheckModalLabel" 
+   			 aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5>삭제확인</h5>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		            </div>
+		            <div class="modal-body">
+		                <strong>해당 이용권을 정말 환불하시겠습니까?</strong>
+		            </div>
+		            <div class="modal-footer">
+		                <button id="btn-cancell" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		                <form action="wait-refund" method="post">
+		                    <button type="submit" class="btn btn-danger">확인</button>
+		                    <input type="hidden" name="no">
+		                </form>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 	</div>
 	
     <jsp:include page="/WEB-INF/views/common/footernavbar.jsp" />
@@ -222,11 +223,14 @@
 	<script src="/resources/js/main.js"></script>
 </body>
 <script type="text/javascript">
+let myModal = new bootstrap.Modal(document.getElementById("deleted-check-Modal"));
+
 $(function () {
-	
-	let membershipNo = $("[id^=btn-refund]").attr("data-membership-no");
 	$("[id^=btn-refund]").on('click', function () {
-		$("#detail-modal-" + membershipNo)
+		let myMembershipNo = $(this).attr('data-membership-no');
+		$("input[name=no]").val(myMembershipNo);
+		
+		$("[id^=detail-modal]")
 			.removeClass("show")
 			.removeClass("fade")
 			.removeAttr("aria-modal")
@@ -234,24 +238,26 @@ $(function () {
 			.attr("aria-hidden", "true")
 			.hide();	
 		
-		$("#deleted-check-Modal-"+ membershipNo)
+		myModal.show();
+		
+		/* $("#deleted-check-Modal")
 			.addClass("show")
 			.attr("aria-modal", "true")
 			.attr("role", "dialog")
 			.removeAttr("aria-hidden")
-			.modal().show();
+			.modal().show(); */
 	});
 	
-	$("#btn-cancell-" + membershipNo).on('click', function () {
-		 $('#deleted-check-Modal-' + membershipNo)
+	$("#btn-cancell").on('click', function () {
+		/*  $('#deleted-check-Modal')
 		 	.removeClass("show")
 			.removeClass("fade")
 			.removeAttr("aria-modal")
 			.removeAttr("role")
 			.attr("aria-hidden", "true")
 			.removeClass("transform")
-			.modal().hide();
-		 
+			.modal().hide(); */
+			
 		 location.reload()
 	})
 })
