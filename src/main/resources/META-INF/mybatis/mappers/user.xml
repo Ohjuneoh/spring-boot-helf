@@ -70,7 +70,7 @@
 		 user_social)
 		values
 		(#{id}, #{email}, #{name}, #{tel}, #{encryptedPassword}, 
-		 #{gender}, #{type}, 1, 0, #{mobileCarrier},
+		 #{gender}, #{type}, 1, #{point}, #{mobileCarrier},
 		 #{social})
 	</insert>
 	
