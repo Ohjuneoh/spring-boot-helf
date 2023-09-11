@@ -81,7 +81,7 @@
 		        	<c:if test="${userInfo.social eq 'web' }">
 		        	<a href="/user/userModify" class="btn btn-primary btn-sm">수정하기</a>
 		        	</c:if>
-		        	<a class="btn btn-danger btn-sm">회원탈퇴</a>
+		        	<a class="btn btn-danger btn-sm" href="/user/withdrawal" onclick="return confirmWithdrawal();">회원탈퇴</a>
 		        </div>
             </div>
         </div>
@@ -200,7 +200,6 @@
     			</div>
     		</div>
     	</div>
-    </div>
     
     <!-- Lesson Register Form End  -->
 	<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
@@ -299,8 +298,10 @@
 
 <script type="text/javascript">
 
+function confirmWithdrawal() {
+    return confirm('정말로 탈퇴하시겠습니까?');
+}
 </script>
-
 
     
 </body>
