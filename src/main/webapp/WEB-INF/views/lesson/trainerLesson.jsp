@@ -264,20 +264,32 @@
             let lessonNo = $(this).attr('data-lesson-no');
             $("#current-lesson-no").val(lessonNo);
             $.getJSON("trainer-user-apply", {lessonNo:lessonNo}, function(LessonApplies) {
-                LessonApplies.forEach(function(apply, index) {
-                    console.log(apply);
-                    let tr = `
-                    <tr>
-                        <td>\${apply.user.name }</td>
-                        <td>\${apply.attendanceStatus }</td>
-                        <td>
-                            <button type="button" class="btn btn-primary btn-sm" data-select="\${apply.user.id }">출석</button>
-                            <button type="button" class="btn btn-danger btn-sm" data-select="\${apply.user.id }">결석</button>
-                        </td>
-                    </tr>
-                `;
-                    $tbody.append(tr);
-                })
+
+                if (LessonApplies.length === 0) {
+                        let tr = `
+                         <tr>
+                                <td colspan="3">신청한 수강생이 존재하지 않습니다.</td>
+                            </tr>
+                    `
+                        $tbody.append(tr);
+                } else {
+                    LessonApplies.forEach(function(apply, index) {
+                        console.log(apply);
+                        let tr = `
+
+                            <tr>
+                                <td>\${apply.user.name }</td>
+                                <td>\${apply.attendanceStatus }</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm" data-select="\${apply.user.id }">출석</button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-select="\${apply.user.id }">결석</button>
+                                </td>
+                            </tr>
+                        `;
+                        $tbody.append(tr);
+                    })
+
+                }
             })
         });
         // 모달창에 출석버튼 클릭 시
