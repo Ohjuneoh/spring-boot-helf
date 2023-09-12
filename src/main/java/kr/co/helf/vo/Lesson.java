@@ -33,4 +33,8 @@ public class Lesson {
     public Lesson(int no){
         this.no = no;
     }
+
+    public boolean isPast() {
+        return date.before(new Date());
+    }
 }
