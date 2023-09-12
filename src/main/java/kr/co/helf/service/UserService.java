@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
+
 import kr.co.helf.dto.AttendanceList;
 import kr.co.helf.dto.CustomerAttendanceListDto;
 import kr.co.helf.dto.CustomerDetailDto;
@@ -24,6 +25,7 @@ import kr.co.helf.dto.CustomerListDto;
 import kr.co.helf.dto.CustomerOrderDto;
 import kr.co.helf.dto.Pagination;
 import kr.co.helf.dto.TrainerDto;
+import kr.co.helf.exception.WithdrawalUserException;
 import kr.co.helf.mapper.InquiryMapper;
 import java.io.*;
 import java.text.ParseException;
@@ -325,8 +327,7 @@ public class UserService {
        
    
    // 마이페이지 - 유저 회원탈퇴
-      public void withdrawalUser(String id) {
-         User user = userMapper.getUserById(id);
+      public void withdrawalUser(User user) {
          
          if(user == null) {
             throw new RuntimeException("탈퇴처리를 진행할 회원이 존재하지 않습니다.");
@@ -334,6 +335,32 @@ public class UserService {
          
          if("N".equals(user.getStatus())) {
             throw new RuntimeException("이미 탈퇴처리가 완료된 회원입니다.");
+         }
+         
+         if("ROLE_TRAINER".equals(user.getType())) {
+        	 Trainer trainer = personalLessonMapper.getTrainerByUserId(user.getId());
+        	 
+        	 Date today = new Date();
+        	 List<Lesson> lessonList = userMapper.getAllLessonById(user.getId());
+        	 if(!lessonList.isEmpty()) {
+        		 for(Lesson lesson : lessonList) {
+        			 Date lessonDate = lesson.getDate();
+        			 
+        			 if(lessonDate.compareTo(today) > 0) {
+        				 throw new WithdrawalUserException("아직 수업이 남아있기 때문에 탈퇴는 불가합니다.");
+        			 }
+        		 }
+        	 }
+        	 
+        	 List<PersonalLesson> personalList = userMapper.getAllPersonalLessonByNo(trainer.getTrainerNo());
+        	 if(!personalList.isEmpty()) {
+	        	 for(PersonalLesson personalLesson : personalList) {
+	        		 Date lessonDate = personalLesson.getDate();
+	        		 if(lessonDate.compareTo(today) > 0) {
+	        			 throw new WithdrawalUserException("아직 수업이 남아있기 때문에 탈퇴는 불가합니다.");
+	        		 }
+	        	 }
+        	 }
          }
          
          user.setStatus("N");

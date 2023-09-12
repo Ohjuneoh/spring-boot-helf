@@ -117,6 +117,7 @@ public interface UserMapper {
 
 	void deleteCareer(int careerNo);
 
-	
-	
+	List<Lesson> getAllLessonById(String id);
+
+	List<PersonalLesson> getAllPersonalLessonByNo(int trainerNo);
 }
