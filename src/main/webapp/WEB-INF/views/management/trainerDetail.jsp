@@ -163,7 +163,7 @@
             	<h3 class="mb-0 text-primary">최근 개인 수업 내역 </h3>
             </div>
             <div class="col-sm wow zoomIn" data-wow-delay="0.2s">
-            	<p style="text-align: right;"><a href="">자세히보기</a></p>
+            	<p style="text-align: right;"><a href="/management/morePersonalLesson?id=${param.id}">자세히보기</a></p>
               		<table class="table table-bordered shadow-sm" style="text-align: center; vertical-align: middle;">
                			<thead>
 	               			<tr>
@@ -176,14 +176,16 @@
 	               			</tr>
 	               		</thead>
 	               		<tbody>
-	               			<tr>
-				               	<td>-</td>
-				       			<td>-</td>
-			    				<td>-</td>
-				   				<td>-</td>
-			      				<td>-</td>
-			     				<td>-</td>
-			               	</tr>
+		               		<c:forEach var="personalLesson" items="${personalLessons }" >
+		               			<tr>
+					               	<td><fmt:formatDate value="${personalLesson.date }" pattern="yyyy년 M월 d일" /></td>
+					       			<td><fmt:formatDate value="${personalLesson.createDate }" pattern="yyyy년 M월 d일" /></td>
+				    				<td>${personalLesson.name }</td>
+					   				<td>${personalLesson.user.name }</td>
+				      				<td>${personalLesson.status }</td>
+				     				<td>${personalLesson.myMembership.membership.name }</td>
+				               	</tr>
+				            </c:forEach>
 	               		</tbody>
 	               </table>
             	</div>
@@ -198,7 +200,7 @@
             	<h3 class="mb-0 text-primary">최근 그룹 수업 내역 </h3>
             </div>
             <div class="col-sm wow zoomIn" data-wow-delay="0.2s">
-				<p style="text-align: right;"><a href="/management/moreGroupLesson?id=${param.id}">자세히보기</a></p>
+				<p style="text-align: right;"><a href="/management/moreGroupLesson?id=${param.id}">자세히	보기</a></p>
               		<table class="table table-bordered shadow-sm" style="text-align: center; vertical-align: middle;" id="table-order-list">
                			<thead>
 	               			<tr>
@@ -208,6 +210,13 @@
 	               			</tr>
 	               		</thead>
 	               		<tbody>
+						<c:choose>
+							<c:when test="${empty lessons }">
+								<tr>
+									<td colspan="4">그룹수업 내역이 없습니다.</td>
+								</tr>
+							</c:when>
+						</c:choose>
 						<c:forEach var="lesson" items="${lessons }" varStatus="status">
 							<c:choose>
 								<c:when test="${status.index < 5}">
@@ -217,8 +226,6 @@
 										<td>그룹 PT</td>
 									</tr>
 								</c:when>
-								<c:otherwise>
-								</c:otherwise>
 							</c:choose>
 						</c:forEach>
 	               		</tbody>
