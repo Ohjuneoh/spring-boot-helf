@@ -191,7 +191,7 @@
 	                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
 	                    <div class="team-item bg-light rounded overflow-hidden">
 	                        <div class="team-img position-relative overflow-hidden">
-	                            <img class="img-fluid w-100" src="/resources/img/${trainer.trainerFile }" alt="">
+	                            <img class="img-fluid w-100" src="/resources/img/photo/${trainer.trainerFile }" alt="">
 	                        </div>
 	                        <div class="text-center py-4">
 	                            <h4 class="text-primary">${trainer.user.name }</h4>
