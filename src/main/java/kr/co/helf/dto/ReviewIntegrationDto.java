@@ -1,7 +1,5 @@
 package kr.co.helf.dto;
 
-import java.util.List;
-
 import kr.co.helf.vo.TrainerPersonalReview;
 import kr.co.helf.vo.TrainerReview;
 import lombok.Getter;

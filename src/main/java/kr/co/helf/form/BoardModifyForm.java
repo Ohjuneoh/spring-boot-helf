@@ -1,7 +1,5 @@
 package kr.co.helf.form;
 
-import java.util.Date;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

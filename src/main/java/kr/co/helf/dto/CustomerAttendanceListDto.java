@@ -1,7 +1,5 @@
 package kr.co.helf.dto;
 
-import java.util.List;
-
 import kr.co.helf.vo.CustomerAttendance;
 import lombok.Getter;
 import lombok.Setter;

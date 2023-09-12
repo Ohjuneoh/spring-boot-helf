@@ -101,7 +101,7 @@
 										<br/><br/>${myOption.name }
 			   						</c:forEach>
 			   					</th>
-				   				<td>
+				   				<td style="width: 150px;">
 				   					<c:if test="${dto.orderJoin.remainderCnt eq null }">
 					   					${dto.orderJoin.period.duration }개월
 				   					</c:if>
@@ -112,7 +112,7 @@
 										<br/><br/>${dto.orderJoin.period.duration }개월
 			   						</c:forEach>
 				   				</td>
-				   				<td>
+				   				<td style="width: 150px;">
 				   					<fmt:formatNumber value="${dto.orderJoin.membershipPrice }" pattern="###,###"/>원
 				   					<c:forEach var="myOption" items="${dto.myOptionJoins }">
 										<br/><br/><fmt:formatNumber value="${myOption.price }"/> 원

@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.helf.vo.Answer;
-import kr.co.helf.vo.Board;
 import kr.co.helf.vo.Inquires;
 
 @Mapper

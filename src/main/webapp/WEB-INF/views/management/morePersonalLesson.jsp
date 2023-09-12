@@ -86,32 +86,30 @@
             <div class="col-12">
                 <div class="card" >
                     <div class="card-header bg-dark" style="color: #ffffff">
-                        그룹수업 목록
+                        개인수업 목록
                     </div>
                     <div class="card-body">
                         <table class="table">
                             <thead>
                             <tr>
-                                <th style="width: 15%">수업 번호</th>
-                                <th style="width: 15%">수업 명</th>
-                                <th style="width: 20%">수업날짜</th>
-                                <th style="width: 20%">신청인원/모집총원</th>
-                                <th style="width: 20%">
-                                    출석률
-                                    <span data-toggle="tooltip" data-placement="top" title="출석률은 신청인원 중 실제로 출석한 인원에 한하여 산정">
-                                         <i class="fas fa-info-circle ml-2"></i>
-                                     </span>
-                                </th>
+                                <th class="text-center" style="width: 10%">수업번호</th>
+                                <th class="text-center" style="width: 20%">수업 명</th>
+                                <th class="text-center" style="width: 25%">수업날짜</th>
+                                <th  class="text-center" style="width: 20%">예약날짜</th>
+                                <th class="text-center" style="width: 15%">회원명</th>
+                                <th class="text-center" style="width: 10%">출결여부</th>
+
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="lesson" items="${result.lessons }">
+                            <c:forEach var="lesson" items="${result.personalLesson }">
                                 <tr>
-                                    <td>${lesson.no }</td>
-                                    <td><a href="/group-lesson/detail?no=${lesson.no }">${lesson.name }</a></td>
-                                    <td><fmt:formatDate value="${lesson.date }" pattern="yyyy년 M월 d일" /> ${lesson.time }시 </td>
-                                    <td>${lesson.reqCnt }/${lesson.quota }</td>
-                                    <td>${lesson.attendanceRate}%</td>
+                                    <td class="text-center">${lesson.no }</td>
+                                    <td class="text-center">${lesson.name }</td>
+                                    <td class="text-center"><fmt:formatDate value="${lesson.date }" pattern="yyyy년 M월 d일" /> / ${lesson.time }시 </td>
+                                    <td class="text-center"><fmt:formatDate value="${lesson.createDate }" pattern="yyyy년 M월 d일" /></td>
+                                    <td class="text-center">${lesson.user.name }</td>
+                                    <td class="text-center">${lesson.status}</td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -125,7 +123,7 @@
 <div class="row mb-3" >
     <div class="col-12">
         <c:choose>
-            <c:when test="${result.totalRows gt 0 }">
+            <c:when test="${not empty result }">
                 <nav>
                     <ul class="pagination justify-content-center">
                         <li class="page-item ${result.pagination.first ? 'disabled' : '' }">

@@ -16,7 +16,7 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
@@ -94,6 +94,7 @@
 	                        <form method="post" action="/board/addNotice">
 	                            <div class="row g-3">
 	                                <div class="col-12" >
+                                        <input type="hidden" value="${user.id }">
 	                                    <select class="form-select bg-light border-0" name="main" style="height: 55px;">
 	                                        <option value="0">주요 공지사항</option>
 	                                        <option value="1">일반 공지사항</option>
@@ -137,12 +138,30 @@
 
 <script type="text/javascript">
 
-// 썸머노트 
-$(document).ready(function() {
-    $('#summernote').summernote({
-        height: 300,
-        lang: "ko-KR"
+	// 썸머노트 
+	$(document).ready(function() {
+	    $('#summernote').summernote({
+	        height: 300,
+	        lang: "ko-KR"
+	 });
+    
+
+    // 폼 제출 시 이벤트 처리
+    $('form').submit(function() {
+        var title = $('input[name="title"]').val();
+        var content = $('#summernote').summernote('code'); // 썸머노트의 내용 가져오기
+
+        if (title.trim() === '') {
+            alert('제목을 입력하세요.');
+            return false;
+        }
+
+        if (content.trim() === '' || content.trim() === '<p><br></p>') {
+            alert('내용을 입력하세요.'); // 내용을 입력하지 않았을 때 알림창 띄우기
+            return false; // 폼 제출을 중단
+        }
     });
+   
 });
 </script>
 

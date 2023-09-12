@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
-import kr.co.helf.enums.MembershipEnum;
 import kr.co.helf.enums.OrderStateEnum;
 import kr.co.helf.vo.Category;
 import kr.co.helf.vo.Period;

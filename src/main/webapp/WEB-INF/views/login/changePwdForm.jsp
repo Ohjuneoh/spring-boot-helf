@@ -75,10 +75,11 @@
 										    <div class="box-inn-sub-email">
 										        <dl>
 										            <dt><label for="emailNm" class="label_txt">새 비밀번호</label></dt>
-										            	<dd><input type="password" id="newPwd" name="newPwd" maxlength="40" class="input_txt" style="width:217px"></dd>
-										            
+										            	<dd><input type="password" id="newPwd" name="newPwd" maxlength="40" class="input_txt" style="width:350px" placeholder="4-12자, 영문+숫자+특수문자 포함하여 입력"></dd>
+										            	<div id="password-format-error" class="text-danger"></div>
 										            <dt><label for="emailNm" class="label_txt">새 비밀번호 확인</label></dt>
-										            	<dd><input type="password" id="newPwd-check" maxlength="40" class="input_txt" style="width:217px"></dd>
+										            	<dd><input type="password" id="newPwd-check" maxlength="40" class="input_txt" style="width:350px" placeholder="위에서 입력한 비밀번호와 일치해야 합니다."></dd>
+										        		<div id="password-match-error" class="text-danger"></div>
 										        </dl>
 										    </div>
 										</div>
@@ -118,13 +119,42 @@
 
     <!-- Template Javascript -->
     <script src="/resources/js/main.js"></script>
-    <script type="text/javascript">
+	<script type="text/javascript">
     $(function() {
-	   
-		 
+        var pwJ = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{4,12}$/;
+
+        var newPasswordInput = $("#newPwd");
+        var newPasswordCheckInput = $("#newPwd-check");
+        var changePasswordButton = $("button");
+
+        changePasswordButton.prop("disabled", true);
+
+        function validatePassword() {
+            var newPassword = newPasswordInput.val();
+            var newPasswordCheck = newPasswordCheckInput.val();
+
+            if (pwJ.test(newPassword)) {
+                $("#password-format-error").text("");
+            } else {
+                $("#password-format-error").text("형식에 맞게 입력하세요.");
+            }
+			
+            if (newPasswordCheck) {
+            	
+	            if (newPassword === newPasswordCheck) {
+	                $("#password-match-error").text("");
+	                changePasswordButton.prop("disabled", false);
+	            } else {
+	                $("#password-match-error").text("비밀번호가 일치하지 않습니다.");
+	                changePasswordButton.prop("disabled", true);
+	            }
+            }
+        }
+
+        newPasswordInput.on("input", validatePassword);
+        newPasswordCheckInput.on("input", validatePassword);
     });
-    	
-    </script>
+</script>
 </body>
 
 </html>
