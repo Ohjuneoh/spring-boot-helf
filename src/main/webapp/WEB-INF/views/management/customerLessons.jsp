@@ -226,7 +226,7 @@
                		</nav> 
 	               </c:if>
      			<div style="text-align:center;">
-	     			<a href="/management/customer-recent-visit?id=${customerDetailDto.user.id}" class="btn btn-primary">목록</a>
+	     			<a href="/management/customer-lesson?id=${customerDetailDto.user.id}" class="btn btn-primary">목록</a>
      			</div>
 	   		</div>
 	   	</form>
