@@ -168,32 +168,32 @@
 						  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  >닫기</button>
 						  <button type="button" class="btn btn-primary next-button" >다음</button>
 						</div>
-<div id="modal-2" class="row g-1" style="display :none" >
-    <div class="col-12">
-        <h3 class="mb-2 mt-2 text-primary">수업명</h3>
-        <input id="lessonName" type="text" class="form-control bg-light border-0" name="lessonName" style="height: 55px;">
-    </div>
-    <div class="col-12">
-        <h3 class="mb-2 mt-2 text-primary">수업 내용</h3>
-        <textarea id="content" class="form-control bg-light border-0" name="content" style="height: 300px;"></textarea>
-    </div>
-    <div class="col-12">
-        <div class="row g-1">
-            <div class="col-6">
-                <div class="input-group">
-                    <span class="input-group-text bg-light border-0"><i class="bi bi-calendar-check-fill"></i></span>
-                    <input type="text" class="form-control bg-light border-0" name="date" id="date" style="height: 55px;" placeholder="수업일">
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="input-group">
-                    <span class="input-group-text bg-light border-0"><i class="bi bi-alarm-fill"></i></span>
-                    <input type="text" class="form-control bg-light border-0" name="time" id="time" style="height: 55px;" placeholder="시간">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+						<div id="modal-2" class="row g-1" style="display :none" >
+						    <div class="col-12">
+						        <h3 class="mb-2 mt-2 text-primary">수업명</h3>
+						        <input id="lessonName" type="text" class="form-control bg-light border-0" name="lessonName" style="height: 55px;">
+						    </div>
+						    <div class="col-12">
+						        <h3 class="mb-2 mt-2 text-primary">수업 내용</h3>
+						        <textarea id="content" class="form-control bg-light border-0" name="content" style="height: 300px;"></textarea>
+						    </div>
+						    <div class="col-12">
+						        <div class="row g-1">
+						            <div class="col-6">
+						                <div class="input-group">
+						                    <span class="input-group-text bg-light border-0"><i class="bi bi-calendar-check-fill"></i></span>
+						                    <input type="text" class="form-control bg-light border-0" name="date" id="date" style="height: 55px;" placeholder="수업일">
+						                </div>
+						            </div>
+						            <div class="col-6">
+						                <div class="input-group">
+						                    <span class="input-group-text bg-light border-0"><i class="bi bi-alarm-fill"></i></span>
+						                    <input type="text" class="form-control bg-light border-0" name="time" id="time" style="height: 55px;" placeholder="시간">
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
 						<div id="submit-button" class="modal-footer"  style="display :none">
 						  <button type="button" class="btn btn-success back-button" >이전</button>
 						  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  >닫기</button>
@@ -228,19 +228,6 @@
 	<script src="/resources/js/main.js"></script>
     
 <script>
-$('#date').change(function() {
-    var selectedDate = new Date($(this).val());
-    var today = new Date();
-    today.setHours(0, 0, 0, 0);  // 오늘 날짜의 시간을 00:00:00으로 설정
-
-    if(selectedDate < today) {
-        alert('올바른 날짜 형식을 입력하세요.');
-        $(this).val('');  // 선택한 날짜를 초기화
-        $(this).focus();  // 날짜 입력 필드로 포커스 이동
-    }
-});
-
-
 $(document).ready(function() {
     $('#myModal').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget);  
