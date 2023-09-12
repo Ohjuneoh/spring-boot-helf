@@ -85,15 +85,15 @@
         <div class="row mb-3">
             <div class="col-12">
             	<div>
-				    <button id="group-lesson-button" class="btn btn-outline-primary mb-1 active" type="button">그룹수업</button>
-				    <button id="personal-lesson-button" class="btn btn-outline-primary mb-1" type="button" >개인수업</button>
+				    <button id="personal-lesson-button" class="btn btn-outline-primary mb-1 active" type="button" >개인수업</button>
+				    <button id="group-lesson-button" class="btn btn-outline-primary mb-1" type="button">그룹수업</button>
 				</div>
                 <div class="card" >
                     <div class="card-header bg-dark" style="color: #ffffff">
                         <strong>수업 목록</strong>
                     </div>
                     <!-- GroupLesson start -->
-                    <div class="card-body">
+                    <div id="group-lesson-list" class="card-body" style="display: none;">
                         <table class="table" id="table-lessons">
                             <thead>
                             <tr>
@@ -148,7 +148,7 @@
                     </div>
                     <!-- GroupLesson end -->
                     <!-- PersonalLesson start  -->
-              		<div id="personal-lesson-list" class="card-body"  style="display: none;">
+              		<div id="personal-lesson-list" class="card-body">
                         <table class="table" id="table-personal-users">
                             <thead>
                             <tr>
@@ -167,7 +167,7 @@
                                     <td class="text-center"><fmt:formatDate value="${consultation.applicationDate }" pattern="yyyy년 M월 d일" /></td>
                                     <td class="text-center">${consultation.myMembership.remainderCnt } 회 </td>
                                     <td class="text-center">
-                                    	<button type="button" class="btn btn-primary attendance-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" 
+                                    	<button type="button" class="btn btn-primary attendance-btn btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop" 
 									        data-membership-no="${consultation.myMembership.no}" 
 									        data-trainer-no="${consultation.trainer.trainerNo}" 
 									        data-user-id="${consultation.user.id}"
@@ -239,20 +239,20 @@
 <script src="/resources/js/main.js"></script>
 
 <script>
-	//개인수업/그룹수업 display 설정
+	//display
 	$(document).ready(function(){
 	    $("#personal-lesson-button").click(function(){
 	        $(this).addClass('active');
 	        $("#group-lesson-button").removeClass('active');
+	        $("#group-lesson-list").hide();
 	        $("#personal-lesson-list").show();
-	        $("#table-lessons").hide();
 	    });
 	
 	    $("#group-lesson-button").click(function(){
 	        $(this).addClass('active');
 	        $("#personal-lesson-button").removeClass('active');
-	        $("#table-lessons").show();
 	        $("#personal-lesson-list").hide();
+	        $("#group-lesson-list").show();
 	    });
 	});
     // 트레이너가 개설한 그룹수업에 대해서 수강생 조회

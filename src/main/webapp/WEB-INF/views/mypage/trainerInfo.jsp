@@ -73,13 +73,18 @@
         <div class="section-title position-relative pb-3 mb-3">
 	   		<h1 class="fw-bold text-primary text-uppercase" style="font-size: 40px;">내 정보</h1>
 		</div>
+		<c:if test="${param.error eq 'no-withdrawal' }">
+			<div class="alert alert-danger text-center" style="height: 50px; width: 1300px;">
+				<strong>수업 진행 중에 탈퇴는 불가합니다.</strong>
+			</div>
+		</c:if>
         <div class="d-flex align-items-center mb-3">
             <img src="/resources/img/photo/${trainerInfo.trainerFile }" class="rounded-circle mr-2" style="width: 150px; height: 150px; ">
             <div class="ml-4" style="margin-left: 40px;">
                 <h1 class="text-dark">${userInfo.name } <span style="font-size: 30px; color: #b0b0b0;">강사님</span></h1>
 		        <div>
 		        	<a href="/user/trainerModify" class="btn btn-primary btn-sm">수정하기</a>
-		        	<a class="btn btn-danger btn-sm" href="/user/withdrawal">회원탈퇴</a>
+		        	<a href="withdrawal" class="btn btn-danger btn-sm">회원탈퇴</a>
 		        </div>
             </div>
         </div>

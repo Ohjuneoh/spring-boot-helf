@@ -686,7 +686,37 @@
 		where 
 			user_id = #{value}
 	</select>
-	
 
+	<select id="getAllLessonById" parameterType="string" resultType="Lesson">
+		select lesson_no				as no,
+				lesson_name				as name,
+				lesson_time				as time,
+				lesson_description		as description,
+				lesson_disabled			as disabled,
+				lesson_req_cnt			as reqCnt,
+				lesson_quota			as quota,
+				lesson_reservation		as reservation,
+				lesson_type				as type,
+				lesson_date				as "date",
+				user_id					as "user.id",
+				membership_no			as "membership.no"
+		from helf_lesson
+		where user_id = #{value}
+	</select>
 	
+	<select id="getAllPersonalLessonByNo" parameterType="int" resultType="PersonalLesson">
+		select personal_lesson_no				as no,
+				personal_lesson_name			as name,
+				personal_lesson_date			as "date",
+				personal_lesson_time			as time,
+				personal_lesson_content			as content,
+				personal_lesson_status			as status,
+				my_membership_no				as "myMembership.no",
+				trainer_no						as "trainer.no",
+				user_id							as "user.id",
+				personal_lesson_create_date		as createDate
+		from helf_personal_lesson
+		where trainer_no = #{value}
+	</select>
+
 </mapper>
