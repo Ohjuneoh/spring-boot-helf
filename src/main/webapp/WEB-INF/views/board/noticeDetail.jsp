@@ -269,7 +269,7 @@
 	                                    </select>
 	                                </div>
 	                                <div class="col-xl-12">
-	                                    <input type="text" class="form-control bg-light border-0" name="title" placeholder="제목" style="height: 55px;" value="${board.title}">
+	                                    <input type="text" class="form-control bg-light border-0" id="title" name="title" placeholder="제목" style="height: 55px;" value="${board.title}">
 	                                </div>
 	                        		<textarea id="summernote" name="content" >${board.content }</textarea>
 	                            </div>
@@ -317,10 +317,41 @@ $(document).ready(function() {
         height: 300,
         lang: "ko-KR"
     });
+    
+    // 수정 폼 제출 시 이벤트 처리
+    $('#modifyForm').submit(function() {
+        var title = $('input[name="title"]').val();
+        var content = $('#summernote').summernote('code'); // 썸머노트의 내용 가져오기
+
+        if (title.trim() === '' || content.trim() === '' || content.trim() === '<p><br></p>') {
+            alert('제목과 내용을 모두 입력하세요.'); // 제목 또는 내용을 입력하지 않았을 때 알림창 띄우기
+            return false; // 폼 제출을 중단
+        }
+    });
+    
 });
+
+// 모달이 열릴 때마다 제목 입력값 초기화
+$('#modifyModal').on('show.bs.modal', function (e) {
+    $('#title').val('');
+});
+
+// 수정 버튼 클릭 시 이벤트 처리
+$('#modifySubmit').click(function() {
+    var title = $('#title').val();
+
+    if (title.trim() === '') {
+        alert('제목을 입력하세요.'); // 제목이 입력되지 않았을 때 알림창 띄우기
+        return false; // 폼 제출을 중단
+    }
+});
+
 function confirmDelete() {
     return confirm('정말로 삭제하시겠습니까? (되돌릴 수 없습니다.)');
 }
+
+
+
 </script>
 
 

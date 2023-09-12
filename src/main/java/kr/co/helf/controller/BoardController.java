@@ -20,7 +20,6 @@ import kr.co.helf.form.AddBoardForm;
 import kr.co.helf.form.BoardModifyForm;
 import kr.co.helf.service.BoardService;
 import kr.co.helf.vo.Board;
-import kr.co.helf.vo.User;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -59,7 +58,8 @@ public class BoardController {
 	      boardService.addNotice(form, user);
 	      
 	      return "redirect:/board/notice";
-	   }	
+	   }
+
 	
 	// 공지사항 상세정보 & 이전글/다음글
 	@GetMapping(value="/detail")
