@@ -106,12 +106,13 @@
             </div>
         </section>
         
-        <!-- Schedule Section -->
+<%--         <!-- Schedule Section -->
         <section class="mb-4">
             <h2 class="mb-3 text-dark">수업일정</h2>
             <p>트레이너의 수업 스케줄을 이쪽에 표시</p>
             <hr>
-        </section>
+        </section> --%>
+        
     </div>
     
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
