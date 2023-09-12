@@ -101,7 +101,7 @@
         <div class="row mb-3">
             <div class="col-12">
             	<div>
-				    <button id="personal-lesson-button" class="btn btn-outline-primary mb-1" type="button" >개인수업</button>
+				    <button id="personal-lesson-button" class="btn btn-outline-primary mb-1 active" type="button"  >개인수업</button>
 				    <button id="group-lesson-button" class="btn btn-outline-primary mb-1" type="button">그룹수업</button>
 				</div>
 				

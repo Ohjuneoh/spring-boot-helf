@@ -59,7 +59,7 @@ public class BoardController {
 	      
 	      return "redirect:/board/notice";
 	   }
-=
+
 	
 	
 	// 공지사항 상세정보 & 이전글/다음글
