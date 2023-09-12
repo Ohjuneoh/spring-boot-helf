@@ -127,9 +127,10 @@
 			                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청일 :</strong><span><fmt:formatDate value="${consultation.consultations.requestDate}" pattern="yyyy-MM-dd" /></span><i class="fa fa-calendar text-primary pt-1 text-end"></i></div>
 			                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청시간 :</strong><span>${consultation.consultations.requestTime}</span><i class="fa fa-clock text-primary pt-1 text-end"></i></div>
 			                            <div class="d-flex justify-content-center">
-			                            <button type="button" class="btn btn-primary py-2 px-4 mt-5" data-bs-toggle="modal" data-bs-target="#myModal"  
-			                            		data-username="${consultation.user.name}님 1:1수업" data-userid="${consultation.user.id}" data-trainerno="${consultation.consultations.trainer.trainerNo}" 
-			                            		data-mymembershipno="${consultation.consultations.myMembership.no}" data-consultationno="${consultation.consultations.consultationNo}">예약</button>
+										<button type="button" class="btn btn-primary py-2 px-4 mt-5" data-bs-toggle="modal" data-bs-target="#myModal"  
+										    data-username="${consultation.user.name}님 1:1수업" data-userid="${consultation.user.id}" data-trainerno="${consultation.consultations.trainer.trainerNo}" 
+										    data-mymembershipno="${consultation.consultations.myMembership.no}" data-consultationno="${consultation.consultations.consultationNo}"
+										    data-consultation-goal="${consultation.consultations.goal}" data-consultation-abnormalities="${consultation.consultations.abnormalities}">예약</button>
 			                            </div>
 			                        </div>
 			                    </div>
@@ -141,7 +142,7 @@
         </div>
     </div>
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  		<div class="modal-dialog">
+  		<div class="modal-dialog modal-lg">
     		<div class="modal-content">
 				<div class="modal-header bg-primary">
 				  <h5 class="modal-title text-light" id="exampleModalLabel"><span id="modal-userName"></span></h5>
@@ -153,31 +154,50 @@
 						<input id="modal-trainerNo" type="hidden" name="trainerNo"/>
 						<input id="modal-myMembershipNo" type="hidden" name="myMembershipNo"/>
 						<input id="modal-consultationNo" type="hidden" name="consultationNo"/>
-		        		<div class="row g-1">
+						<div id="modal-1" class="row g-1">
 		        			<div class="col-12">
-								<h3 class="mb-2 mt-2 text-primary" >수업명</h3>	
-								<input id="lessonName" type="text" class="form-control bg-light border-0" name="lessonName"  style="height: 55px;">
+								<h5 class="mb-2 mt-2 text-primary" > 회원님의 PT목표</h5>	
+								<input id="modal-consultationGoal" name="goal" class="form-control bg-light border-0" style="height: 55px; font-weight: bold;" readonly></input>
 							</div>
 							<div class="col-12">
-								<h3 class="mb-2 mt-2 text-primary" >수업 내용</h3>	
-								<textarea id="content" class="form-control bg-light border-0" name="content" style="height: 300px;"></textarea>
+								<h5 class="mb-2 mt-2 text-primary" > 회원님의 상담내용</h5>	
+								<input  id="modal-consultationAbnormalities" name="abnormalities" class="form-control bg-light border-0"  style="height: 300px; font-weight: bold;" readonly></input>
 							</div>
-							<div class="col-6">
-						    	<div class="input-group">
-						        	<span class="input-group-text bg-light border-0"><i class="bi bi-calendar-check-fill"></i></span>
-						        	<input type="text" class="form-control bg-light border-0" name="date" id="date" style="height: 55px;" placeholder="수업일">
-						    	</div>
-							</div>
-					    	<div class="col-3">
-						    	<div class="input-group">
-						        	<span class="input-group-text bg-light border-0"><i class="bi bi-alarm-fill"></i></span>
-						        	<input type="text" class="form-control bg-light border-0" name="time" id="time" style="height: 55px;" placeholder="시간">
-						    	</div>
-							</div> 
 						</div>
-						<div class="modal-footer">
-						  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-						  <button type="submit" class="btn btn-primary">개설</button>
+						<div id="next-button" class="modal-footer">
+						  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  >닫기</button>
+						  <button type="button" class="btn btn-primary next-button" >다음</button>
+						</div>
+<div id="modal-2" class="row g-1" style="display :none" >
+    <div class="col-12">
+        <h3 class="mb-2 mt-2 text-primary">수업명</h3>
+        <input id="lessonName" type="text" class="form-control bg-light border-0" name="lessonName" style="height: 55px;">
+    </div>
+    <div class="col-12">
+        <h3 class="mb-2 mt-2 text-primary">수업 내용</h3>
+        <textarea id="content" class="form-control bg-light border-0" name="content" style="height: 300px;"></textarea>
+    </div>
+    <div class="col-12">
+        <div class="row g-1">
+            <div class="col-6">
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-0"><i class="bi bi-calendar-check-fill"></i></span>
+                    <input type="text" class="form-control bg-light border-0" name="date" id="date" style="height: 55px;" placeholder="수업일">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-0"><i class="bi bi-alarm-fill"></i></span>
+                    <input type="text" class="form-control bg-light border-0" name="time" id="time" style="height: 55px;" placeholder="시간">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+						<div id="submit-button" class="modal-footer"  style="display :none">
+						  <button type="button" class="btn btn-success back-button" >이전</button>
+						  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  >닫기</button>
+						  <button type="submit" class="btn btn-primary" >개설</button>
 						</div>
 					</form>		
 				</div>
@@ -215,19 +235,23 @@ $(document).ready(function() {
         var username = button.data('username');
         var userid = button.data('userid');
         var trainerno = button.data('trainerno');
-        var mymembershipno = button.data('mymembershipno')
-        var consultationno = button.data('consultationno')
+        var mymembershipno = button.data('mymembershipno');
+        var consultationno = button.data('consultationno');
+        var abnormalities = button.data('consultation-abnormalities');
+        var goal = button.data('consultation-goal');
         $('#modal-userName').text(username); 
         $('#modal-userId').val(userid); 
         $('#modal-trainerNo').val(trainerno); 
         $('#modal-myMembershipNo').val(mymembershipno);
         $('#modal-consultationNo').val(consultationno);
+        $('#modal-consultationAbnormalities').val(abnormalities);
+        $('#modal-consultationGoal').val(goal);
     });
 });
 
 $( function() {
     $("#date").datepicker({
-   		dateFormat: 'yy/mm/dd'
+   		dateFormat: 'yy-mm-dd'
     });
 });
 
@@ -239,9 +263,44 @@ $( function() {
 });
 
 $(document).ready(function() {
+	
+	var timePattern = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
+	
     $('#lessonSubmitForm').on('submit', function(e) {
         // 폼의 기본 제출 기능을 방지
         e.preventDefault();
+
+        // 유효성 검사
+        if ($('#lessonName').val().trim() === "") {
+            alert("수업명을 입력하세요.");
+            $('#lessonName').focus();
+            return;
+        }
+        
+        if ($('#content').val().trim() === "") {
+            alert("수업 내용을 입력하세요.");
+            $('#content').focus();
+            return;
+        }
+
+        var datePattern = /^\d{4}-\d{2}-\d{2}$/; 
+        if(!datePattern.test($('#date').val().trim())) {
+            alert('올바른 날짜 형식을 입력하세요.');
+            $('#date').focus();
+            return;
+        }
+
+        if ($('#time').val().trim() === "") {
+            alert("수업 시간을 입력하세요.");
+            $('#time').focus();
+            return;
+        }
+        
+        if (!$.trim($("#time").val()) || !timePattern.test($("#time").val().trim())) {
+            alert("올바른 희망 상담시간을 입력해주세요 (예: 16:00, 17:00).");
+            $("#time").focus();
+            return;
+        }
 
         // 폼 데이터 수집
         var formData = $(this).serialize();
@@ -264,6 +323,23 @@ $(document).ready(function() {
         });
     });
 });
+
+$(document).ready(function(){
+    $(".next-button").click(function(){
+      $("#next-button").css("display", "none");
+      $("#modal-1").css("display", "none");
+      $("#modal-2").css("display", "block");
+      $("#submit-button").css("display", "block");
+    });
+
+    $(".back-button").click(function(){
+      $("#next-button").css("display", "block");
+      $("#modal-1").css("display", "block");
+      $("#modal-2").css("display", "none");
+      $("#submit-button").css("display", "none");
+    });
+  });
+
 </script>
 
     
