@@ -100,12 +100,12 @@
                     </tr>
                     <tr>
                         <th class="table-dark" style="width: 15%;">레슨모집 상태</th>
-                        <c:if test="${lesson.reqCnt != lesson.quota}">
+                        <c:if test="${lesson.reqCnt != lesson.quota && !lesson.past}">
                             <td  style="width: 85%" colspan="3">
                                 <span class="badge text-bg-success p-2">모집중</span>
                             </td>
                         </c:if>
-                        <c:if test="${lesson.reqCnt == lesson.quota}">
+                        <c:if test="${lesson.reqCnt == lesson.quota || lesson.past}">
                             <td  style="width: 85%" colspan="3">
                                 <span class="badge text-bg-danger p-2">모집완료</span>
                             </td>
