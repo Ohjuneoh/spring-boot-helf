@@ -102,8 +102,8 @@
 									<div class="col-2">
 										<select name="type"  class="form-select">
 											<option selected="selected" disabled="disabled">전체보기</option>
-											<option value="name" ${param.type eq 'name' ? 'selected' : '' }>구매상품</option>
-											<option value="no" ${param.type eq 'no' ? 'selected' : '' }>구매번호</option>	
+											<option value="name" ${param.type eq 'name' ? 'selected' : '' }>이름</option>
+											<option value="no" ${param.type eq 'no' ? 'selected' : '' }>번호</option>	
 										</select>
 									</div>
 									<div class="col-3">
@@ -111,6 +111,7 @@
 									</div>
 									<div class="col-2">
 										<button type="submit" class="btn btn-success">검색</button>
+										<a href="list-manager" id="point-return" class="bi bi-arrow-clockwise btn btn-primary"></a>
 									</div>
 								</div>
 							</div>
@@ -129,7 +130,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:if test="${dto.membershipList eq null }">
+									<c:if test="${empty dto.membershipList }">
 								   		<tr>
 									   		<td colspan="5" class="text-center">생성한 이용권이 없습니다.</td>
 								   		</tr>

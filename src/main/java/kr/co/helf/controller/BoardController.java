@@ -51,6 +51,7 @@ public class BoardController {
 	}
 	
 	// 공지사항 등록 
+
 	   @PostMapping(value="/addNotice")
 	   @PreAuthorize("hasRole('ROLE_MANAGER')")
 	   public String addNotice(AddBoardForm form, @AuthenticationPrincipal User user) {
@@ -58,9 +59,7 @@ public class BoardController {
 	      boardService.addNotice(form, user);
 	      
 	      return "redirect:/board/notice";
-	   }
-=
-	
+	   }	
 	
 	// 공지사항 상세정보 & 이전글/다음글
 	@GetMapping(value="/detail")
