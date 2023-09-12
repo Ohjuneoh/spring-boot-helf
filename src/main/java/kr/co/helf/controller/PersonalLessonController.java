@@ -9,6 +9,8 @@ import kr.co.helf.vo.PersonalLesson;
 import kr.co.helf.vo.Trainer;
 import kr.co.helf.vo.User;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -124,7 +126,7 @@ public class PersonalLessonController {
 								@RequestParam("myMembershipNo") int membershipNo,
 								@RequestParam("lessonName") String lessonName,
 								@RequestParam("content") String content,
-								@RequestParam("date") Date date,
+								 @RequestParam("date") String dateStr,
 								@RequestParam("time") String time,
 								@RequestParam("consultationNo") int consultationNo)  {
 		
@@ -132,7 +134,16 @@ public class PersonalLessonController {
 		
 		personalLesson.setName(lessonName);
 		personalLesson.setContent(content);
-		personalLesson.setDate(date);
+		 try {
+		        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		        Date date = formatter.parse(dateStr);
+		        personalLesson.setDate(date);
+		    } catch (ParseException e) {
+		        e.printStackTrace();
+		        // 날짜 형식이 잘못된 경우 적절한 오류 처리를 수행합니다. (예: 오류 메시지를 보여주거나 로그를 남김)
+		    }
+		    
+		    personalLesson.setTime(time);
 		personalLesson.setTime(time);
 		
 		User user = new User();

@@ -396,7 +396,7 @@
 	                row_number() over (order by l.lesson_date desc) rownumber
 	        from helf_lesson_apply la, helf_lesson l, helf_users tu, helf_my_membership mm, helf_membership m
 	        where la.lesson_no = l.lesson_no
-	        and la.user_id = tu.user_id
+	        and l.user_id = tu.user_id
 	        and la.my_membership_no = mm.my_membership_no 
 	        and mm.membership_no = m.membership_no 
 	        and la.user_id = #{userId}
@@ -601,6 +601,27 @@
 		
 		        )
 		    where rownumber between #{begin} and #{end}
+	</select>
+	
+	<select id="getGroupThreeLessonsById" parameterType="String" resultType="kr.co.helf.vo.LessonApply">
+	select A.lesson_name						as "lesson.name",
+	        B.lesson_apply_date					as applyDate,
+	        A.lesson_date 						as "lesson.date",
+	        a.lesson_time						as "lesson.time",		
+	        E.user_name							as "lesson.user.name",
+	        b.lesson_apply_attendance_status	as attendanceStatus,
+	        D.membership_name					as "myMembership.membership.name"
+	FROM 
+	    HELF_LESSON A 
+	JOIN 
+	    HELF_LESSON_APPLY B ON A.LESSON_NO = B.LESSON_NO 
+	JOIN 
+	    HELF_MY_MEMBERSHIP C ON B.MY_MEMBERSHIP_NO = C.MY_MEMBERSHIP_NO 
+	JOIN 
+	    HELF_MEMBERSHIP D ON C.MEMBERSHIP_NO = D.MEMBERSHIP_NO 
+	JOIN 
+	    HELF_USERS E ON A.USER_ID = E.USER_ID
+	where B.user_id = #{userId}
 	</select>
 
 </mapper>

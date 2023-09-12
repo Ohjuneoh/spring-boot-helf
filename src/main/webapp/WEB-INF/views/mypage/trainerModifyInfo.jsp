@@ -212,6 +212,18 @@
 
 
 <script type="text/javascript">
+
+$(document).ready(function(){
+    function triggerFileInput() {
+        $('#fileInput').click();
+    }
+    
+    $('button[onclick="triggerFileInput()"]').on('click', function(e) {
+        e.preventDefault();
+        
+        triggerFileInput();
+    });
+});
 $(document).ready(function(){
     let careerCounter = 0;
 
