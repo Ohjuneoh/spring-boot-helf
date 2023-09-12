@@ -59,8 +59,8 @@
   <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 10px;">
     <div class="row py-5">
       <div class="col-12 pt-lg-5 mt-lg-5 text-center">
-        <h1 class="display-4 text-white animated zoomIn">REVIEWLIST</h1>
-        <a href="" class="h5 text-white">리뷰 목록</a>
+        <h1 class="display-4 text-white animated zoomIn">INQUIRIES</h1>
+        <a href="" class="h5 text-white">문의 목록</a>
       </div>
     </div>
   </div>
@@ -86,7 +86,7 @@
       <div class="col-12">
         <div class="card" >
           <div class="card-header bg-dark" style="color: #ffffff">
-            내 리뷰 목록
+            내 문의 목록
           </div>
           <div class="card-body">
             <table class="table">

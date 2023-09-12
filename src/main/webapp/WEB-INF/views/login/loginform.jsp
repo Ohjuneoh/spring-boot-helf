@@ -66,7 +66,7 @@
 	                            	</div>
 	                            	<c:if test="${param.error eq 'fail'}">
 	                            	<div class="alert alert-danger" style="height: 50px; width: 1000px;">
-										<strong>[잘못된 접근]</strong> 로그인 할 수 없습니다. 다시 입력하세요.
+										<strong>[잘못된 접근]</strong> ${loginErrorMessage }
 									</div>
 	                            	</c:if>
 	                                <div class="col-xl-12">

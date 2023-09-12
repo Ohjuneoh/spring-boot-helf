@@ -709,5 +709,57 @@ public class UserService {
 		userMapper.deleteCareer(careerNo);
 		
 	}
+	// 트레이너 최근 수업내역 5개 조회(준오)
+	public List<PersonalLesson> getRecentPersonalLessons(String userId) {
+		
+	    List<PersonalLesson> personalLessons = personalLessonMapper.getRecentPersonalLessons(userId);
+	    
+	    for (PersonalLesson personalLesson : personalLessons) {
+	        int myMembershipNo = personalLesson.getMyMembership().getNo();  // PersonalLesson에서 myMembership_no 가져오기
+
+	        // myMembership 테이블에서 membership_no 찾기
+	        Integer membershipNo = personalLessonMapper.getMembershipNoByMyMembershipNo(myMembershipNo);
+	        
+	        if (membershipNo != null) {
+	            // 찾은 membership_no를 사용하여 HELF_MEMBERSHIP 테이블에서 Membership 이름 찾기
+	            String membershipName = personalLessonMapper.getMembershipNameByNo(membershipNo);
+	            
+	            // MyMembership 객체를 생성하고 Membership 정보 설정
+	            MyMembership myMembership = new MyMembership();
+	            
+	            // Membership 객체 생성하고 이름 설정
+	            Membership membership = new Membership();
+	            membership.setName(membershipName);
+	            
+	            // MyMembership에 Membership 설정
+	            myMembership.setMembership(membership);
+	            
+	            // PersonalLesson에 MyMembership 설정
+	            personalLesson.setMyMembership(myMembership);
+	        }
+	    }
+		return personalLessons;
+	}
+	// 개인수업 자세히보기
+	public Map<String, Object> trainerMyAllPersonalLessons(Map<String, Object> param, String userId) {
+	      Map<String, Object> result = new HashMap<>();
+
+	      int totalRows = personalLessonMapper.getTotalRows(param);
+	      int page = (int) param.get("page");
+
+	      Pagination pagination = new Pagination(page, totalRows);
+	      int begin = pagination.getBegin();
+	      int end = pagination.getEnd();
+	      param.put("begin", begin);
+	      param.put("end", end);
+	      param.put("userId", userId);
+
+	      List<PersonalLesson> personalLessons = personalLessonMapper.trainerMyAllPersonalLessons(param);
+
+	      result.put("personalLesson", personalLessons);
+	      result.put("pagination", pagination);
+	      
+		return result;
+	}
 
 }

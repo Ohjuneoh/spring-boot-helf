@@ -243,7 +243,7 @@
 		keyboard: false
 	});
 	
-	
+	// 수업 출석하기 (버튼) - 오늘 수업 목록 조회 및 클릭하기 
 	$("#btn-open-lesson-modal").click(function(){
 		$("#modal-table-lessons tbody").empty();
 		const requestUserId = '${param.id}'
@@ -251,13 +251,16 @@
 			type: "GET",
 			url: "/checkin/lesson",
 			data:{id:requestUserId},
-			success: function(myLessonLists){
+			success: function(response){
+				 const myLessonLists = response.myLessonLists;
+				 const personalLists = response.personalLists;
 				
-				if (myLessonLists.length == 0) {
-					alert("수업이 없습니다.");
-					return;
-				}
+				 if (myLessonLists.length == 0 && personalLists.length == 0) {
+				     alert("수업이 없습니다.");
+				     return;
+				 }
 				
+				 // 그룹 수업 
 				myLessonLists.forEach(function(lessonApply, index){
 					let lessonTimestamp = new Date(lessonApply.lesson.date);
 					let lessonDate = lessonTimestamp.toISOString().split('T')[0];
@@ -269,7 +272,7 @@
 					let membershipCat =	lessonApply.myMembership.membership.category.no;
 					let myMembershipRemainderCnt = lessonApply.myMembership.remainderCnt;
 					let myMembershipEndDate = lessonApply.myMembership.endDate;
-					
+				
 					let tr = `
 						<tr>
 							<td>\${lessonDate} \${lessonTime}</td>
@@ -286,6 +289,39 @@
 					`
 					$("#modal-table-lessons tbody").append(tr);
 				});
+				 // start
+				 // 개인 레슨 수업 
+					personalLists.forEach(function(personalLesson, index){
+						let lessonTimestamp = new Date(personalLesson.date);
+						let lessonDate = lessonTimestamp.toISOString().split('T')[0];
+						let lessonTime = personalLesson.time;
+						let lessonName = personalLesson.name;
+						let teacherName = personalLesson.trainer.user.name;
+						let userName = personalLesson.user.name;
+						let myMembershipNo = personalLesson.myMembership.no;
+						let membershipCat =	personalLesson.myMembership.membership.category.no;
+						let myMembershipRemainderCnt = personalLesson.myMembership.remainderCnt;
+						let myMembershipEndDate = personalLesson.myMembership.endDate;
+						
+						let tr = `
+							<tr>
+								<td>\${lessonDate} \${lessonTime}</td>
+								<td>\${lessonName}</td>
+								<td>\${teacherName}</td>
+								<td><button class="btn btn-outline-primary"
+									data-my-membership-no = "\${myMembershipNo}"
+									data-user-name = "\${userName}"
+									data-membership-cat = "\${membershipCat}"
+									data-my-membership-remainder-cnt = "\${myMembershipRemainderCnt}"
+									data-my-membership-end-date = "\${myMembershipEndDate}">출석</button>
+								</td>
+							</tr>
+						`
+						$("#modal-table-lessons tbody").append(tr);
+						
+					});
+				 // 개인수업 end
+				 
 				$("#welcome-lesson-modal").modal("show");
 			},
 			error: function (xhr, status, error) {
@@ -295,6 +331,7 @@
 		});
 	});
 	
+	// 출석 버튼 클릭 시, customerAttendance 저장 
 	$("#modal-table-lessons tbody").on('click', 'button', function() {
 		const userId = '${param.id}'
 		
