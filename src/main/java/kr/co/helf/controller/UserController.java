@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import kr.co.helf.vo.Inquires;
 import kr.co.helf.dto.TrainerDto;
+import kr.co.helf.exception.WithdrawalUserException;
 import kr.co.helf.form.AddUserForm;
 import kr.co.helf.form.UpdateUserForm;
 import kr.co.helf.service.PersonalLessonService;
@@ -312,7 +313,12 @@ public class UserController {
    // 마이페이지 - 유저 회원탈퇴
    @GetMapping("/withdrawal")
    public String withdrawalUser(@AuthenticationPrincipal User user) {
-      userService.withdrawalUser(user.getId());
+	  
+	   try {
+		  userService.withdrawalUser(user);
+	   } catch (WithdrawalUserException e) {
+		   return "redirect:/user/trainerMypage?error=no-withdrawal";
+	   }
       
       // 회원탈퇴 후 로그아웃
       SecurityContextHolder.getContext().setAuthentication(null);
