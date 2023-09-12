@@ -177,7 +177,7 @@
 						<div class="col-3">
 					    	<div class="input-group">
 					        	<span class="input-group-text bg-light border-0"><i class="bi bi-calendar-check-fill"></i></span>
-					        	<input type="text" class="form-control bg-light border-0" name="requestDate" id="date" style="height: 55px;" placeholder="희망 상담일">
+					        	<input type="date" class="form-control bg-light border-0" name="requestDate" id="date" pattern="\d{4}-\d{2}-\d{2}" style="height: 55px;" placeholder="희망 상담일">
 					    	</div>
 						</div>
 				    	<div class="col-3">
@@ -329,6 +329,13 @@ $(document).ready(function() {
         if (!$.trim($("#date").val())) {
             alert("희망 상담일을 입력해주세요.");
             $("#date").focus();
+            return;
+        }
+        
+        var datePattern = /^\d{4}-\d{2}-\d{2}$/; 
+        if(!datePattern.test($('#date').val().trim())) {
+            alert('올바른 날짜 형식을 입력하세요.');
+            $('#date').focus();
             return;
         }
 
