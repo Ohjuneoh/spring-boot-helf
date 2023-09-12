@@ -666,24 +666,27 @@
 	
 	<select id="getTrainerUserById" parameterType="string" resultType="User">
 		select
-			user_id					as id,
-			user_email				as email,
+			user_id						as id,
+			user_email					as email,
 			user_name					as name,
 			user_tel					as tel,
 			user_encrypted_password 	as encryptedPassword,
-			user_gender				as gender,
-			user_status				as status,
-			user_mobile_carrier		as mobileCarrier,
+			user_gender					as gender,
+			user_status					as status,
+			user_mobile_carrier			as mobileCarrier,
 			user_create_date			as createDate, 
 			user_update_date			as updateDate,
-			user_point				as point,
-			rank_no					as "rank.no",
+			user_point					as point,
+			rank_no						as "rank.no",
 			user_type					as type,
-			user_authentication_no	as authenticationNo,
-			user_social				as social
+			user_authentication_no		as authenticationNo,
+			user_social					as social
 		from
 			helf_users 
 		where 
 			user_id = #{value}
 	</select>
+	
+
+	
 </mapper>

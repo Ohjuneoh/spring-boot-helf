@@ -79,7 +79,7 @@
                 <h1 class="text-dark">${userInfo.name } <span style="font-size: 30px; color: #b0b0b0;">강사님</span></h1>
 		        <div>
 		        	<a href="/user/trainerModify" class="btn btn-primary btn-sm">수정하기</a>
-		        	<a class="btn btn-danger btn-sm">회원탈퇴</a>
+		        	<a class="btn btn-danger btn-sm" href="/user/withdrawal">회원탈퇴</a>
 		        </div>
             </div>
         </div>
