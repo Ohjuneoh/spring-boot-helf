@@ -231,13 +231,16 @@ public class ManagementController {
 		List<TrainerAttendance> attendances = userService.getTrainerThreeAttendances(userId);
 		// 그룹레슨 최근 5개 내역 조회(예광)
 		List<Lesson> lessons = userService.getRecentLessons(userId);
+		// 개인레슨 최근 5개 내역 조회(준오)
+		List<PersonalLesson> persoanlLessons = userService.getRecentPersonalLessons(userId);
 		
 		
 		model.addAttribute("trainerInfo", trainerInfo);
 		model.addAttribute("attendances", attendances);
 		// 그룹레슨 최근 5개 내역 조회(예광)
 		model.addAttribute("lessons", lessons);
-
+		// 개인레슨 최근 5개 내역 조회(준오)
+		model.addAttribute("personalLessons", persoanlLessons);
 		return "management/trainerDetail";
 	}
 
@@ -257,6 +260,23 @@ public class ManagementController {
 
 		model.addAttribute("result", result);
 		return "management/moreGroupLesson";
+	}
+	
+	// 개인수업 자세히보기-(준오)
+	@GetMapping("/morePersonalLesson")
+	public String morePersonalLesson(@RequestParam(name="page",required = false,defaultValue = "1") int page,
+								  @RequestParam("id") String userId,
+								  Model model){
+		// 트레이너 개인 정보
+		MySalary trainerInfo = userService.getTrainerDetailById(userId);
+
+
+		Map<String,Object> param = new HashMap<>();
+		param.put("page", page);
+		Map<String,Object> result = userService.trainerMyAllPersonalLessons(param,userId);
+
+		model.addAttribute("result", result);
+		return "management/morePersonalLesson";
 	}
 
 	
