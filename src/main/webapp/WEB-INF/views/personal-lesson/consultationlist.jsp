@@ -123,7 +123,7 @@
 										        <div class="d-flex justify-content-between mb-3"><strong>상태 :</strong><span>${consultation.consultations.consultationStatus}</span><i class="fa fa-bell text-primary pt-1 text-end"></i></div>
 										    </c:otherwise>
 										</c:choose>
-			                            <div class="d-flex justify-content-between mb-3"><strong>신청일 :</strong><span><fmt:formatDate value="${consultation.consultations.applicationDate}" pattern="yyyy-MM-dd" /></span><i class="fa fa-calendar text-secondary pt-1 text-end"></i></div>
+			                            <div type="date" class="d-flex justify-content-between mb-3"><strong>신청일 :</strong><span><fmt:formatDate value="${consultation.consultations.applicationDate}" pattern="yyyy-MM-dd" /></span><i class="fa fa-calendar text-secondary pt-1 text-end"></i></div>
 			                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청일 :</strong><span><fmt:formatDate value="${consultation.consultations.requestDate}" pattern="yyyy-MM-dd" /></span><i class="fa fa-calendar text-primary pt-1 text-end"></i></div>
 			                            <div class="d-flex justify-content-between mb-3"><strong>상담 요청시간 :</strong><span>${consultation.consultations.requestTime}</span><i class="fa fa-clock text-primary pt-1 text-end"></i></div>
 			                            <div class="d-flex justify-content-center">
@@ -228,6 +228,18 @@
 	<script src="/resources/js/main.js"></script>
     
 <script>
+$('#date').change(function() {
+    var selectedDate = new Date($(this).val());
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);  // 오늘 날짜의 시간을 00:00:00으로 설정
+
+    if(selectedDate < today) {
+        alert('올바른 날짜 형식을 입력하세요.');
+        $(this).val('');  // 선택한 날짜를 초기화
+        $(this).focus();  // 날짜 입력 필드로 포커스 이동
+    }
+});
+
 
 $(document).ready(function() {
     $('#myModal').on('show.bs.modal', function(event) {

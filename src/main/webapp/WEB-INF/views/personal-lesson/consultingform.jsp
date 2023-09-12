@@ -121,7 +121,7 @@
 	           					<c:when test="${not empty trainers}">
 					               	<c:forEach var="trainer" items="${trainers}">
 					               	<div class="col-6" >
-			            				<img src="/resources/img/${trainer.trainerFile}"  class="img-fluid"/>
+			            				<img src="/resources/img/photo/${trainer.trainerFile}"  class="img-fluid"/>
 			            			</div>
 				           			<div class="col-3"> 
 				            			<h1 class="mb-5">${trainer.user.name}<strong style="margin-left: 10px; color: gray;">강사</strong></h1>
@@ -397,6 +397,18 @@ $(".selectBtn").click(function(){
 
     // 회원권 선택 버튼 클릭 후 메시지를 띄우기
     alert('신청이 완료되었습니다.');
+});
+
+$('#date').change(function() {
+    var selectedDate = new Date($(this).val());
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);  // 오늘 날짜의 시간을 00:00:00으로 설정
+
+    if(selectedDate < today) {
+        alert('올바른 날짜 형식을 입력하세요.');
+        $(this).val('');  // 선택한 날짜를 초기화
+        $(this).focus();  // 날짜 입력 필드로 포커스 이동
+    }
 });
 
 </script>
