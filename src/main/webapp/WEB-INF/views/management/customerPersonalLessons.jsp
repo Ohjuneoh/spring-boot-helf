@@ -182,7 +182,16 @@
 		               					<td><fmt:formatDate value="${pcl.createDate}" pattern="yyyy-MM-dd"/></td>
 		               					<td>${pcl.name}</td>
 		               					<td>${pcl.trainer.user.name }</td>
-		               					<td>${pcl.status}</td>
+		               					<td>
+		               						<c:choose>
+		               							<c:when test="${pcl.status == 'N' }">
+		               								<span class="badge" style="background-color: #c46d6a; color: #cfc3c2;">결석</span>
+		               							</c:when>
+		               							<c:when test="${pcl.status == 'Y' }">
+		               								<span class="badge" style="background-color: #4dc9e8; color: #f2fafc;">출석</span>
+		               							</c:when>
+		               						</c:choose>
+		               					</td>
 		               					<td>${pcl.myMembership.membership.name}</td>
 	               					</tr>
 	               				</c:forEach>
@@ -219,7 +228,7 @@
                		</nav> 
 	               </c:if>
      			<div style="text-align:center;">
-	     			<a href="/management/customer-recent-visit?id=${customerDetailDto.user.id}" class="btn btn-primary">목록</a>
+	     			<a href="/management/customer-list?id=${customerDetailDto.user.id}" class="btn btn-primary">목록</a>
      			</div>
 	   		</div>
 	   	</form>

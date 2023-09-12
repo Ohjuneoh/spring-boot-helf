@@ -152,7 +152,7 @@
 	    </ul>
 	</div>
 	<!-- 임직원 급여 부분 End -->
-	<div class="container">
+	<div class="container" style="padding:10px;">
 		<div class="row" style="margin: 10px;">
 		<form method="get" action="/salary/salary-detail" id="form-salary-detail">
 			<input type="hidden" name="page" value="${empty parm.page ? 1 : pagination.page  }"/>

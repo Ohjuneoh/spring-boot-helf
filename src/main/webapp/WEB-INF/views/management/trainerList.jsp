@@ -96,50 +96,50 @@
      	<form id="form-trainer-search" class="" method="get" action="trainer-list">
      		<!-- 검색 기능 -->
      		<input type="hidden" name="page" value="${param.page }"/>
-     		<div class="row mb-3 align-items-center">
-     		<div class="col-2 pl-1">
-     			<select class="form-select" name="opt" id="selectOpt">
-     				<option disabled selected>전체</option>
-     				<option value="name" ${param.opt eq 'name' ? 'selected' : ''}>이름</option>
-     				<option value="tel" ${param.opt eq 'tel' ? 'selected' : '' }>연락처</option>
-     			</select>
-     		</div>
-     			<div class="col-md-5 pr-1">
-     				<input type="text" class="form-control" name="keyword" value="${param.keyword}" style="width: 80%; margin:0 auto;" id="inputKeyword"/>
-     			</div>
-     			<div class="col-2 pl-1">
-     				<button type="button" class="btn btn-primary" onclick="searchTrainer()">
-                		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  							<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
-						</svg>
-                		검색
-              		</button>
-     			</div>
-     		</div>
+     		<div class="row mb-3 align-items-center justify-content-center">
+			    <div class="col-auto text-center">
+			        <select class="form-select" name="opt" id="selectOpt" style="margin-right:10px; widht:300px;">
+			            <option disabled selected>전체</option>
+			            <option value="name" ${param.opt eq 'name' ? 'selected' : ''}>이름</option>
+			            <option value="tel" ${param.opt eq 'tel' ? 'selected' : '' }>연락처</option>
+			        </select>
+			    </div>
+			    <div class="col-auto text-center">
+			        <input type="text" class="form-control" name="keyword" value="${param.keyword}" style="margin-right:10px;" id="inputKeyword"/>
+			    </div>
+			    <div class="col-auto text-center">
+			        <button type="button" class="btn btn-primary" onclick="searchTrainer()">
+			            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+			                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+			            </svg>
+			            검색
+			        </button>
+			    </div>
+			</div>
      		<br>
      		<div class="row">
-	     		<div class="col-12">
-    	 			<table class="table table-bordered">
-     					<tbody>
-     						<tr>
-     							<th style="width: 30%;">임직원 구분</th>
-     							<th style="width: 70%;">
-     								<input type="radio" name="trainerStatus" value="전체" checked/> 전체  
-     								<input type="radio" name="trainerStatus" value="재직"/> 재직
-     								<input type="radio" name="trainerStatus" value="퇴직"/> 퇴직
-     								<input type="radio" name="trainerStatus" value="승인대기"/> 승인대기
-     							</th>
-     						</tr>
-     						<tr>
-								<th style="width: 30%;">직급</th>
-     							<th style="width: 70%;">
-     								<input type="radio" name="trainerTitle" value="전체" checked/> 전체
-     								<input type="radio" name="trainerTitle" value="점장"/> 점장
-     								<input type="radio" name="trainerTitle" value="직원"/> 강사 
-     							</th>
-     						</tr>
-						</tbody>
-     				</table>
+	     		<div class="col-6 mx-auto">
+    	 			<table class="table table-bordered" style="text-align:center">
+					    <tbody>
+					        <tr>
+					            <th style="width: 30%;">임직원 구분</th>
+					            <th style="width: 70%;">
+					                <input type="radio" name="trainerStatus" value="전체" ${param.trainerStatus == null || param.trainerStatus eq '전체' ? 'checked' : '' }/> 전체  
+					                <input type="radio" name="trainerStatus" value="재직" ${param.trainerStatus eq '재직' ? 'checked' : '' }/> 재직
+					                <input type="radio" name="trainerStatus" value="퇴직" ${param.trainerStatus eq '퇴직' ? 'checked' : '' }/> 퇴직
+					                <input type="radio" name="trainerStatus" value="승인대기" ${param.trainerStatus eq '승인대기' ? 'checked' : '' }/> 승인대기
+					            </th>
+					        </tr>
+					        <tr>
+					            <th style="width: 30%;">직급</th>
+					            <th style="width: 70%;">
+					                <input type="radio" name="trainerTitle" value="전체" ${param.trainerTitle == null || param.trainerTitle eq '전체' ? 'checked' : '' }/> 전체
+					                <input type="radio" name="trainerTitle" value="점장" ${param.trainerTitle eq '점장' ? 'checked' : '' }/> 점장
+					                <input type="radio" name="trainerTitle" value="직원" ${param.trainerTitle eq '직원' ? 'checked' : '' }/> 트레이너 
+					            </th>
+					        </tr>
+					    </tbody>
+					</table>
      			</div>
      		</div>
      	</form>
@@ -147,18 +147,10 @@
      <div class="container">
      	<div class="d-flex align-items-center">
      		<h4 class="mb-3 mr-4">전체 임직원 수 ${totalRows }명 </h4> 
-     		<span class="px-2"></span>
-     		<div class="d-flex justify-content-start mb-3">
-     			<select class="form-select" style="width: 150px;" name="rows" onchange="changeRows()">
-     				<option value="10" ${param.rows eq 10 ? 'selected' : '' }>10개씩</option>
-     				<option value="20" ${param.rows eq 20 ? 'selected' : '' }>20개씩</option>
-     				<option value="30" ${param.rows eq 30 ? 'selected' : '' }>30개씩</option>
-     			</select>
-     		</div>
     	</div>
     	<div class="row mb-3">
      		<div class="col-12">
-     			<table class="table" id="table-trainers">
+     			<table class="table" id="table-trainers" style="text-align:center">
      				<thead>
      					<tr>
      						<th>No</th>
@@ -179,26 +171,30 @@
 	     						<tr>
 	    							<td>${status.index +1 }</td>
 	    							<td>${trainer.user.name }</td>
-	    							<c:choose>
-	    								<c:when test="${trainer.user.gender == 'MAN'}">
-	    									<td>남성</td>
-	    								</c:when>
-	    								<c:when test="${trainer.user.gender == 'WOMAN'}">
-	    									<td>여성</td>
-	    								</c:when>
-	    							</c:choose>
+	    							<td>
+		    							<c:choose>
+		    								<c:when test="${trainer.user.gender == 'MAN'}">
+		    									<span class="badge" style="background-color: #e6f7ff; color: #727a7d;">남성</span>
+		    								</c:when>
+		    								<c:when test="${trainer.user.gender == 'WOMAN'}">
+		    									<span class="badge" style="background-color: #ffe6fb; color: #6e646c;">여성</span>
+		    								</c:when>
+		    							</c:choose>
+	    							</td>
 	    							<td>${trainer.user.tel }</td>
-	    							<c:choose>
-	    								<c:when test="${trainer.user.status == 'R'}">
-	    									<td>승인대기</td>
-	    								</c:when>
-	    								<c:when test="${trainer.user.status == 'Y' }">
-	    									<td>재직</td>
-	    								</c:when>
-	    								<c:when test="${trainer.user.status == 'N'}">
-	    									<td>퇴사</td>
-	    								</c:when>
-	    							</c:choose>
+	    							<td>
+		    							<c:choose>
+		    								<c:when test="${trainer.user.status == 'R'}">
+		    									<span class="badge" style="background-color: white; color: skyblue; border: 1px solid skyblue;">승인대기</span>
+		    								</c:when>
+		    								<c:when test="${trainer.user.status == 'Y' }">
+		    									<span class="badge" style="background-color: #fff1cc; color: #6e6b64;">재직</span>
+		    								</c:when>
+		    								<c:when test="${trainer.user.status == 'N'}">
+		    									<span class="badge" style="background-color: #6e6b64; color: #fff1cc;">퇴사</span>
+		    								</c:when>
+		    							</c:choose>
+	    							</td>
 	    							<c:choose>
 									    <c:when test="${trainer.user.status == 'R'}">
 									        <td>
@@ -206,7 +202,12 @@
 									        </td>
 									    </c:when>
 									    <c:otherwise>
-									        <td>${trainer.title}</td>
+									        <td>
+										        <c:choose>
+										        	<c:when test="${trainer.title == '직원'}">트레이너</c:when>
+										        	<c:otherwise>${trainer.title }</c:otherwise>
+										        </c:choose>
+									        </td>
 									    </c:otherwise>
 									</c:choose>
 	    							<td><fmt:formatDate value="${trainer.hiredDate }" pattern="yyyy-MM-dd"></fmt:formatDate></td>

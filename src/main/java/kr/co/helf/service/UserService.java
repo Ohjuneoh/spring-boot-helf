@@ -387,7 +387,7 @@ public class UserService {
    // 고객 조회 - 채경
    public Map<String, Object> getAllCustomerInfo(Map<String, Object> param) {
       // 총 행의 개수 
-      int totalRows = userMapper.getCustomerTotalRows();
+      int totalRows = userMapper.getCustomerTotalRows(param);
 
       // 파라미터 값을 뽑아내서 페이지네이션에 넣는다.
       int page = (int) param.get("page");
