@@ -65,6 +65,9 @@ public interface PersonalLessonMapper {
 	// 고객관리 - 그룹 수업 조회 -  채경 
 	List<LessonApply> getGroupLessonsById(Map<String, Object> param);
 	
+	// 고객관리 - 그룹 수업 3개 조회 - 채경 
+	List<LessonApply> getGroupThreeLessonsById(String userId);
+	
 	// 고객관리 - 개인 수업 totalRows 조회 - 채경
 	int getPclTotalRowsById(Map<String, Object> param);
 	// 고객관리 - 개인 수업 조회 - 채경

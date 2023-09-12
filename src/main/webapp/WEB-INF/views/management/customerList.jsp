@@ -97,43 +97,43 @@
      		<!-- 검색 기능 -->
      		<input type="hidden" name="page" value="${param.page }"/>
      		<div class="row mb-3 align-items-center justify-content-center">
-	     		<div class="col-3">
-	     			<select class="form-select" name="opt" id="selectOpt">
-	     				<option value="name" ${param.opt eq 'name' ? 'selected' : ''}>이름</option>
-	     				<option value="tel" ${param.opt eq 'tel' ? 'selected' : '' }>연락처</option>
-	     			</select>
-	     		</div>
-	     		<div class="col-6">
-	     			<input type="text" class="form-control" name="keyword" value="${param.keyword}" style="width: 80%; margin:0 auto;" id="inputKeyword"/>
-	     		</div>
-	     		<div class="col-3">
-	     			<button type="button" class="btn btn-primary" onclick="searchCustomer()">
-	                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-	  				<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
-					</svg>
-	                검색
-	              </button>
-	     		</div>
-     		</div>
+			    <div class="d-flex justify-content-center align-items-center">
+			        <select class="form-select" name="opt" id="selectOpt" style="margin-right: 10px; width:150px;">
+			            <option value="name" ${param.opt eq 'name' ? 'selected' : ''}>이름</option>
+			            <option value="tel" ${param.opt eq 'tel' ? 'selected' : '' }>연락처</option>
+			        </select>
+			
+			        <input type="text" class="form-control" name="keyword" value="${param.keyword}" style="width: 300px; margin-right: 10px;" id="inputKeyword"/>
+			
+			        <button type="button" class="btn btn-primary" onclick="searchCustomer()">
+			            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+			                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+			            </svg>
+			            검색
+			        </button>
+			    </div>
+			</div>
      		<br>
      		<div class="row">
 	     		<div class="col-12">
-    	 			<table class="table table-bordered">
+    	 			<table class="table table-bordered" style="text-align:center">
      					<tbody>
      						<tr>
      							<th style="width: 30%;">회원 구분</th>
      							<th style="width: 70%;">
-     								<input type="radio" name="userStatus" value="전체회원" checked/> 전체 회원 
-     								<input type="radio" name="userStatus" value="유효회원"/> 유효 회원 
-     								<input type="radio" name="userStatus" value="탈퇴회원"/> 탈퇴 회원 
+     								<input type="radio" name="userStatus" value="전체회원" ${param.userStatus == null || param.userStatus eq '전체회원' ? 'checked' : '' }/> 전체 회원 
+									<input type="radio" name="userStatus" value="유효회원" ${param.userStatus eq '유효회원' ? 'checked' : '' }/> 유효 회원 
+									<input type="radio" name="userStatus" value="탈퇴회원" ${param.userStatus eq '탈퇴회원' ? 'checked' : '' }/> 탈퇴 회원 
      							</th>
      						</tr>
      						<tr>
 								<th style="width: 30%;">이용권 상태</th>
      							<th style="width: 70%;">
-     								<input type="radio" name="membershipState" value="전체" checked/> 전체
-     								<input type="radio" name="membershipState" value="유효"/> 유효
-     								<input type="radio" name="membershipState" value="만료"/> 만료 
+     								<input type="radio" name="membershipState" value="전체" ${param.membershipState == null || param.membershipState eq '전체' ? 'checked' : '' }/> 전체
+									<input type="radio" name="membershipState" value="사용대기" ${param.membershipState eq '사용대기' ? 'checked' : '' }/> 사용대기
+									<input type="radio" name="membershipState" value="사용가능" ${param.membershipState eq '사용가능' ? 'checked' : '' }/> 사용가능
+									<input type="radio" name="membershipState" value="사용중" ${param.membershipState eq '사용중' ? 'checked' : '' }/> 사용중
+									<input type="radio" name="membershipState" value="사용불가" ${param.membershipState eq '사용불가' ? 'checked' : '' }/> 사용불가 
      							</th>
      						</tr>
      						<tr>
@@ -157,13 +157,6 @@
      <div class="container">
      	<div class="d-flex align-items-center">
      		<h4 class="mb-3 mr-4">전체 회원 수 ${totalRows}명 </h4> 
-     		<div class="d-flex justify-content-start mb-3">
-     			<select class="form-select" style="width: 150px;" name="rows" onchange="changeRows()">
-     				<option value="10" ${param.rows eq 10 ? 'selected' : '' }>10개씩</option>
-     				<option value="20" ${param.rows eq 20 ? 'selected' : '' }>20개씩</option>
-     				<option value="30" ${param.rows eq 30 ? 'selected' : '' }>30개씩</option>
-     			</select>
-     		</div>
     	</div>
     	<div class="row mb-3">
      		<div class="col-12">
@@ -192,47 +185,80 @@
      							<tr>
     								<td>${status.index + 1 }</td>
     								<td>${cus.userName }</td>
-    								<td>${cus.userGender == 'WOMAN' ? '여성' : (cus.userGender == 'MAN' ? '남성' : '') }</td>
+    								<td>
+	    								<c:choose>
+	    									<c:when test="${cus.userGender == 'WOMAN' }">
+	    										<span class="badge" style="background-color: #ffe6fb; color: #6e646c;">여성</span>
+	    									</c:when>
+	    									<c:when test="${cus.userGender == 'MAN' }">
+	    										<span class="badge" style="background-color: #e6f7ff; color: #727a7d;">남성</span>
+	    									</c:when>
+	    								</c:choose>
+    								</td>
     								<td>${cus.userTel }</td>
-    								<td>${cus.userStatus == 'Y' ? '유효' : (cus.userStatus == 'N' ? '탈퇴' : '') }</td>
-    								<c:choose>
-    									<c:when test="${not empty cus.firstOrderDate }">
-    										<td><fmt:formatDate value="${cus.firstOrderDate }" pattern="yyyy-MM-dd"/></td>
-    									</c:when>
-    									<c:otherwise>
-    										<td>-</td>
-    									</c:otherwise>
-    								</c:choose>
-    								<c:choose>
-    									<c:when test="${not empty cus.latestOrderDate }">
-    										<td><fmt:formatDate value="${cus.latestOrderDate }" pattern="yyyy-MM-dd"/></td>    									
-    									</c:when>
-    									<c:otherwise>
-    										<td>-</td>
-    									</c:otherwise>
-    								</c:choose>
+    								<td>
+	    								<c:choose>
+	    									<c:when test="${cus.userStatus == 'Y'}">
+	    										<span class="badge" style="background-color: #fff1cc; color: #6e6b64;">유효</span>
+	    									</c:when>
+	    									<c:when test="${cus.userStatus == 'N'}">
+	    										<span class="badge" style="background-color: #6e6b64; color: #fff1cc;">탈퇴</span>
+	    									</c:when>
+	    								</c:choose>
+    								</td>
+    								<td>
+	    								<c:choose>
+	    									<c:when test="${not empty cus.firstOrderDate }">
+	    										<fmt:formatDate value="${cus.firstOrderDate }" pattern="yyyy-MM-dd"/>
+	    									</c:when>
+	    									<c:otherwise>-</c:otherwise>
+	    								</c:choose>
+    								</td>
+    								<td>
+	    								<c:choose>
+	    									<c:when test="${not empty cus.latestOrderDate }">
+	    										<fmt:formatDate value="${cus.latestOrderDate }" pattern="yyyy-MM-dd"/>   									
+	    									</c:when>
+	    									<c:otherwise>-</c:otherwise>
+	    								</c:choose>
+    								</td>
     								<td>${not empty cus.membershipName ? cus.membershipName : '-'}</td>
-    								<td>${cus.myMembershipState}</td>
-  									<td>${not empty cus.myMembershipEndDate ? cus.myMembershipEndDate : '-'}</td>
-    								<c:choose>
-    									<c:when test="${cus.myMembershipRemainderCnt == -1 }">
-    										<td>무제한</td>
-    									</c:when>
-    									<c:when test="${cus.myMembershipRemainderCnt == ''}">
-    										<td>-</td>
-    									</c:when>
-    									<c:otherwise>
-    										<td>${cus.myMembershipRemainderCnt } 회</td>
-    									</c:otherwise>
-    								</c:choose>
-    								<c:choose>
-    									<c:when test="${not empty cus.getDaysRemaining()}">
-    										<td>${cus.getDaysRemaining()} 일</td>
-    									</c:when>
-    									<c:when test="${cus.getDaysRemaining() == null }">
-    										<td>-</td>
-    									</c:when>
-    								</c:choose>
+    								<td>
+	    								<c:choose>
+	    									<c:when test="${cus.myMembershipState == '사용불가'}">
+	    										<span class="badge" style="background-color: #c46d6a; color: #cfc3c2;">사용불가</span>
+	    									</c:when>
+	    									<c:when test="${cus.myMembershipState == '사용대기'}">
+	    										<span class="badge" style="background-color: #4dc9e8; color: #f2fafc;">사용대기</span>
+	    									</c:when>
+	    									<c:when test="${cus.myMembershipState == '사용가능'}">
+	    										<span class="badge" style="background-color: #4dc9e8; color: #f2fafc;">사용가능</span>
+	    									</c:when>
+	    									<c:when test="${cus.myMembershipState == '사용중'}">
+	    										<span class="badge" style="background-color: #4dc9e8; color: #f2fafc;">사용중</span>
+	    									</c:when>
+	    								</c:choose>
+    								</td>
+    								<td>
+	    								<c:choose>
+	    									<c:when test="${not empty cus.myMembershipEndDate }">${cus.myMembershipEndDate }</c:when>
+	    									<c:when test="${empty cus.myMembershipEndDate}">-</c:when>
+	    								</c:choose>
+    								</td>
+    								<td>
+	    								<c:choose>
+	    									<c:when test="${cus.myMembershipRemainderCnt == -1 }">무제한</c:when>
+	    									<c:when test="${empty cus.myMembershipRemainderCnt}">-</c:when>
+	    									<c:otherwise>${cus.myMembershipRemainderCnt } 회
+	    									</c:otherwise>
+	    								</c:choose>
+    								</td>
+    								<td>
+	    								<c:choose>
+	    									<c:when test="${not empty cus.getDaysRemaining()}">${cus.getDaysRemaining()} 일</c:when>
+	    									<c:when test="${cus.getDaysRemaining() == null }">-</c:when>
+	    								</c:choose>
+    								</td>
     								<td><a href="/management/customer-detail?id=${cus.userId}" class="btn btn-outline-primary">상세</a></td>
      							</tr>
      						</c:forEach>
@@ -316,6 +342,7 @@
 	function searchCustomer(){
 		document.querySelector("input[name=page]").value = 1;
 		let keyword = document.querySelector("input[name=keyword]").value;
+		let membershipState = document.querySelector("input[name=membershipState]").value;
 		let remainderCnt = document.querySelector("input[name=remainderCnt]").value;
 		let remainingDays1 = document.querySelector("input[name=remainingDays1]").value;
 		let remainingDays2 = document.querySelector("input[name=remainingDays2]").value;
