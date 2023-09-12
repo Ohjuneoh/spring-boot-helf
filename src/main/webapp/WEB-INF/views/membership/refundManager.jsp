@@ -80,6 +80,10 @@
     </div>
 	<div>
 		<div class="container py-5 ">
+			<div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+				<h5 class="fw-bold text-primary text-uppercase">Refund Managing</h5>
+				<h1 class="mb-0">환불내역</h1>
+			</div>
 			<div class="row mb-3 d-flex align-items-center justify-content-center">
 				<div class="col-10">
 				
@@ -99,7 +103,7 @@
 							<input type="hidden" name="page" value="${dto.pagination.page}"/>
 							<div class="card-body">							
 								<div class="row mb-3 pt-3">
-									<label class="col-1 offset-1 col-form-label text-end">상태</label>
+									<label class="col-1 col-form-label text-end" style="margin-left: 50px;">상태</label>
 									<div class="col-2">
 										<select name="state" class="form-select">
 											<option selected="selected" disabled="disabled">전체보기</option>
@@ -121,6 +125,7 @@
 									</div>
 									<div class="col-2">
 										<button type="submit" class="btn btn-success">검색</button>
+										<a href="refund-manager" id="point-return" class="bi bi-arrow-clockwise btn btn-primary"></a>
 									</div>
 								</div>
 							</div>

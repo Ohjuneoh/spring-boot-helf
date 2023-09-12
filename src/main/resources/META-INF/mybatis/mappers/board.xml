@@ -81,6 +81,7 @@
 		            lead(board_title) OVER (ORDER BY board_no) next_board_title
 		    from    helf_boards
 		    where   board_type = 'notice'
+		    and		board_deleted = 'N'
 		    )
 		where board_no = #{value}
 	</select>

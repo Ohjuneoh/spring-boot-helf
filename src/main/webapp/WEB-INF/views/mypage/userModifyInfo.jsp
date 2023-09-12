@@ -75,7 +75,7 @@
 		        <div class="row g-3">
 		            <div class="row" >
 						<div class="col-12 section-title text-start position-relative pb-3 mb-1 mt-4" style="max-width: 600px;">
-			                <h1 class="fw-bold text-primary text-uppercase">수정하기</h1>
+			                <h1 class="fw-bold text-primary text-uppercase" >수정하기</h1>
 			            </div>
 					</div>
 		        <div class="p-3">
@@ -160,7 +160,7 @@
           	<div>
           	</div>
 			<div class="col-12 mt-3">
-				<button type="submit" class="btn btn-dark w-100 py-3" id="changePwd-button" >회원정보 수정</button>
+				<button type="submit" class="btn btn-dark w-100 py-3" id="changePwd-button" disabled>회원정보 수정</button>
 			</div>
 		</form>
    </div>                    
@@ -203,7 +203,7 @@ $(document).ready(function(){
     function triggerFileInput() {
         document.getElementById('fileInput').click();
     }
-});
+
 
 function addPasswordMatchCheck() {
     $("#password_confirmation input").on('input', function() {
@@ -234,6 +234,94 @@ function checkPasswordMatch() {
     }
 }
 
+ 
+	//이메일 유효성 검사
+	$("#user-email").on('input', function() {
+	    var email = $(this).val();
+	    var mailJ = /^[a-zA-Z0-9]/;
+	    if (mailJ.test(email)) {
+	        $("#user-email-check").text("");
+	    } else {
+	        $("#user-email-check").text("이메일 형식에 맞게 입력하세요.");
+	    }
+	    checkFormValidity(); // 폼 유효성 검사 함수 호출
+	});
+	
+	// 비밀번호 유효성 검사
+	$("#user-password").on('input', function() {
+	    var password = $(this).val();
+	    var pwJ = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{4,12}$/;
+	    if (pwJ.test(password)) {
+	        $("#user-password_check").text("");
+	    } else {
+	        $("#user-password_check").text("비밀번호 형식에 맞게 입력하세요.");
+	    }
+	    checkFormValidity(); // 폼 유효성 검사 함수 호출
+	});
+	
+	// 휴대폰 번호 유효성 검사
+	$("#user-tel").on('input', function() {
+	    var phone = $(this).val();
+	    var phoneJ = /^01([0|1|6|7|8|9]?)?-?([0-9]{3,4})?-?([0-9]{4})$/;
+	    if (phoneJ.test(phone)) {
+	        $("#user-tel_check").text("");
+	    } else {
+	        $("#user-tel_check").text("휴대폰 번호 형식에 맞게 입력하세요.");
+	    }
+	    checkFormValidity(); // 폼 유효성 검사 함수 호출
+	});
+	
+	// 폼 유효성 검사 함수
+	function checkFormValidity() {
+	    var emailValid = $("#user-email-check").text() === "";
+	    var passwordValid = $("#user-password_check").text() === "";
+	    var telValid = $("#user-tel_check").text() === "";
+	
+	    // 모든 조건을 만족하면 수정 버튼 활성화
+	    if (emailValid && passwordValid && telValid) {
+	        $("#changePwd-button").prop("disabled", false);
+	    } else {
+	        $("#changePwd-button").prop("disabled", true);
+	    }
+	}
+
+	
+	// 회원정보 수정 버튼 클릭 이벤트 처리
+    $("#changePwd-button").click(function(event) {
+        // 이메일 체크
+        var email = $("#user-email").val();
+        if (email.trim() === "") {
+            alert("이메일을 입력하세요.");
+            event.preventDefault(); // 이벤트 중단
+            return;
+        }
+
+        // 비밀번호 체크
+        var password = $("#user-password").val();
+        if (password.trim() === "") {
+            alert("비밀번호를 입력하세요.");
+            event.preventDefault();
+            return;
+        }
+
+        // 통신사 체크
+        var mobileCarrier = $("#user-mobileCarrier").val();
+        if (mobileCarrier === null) {
+            alert("통신사를 선택하세요.");
+            event.preventDefault();
+            return;
+        }
+
+        // 전화번호 체크
+        var tel = $("#user-tel").val();
+        if (tel.trim() === "") {
+            alert("전화번호를 입력하세요.");
+            event.preventDefault();
+            return;
+        }
+    });
+
+});
     
 </script>
 

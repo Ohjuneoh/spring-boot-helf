@@ -125,7 +125,7 @@
 <div class="row mb-3" >
     <div class="col-12">
         <c:choose>
-            <c:when test="${not empty result }">
+            <c:when test="${result.totalRows gt 0 }">
                 <nav>
                     <ul class="pagination justify-content-center">
                         <li class="page-item ${result.pagination.first ? 'disabled' : '' }">

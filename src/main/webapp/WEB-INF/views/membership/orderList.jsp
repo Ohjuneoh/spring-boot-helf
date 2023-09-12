@@ -90,7 +90,7 @@
 							<input type="hidden" name="page" value="${dto.pagination.page}"/>
 							<div class="card-body">							
 								<div class="row mb-3 pt-3">
-									<label class="col-1 offset-1 col-form-label text-end">상태</label>
+									<label class="col-1 col-form-label text-end" style="margin-left: 50px;">상태</label>
 									<div class="col-2">
 										<select name="state" class="form-select">
 											<option selected="selected" disabled="disabled">전체보기</option>
@@ -112,6 +112,7 @@
 									</div>
 									<div class="col-2">
 										<button type="submit" class="btn btn-success">검색</button>
+										<a href="order-list" id="point-return" class="bi bi-arrow-clockwise btn btn-primary"></a>
 									</div>
 								</div>
 							</div>

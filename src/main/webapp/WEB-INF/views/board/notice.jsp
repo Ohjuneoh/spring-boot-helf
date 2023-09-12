@@ -80,52 +80,61 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
-		<div class="container py-5">
-			<div class="row mb-3">
-				<div class="col-12 d-flex justify-content-center" >
-					<div id="boardlist" class="wrap_inner" style="width: 1200px;">
-						<div class="card-body">
-			               <table class="table">
-			               		<thead>
-									<tr>
-			                        	<th style="width: 30%;">글번호</th>
-			                        	<th style="width: 40%;">제목</th>
-			                        	<th style="width: 30%;">작성일</th>
-			                     	</tr>
-								</thead>
-							   <tbody>
-							   <c:forEach var="board" items="${result.notices }">
-				                        <tr>
-				                        	<c:choose>
-												<c:when test="${board.main == 0 }">
-					                        		<td><i class="bi bi-megaphone-fill" style="color: blue; font-size: 20px;"></i></td>
-												</c:when>
-												<c:otherwise>
-													 <td>${board.no}</td>
-									            </c:otherwise>
-				                        	</c:choose>
-											<td><a href="/board/detail?no=${board.no }">${board.title }</a></td>
-				                        	<td><fmt:formatDate value="${board.createDate }" pattern="yyyy년 M월 d일" /></td>
-		                    		 	</tr>
-							   </c:forEach>
-						  	
-									
-							   </tbody>
-			               </table>
-			               <sec:authorize access="hasRole('ROLE_MANAGER')">
-			               <div class="ExpandMoreBtn_more_btn_box__5lBg8 d-flex justify-content-end align-items-center">
-								<a href="noticeform" class="btn btn-primary btn-sm" >
-									글쓰기
-								</a>
-							</div>
-							</sec:authorize>
-							</div>
-        				</div>
-    				</div>
-    			</div>
-    		</div>
+ <div class="container-fluid py-0 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 1px;">
+    <div class="container py-5">
+        <div class="row mb-3">
+            <div class="col-12 d-flex justify-content-center">
+                <div id="boardlist" class="wrap_inner" style="width: 1200px;">
+                    <div class="card-body">
+                        <c:choose>
+                            <c:when test="${empty result.notices}">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="3" class="text-center">게시글이 없습니다.</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </c:when>
+                            <c:otherwise>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 30%;">글번호</th>
+                                            <th style="width: 40%;">제목</th>
+                                            <th style="width: 30%;">작성일</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="board" items="${result.notices}">
+                                            <tr>
+                                                <c:choose>
+                                                    <c:when test="${board.main == 0}">
+                                                        <td><i class="bi bi-megaphone-fill" style="color: blue; font-size: 20px;"></i></td>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <td>${board.no}</td>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <td><a href="/board/detail?no=${board.no }">${board.title }</a></td>
+                                                <td><fmt:formatDate value="${board.createDate }" pattern="yyyy년 M월 d일" /></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:otherwise>
+                        </c:choose>
+                        <sec:authorize access="hasRole('ROLE_MANAGER')">
+                            <div class="ExpandMoreBtn_more_btn_box__5lBg8 d-flex justify-content-end align-items-center">
+                                <a href="noticeform" class="btn btn-primary btn-sm">글쓰기</a>
+                            </div>
+                        </sec:authorize>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+</div>
     
 		<div class="row mb-3" >
 	
