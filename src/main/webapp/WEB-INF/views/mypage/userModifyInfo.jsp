@@ -85,7 +85,6 @@
 						<div class="row">
 							<div class="col-sm-6">
 							    <img src="/resources/img/photo/유저사진.png" class="img-fluid border" />
-							    <button type="button" class="btn btn-primary btn-sm mt-2" onclick="triggerFileInput()">프로필 사진 업로드</button>
 							    <div class="col-sm-6 input-wrapper">
 							        <input type="file" name="photofile" style="display: none;" id="fileInput" />
 							    </div>
