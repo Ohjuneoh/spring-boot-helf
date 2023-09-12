@@ -182,7 +182,14 @@
 		               					<td><fmt:formatDate value="${gcl.applyDate}" pattern="yyyy-MM-dd"/></td>
 		               					<td>${gcl.lesson.name}</td>
 		               					<td>${gcl.lesson.user.name }</td>
-		               					<td>${gcl.attendanceStatus}</td>
+		               					<td>
+		               					<c:choose>
+		               						<c:when test="${gcl.attendanceStatus == 'Y'}">
+		               							출석
+		               						</c:when>
+		               						<c:otherwise>결석
+		               						</c:otherwise>
+		               					</c:choose></td>
 		               					<td>${gcl.myMembership.membership.name}</td>
 	               					</tr>
 	               				</c:forEach>

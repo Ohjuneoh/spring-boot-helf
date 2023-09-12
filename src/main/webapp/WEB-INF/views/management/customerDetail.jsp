@@ -243,8 +243,8 @@
 	               		<tbody>
 	               			<c:set var="rowCount" value="0"/>
 	               			<c:choose>
-	               				<c:when test="${not empty lessonApply }">
-	               					<c:forEach var="la" items="${lessonApply }" varStatus="loop">
+	               				<c:when test="${not empty groupLesson }">
+	               					<c:forEach var="la" items="${groupLesson }" varStatus="loop">
 	               						<c:if test="${loop.index <3 }">
 					               			<tr>
 					               				<td><fmt:formatDate value="${la.lesson.date}" pattern="yyyy년 MM월 dd일"></fmt:formatDate> ${la.lesson.time}</td>

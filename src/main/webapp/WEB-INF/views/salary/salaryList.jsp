@@ -202,9 +202,15 @@
 						     			</c:choose>
 				     				</td>
 				     				<td>
-				     					<span class="badge bg-success">
-					     					${mySalary.mySalary.trainer.title }
-				     					</span>
+				     					<c:choose>
+				     						<c:when test="${mySalary.mySalary.trainer.title == '점장' }">
+				     							<span class="badge bg-success">점장</span>
+				     						</c:when>
+				     						<c:when test="${ mySalary.mySalary.trainer.title == '직원' }">
+				     							<span class="badge" style="background-color: #72cc75; color: white;">트레이너</span>
+				     						</c:when>
+				     						<c:otherwise>-</c:otherwise>
+				     					</c:choose>
 				     				</td>
 				     				<c:choose>
 				     					<c:when test="${mySalary.status == 'Y'}">
