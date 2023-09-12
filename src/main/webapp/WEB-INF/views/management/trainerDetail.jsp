@@ -210,6 +210,13 @@
 	               			</tr>
 	               		</thead>
 	               		<tbody>
+						<c:choose>
+							<c:when test="${empty lessons }">
+								<tr>
+									<td colspan="4">그룹수업 내역이 없습니다.</td>
+								</tr>
+							</c:when>
+						</c:choose>
 						<c:forEach var="lesson" items="${lessons }" varStatus="status">
 							<c:choose>
 								<c:when test="${status.index < 5}">
@@ -219,8 +226,6 @@
 										<td>그룹 PT</td>
 									</tr>
 								</c:when>
-								<c:otherwise>
-								</c:otherwise>
 							</c:choose>
 						</c:forEach>
 	               		</tbody>
