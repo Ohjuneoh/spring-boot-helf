@@ -63,7 +63,7 @@ public interface UserMapper {
 	void insertTrainerAttendances(Map<String, Object> param);
 	
 	// 전체 고객 수 - 채경 
-	int getCustomerTotalRows();
+	int getCustomerTotalRows(Map<String, Object> param);
 	
 	// 고객 아이디 별 출석 수 - 채경 
 	int getCustomerAttendanceTotalRowsById(Map<String, Object> param);

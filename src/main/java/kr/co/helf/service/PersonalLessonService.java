@@ -1,6 +1,7 @@
 package kr.co.helf.service;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -99,7 +100,19 @@ public class PersonalLessonService {
 	}
 	
 	// 고객별 그룹 수업 조회 
-	public List<LessonApply> getGroupLessonsById(Map<String, Object> param){
+	public List<LessonApply> getGroupThreeLessonsById(String userId){
+		List<LessonApply> groupThreeLessonList = personalLessonMapper.getGroupThreeLessonsById(userId);
+		return groupThreeLessonList;
+	}
+	
+	// 고객별 개인 수업 3개 조회 
+		public List<PersonalLesson> getThreePersonalLessonById(String userId){
+			List<PersonalLesson> result = personalLessonMapper.getThreePersonalLessonById(userId);
+			return result;
+		}
+	
+	// 고객별 그룹 수업 조회 
+	public Map<String, Object> getGroupLessonsById(Map<String, Object> param){
 		// 총 행의 갯수
 		int totalRows = personalLessonMapper.getGclTotalRowsById(param);
 		int page = (int) param.get("page");
@@ -111,7 +124,12 @@ public class PersonalLessonService {
 		param.put("begin", begin);
 		param.put("end", end);
 		
-		List<LessonApply> result = personalLessonMapper.getGroupLessonsById(param);
+		List<LessonApply> groupLessonList = personalLessonMapper.getGroupLessonsById(param);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("totalRows", totalRows);
+		result.put("pagination", pagination);
+		result.put("groupLessonList", groupLessonList);
 		return result;
 	}
 	
@@ -132,11 +150,7 @@ public class PersonalLessonService {
 		return result;
 	}
 	
-	// 고객별 개인 수업 3개 조회 
-	public List<PersonalLesson> getThreePersonalLessonById(String userId){
-		List<PersonalLesson> result = personalLessonMapper.getThreePersonalLessonById(userId);
-		return result;
-	}
+	
 
 	public Consultation getConsultationByUserId(String id, int trainerNo) {
 		

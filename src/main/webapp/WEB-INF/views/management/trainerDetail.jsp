@@ -221,9 +221,9 @@
 							<c:choose>
 								<c:when test="${status.index < 5}">
 									<tr>
-										<td>${lesson.name }</td>
+										<td>${lesson.name}</td>
 										<td><fmt:formatDate value="${lesson.date }" pattern="yyyy년 M월 d일" /> ${lesson.time }시 </td>
-										<td>그룹 PT</td>
+										<td>그룹PT</td>
 									</tr>
 								</c:when>
 							</c:choose>
@@ -276,6 +276,9 @@
         	</div>
      	</div>
    	</div>
+   	<div class="container" style="text-align:right;">
+	   <a href="/management/trainer-list" class="btn btn-primary">목록</a>
+    </div>
 	<!--  회원별 상세 페이지 form End -->
 	
 	

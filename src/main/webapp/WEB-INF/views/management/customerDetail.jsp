@@ -243,8 +243,8 @@
 	               		<tbody>
 	               			<c:set var="rowCount" value="0"/>
 	               			<c:choose>
-	               				<c:when test="${not empty lessonApply }">
-	               					<c:forEach var="la" items="${lessonApply }" varStatus="loop">
+	               				<c:when test="${not empty groupLesson }">
+	               					<c:forEach var="la" items="${groupLesson }" varStatus="loop">
 	               						<c:if test="${loop.index <3 }">
 					               			<tr>
 					               				<td><fmt:formatDate value="${la.lesson.date}" pattern="yyyy년 MM월 dd일"></fmt:formatDate> ${la.lesson.time}</td>
@@ -529,6 +529,9 @@
         	</div>
      	</div>
    	</div>
+   	<div class="container" style="text-align:right;">
+		<a href="/management/customer-list" class="btn btn-primary">목록</a>
+    </div>
 	<!--  회원별 상세 페이지 form End -->
 	
 	<!-- 최근 결제 내역 Modal Start 

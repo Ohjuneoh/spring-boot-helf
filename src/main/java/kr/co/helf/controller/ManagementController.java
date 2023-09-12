@@ -86,8 +86,9 @@ public class ManagementController {
 	public String customerDetail(@RequestParam("id") String userId, Model model) {
 		Map<String, Object> result = userService.getCustomerDetails(userId);
 		List<PersonalLesson> personalLesson = personalLessonService.getThreePersonalLessonById(userId);
+		List<LessonApply> groupThreeLessonList = personalLessonService.getGroupThreeLessonsById(userId);
 		model.addAttribute("customerInfo", result.get("customerInfo"));
-		model.addAttribute("lessonApply", result.get("lessonApply")); // 그룹 수업 
+		model.addAttribute("groupLesson", groupThreeLessonList); // 그룹 수업 
 		model.addAttribute("customerOrderDto", result.get("customerOrderDto"));
 		model.addAttribute("myMembershipList", result.get("myMembershipList"));
 		model.addAttribute("customerAttendance", result.get("customerAttendance"));
@@ -144,17 +145,15 @@ public class ManagementController {
 		if (StringUtils.hasText(specificDate2)) {
 			param.put("specificDate2", specificDate2);			
 		}
-		// 개인수업 조회
-		// List<PersonalLesson> personalLessonList = personalLessonService.getPersonalLessonById(param);
 		// 그룹수업 조회
-		List<LessonApply> groupLessonList = personalLessonService.getGroupLessonsById(param);
+		Map<String, Object> result2 = personalLessonService.getGroupLessonsById(param);
 		// 고객 상세 
-		Map<String, Object> result = userService.getCustomerAttendances(param);
 		CustomerDetailDto customerDetailDto = userService.getPrivateInfo(userId);
-		// model.addAttribute("personalLessonList", personalLessonList);
-		model.addAttribute("groupLessonList", groupLessonList);
-		model.addAttribute("pagination", result.get("pagination"));
+		
+		model.addAttribute("groupLessonList", result2.get("groupLessonList"));
+		model.addAttribute("pagination", result2.get("pagination"));
 		model.addAttribute("customerDetailDto", customerDetailDto);
+		model.addAttribute("totalRows", result2.get("totalRows"));
 		return "management/customerLessons";
 	}
 	

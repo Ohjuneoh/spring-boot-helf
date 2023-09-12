@@ -149,7 +149,7 @@
 	        </li>
 	    </ul>
 	<!-- 개인 레슨 수당 내역  --> 
-	<div class="content-section">
+	<div class="content-section" style="padding: 20px;">
 	<div class="card-body">
     	<form method="get" action="/salary/tab3Content" id="form-pclLesson-search">
    			<input type="hidden" name="page" value="${empty param.page ? 1 : param.page  }"/>

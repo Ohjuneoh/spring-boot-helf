@@ -162,12 +162,15 @@
 <script>
 $( function() {
     $("#date").datepicker({
-   		dateFormat: 'yy/mm/dd',
-        onSelect: function(selectedDate) {
+        dateFormat: 'yy/mm/dd',
+        onSelect: function (selectedDate) {
+            let selectedDateObj = new Date(selectedDate); // 선택한 날짜 가져오기
             let currentDate = new Date(); // 현재 날짜 가져오기
-            let selectedDateObj = $.datepicker.parseDate('yy/mm/dd', selectedDate); // 선택한 날짜 가져오기
 
-            if (selectedDateObj < currentDate) {
+            // 현재 날짜를 00:00:00 시간으로 설정
+            currentDate.setHours(0, 0, 0, 0);
+
+            if (selectedDateObj.getTime() < currentDate.getTime()) {
                 alert("올바른 날짜를 입력해주세요.");
                 $("#date").val(""); // 날짜 입력란 초기화
             }

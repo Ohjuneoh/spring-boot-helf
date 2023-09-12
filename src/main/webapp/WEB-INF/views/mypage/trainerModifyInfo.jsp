@@ -84,7 +84,7 @@
 						
 						<div class="row">
 							<div class="col-sm-6">
-							    <img src="/resources/img/photo/강.jpg" class="img-fluid border" />
+							    <img src="/resources/img/photo/${trainerInfo.trainerFile }" class="img-fluid border" />
 							    <button type="button" class="btn btn-primary btn-sm mt-2" onclick="triggerFileInput()">프로필 사진 업로드</button>
 							    <div class="col-sm-6 input-wrapper">
 							        <input type="file" name="photofile" style="display: none;" id="fileInput" />
@@ -212,6 +212,18 @@
 
 
 <script type="text/javascript">
+
+$(document).ready(function(){
+    function triggerFileInput() {
+        $('#fileInput').click();
+    }
+    
+    $('button[onclick="triggerFileInput()"]').on('click', function(e) {
+        e.preventDefault();
+        
+        triggerFileInput();
+    });
+});
 $(document).ready(function(){
     let careerCounter = 0;
 
