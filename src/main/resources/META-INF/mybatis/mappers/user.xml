@@ -226,10 +226,79 @@
 	</insert>
 	
 	<!-- 고객 전체 행 개수 -->
-	<select id="getCustomerTotalRows" resultType="int">
-		select count(*)
-		from helf_users
-		where user_type = 'ROLE_USER'	
+	<select id="getCustomerTotalRows" resultType="int" parameterType="map">
+		WITH LatestOrder AS (
+		    SELECT
+		       o.user_id,
+		        m.membership_name,
+		        o.orders_payment_date,
+		        mm.my_membership_remainder_cnt,
+		        mm.my_membership_enddate,
+		        mm.my_membership_state,
+		        ROW_NUMBER() OVER (PARTITION BY o.user_id ORDER BY o.orders_payment_date DESC) AS latest_rn
+		    FROM HELF_ORDERS o
+		    LEFT JOIN helf_my_membership mm ON o.my_membership_no = mm.my_membership_no
+		    LEFT JOIN helf_membership m ON mm.membership_no = m.membership_no
+		),
+		
+			FirstOrder AS (
+		    	SELECT
+			        o.user_id,
+			        o.orders_payment_date,
+			        ROW_NUMBER() OVER (PARTITION BY o.user_id ORDER BY o.orders_payment_date ASC) AS first_rn
+			    FROM HELF_ORDERS o
+			)
+		
+		, AllData AS (
+		    SELECT 
+		        u.user_id       as userId,
+		        u.user_name     as userName,
+		        u.user_gender   as userGender,
+		        u.user_tel      as userTel,
+		        u.user_status   as userStatus,
+		        f.orders_payment_date AS firstOrderDate,
+		        l.orders_payment_date AS latestOrderDate,
+		        l.membership_name AS MembershipName,
+		        l.my_membership_remainder_cnt AS myMembershipRemainderCnt,
+		        l.my_membership_enddate AS myMembershipEndDate,
+		        l.my_membership_state   AS myMembershipState
+		    FROM HELF_USERS u
+		    LEFT JOIN FirstOrder f ON u.user_id = f.user_id AND f.first_rn = 1
+		    LEFT JOIN LatestOrder l ON u.user_id = l.user_id AND l.latest_rn = 1
+		    WHERE u.user_type = 'ROLE_USER'
+		        <if test="opt == 'name'">
+		            AND u.user_name = INITCAP(#{keyword})
+		        </if>
+		        <if test="opt == 'tel'">
+		            AND u.user_tel = #{keyword}
+		        </if>
+		        <if test="userStatus == '유효회원'">
+		            AND u.user_status = 'Y'
+		        </if>
+		        <if test="userStatus == '탈퇴회원'">
+		            AND u.user_status = 'N' 
+		        </if>
+		        <if test="membershipState == '사용대기'">
+		            AND l.my_membership_state = '사용대기'
+		        </if>
+		        <if test="membershipState == '사용가능'">
+		            AND l.my_membership_state = '사용가능'
+		        </if>
+		        <if test="membershipState == '사용중'">
+		            AND l.my_membership_state = '사용중'
+		        </if>
+		        <if test="membershipState == '사용불가'">
+		            AND l.my_membership_state = '사용불가'
+		        </if>
+		        <if test="remainderCnt != null">
+		            AND l.my_membership_remainder_cnt &lt;= #{remainderCnt}
+		        </if>
+		        <if test="remainingDays1 != null and remainingDays2 != null">
+		            AND l.my_membership_enddate BETWEEN #{remainingDays1} AND #{remainingDays2}
+		        </if>
+		)
+		SELECT count(*) 
+		FROM AllData
 	</select>
 	
 	<!-- 고객 정보 조회 내역 - 채경 -->
@@ -274,32 +343,36 @@
 		    LEFT JOIN FirstOrder f ON u.user_id = f.user_id AND f.first_rn = 1
 		    LEFT JOIN LatestOrder l ON u.user_id = l.user_id AND l.latest_rn = 1
 		    WHERE u.user_type = 'ROLE_USER'
-		    <choose>
-		        <when test="opt == 'name'">
+		        <if test="opt == 'name'">
 		            AND u.user_name = INITCAP(#{keyword})
-		        </when>
-		        <when test="opt == 'tel'">
+		        </if>
+		        <if test="opt == 'tel'">
 		            AND u.user_tel = #{keyword}
-		        </when>
-		        <when test="userStatus == '유효회원'">
+		        </if>
+		        <if test="userStatus == '유효회원'">
 		            AND u.user_status = 'Y'
-		        </when>
-		        <when test="userStatus == '탈퇴회원'">
+		        </if>
+		        <if test="userStatus == '탈퇴회원'">
 		            AND u.user_status = 'N' 
-		        </when>
-		        <when test="membershipState == '유효'">
-		            AND l.my_membership_state = 'Y'
-		        </when>
-		        <when test="membershipState == '만료'">
-		            AND l.my_membership_state = 'N'
-		        </when>
-		        <when test="remainderCnt != null">
-		            AND l.my_membership_remainder_cnt = #{remainderCnt}
-		        </when>
-		        <when test="remainingDays1 != null and remainingDays2 != null">
+		        </if>
+		        <if test="membershipState == '사용대기'">
+		            AND l.my_membership_state = '사용대기'
+		        </if>
+		        <if test="membershipState == '사용가능'">
+		            AND l.my_membership_state = '사용가능'
+		        </if>
+		        <if test="membershipState == '사용중'">
+		            AND l.my_membership_state = '사용중'
+		        </if>
+		        <if test="membershipState == '사용불가'">
+		            AND l.my_membership_state = '사용불가'
+		        </if>
+		        <if test="remainderCnt != null">
+		           AND l.my_membership_remainder_cnt &lt;= #{remainderCnt}
+		        </if>
+		        <if test="remainingDays1 != null and remainingDays2 != null">
 		            AND l.my_membership_enddate BETWEEN #{remainingDays1} AND #{remainingDays2}
-		        </when>
-		    </choose>
+		        </if>
 		)
 		SELECT * 
 		FROM AllData
@@ -363,11 +436,9 @@
 		and la.my_membership_no(+) = mm.my_membership_no
 		and la.lesson_no = l.lesson_no(+)
 		and ca.user_id = #{userId}
-		<choose>
-			<when test="specificDate1 != null and specificDate2 != null">
+			<if test="specificDate1 != null and specificDate2 != null">
 			and ca.customer_attendance_date between #{specificDate1} and #{specificDate2}
-			</when>
-		</choose>
+			</if>
 	)
 	where rownumber between #{begin} and #{end}	
 	</select>
@@ -434,8 +505,30 @@
 	
 	<select id="getAllTrainerTotalRows" parameterType="map" resultType="int">
 	select count(*)
-	from helf_users 
-	where user_type='ROLE_TRAINER'
+	from helf_users u, helf_trainers t
+	where u.user_id = t.user_id
+	and u.user_type='ROLE_TRAINER'
+	<if test="opt == 'name'">
+				and u.user_name = #{keyword}
+				</if>
+				<if test="opt == 'tel'">
+				and u.user_tel = #{keyword}
+				</if>
+				<if test="trainerStatus == '재직'">
+				and u.user_status = 'Y'
+				</if>
+				<if test="trainerStatus == '퇴직'">
+				and u.user_status = 'N'
+				</if>
+				<if test="trainerStatus == '승인대기'">
+				and u.user_status = 'R'
+				</if>
+				<if test="trainerTitle == '점장'">
+				and t.trainer_title = '점장'
+				</if>
+				<if test="trainerTitle == '직원'">
+				and t.trainer_title = '직원' 
+				</if>
 	</select>
 	
 	<select id="getAllTrainers" parameterType="map" resultType="kr.co.helf.vo.Trainer">
@@ -452,33 +545,31 @@
 		           t.trainer_resignation_date	as resignationDate, 
 		           t.trainer_title				as title, 
 		           t.trainer_hired_date			as hiredDate,
-		           ROW_NUMBER() OVER (ORDER BY t.trainer_hired_date) AS row_number
+		           ROW_NUMBER() OVER (ORDER BY u.user_name) AS row_number
 			from helf_users u, helf_trainers t
 			where u.user_id = t.user_id
 			and u.user_type='ROLE_TRAINER'
-			<choose>
-				<when test="opt == 'name'">
+				<if test="opt == 'name'">
 				and u.user_name = #{keyword}
-				</when>
-				<when test="opt == 'tel'">
+				</if>
+				<if test="opt == 'tel'">
 				and u.user_tel = #{keyword}
-				</when>
-				<when test="trainerStatus == '재직'">
+				</if>
+				<if test="trainerStatus == '재직'">
 				and u.user_status = 'Y'
-				</when>
-				<when test="trainerStatus == '퇴직'">
+				</if>
+				<if test="trainerStatus == '퇴직'">
 				and u.user_status = 'N'
-				</when>
-				<when test="trainerStatus == '승인대기'">
+				</if>
+				<if test="trainerStatus == '승인대기'">
 				and u.user_status = 'R'
-				</when>
-				<when test="trainerTitle == '점장'">
+				</if>
+				<if test="trainerTitle == '점장'">
 				and t.trainer_title = '점장'
-				</when>
-				<when test="trainerTitle == '직원'">
+				</if>
+				<if test="trainerTitle == '직원'">
 				and t.trainer_title = '직원' 
-				</when>
-			</choose>)
+				</if>)
 	where row_number BETWEEN #{begin} AND #{end}
 	ORDER BY row_number
 	</select>

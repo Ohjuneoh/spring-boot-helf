@@ -92,22 +92,22 @@
     <!-- Full Screen Search End -->
     
     <!-- 전체 급여 목록 form Start -->
-     <div class="container">
+     <div class="container" style="padding:20px;">
      	<form id="form-salary-list" class="" method="get" action="salary-list">
 	     	<input type="hidden" name="page" value="${param.page }" />
 	     	<div class="row mb-3">
 	     	<div class="col-8">
 				<h3 style="display: inline-block;">임직원 급여 현황</h3>
 				<h3 style="color:#007bff; display: inline-block; margin-left:10px;"><fmt:formatDate value="${graphData[0].salaryDate }" pattern="yyyy년 MM월"/></h3>
-				<div class="card" style="background-color: #f0f8ff; border:none;">
+				<div class="card" style="background-color: #f0f8ff; border:none; padding-top:20px; border-radius:15px;">
 					<canvas id="AllTrainerSalaryBarChart"></canvas>
 				</div>
 	     	</div>
 	     	<div class="col-4">
 	     		<h3 >급여정산 요약</h3> 
-	     		<div class="card" style="background-color: #f0f8ff; border:none;">
+	     		<div class="card" style="background-color: #f0f8ff; border:none; padding:10px; border-radius:15px;">
 	     			<div class="card-body">
-	     					<span class="badge" style="background-color: #fff5cc; color: #d1a655;">확정완료</span>
+	     					<span class="badge" style="background-color: #fff5cc; color: #d1a655; padding-bottm:10px;">확정완료</span>
 		     				<!-- 이번 달 급여액 합 계산하기 Start -->
 		     				<c:set var="totalSalary" value="0"/>
 		     				<c:forEach var="total" items="${mySalary }">
@@ -116,7 +116,7 @@
 		     					</c:if>
 		     				</c:forEach> 
 		     				<!-- 이번 달 급여액 합 계산하기 Start -->
-		     				<div style="display: flex; justify-content: space-between; align-items: center;">
+		     				<div style="display: flex; justify-content: space-between; align-items: center; padding-top:20px;">
        							<h4 style="color: #2f343d;">급여 지급액 합계</h4>
        							<h4 style="color: #007bff; margin-bottom: 20px;"><fmt:formatNumber value="${totalSalary}" groupingUsed="true"/>원</h4>
     						</div>
@@ -138,7 +138,7 @@
 	     		</div>
 	     	</div>
 	     </div>
-	     <div class="container">
+	     <div class="container" style="padding:20px;">
 	     	<table class="table" id="table-salary">
 	     		<thead>
 	     			<tr>
@@ -202,9 +202,15 @@
 						     			</c:choose>
 				     				</td>
 				     				<td>
-				     					<span class="badge bg-success">
-					     					${mySalary.mySalary.trainer.title }
-				     					</span>
+				     					<c:choose>
+				     						<c:when test="${mySalary.mySalary.trainer.title == '점장' }">
+				     							<span class="badge bg-success">점장</span>
+				     						</c:when>
+				     						<c:when test="${ mySalary.mySalary.trainer.title == '직원' }">
+				     							<span class="badge" style="background-color: #72cc75; color: white;">트레이너</span>
+				     						</c:when>
+				     						<c:otherwise>-</c:otherwise>
+				     					</c:choose>
 				     				</td>
 				     				<c:choose>
 				     					<c:when test="${mySalary.status == 'Y'}">
