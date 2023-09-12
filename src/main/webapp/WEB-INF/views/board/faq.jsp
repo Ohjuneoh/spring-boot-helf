@@ -71,7 +71,7 @@
         <div class="container py-5">
             <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
                 <h5 class="fw-bold text-primary text-uppercase">자주 묻는 질문</h5>
-                <h1 class="mb-0">HELF 고객님들이 자주묻는 질문들을 참고하세요.</h1>
+                <h1 class="mb-0">HELF 고객님들이 자주묻는<br> 질문들을 참고하세요.</h1>
             </div>
             
            
