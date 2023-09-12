@@ -23,15 +23,11 @@ public class BoardService {
 	private BoardMapper boardMapper;
 	
 	// 공지사항 등록
-	public void addNotice(AddBoardForm form) {
+	public void addNotice(AddBoardForm form, User user) {
 		Board board = new Board();
-		
 		BeanUtils.copyProperties(form, board);
 		
-		User user = new User();
-		user.setId("man");
 		board.setUser(user);
-		
 		board.setType("notice");
 		
 		if(form.getMain().equals("0")) {

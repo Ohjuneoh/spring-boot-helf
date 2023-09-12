@@ -252,7 +252,7 @@
 							and A.membership_name like '%' || #{keyword} || '%'
 						</when>
 						<when test="type == 'no'">
-							and A.membership_no like '%' || #{keyword} || '%'
+							and A.membership_no = #{keyword}
 						</when>
 				  </choose>
 			  </if>) X
@@ -263,19 +263,21 @@
 		select count(*)
 		from helf_membership A join helf_membership_category B
 			on A.category_no = B.category_no
-		<if test="type != null">
-			<choose>
-				<when test="type == 'name'">
-					and A.membership_name like '%' || #{keyword} || '%'
-				</when>
-				<when test="type == 'no'">
-					and A.membership_no like '%' || #{keyword} || '%'
-				</when>
-			</choose>
-		</if>
-		<if test="state != null">
-			and A.membership_delete = #{state}
-		</if>
+		<where>
+			<if test="type != null">
+				<choose>
+					<when test="type == 'name'">
+						and A.membership_name like '%' || #{keyword} || '%'
+					</when>
+					<when test="type == 'no'">
+						and A.membership_no = #{keyword}
+					</when>
+				</choose>
+			</if>
+			<if test="state != null">
+				and A.membership_delete = #{state}
+			</if>
+		</where>
 	</select>
 	
 	<update id="updateMembership" parameterType="membership">

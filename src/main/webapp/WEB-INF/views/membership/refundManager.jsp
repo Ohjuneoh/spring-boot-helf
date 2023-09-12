@@ -121,6 +121,7 @@
 									</div>
 									<div class="col-2">
 										<button type="submit" class="btn btn-success">검색</button>
+										<a href="refund-manager" id="point-return" class="bi bi-arrow-clockwise btn btn-primary"></a>
 									</div>
 								</div>
 							</div>
